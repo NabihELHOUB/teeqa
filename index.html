@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#0E3B31">
+  <title>TEEQA</title>
+  <!-- Installation sur l'écran d'accueil (iOS et Android) -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="TEEQA">
+  <link rel="apple-touch-icon" href="assets/icone/icon-180.png">
+  <link rel="icon" href="assets/icone/icon-32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="assets/icone/icon-192.png" type="image/png" sizes="192x192">
+  <link rel="preload" href="assets/fonts/archivo-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- Adresse « ?zero » (celle du QR d'essai) : on repart de zéro, lancement compris. Le « ?zero » est retiré de l'adresse
+       aussitôt, pour qu'un simple rechargement pendant l'essai garde l'état en cours. -->
+  <script>
+    if (/[?&]zero\b/.test(location.search)) {
+      try { localStorage.clear(); sessionStorage.clear(); } catch (e) {}
+      history.replaceState(null, '', location.pathname);
+    }
+  </script>
+  <!-- Embarquée dans un téléphone de la page vitrine (index.html?vitrine) : on réserve la place de l'îlot et de la barre d'accueil. -->
+  <script>if (/[?&]vitrine\b/.test(location.search)) document.documentElement.classList.add('in-vitrine');</script>
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/app.css?v=salle1">
+  <link rel="stylesheet" href="css/bellarej.css">
+  <link rel="stylesheet" href="css/fete.css">
+  <link rel="stylesheet" href="css/langues.css">
+  <!-- 19 nov. : police arabe (téléchargée seulement si un texte arabe s'affiche, grâce aux plages de caractères). -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@500;600;700;800&display=swap">
+</head>
+<body>
+  <!-- .device : cadre iPhone 17 (402 × 874) sur ordinateur, plein écran sur téléphone -->
+  <div class="device" data-tone="dark">
+    <main id="app" aria-live="off"></main>
+    <div class="device-chrome" aria-hidden="true">
+      <div class="statusbar">
+        <span class="sb-time">9:41</span>
+        <span class="sb-icons">
+          <svg viewBox="0 0 18 12" width="18" height="12"><rect x="0" y="8" width="3" height="4" rx=".8"/><rect x="5" y="5.5" width="3" height="6.5" rx=".8"/><rect x="10" y="3" width="3" height="9" rx=".8"/><rect x="15" y="0" width="3" height="12" rx=".8"/></svg>
+          <svg viewBox="0 0 17 12" width="17" height="12"><path d="M8.5 2.6c2.3 0 4.4.9 6 2.4l1.1-1.2A10.3 10.3 0 0 0 8.5 1 10.3 10.3 0 0 0 1.4 3.8l1.1 1.2a8.6 8.6 0 0 1 6-2.4zm0 3.3c1.4 0 2.7.5 3.7 1.4l1.1-1.2a7.1 7.1 0 0 0-9.6 0l1.1 1.2c1-.9 2.3-1.4 3.7-1.4zm0 3.2c-.7 0-1.3.3-1.8.7L8.5 12l1.8-2.2c-.5-.4-1.1-.7-1.8-.7z"/></svg>
+          <svg viewBox="0 0 27 13" width="27" height="13"><rect x=".5" y=".5" width="22" height="12" rx="3.6" fill="none" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="19" height="9" rx="2.2"/><path d="M24.2 4.4v4.2c.9-.3 1.5-1.1 1.5-2.1s-.6-1.8-1.5-2.1z" opacity=".45"/></svg>
+        </span>
+      </div>
+      <div class="island"></div>
+      <div class="home-indicator"></div>
+    </div>
+  </div>
+  <noscript>Cette démo nécessite JavaScript.</noscript>
+  <script src="js/cloud-config.js"></script>
+  <script type="module" src="js/app.js"></script>
+  <script type="module" src="js/widget-pont.js"></script>
+</body>
+</html>

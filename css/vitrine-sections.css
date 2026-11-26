@@ -1,0 +1,90 @@
+/* Vitrine TEEQA, 13 nov. 2026 : sections tirées des références Mobbin de Nabih.
+   - « Fondu » (réf. Technology) : après la 3D, un dégradé dans nos couleurs qui s'éclaircit jusqu'au blanc chaux,
+     avec de très grands titres, façon Apple, dans la police de l'appli (Nunito).
+   - « Confiance » (réf. Business) : grand titre, utilisateurs qui apparaissent dans un tourbillon de zelliges,
+     défilé de partenaires, puis une bande de motifs qui fait passer du blanc au vert (les pixels de la référence
+     remplacés par nos étoiles). */
+
+.geant { margin: 0; font-family: var(--font-title, "Nunito"), "Nunito", system-ui, sans-serif; font-weight: 900; letter-spacing: -.045em; line-height: .93; color: var(--encre); }
+
+/* ---------- Fondu ---------- */
+.fondu { position: relative; padding: 46vh 24px 8vh; text-align: center; overflow: hidden;
+  background: linear-gradient(180deg, #08261F 0%, #0E3B31 10%, #17604B 22%, #4f8f6a 32%, #c9a85c 41%, #EBCB8B 47%, #F6E6C6 55%, #FBF4E6 64%, #FFFDF8 74%, rgba(241, 236, 226, 0) 100%); }
+/* halo safran et terre cuite qui respire doucement dans la zone de passage */
+.fondu::before { content: ""; position: absolute; left: 50%; top: 30%; width: 120vw; height: 46vh; translate: -50% 0; pointer-events: none;
+  background: radial-gradient(closest-side at 30% 50%, rgba(226, 163, 59, .42), transparent), radial-gradient(closest-side at 72% 55%, rgba(196, 98, 58, .26), transparent);
+  filter: blur(30px); animation: fonduHalo 9s ease-in-out infinite alternate; }
+@keyframes fonduHalo { to { transform: translateX(4vw) scale(1.08); } }
+.fondu .geant { position: relative; font-size: clamp(56px, 11.5vw, 178px); }
+.fondu .geant span { display: block; opacity: calc(.12 + .88 * var(--v, 1)); translate: 0 calc((1 - var(--v, 1)) * 40px); }
+.fondu .geant span + span { color: var(--fes2); }
+.fondu-sous { position: relative; margin: 34px auto 0; max-width: 30em; font-size: clamp(18px, 1.8vw, 24px); line-height: 1.45; color: var(--encre2); font-weight: 700;
+  opacity: calc(.2 + .8 * var(--v, 1)); }
+.fondu + .hero { padding-top: 40px; min-height: 0; }
+
+/* ---------- Confiance ---------- */
+.confiance { position: relative; margin-top: 70px; background: linear-gradient(180deg, rgba(255, 255, 255, 0), #fff 120px); }
+.conf-scene { position: relative; max-width: 1240px; margin: 0 auto; min-height: 780px; padding: 150px 24px 80px; text-align: center; }
+.conf-poussiere { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.conf-h { position: relative; font-size: clamp(52px, 8.6vw, 128px); }
+.conf-h span { color: var(--fes2); }
+.conf-sous { position: relative; margin: 26px auto 0; max-width: 32em; font-size: clamp(17px, 1.5vw, 20px); color: var(--encre2); }
+.conf-cta { position: relative; margin-top: 30px; display: flex; justify-content: center; }
+.conf-points { position: relative; list-style: none; margin: 30px auto 0; padding: 0; display: flex; justify-content: center; flex-wrap: wrap; gap: 10px 28px; font-size: 14.5px; font-weight: 800; color: var(--encre2); }
+.conf-points li { display: flex; align-items: center; gap: 8px; }
+.conf-points li::before { content: ""; width: 9px; height: 9px; background: var(--saf); transform: rotate(45deg); border-radius: 2px; }
+
+/* Utilisateurs qui apparaissent autour du titre */
+.conf-ava { position: absolute; display: flex; align-items: center; gap: 8px; pointer-events: none; opacity: 0; scale: .6; transition: opacity .55s ease, scale .7s cubic-bezier(.2, 1.4, .4, 1); }
+.conf-ava.on { opacity: 1; scale: 1; }
+.conf-ava i { flex: none; width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; font-style: normal; font-weight: 900; font-size: 16px; color: #fff;
+  box-shadow: 0 0 0 3px #fff, 0 8px 18px rgba(14, 36, 30, .18); }
+.conf-ava div { text-align: left; display: grid; }
+.conf-ava b { font-size: 13px; font-weight: 900; color: var(--encre); white-space: nowrap; }
+.conf-ava small { font-size: 12px; color: var(--encre2); white-space: nowrap; }
+.conf-ava q { margin-top: 6px; max-width: 220px; padding: 8px 12px; border-radius: 4px 14px 14px 14px; background: var(--carte); font-size: 13px; line-height: 1.35; color: var(--encre);
+  box-shadow: 0 0 0 1px var(--trait), 0 6px 14px rgba(14, 36, 30, .08); quotes: "« " " »"; }
+
+/* Défilé des partenaires */
+.conf-partenaires { position: relative; max-width: 1240px; margin: 0 auto; padding: 18px 0 60px; display: grid; grid-template-columns: auto 1fr; gap: 26px; align-items: center; }
+.conf-partenaires > p { margin: 0 0 0 24px; font-size: 13px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: var(--encre2); white-space: nowrap; }
+.conf-piste { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.conf-piste ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 54px; width: max-content; animation: confDefile 42s linear infinite; }
+.conf-piste:hover ul { animation-play-state: paused; }
+.conf-piste li { display: flex; align-items: center; gap: 9px; color: #39463F; opacity: .82; white-space: nowrap; }
+.conf-piste svg { width: 26px; height: 26px; flex: none; }
+.conf-piste .l1 { font-weight: 900; font-size: 19px; letter-spacing: -.02em; }
+.conf-piste .l2 { font-weight: 800; font-size: 15px; letter-spacing: .14em; text-transform: uppercase; }
+.conf-piste .l3 { font-family: Georgia, "Times New Roman", serif; font-weight: 700; font-size: 20px; font-style: italic; }
+.conf-piste .l4 { font-weight: 700; font-size: 18px; letter-spacing: -.01em; } .conf-piste .l4 em { font-style: normal; font-weight: 400; }
+@keyframes confDefile { to { transform: translateX(-50%); } }
+
+/* ---------- Bande de motifs : du blanc au vert ---------- */
+.motif { position: relative; height: clamp(260px, 34vw, 420px); overflow: hidden; background: linear-gradient(180deg, #fff 0%, #fff 30%, #d9e6dc 62%, #2b7158 88%, #14503F 100%); }
+.motif canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.motif .nuage { position: absolute; border-radius: 50%; background: rgba(251, 248, 242, .55); filter: blur(22px); pointer-events: none; animation: nuage 38s linear infinite; }
+.motif .n1 { width: 420px; height: 90px; top: 58%; left: -10%; }
+.motif .n2 { width: 300px; height: 70px; top: 72%; left: 40%; animation-duration: 52s; animation-delay: -20s; opacity: .8; }
+.motif .n3 { width: 360px; height: 80px; top: 64%; left: 75%; animation-duration: 46s; animation-delay: -34s; opacity: .7; }
+@keyframes nuage { from { transform: translateX(-30vw); } to { transform: translateX(60vw); } }
+.motif + .sec.dark { margin-top: 0; background: linear-gradient(180deg, #14503F 0, rgba(20, 80, 63, 0) 240px), radial-gradient(1100px 600px at 50% 0, #17604B 0, var(--fes) 46%, var(--nuit) 100%); }
+
+@media (max-width: 760px) {
+  .fondu { padding-top: 34vh; }
+  .conf-scene { min-height: 0; padding: 90px 18px 230px; }
+  .conf-ava q { display: none; }
+  .conf-partenaires { grid-template-columns: 1fr; gap: 14px; }
+  .conf-partenaires > p { margin: 0; text-align: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fondu::before, .motif .nuage, .conf-piste ul { animation: none; }
+  .conf-ava { transition: none; }
+}
+
+/* Priorité sur les règles générales de vitrine.css (.vt h2, .vt p) */
+.vt .fondu .geant { font-size: clamp(56px, 11.5vw, 178px); }
+.vt .conf-h { font-size: clamp(46px, 7.4vw, 112px); line-height: .93; letter-spacing: -.045em; }
+.vt .fondu-sous { margin: 34px auto 0; }
+.vt .conf-sous { margin: 26px auto 0; }
+.vt .conf-partenaires > p { margin: 0 0 0 24px; }
+@media (max-width: 760px) { .vt .conf-partenaires > p { margin: 0; } }

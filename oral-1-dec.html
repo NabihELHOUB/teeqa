@@ -1,0 +1,551 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TEEQA · Oral du 1er décembre</title>
+  <meta name="description" content="Présentation de l'oral du jalon 2 de TEEQA (1er décembre 2026), 15 minutes, au clavier.">
+  <link rel="icon" href="assets/icone/icon-32.png" type="image/png">
+  <link rel="stylesheet" href="css/bellarej.css">
+  <link rel="stylesheet" href="css/oral.css">
+</head>
+<!--
+  Oral du jalon 2 (mardi 1er décembre 2026). Diapo de base pour le groupe : 16:9, 1920 × 1080, mise à l'échelle de l'écran.
+  Clavier : → / Espace / Page suivante = avancer ; ← / Page précédente = reculer ; Début / Fin ; un numéro puis Entrée = aller à la diapo ;
+  N = notes d'orateur ; P = fenêtre de l'orateur (synchronisée) ; F = plein écran ; B = écran noir ; D = ouvrir la démo (diapo Maquettage).
+  Une diapo = <section class="slide">. Ses notes = <aside class="notes" data-orateur data-duree> (phrase-clé dans .cle).
+  Les éléments [data-r] arrivent l'un après l'autre ; .count[data-to] se compte. Rien ici ne touche l'appli.
+-->
+<body>
+<main class="deck" id="deck" aria-live="polite">
+
+  <!-- 1 · TITRE -->
+  <section class="slide fes s-titre" data-part="0" data-titre="TEEQA">
+    <div class="zellige" aria-hidden="true"></div>
+    <div class="titre-bloc">
+      <svg class="logo" data-r viewBox="0 0 40 40" aria-hidden="true"><rect x="3" y="3" width="34" height="34"/><path d="M13 35V21a7 7 0 1 1 14 0v14"/><path d="M20 3v5M3 20h5M37 20h-5"/></svg>
+      <h1 data-r>TEEQA</h1>
+      <p class="ar" data-r lang="ar" dir="rtl">الثقة</p>
+      <p class="baseline" data-r>la confiance, vérifiée</p>
+      <p class="promesse" data-r>Faire construire au Maroc depuis l'étranger,<br>et payer ce qui est prouvé.</p>
+    </div>
+    <div class="titre-bellarej" data-r data-bellarej="annonce" data-h="420"></div>
+    <footer class="titre-pied" data-r>
+      <span>David Lescure · Nabih El Houb · Manuela Dongmo · Evrard Dedo</span>
+      <span>Jalon 2 · Projet d'innovation · M2 · IAE Savoie Mont Blanc · mardi 1er décembre 2026</span>
+    </footer>
+    <aside class="notes" data-orateur="David" data-duree="0:15">
+      <p class="cle">TEEQA, de « thiqa », la confiance : construire au Maroc depuis l'étranger, et ne payer que ce qui est prouvé.</p>
+      <p>« Bonjour. TEEQA vient de thiqa, la confiance en arabe. Nous allons vous montrer en quinze minutes pourquoi les Marocains de l'étranger en ont besoin, comment nous en faisons un modèle économique, et, avec Nabih, l'appli elle-même. »</p>
+      <p>Annoncer le partage : David (valeur, trajectoire), Manuela (marché, concurrence), Evrard (modèle économique), Nabih (maquettage).</p>
+    </aside>
+  </section>
+
+  <!-- 2 · LE PROBLÈME -->
+  <section class="slide s-probleme" data-part="1" data-titre="Le problème">
+    <header class="kicker" data-r><b>01</b> Proposition de valeur · le problème</header>
+    <h2 data-r>Aujourd'hui, l'argent part<br>sur un simple message.</h2>
+    <div class="probleme-grille">
+      <div class="chat" data-r aria-label="Scène fictive : conversation">
+        <div class="chat-tete"><span class="chat-av">C</span><div><b>Cousin</b><small>Nador · en ligne</small></div></div>
+        <p class="bulle eux" style="--d:.6s">Il faut envoyer pour la dalle.<time>21:04</time></p>
+        <p class="bulle moi" style="--d:1.5s">Tu peux m'envoyer une photo ?<time>21:06</time></p>
+        <p class="bulle eux" style="--d:2.4s">C'est bon, fais-moi confiance.<time>21:07</time></p>
+        <small class="fictif">Scène fictive</small>
+      </div>
+      <div class="distance" data-r>
+        <svg viewBox="0 0 640 420" aria-hidden="true">
+          <path class="arc" d="M120 90 C 300 30, 520 160, 520 340" pathLength="1"/>
+          <circle class="ville" cx="120" cy="90" r="14"/><circle class="ville safran" cx="520" cy="340" r="14"/>
+          <text x="120" y="54" text-anchor="middle">Lyon</text>
+          <text x="520" y="396" text-anchor="middle">Nador</text>
+        </svg>
+        <p class="distance-km"><b><span class="count" data-to="1350">1 350</span> km</b> à vol d'oiseau</p>
+      </div>
+      <ul class="constats">
+        <li data-r>Les tranches partent sur demande, <b>sans preuve vérifiée</b>.</li>
+        <li data-r>Une malfaçon se découvre tard, <b>une fois recouverte</b>.</li>
+        <li data-r>Sur place, le seul contrôle est souvent la famille : <b>ni experte, ni neutre</b>.</li>
+      </ul>
+    </div>
+    <aside class="notes" data-orateur="David" data-duree="0:30">
+      <p class="cle">L'argent part par tranches, sur un message, sans preuve : c'est le problème que TEEQA règle.</p>
+      <p>« Prenons Karim, un personnage : il vit à Lyon, sa maison se construit à Nador, à 1 350 kilomètres. Un soir : “Il faut envoyer pour la dalle.” Il demande une photo. Réponse : “Fais-moi confiance.” »</p>
+      <p>« Les tranches partent sans preuve, les malfaçons se voient une fois recouvertes, et le seul contrôle, c'est la famille. »</p>
+      <p><b>Si on vous demande la loi :</b> la loi 44-00 (vente en l'état futur d'achèvement) protège l'acheteur d'un logement sur plan, pas le particulier qui fait construire sur son terrain.</p>
+      <p><b>Distance :</b> 1 348 km entre Lyon et Nador, calculés sur les coordonnées des deux villes. Ne pas dire « 2 000 km ».</p>
+    </aside>
+  </section>
+
+  <!-- 3 · PROPOSITION DE VALEUR -->
+  <section class="slide s-valeur" data-part="1" data-titre="Proposition de valeur">
+    <header class="kicker" data-r><b>01</b> Proposition de valeur</header>
+    <h2 class="geant" data-r>L'argent suit <em>la preuve</em>.</h2>
+    <p class="chapo" data-r>À chaque étape clé, TEEQA date, signe et garde la preuve. Le client décide : payer, ou attendre.</p>
+    <div class="trois">
+      <article class="carte" data-r>
+        <h3>Pour qui</h3>
+        <p>Les Marocains de l'étranger qui font construire, ou rénovent lourdement, sur leur terrain au Maroc.</p>
+      </article>
+      <article class="carte carte-forte" data-r>
+        <h3>Ce qu'on vend</h3>
+        <p>Une <b>preuve datée et signée</b> à chaque étape : photos prises dans l'appli, avis d'un contrôleur indépendant, dossier gardé 10 ans.</p>
+      </article>
+      <article class="carte" data-r>
+        <h3>Ce qu'on ne fait pas</h3>
+        <p>TEEQA ne détient jamais l'argent des travaux, ne tranche pas un désaccord, ne certifie pas une photo.</p>
+      </article>
+    </div>
+    <div class="roles" data-r>
+      <span><i data-bellarej="attend" data-seat="transat" data-h="96"></i><b>Client</b> suit à distance</span>
+      <span><i data-bellarej="posee" data-gear="orange" data-h="96"></i><b>Entreprise</b> déclare l'étape</span>
+      <span><i data-bellarej="photo" data-gear="jaune" data-h="96"></i><b>Contrôleur</b> vérifie sur place</span>
+    </div>
+    <aside class="notes" data-orateur="David" data-duree="0:35">
+      <p class="cle">Notre valeur, c'est la preuve datée et signée de chaque étape ; l'argent des travaux ne passe jamais par nous.</p>
+      <p>« Une règle : l'argent suit la preuve. Pour qui ? Les Marocains de l'étranger qui font construire sur leur terrain. Ce qu'on vend : à chaque étape clé, des photos prises dans l'appli, avec l'heure et le lieu, l'avis signé d'un contrôleur indépendant, et un dossier gardé dix ans. »</p>
+      <p>« Ce qu'on ne fait pas : on ne touche jamais l'argent des travaux. Nous recommandons de payer ou de différer ; c'est le client qui paie lui-même l'entreprise. »</p>
+      <p>Mots imposés : « paiement recommandé » ou « différé », jamais « débloqué ». Passer la parole : « Manuela, est-ce que ce besoin existe ? »</p>
+    </aside>
+  </section>
+
+  <!-- 4 · MARCHÉ : DONNÉES SECONDAIRES -->
+  <section class="slide s-marche" data-part="2" data-titre="Marché · données secondaires">
+    <header class="kicker" data-r><b>02</b> Marché et cibles · l'approche globale</header>
+    <h2 data-r>L'argent des MRE est là,<br>et il va d'abord à la pierre.</h2>
+    <div class="chiffres">
+      <article class="chiffre chiffre-xl" data-r>
+        <p class="n">&gt; <span class="count" data-to="122">122</span><small> Mds DH</small></p>
+        <p class="l">transférés au Maroc par les Marocains de l'étranger en 2025 (118,9 Mds DH en 2024).</p>
+        <p class="src">Office des changes, via Hespress, 2 févr. 2026</p>
+      </article>
+      <article class="chiffre" data-r>
+        <p class="n">≈ <span class="count" data-to="10">10</span><small> %</small></p>
+        <p class="l">de ces transferts vont chaque année à l'investissement, surtout le foncier et l'immobilier.</p>
+        <p class="src">Ministre de l'Économie et des Finances, via FNH, 16 févr. 2021</p>
+      </article>
+      <article class="chiffre" data-r>
+        <p class="n"><span class="count" data-to="40.7" data-dec="1">40,7</span><small> %</small> <span class="plus">+ 16,6 %</span></p>
+        <p class="l">des investissements des migrants vont à l'immobilier, et 16,6 % à la construction.</p>
+        <p class="src">HCP, Enquête nationale sur la migration internationale 2018-2019</p>
+      </article>
+      <article class="chiffre" data-r>
+        <p class="n"><span class="count" data-to="3.4" data-dec="1">3,4</span><small> Md€</small></p>
+        <p class="l">envoyés de France vers le Maroc par les ménages en 2024.</p>
+        <p class="src">Eurostat, via Bladi, 17 déc. 2025</p>
+      </article>
+      <article class="chiffre" data-r>
+        <p class="n">≈ <span class="count" data-to="932000">932 000</span></p>
+        <p class="l">immigrés nés au Maroc vivent en France (11,7 % des 7,97 millions d'immigrés).</p>
+        <p class="src">Insee, 2025, données provisoires (calcul : 11,7 % × 7,97 M)</p>
+      </article>
+      <article class="chiffre" data-r>
+        <p class="n"><span class="count" data-to="14.8" data-dec="1">14,8</span><small> Mt</small> <span class="plus">+ 8,2 %</span></p>
+        <p class="l">de ciment livrées au Maroc en 2025 : le bâtiment accélère.</p>
+        <p class="src">Ministère de l'Habitat, données APC, via Médias24, 5 janv. 2026</p>
+      </article>
+    </div>
+    <aside class="notes" data-orateur="Manuela" data-duree="0:45">
+      <p class="cle">Le marché existe : plus de 122 milliards de dirhams transférés en 2025, et la pierre en tête des investissements des MRE.</p>
+      <p>« Les données publiques d'abord. En 2025, les Marocains de l'étranger ont transféré plus de 122 milliards de dirhams, selon l'Office des changes. Près de 10 % vont chaque année à l'investissement, surtout le foncier et l'immobilier. Et selon le HCP, l'immobilier et la construction pèsent à eux deux plus de la moitié de leurs investissements. »</p>
+      <p>« La France envoie 3,4 milliards d'euros par an, et compte environ 932 000 immigrés nés au Maroc. Enfin, le bâtiment accélère : 14,8 millions de tonnes de ciment livrées en 2025, plus 8 %. »</p>
+      <p>« Ces chiffres montrent un marché, pas encore un besoin : pour ça, il fallait interroger la cible. »</p>
+      <p><b>Ne pas dire :</b> « 10 % des transferts vont au foncier » (c'est 10 % à l'investissement, dont surtout l'immobilier) ; « 5,5 millions de MRE » (pas de source primaire ; le HCP dit « plus de 5 millions », 2020) ; « 122 Mds venus de France » (c'est le total, la France pèse environ un tiers).</p>
+    </aside>
+  </section>
+
+  <!-- 5 · ÉTUDE PRIMAIRE -->
+  <section class="slide s-primaire" data-part="2" data-titre="Étude primaire">
+    <header class="kicker" data-r><b>02</b> Marché et cibles · l'étude primaire</header>
+    <h2 data-r>32 vraies réponses : le besoin se dessine,<br>le prix reste à confirmer.</h2>
+    <div class="primaire-grille">
+      <div class="base" data-r>
+        <p class="base-n"><span class="count" data-to="32">32</span></p>
+        <p class="base-l">réponses à 4 questionnaires en ligne<br><small>17 oct. – 24 nov. 2026</small></p>
+        <ul>
+          <li><b>25</b> clients particuliers</li>
+          <li><b>2</b> entreprises du BTP</li>
+          <li><b>3</b> artisans</li>
+          <li><b>2</b> bureaux de contrôle</li>
+        </ul>
+      </div>
+      <div class="enseignements">
+        <p class="ens" data-r><b>18 sur 25</b> ont fait construire à distance (8) ou en ont le projet (10).</p>
+        <p class="ens" data-r><b>3 sur 9</b> concernés ont déjà payé une étape sans pouvoir la vérifier.</p>
+        <p class="ens" data-r><b>10 sur 18</b> l'utiliseraient au bon prix : 3 « certainement », 7 « probablement » ; 7 « peut-être », 1 « probablement pas ».</p>
+        <div class="prix-echelle" data-r>
+          <p class="pe-titre">Prix jugé pour tout le chantier · médianes de 10 réponses en euros</p>
+          <div class="pe-barre">
+            <span class="pe-zone" style="--a:16.7%;--b:91.7%"></span>
+            <span class="pe-m" style="--x:16.7%"><b>1 000 €</b>trop bon marché</span>
+            <span class="pe-m pe-fort" style="--x:33.3%"><b>2 000 €</b>bonne affaire</span>
+            <span class="pe-m" style="--x:62.5%"><b>3 750 €</b>cher</span>
+            <span class="pe-m" style="--x:91.7%"><b>5 500 €</b>trop cher</span>
+            <span class="pe-nous" style="--x:9.2%"><b>TEEQA</b>≈ 549 € (4 visites)</span>
+          </div>
+        </div>
+        <p class="ens pro" data-r><b>Côté pros :</b> un bureau de contrôle de l'Oriental facture 1 500 MAD une visite d'une demi-journée et préfère être payé par le service ; une entreprise de 21 à 50 salariés paie déjà plus de 200 € par mois pour trouver des clients.</p>
+      </div>
+    </div>
+    <p class="limite" data-r>Échantillon petit et non représentatif : 6 répondants seulement ont un chantier au Maroc, passé ou en projet. Aucun entretien à ce jour. À faire : entretiens, devis de 3 bureaux de contrôle.</p>
+    <aside class="notes" data-orateur="Manuela" data-duree="1:05">
+      <p class="cle">32 vraies réponses : un besoin réel chez ceux qui construisent à distance, et une disposition à payer bien au-dessus de notre prix.</p>
+      <p>« Notre étude primaire : 32 vraies réponses à des questionnaires en ligne, 25 clients particuliers, 2 entreprises du BTP, 3 artisans et 2 bureaux de contrôle. C'est peu, on vous donne donc des nombres, pas des pourcentages. »</p>
+      <p>« 18 clients sur 25 ont fait construire à distance ou en ont le projet. 3 sur 9 ont déjà payé une étape sans pouvoir la vérifier. 10 sur 18 l'utiliseraient au bon prix. »</p>
+      <p>« Le prix : pour tout le chantier, la bonne affaire médiane est de 2 000 euros, sur 10 réponses en euros. Notre Suivi contrôlé coûte environ 550 euros : nous sommes en dessous de ce que la cible se dit prête à payer. C'est une marge à tester au pilote. »</p>
+      <p>« Côté pros : un bureau de contrôle de l'Oriental facture 1 500 dirhams une visite d'une demi-journée. Et nos limites : 6 répondants seulement visent le Maroc, aucun entretien encore. Ce sont nos prochaines étapes. »</p>
+      <p><b>Ne jamais citer</b> les 62 réponses du 1er oral (38 étaient simulées), ni « 78 % » ou « 82 % » (aucune source). Les autres prix : 3 réponses en % des travaux, 3 en dirhams, 2 en francs suisses, trop dispersés pour une médiane.</p>
+    </aside>
+  </section>
+
+  <!-- 6 · BENCHMARK -->
+  <section class="slide s-bench" data-part="3" data-titre="Concurrence · benchmark">
+    <header class="kicker" data-r><b>03</b> Concurrence · le benchmark</header>
+    <h2 data-r>Le contrôle existe déjà. L'appli partagée, pas encore.</h2>
+    <table class="bench" data-r>
+      <thead><tr><th>Acteur</th><th>Contrôle par un tiers</th><th>Suivi étape par étape</th><th>Appli partagée client, entreprise, contrôleur</th><th>Prix affiché</th><th>Zone</th></tr></thead>
+      <tbody>
+        <tr><td><b>Famille, proche</b><small>par WhatsApp</small></td><td class="p">rarement du métier</td><td class="p">au gré des visites</td><td class="n">non</td><td>gratuit</td><td>partout</td></tr>
+        <tr><td><b>Inspectimmo</b><small>inspection ponctuelle</small></td><td class="o">oui</td><td class="n">une visite</td><td class="n">non</td><td>1 200 – 3 600 DH</td><td>Casablanca</td></tr>
+        <tr><td><b>Reaconsult</b><small>maîtrise d'ouvrage déléguée</small></td><td class="o">oui, il pilote</td><td class="o">oui</td><td class="n">non</td><td>4 à 8 % des travaux</td><td>Casablanca</td></tr>
+        <tr><td><b>AMG Building</b><small>constructeur</small></td><td class="n">se suit lui-même</td><td class="o">oui</td><td class="p">ses clients seuls</td><td>non communiqué</td><td>Marrakech</td></tr>
+        <tr class="proche"><td><b>Soustraitant.ma</b><small>le plus proche</small></td><td class="o">ses ingénieurs</td><td class="o">8 visites</td><td class="n">rapports par message</td><td>sur devis</td><td>Casablanca, Rabat</td></tr>
+        <tr><td><b>TACHRONE.ma</b><small>annuaire du BTP</small></td><td class="n">non</td><td class="n">non</td><td class="p">annuaire</td><td>payé par les pros</td><td>Maroc</td></tr>
+        <tr class="nous"><td><b>TEEQA</b></td><td class="o">agence payée par TEEQA</td><td class="o">étapes clés</td><td class="o">oui, les trois rôles</td><td>1 500 / 5 900 DH</td><td>l'Oriental d'abord</td></tr>
+      </tbody>
+    </table>
+    <p class="src-ligne" data-r>Sources : pages publiques des acteurs (soustraitant.ma, inspectimmo.ma, reaconsult.ma) et presse (Morocco World News, Challenge, Le360), consultées le 14 nov. 2026.</p>
+    <aside class="notes" data-orateur="Manuela" data-duree="0:45">
+      <p class="cle">D'autres contrôlent déjà ; personne ne réunit le client, l'entreprise et le contrôleur dans une même appli, avec un prix affiché.</p>
+      <p>« Notre premier concurrent, c'est la famille : gratuite, présente, mais rarement du métier. Inspectimmo fait une inspection ponctuelle, Reaconsult pilote tout le chantier pour 4 à 8 % des travaux, AMG Building suit ses propres chantiers : il se contrôle lui-même. »</p>
+      <p>« Le plus proche, c'est Soustraitant.ma : ses ingénieurs passent huit fois sur une villa, mais à Casablanca et Rabat, sur devis, avec des rapports envoyés par message. »</p>
+      <p><b>Ne pas dire</b> « aucun concurrent », « leader » ou « les seuls ». Dire « parmi les acteurs que nous avons identifiés ».</p>
+    </aside>
+  </section>
+
+  <!-- 7 · DIFFÉRENCIATION ET SOUSTRAITANT.MA -->
+  <section class="slide s-diff" data-part="3" data-titre="Différenciation">
+    <header class="kicker" data-r><b>03</b> Concurrence · nos marqueurs de différence</header>
+    <h2 data-r>Soustraitant.ma : concurrent aujourd'hui,<br>partenaire possible demain.</h2>
+    <div class="diff-grille">
+      <ol class="marqueurs">
+        <li data-r><b>Une appli partagée par les trois rôles</b><span>L'entreprise déclare l'étape en un geste ; le client la voit à distance.</span></li>
+        <li data-r><b>Un contrôleur attribué par TEEQA</b><span>Anonyme pour l'entreprise, qui ne le choisit pas.</span></li>
+        <li data-r><b>Des avis signés et datés</b><span>Photos prises dans l'appli ; dossier exportable 10 ans.</span></li>
+        <li data-r><b>Un prix affiché, en paliers</b><span>Le même prix partout, sans devis.</span></li>
+      </ol>
+      <div class="decision" data-r>
+        <p class="dec-titre">Notre décision</p>
+        <div class="dec-etape"><b>2027 – 2028</b><p>Concurrent direct. Nous démarrons dans l'Oriental ; eux sont à Casablanca et Rabat.</p></div>
+        <div class="dec-etape dec-futur"><b>2029</b><p>En arrivant à Casablanca et Rabat, leur proposer d'être <b>fournisseur de contrôleurs</b>. S'ils signent, ils entrent dans nos partenaires clés.</p></div>
+      </div>
+    </div>
+    <aside class="notes" data-orateur="Manuela" data-duree="0:35">
+      <p class="cle">Soustraitant.ma est notre concurrent direct en 2027-2028, et un fournisseur de contrôleurs possible à partir de 2029.</p>
+      <p>« Le 3 novembre, vous nous avez demandé : Soustraitant.ma, concurrent ou partenaire ? Notre réponse : concurrent aujourd'hui. Nous nous en distinguons sur quatre points vérifiables : une appli partagée par les trois rôles, un contrôleur attribué par TEEQA et anonyme pour l'entreprise, des avis signés et datés, et un prix affiché. »</p>
+      <p>« Demain, quand nous arriverons à Casablanca et Rabat, ses ingénieurs pourraient devenir nos contrôleurs : il entrerait alors dans notre modèle, comme fournisseur. Evrard va vous montrer ce modèle. »</p>
+      <p><b>Si on vous demande :</b> aucun contact avec eux à ce jour.</p>
+    </aside>
+  </section>
+
+  <!-- 8 · FLUX -->
+  <section class="slide s-flux" data-part="4" data-titre="Business model · les flux">
+    <header class="kicker" data-r><b>04</b> Concept et business model · les flux</header>
+    <h2 data-r>TEEQA vend la preuve.<br>L'argent des travaux ne passe jamais par lui.</h2>
+    <svg class="flux" viewBox="0 0 1760 690" role="img" aria-label="Schéma des flux entre le client, TEEQA, l'agence de contrôle, le contrôleur, l'entreprise et la banque">
+      <defs>
+        <marker id="fl-a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="m-argent"/></marker>
+        <marker id="fl-p" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="m-preuve"/></marker>
+        <marker id="fl-i" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="m-info"/></marker>
+      </defs>
+      <path id="f1" class="lien argent" d="M330 245 L708 245" marker-end="url(#fl-a)"/>
+      <path id="f2" class="lien preuve" d="M720 315 L342 315" marker-end="url(#fl-p)"/>
+      <path id="f3" class="lien argent" d="M1050 228 C 1200 220, 1260 100, 1388 95" marker-end="url(#fl-a)"/>
+      <path id="f4" class="lien argent" d="M1570 170 L1570 390" marker-end="url(#fl-a)"/>
+      <path id="f5" class="lien preuve" d="M1400 470 C 1260 470, 1170 345, 1064 322" marker-end="url(#fl-p)"/>
+      <path id="f6" class="lien info" d="M885 480 L885 362" marker-end="url(#fl-i)"/>
+      <path id="f7" class="lien argent fort" d="M250 350 C 280 470, 520 560, 708 560" marker-end="url(#fl-a)"/>
+      <path id="f8" class="lien argent option" d="M110 350 L110 498"/>
+      <path id="f9" class="lien argent option" d="M330 585 C 480 615, 600 605, 708 596" marker-end="url(#fl-a)"/>
+      <text class="et argent-t" x="525" y="226" text-anchor="middle">Forfait : 1 500 ou 5 900 DH</text>
+      <text class="et preuve-t" x="531" y="354" text-anchor="middle">Avis signé, avec</text>
+      <text class="et preuve-t" x="531" y="384" text-anchor="middle">paiement recommandé ou différé</text>
+      <text class="et argent-t" x="1235" y="140" text-anchor="end">Mission · 700 DH par visite</text>
+      <text class="et argent-t" x="1550" y="292" text-anchor="end">450 DH par visite</text>
+      <text class="et preuve-t" x="1228" y="512" text-anchor="middle">Photos datées · avis signé</text>
+      <text class="et info-t" x="905" y="430">Déclare l'étape</text>
+      <text class="et argent-t fort-t" x="362" y="452">Prix des travaux, en direct</text>
+      <text class="et argent-t" x="470" y="662" text-anchor="middle">ou par séquestre bancaire, facultatif</text>
+      <g class="noeud"><rect x="0" y="175" width="330" height="175" rx="26"/><text x="165" y="252" class="nt">Client MRE</text><text x="165" y="292" class="ns">paie le forfait, une fois</text></g>
+      <g class="noeud coeur"><rect x="720" y="175" width="330" height="175" rx="26"/><text x="885" y="258" class="nt">TEEQA</text><text x="885" y="298" class="ns">date, signe, garde</text></g>
+      <g class="noeud"><rect x="1400" y="20" width="340" height="150" rx="26"/><text x="1570" y="88" class="nt">Agence de contrôle</text><text x="1570" y="126" class="ns">fournisseur payé par TEEQA</text></g>
+      <g class="noeud"><rect x="1400" y="400" width="340" height="140" rx="26"/><text x="1570" y="462" class="nt">Contrôleur</text><text x="1570" y="500" class="ns">anonyme pour l'entreprise</text></g>
+      <g class="noeud"><rect x="720" y="480" width="330" height="140" rx="26"/><text x="885" y="542" class="nt">Entreprise du BTP</text><text x="885" y="580" class="ns">invitée gratuitement</text></g>
+      <g class="noeud option"><rect x="0" y="505" width="330" height="120" rx="26"/><text x="165" y="558" class="nt">Banque partenaire</text><text x="165" y="594" class="ns">compte au nom du client</text></g>
+      <circle class="jeton argent" r="9"><animateMotion dur="3.2s" repeatCount="indefinite"><mpath href="#f1"/></animateMotion></circle>
+      <circle class="jeton argent" r="9"><animateMotion dur="3.6s" begin="1s" repeatCount="indefinite"><mpath href="#f3"/></animateMotion></circle>
+      <circle class="jeton argent" r="9"><animateMotion dur="2.6s" begin="1.6s" repeatCount="indefinite"><mpath href="#f4"/></animateMotion></circle>
+      <circle class="jeton argent" r="11"><animateMotion dur="4s" begin=".4s" repeatCount="indefinite"><mpath href="#f7"/></animateMotion></circle>
+      <circle class="jeton preuve" r="9"><animateMotion dur="3.6s" begin="2s" repeatCount="indefinite"><mpath href="#f5"/></animateMotion></circle>
+      <circle class="jeton preuve" r="9"><animateMotion dur="3.2s" begin="2.6s" repeatCount="indefinite"><mpath href="#f2"/></animateMotion></circle>
+    </svg>
+    <p class="legende" data-r><span class="lg argent"></span> argent <span class="lg preuve"></span> preuve <span class="lg info"></span> déclaration · en pointillé : facultatif</p>
+    <aside class="notes" data-orateur="Evrard" data-duree="0:50">
+      <p class="cle">Le client paie TEEQA pour la preuve ; TEEQA paie l'agence ; l'argent des travaux va du client à l'entreprise, sans nous.</p>
+      <p>« Au centre, TEEQA : nous ne construisons pas et nous ne contrôlons pas nous-mêmes. Le client nous paie un forfait, une fois. Nous missionnons une agence de contrôle, que nous payons 700 dirhams par visite, et elle paie son contrôleur. »</p>
+      <p>« L'entreprise déclare l'étape. Le contrôleur passe, photographie dans l'appli, signe. Nous transmettons l'avis au client avec une recommandation : payer ou différer. »</p>
+      <p>« Et l'argent des travaux va directement du client à l'entreprise. S'il le veut, le client peut passer par un compte de séquestre ouvert à son nom dans une banque partenaire : c'est la banque qui garde et verse, jamais TEEQA. Donc pas de statut d'établissement de paiement. »</p>
+      <p><b>À savoir :</b> la banque du séquestre s'appelle « Banque Saphir » dans l'appli, un nom inventé ; aucune banque n'est signée. TEEQA ne prend aucune commission sur les travaux.</p>
+    </aside>
+  </section>
+
+  <!-- 9 · PRIX EN PALIERS -->
+  <section class="slide s-prix" data-part="4" data-titre="Modèle de revenus">
+    <header class="kicker" data-r><b>04</b> Concept et business model · le modèle de revenus</header>
+    <h2 data-r>Un seul prix par chantier, en paliers.<br>Personne ne paie deux fois.</h2>
+    <div class="paliers">
+      <article class="palier" data-r>
+        <p class="pa-nom">Suivi</p>
+        <p class="pa-prix"><span class="count" data-to="1500">1 500</span> DH</p>
+        <p class="pa-eur">≈ 140 € · par chantier</p>
+        <p class="pa-desc">Sans visite : étapes déclarées, photos datées, dossier gardé.</p>
+      </article>
+      <article class="palier palier-reco" data-r>
+        <p class="pa-badge">Le palier de référence</p>
+        <p class="pa-nom">Suivi contrôlé</p>
+        <p class="pa-prix"><span class="count" data-to="5900">5 900</span> DH</p>
+        <p class="pa-eur">≈ 549 € · 4 visites clés</p>
+        <p class="pa-desc">Un contrôleur indépendant passe aux 4 étapes qui seront cachées ensuite.</p>
+      </article>
+      <article class="palier" data-r>
+        <p class="pa-nom">Chaque visite en plus</p>
+        <p class="pa-prix">+&nbsp;<span class="count" data-to="1100">1 100</span> DH</p>
+        <p class="pa-eur">≈ 102 € · le même prix partout</p>
+        <p class="pa-desc">Exemple, 6 visites : 5&nbsp;900 + 2&nbsp;×&nbsp;1&nbsp;100 = <b>8&nbsp;100&nbsp;DH</b>.</p>
+      </article>
+    </div>
+    <p class="regle" data-r>Une règle : <b>forfait = 1 500 DH + 1 100 DH par visite</b>, en une ou 3 fois. Prix du pilote ; ensuite, <b>3 000 + 2 000 DH</b>.</p>
+    <div class="qui-paie" data-r>
+      <p><b>L'entreprise</b> ne paie rien pour être invitée ni référencée ; seulement une contre-visite causée, ou, à son choix, de la visibilité.</p>
+      <p><b>L'agence</b> ne nous paie rien : c'est nous qui la payons, à l'acte.</p>
+      <p><b>Le séquestre</b> est facultatif : ses frais sont ceux de la banque, qui nous verse un fixe par compte.</p>
+    </div>
+    <aside class="notes" data-orateur="Evrard" data-duree="0:45">
+      <p class="cle">Un seul prix par chantier, qui monte avec le nombre de visites : plus d'abonnement, plus de double facturation.</p>
+      <p>« Le 3 novembre, vous nous avez dit qu'on ne pouvait pas plumer deux fois le client : un forfait et un abonnement. Nous avons retenu ce que vous proposiez : un prix au chantier, avec des paliers. »</p>
+      <p>« Le Suivi, sans visite, 1 500 dirhams. Le Suivi contrôlé, avec 4 visites clés, 5 900 dirhams. Et chaque visite en plus, 1 100 dirhams, le même prix partout : six visites, 8 100 dirhams. »</p>
+      <p>« L'entreprise ne paie rien pour être invitée ; elle paie seulement une contre-visite qu'elle a causée, et, si elle le veut, une option de visibilité dans l'annuaire. L'agence ne nous paie rien : c'est notre fournisseur. »</p>
+      <p>« Ces prix sont ceux du pilote de 2027. Après, on garde la même règle avec des montants plus hauts : 3 000 dirhams de suivi et 2 000 par visite, soit 11 000 pour quatre visites, environ 1 020 euros. Evrard vous montre pourquoi. »</p>
+      <p><b>Le kit à 3,5 % du budget a été écarté.</b> Pourquoi : pour la Villa Nador (environ 1 million de dirhams de travaux), il revenait à environ 35 000 dirhams, six fois le prix de l'appli ; un pourcentage des travaux ressemble à une commission sur un argent que TEEQA ne touche pas, et il fait monter notre prix avec le devis de l'entreprise, sans lien avec le nombre de visites ; enfin, il remettait un second modèle à côté du forfait, ce que le jury nous avait reproché. Seuls 3 répondants sur 25 ont spontanément parlé en pourcentage.</p>
+      <p>Les euros sont indicatifs (1 € pour 10,74 DH, cours Bank Al-Maghrib du 27 octobre 2026, celui de l'appli).</p>
+    </aside>
+  </section>
+
+  <!-- 10 · RENTABILITÉ -->
+  <section class="slide s-renta" data-part="4" data-titre="Rentabilité des visites">
+    <header class="kicker" data-r><b>04</b> Concept et business model · la rentabilité</header>
+    <h2 data-r>Chaque visite paie sa visite.<br>Le prix cible paie aussi l'équipe.</h2>
+    <div class="renta-grille">
+      <div class="decompo" data-r>
+        <p class="dc-titre">Pilote 2027 : une visite à <b>1 100 DH TTC</b></p>
+        <div class="barre">
+          <span class="seg tva" style="--w:16.6%">TVA<b>183</b></span>
+          <span class="seg agence" style="--w:63.7%">agence<b>700</b><i>dont 450 au contrôleur</i></span>
+          <span class="seg teeqa" style="--w:19.7%">TEEQA<b>217</b></span>
+        </div>
+        <p class="dc-detail">Sur un chantier à 5 900 DH, 4 visites : <b>610 DH</b> restent après tous les coûts de l'annexe de l'appli. Trop peu pour payer une équipe.</p>
+      </div>
+      <div class="decompo" data-r>
+        <p class="dc-titre">Dès 2028 : un chantier à <b>11 000 DH TTC</b>, 4 visites</p>
+        <div class="barre">
+          <span class="seg tva" style="--w:16.7%">TVA<b>1 833</b></span>
+          <span class="seg agence" style="--w:25.5%">agences<b>2 800</b></span>
+          <span class="seg cout" style="--w:7.1%">coûts<b>778</b></span>
+          <span class="seg teeqa" style="--w:50.7%">marge brute<b>5 589</b></span>
+        </div>
+        <p class="dc-detail">3 000 DH de suivi + 2 000 DH par visite, ≈ 1 024 € : au seuil « trop bon marché » de notre étude (1 000 €), la moitié de la « bonne affaire » (2 000 €).</p>
+      </div>
+    </div>
+    <div class="avant-apres" data-r>
+      <p><b>Visite à 1 500 DH, le tarif réel</b> Au pilote, − 706 DH par visite ; au prix cible, + 35 DH.</p>
+      <p><b>D'autres payeurs, jamais le client</b> Banque, entreprises, assurance : 71 000 DH en 2029.</p>
+    </div>
+    <p class="limite" data-r>Estimations, pas encore mesurées : 700 DH payés à l'agence pour une visite courte, sur les points clés, à confirmer par 3 devis. Détail : previsionnel.html.</p>
+    <aside class="notes" data-orateur="Evrard" data-duree="0:40">
+      <p class="cle">Au prix du pilote, une visite paie sa visite ; au prix cible, un chantier rapporte 5 589 DH de marge brute et paie l'équipe.</p>
+      <p>« Vous nous aviez fait le calcul : cinq contrôles à 500 euros dans un forfait de 3 000, nous n'étions pas rentables. Au pilote, chaque visite se vend 1 100 dirhams : 183 de TVA, 700 à l'agence, dont 450 à son contrôleur, 217 pour nous. Mais sur un chantier, il reste 610 dirhams : à 100 chantiers, 61 000. Ça ne paie personne. »</p>
+      <p>« Donc après le pilote, même règle, montants relevés : 3 000 de suivi, 2 000 par visite, 11 000 dirhams pour quatre visites. Il reste 5 589 dirhams de marge brute par chantier. C'est encore au seuil de ce que notre étude juge trop bon marché, et environ 1 % du prix d'une villa d'un million. »</p>
+      <p>« Et si la visite coûte en vrai 1 500 dirhams, comme le seul tarif qu'on a recueilli, le prix cible tient encore : chaque visite reste payée. »</p>
+      <p><b>Honnêteté :</b> les prix cibles sont une proposition à tester au pilote, pas une mesure. 10 réponses en euros pour le Van Westendorp, peu visent le Maroc. Les 5 589 DH sont avant salaires, marketing et frais : le point mort est à 144 chantiers par an (diapo 12).</p>
+      <p><b>Calcul de la marge brute à 11 000 DH :</b> 9 167 HT − 2 800 aux agences − 778 de coûts directs (preuves, hébergement, assurance, paiement). Le temps du conseiller est payé par les salaires.</p>
+    </aside>
+  </section>
+
+  <!-- 11 · RÔLE DE L'AGENCE -->
+  <section class="slide s-agence" data-part="4" data-titre="Rôle de l'agence">
+    <header class="kicker" data-r><b>04</b> Concept et business model · le rôle de l'agence</header>
+    <h2 data-r>La valeur, c'est la preuve datée et signée.<br>L'agence est un fournisseur.</h2>
+    <div class="agence-grille">
+      <blockquote data-r>
+        <p>«&nbsp;Est-ce que ça n'en fait pas un de trop&nbsp;?&nbsp;»</p>
+        <cite>Votre question du 3 novembre, sur l'agence de contrôle</cite>
+        <div class="agence-bellarej" data-bellarej="photo" data-gear="jaune" data-h="260"></div>
+      </blockquote>
+      <ol class="garanties">
+        <li data-r><b>Payée par TEEQA</b>, à l'acte, jamais par l'entreprise qu'elle contrôle.</li>
+        <li data-r><b>Attribuée par TEEQA</b> et anonyme pour l'entreprise, qui ne la choisit pas.</li>
+        <li data-r><b>Sans lien</b> avec le client ni l'entreprise : un conflit d'intérêts se déclare, et la mission se refuse.</li>
+        <li data-r><b>Photos prises dans l'appli</b>, avec l'heure et le lieu ; avis signé, gardé au dossier.</li>
+        <li data-r><b>Un désaccord ?</b> Second avis par une autre agence de la zone, jamais celle du premier avis.</li>
+      </ol>
+    </div>
+    <p class="chute" data-r>TEEQA ne juge pas : il date et il garde. L'agence est remplaçable ; la preuve et son historique restent.</p>
+    <aside class="notes" data-orateur="Evrard" data-duree="0:35">
+      <p class="cle">Notre valeur, c'est la preuve et sa traçabilité ; l'agence n'est qu'un fournisseur, payé par nous, et remplaçable.</p>
+      <p>« Vous nous avez demandé si l'agence n'était pas un tiers de trop, et comment garantir son indépendance. Notre réponse : la valeur, ce n'est pas l'agence, c'est la preuve datée et signée, et son historique. L'agence est un fournisseur. »</p>
+      <p>« Elle est payée par nous, attribuée par nous, anonyme pour l'entreprise ; son contrat lui interdit tout lien avec le client ou l'entreprise ; les photos sont prises dans l'appli ; et en cas de désaccord, une autre agence donne un second avis. »</p>
+      <p><b>Si on vous demande « pourquoi pas les photos de l'artisan ? » :</b> l'entreprise prend déjà ses photos dans l'appli, datées, au début et à la fin de chaque étape (c'est la formule Suivi, à 1 500 DH). La visite ajoute un regard du métier, qui ne dépend pas de l'entreprise, aux étapes qui seront cachées (aciers, réseaux, étanchéité).</p>
+      <p>Passer la parole : « David, comment on y arrive ? »</p>
+    </aside>
+  </section>
+
+  <!-- 12 · TRAJECTOIRE -->
+  <section class="slide s-traj" data-part="5" data-titre="Trajectoire 3 ans">
+    <header class="kicker" data-r><b>05</b> Trajectoire stratégique · 3 ans</header>
+    <h2 data-r>Prouver dans l'Oriental, puis suivre la diaspora.</h2>
+    <div class="phases">
+      <article class="phase phase-0" data-r>
+        <p class="ph-date">Déc. 2026 – mars 2027</p>
+        <p class="ph-nom">Préparer</p>
+        <ul><li>3 devis de bureaux de contrôle</li><li>6 entretiens de MRE qui construisent au Maroc</li><li>Un accord de banque pour le séquestre</li><li>L'appli en ligne</li></ul>
+      </article>
+      <article class="phase" data-r>
+        <p class="ph-date">2027</p>
+        <p class="ph-nom">Pilote Nador – Driouch</p>
+        <div class="ph-barre" style="--h:10%"><b><span class="count" data-to="10">10</span></b> chantiers</div>
+        <ul><li>1 agence · prix du pilote</li><li>CA ≈ 51 000 DH</li><li>résultat − 177 000 DH</li></ul>
+      </article>
+      <article class="phase" data-r>
+        <p class="ph-date">2028</p>
+        <p class="ph-nom">Tout l'Oriental</p>
+        <div class="ph-barre" style="--h:40%"><b><span class="count" data-to="40">40</span></b> chantiers</div>
+        <ul><li>2 agences · Oujda, Berkane</li><li>CA ≈ 357 000 DH</li><li>résultat − 240 000 DH</li></ul>
+      </article>
+      <article class="phase" data-r>
+        <p class="ph-date">2029</p>
+        <p class="ph-nom">Les villes des MRE</p>
+        <div class="ph-barre" style="--h:100%"><b><span class="count" data-to="100">100</span></b> chantiers</div>
+        <ul><li>3 agences · Casablanca et Rabat avec un partenaire</li><li>CA ≈ 922 000 DH</li><li>résultat − 212 000 DH</li></ul>
+      </article>
+    </div>
+    <p class="objectifs" data-r><b>Point mort : 144 chantiers par an</b> · besoin de financement ≈ 630 000 DH.</p>
+    <p class="src-ligne" data-r>Volumes : hypothèses de l'équipe, à remplacer par les ventes du pilote. CA hors taxes, toutes sources. Détail : previsionnel.html.</p>
+    <aside class="notes" data-orateur="David" data-duree="1:20">
+      <p class="cle">D'abord prouver sur 10 chantiers à Nador et Driouch, puis l'Oriental, puis les villes des MRE : 10, 40, puis 100 chantiers.</p>
+      <p>« Avant de vendre, on prépare : trois devis de bureaux de contrôle pour fixer le vrai prix d'une visite, six entretiens avec des MRE qui construisent au Maroc, un accord de banque pour le séquestre, et l'appli en ligne. »</p>
+      <p>« En 2027, un pilote à Nador et Driouch, hors de la zone de Soustraitant.ma : 10 chantiers payants, une agence. En 2028, tout l'Oriental, 40 chantiers, deux agences. En 2029, les villes des MRE, et Casablanca et Rabat avec un partenaire, peut-être Soustraitant.ma : 100 chantiers. »</p>
+      <p>« À chaque phase, on mesure quatre choses : le taux d'achat, le coût réel d'une visite, le délai entre la déclaration et l'avis, et la part d'avis contestés. »</p>
+      <p>« Côté chiffres : 51 000 dirhams de chiffre d'affaires en 2027, 357 000 en 2028, 922 000 en 2029. Nous perdons de l'argent les trois années, de moins en moins par chantier : le point mort est à 144 chantiers par an, environ 7 % d'un ordre de grandeur de 2 000 chantiers de MRE par an. Il faut donc lever environ 630 000 dirhams sur trois ans. »</p>
+      <p><b>Si on vous demande d'où vient le résultat :</b> 2029 = 589 000 DH de marge brute − 504 000 de salaires (2 fondateurs salariés, un coordinateur, un conseiller) − 154 000 de marketing − 110 000 de frais − 33 000 d'amortissement. Au prix du pilote, le point mort serait à 684 chantiers par an : c'est pourquoi le prix monte après le pilote.</p>
+      <p><b>Si on vous demande le marché :</b> c'est un ordre de grandeur, pas une mesure : 122 Mds DH × 10 % investis × 16,6 % dans la construction ÷ 1 million par villa. Les sources ont des années différentes. Tout est dans previsionnel.html.</p>
+    </aside>
+  </section>
+
+  <!-- 13 · MAQUETTAGE ET UX (ouverture de la démo de Nabih) -->
+  <section class="slide fes s-maquette" data-part="6" data-titre="Maquettage et UX">
+    <header class="kicker" data-r><b>06</b> Maquettage et UX</header>
+    <h2 data-r>Le parcours principal, de l'accès à la garantie.</h2>
+    <ol class="workflow" data-r>
+      <li><b>P0</b>Accès</li>
+      <li><b>P1</b>Préparation du chantier</li>
+      <li><b>P2</b>Réalisation d'une étape</li>
+      <li><b>P3</b>Contrôle sur place</li>
+      <li><b>P4</b>Avis, corrections, paiement</li>
+      <li><b>P5</b>Situations difficiles</li>
+      <li><b>P6</b>Fin de chantier et garantie</li>
+    </ol>
+    <p class="methode" data-r>26 itérations testées avec des panels de profils types (MRE par pays, entreprises, contrôleurs) et des tests de parcours au doigt.</p>
+    <div class="resultats">
+      <article data-r><p class="r-n">152 <i>→</i> <b>0</b></p><p class="r-l">défauts d'accessibilité</p></article>
+      <article data-r><p class="r-n">0/6 <i>→</i> <b>6/6</b></p><p class="r-l">buts atteints au doigt</p></article>
+      <article data-r><p class="r-n">28 <i>→</i> <b>17</b></p><p class="r-l">gestes en moyenne par but</p></article>
+      <article data-r><p class="r-n"><b>P0 – P6</b></p><p class="r-l">tous les parcours rejoués au clic</p></article>
+    </div>
+    <a class="bouton-demo" data-r href="demo-oral.html" data-demo>Lancer la démo <span aria-hidden="true">→</span></a>
+    <div class="maquette-bellarej" data-r data-bellarej="vol" data-h="300"></div>
+    <aside class="notes" data-orateur="Nabih" data-duree="5:00 (30 s + démo 4 min 30)">
+      <p class="cle">Le workflow complet, de P0 à P6, se joue dans l'appli : je vous le montre au doigt, sur les trois téléphones.</p>
+      <p>« Notre parcours principal tient en sept étapes, de l'accès à la garantie. Nous l'avons amélioré en 26 itérations, testées avec des panels de profils types et des tests de parcours au doigt. Les résultats sont mesurés : 152 défauts d'accessibilité ramenés à zéro, six buts sur six atteints au doigt, contre zéro au départ, et 17 gestes en moyenne au lieu de 28. »</p>
+      <p>Touche <b>D</b> ou le bouton : la démo s'ouvre (demo-oral.html). Revenir ensuite sur la diapo suivante (oral-1-dec.html#14) pour conclure.</p>
+      <p><b>Formulation imposée :</b> « panels de profils types », jamais « des personnes », « des clients » ni « des testeurs réels ».</p>
+    </aside>
+  </section>
+
+  <!-- 14 · CONCLUSION -->
+  <section class="slide s-fin" data-part="7" data-titre="Conclusion">
+    <h2 class="geant" data-r>L'argent suit <em>la preuve</em>.</h2>
+    <div class="fin-grille">
+      <ul class="fin-recap">
+        <li data-r>Un besoin chez ceux qui construisent à distance, mesuré sur 32 vraies réponses.</li>
+        <li data-r>Un prix par chantier, en paliers ; l'argent des travaux ne passe jamais par nous.</li>
+        <li data-r>Une agence fournisseur ; la valeur, c'est la preuve et son historique.</li>
+      </ul>
+      <div class="fin-reste" data-r>
+        <p class="fr-titre">Ce qu'il nous reste à prouver</p>
+        <p>3 devis de bureaux de contrôle</p>
+        <p>Des entretiens avec des MRE qui construisent au Maroc</p>
+        <p>10 chantiers payants</p>
+      </div>
+    </div>
+    <p class="merci" data-r>Merci. Vos questions.</p>
+    <div class="fin-bellarej" data-r data-bellarej="felicite" data-h="300"></div>
+    <aside class="notes" data-orateur="David" data-duree="0:20">
+      <p class="cle">Le besoin existe, le modèle tient en un prix, et il nous reste trois preuves à aller chercher.</p>
+      <p>« Pour finir : un besoin réel chez ceux qui construisent à distance, un prix par chantier en paliers, une agence fournisseur. Il nous reste à prouver trois choses : le vrai prix d'une visite, des entretiens avec des MRE qui construisent au Maroc, et dix chantiers payants. Merci, nous attendons vos questions. »</p>
+    </aside>
+  </section>
+
+  <!-- 15 · SOURCES (annexe, non chronométrée) -->
+  <section class="slide s-sources" data-part="8" data-titre="Sources">
+    <header class="kicker" data-r><b>Annexe</b> Sources</header>
+    <h2 data-r>Sources</h2>
+    <div class="sources" data-r>
+      <div>
+        <h3>Marché</h3>
+        <ul>
+          <li>Transferts des MRE 2025 et 2024 : Office des changes, indicateurs des échanges extérieurs, rapportés par Hespress, 2 févr. 2026 (fr.hespress.com/460750).</li>
+          <li>≈ 10 % des transferts à l'investissement : M. Benchaâboun, ministre de l'Économie et des Finances, rapporté par FNH, 16 févr. 2021.</li>
+          <li>40,7 % immobilier, 16,6 % construction : HCP, Enquête nationale sur la migration internationale 2018-2019 (hcp.ma/file/235620).</li>
+          <li>3,4 Md€ envoyés de France en 2024 : Eurostat, rapporté par Bladi, 17 déc. 2025.</li>
+          <li>Immigrés nés au Maroc en France : Insee, « Immigrés et descendants d'immigrés », 2025, provisoire (insee.fr/fr/statistiques/3633212).</li>
+          <li>Ciment 2025 : ministère de l'Habitat, données de l'APC, rapportées par Médias24, 5 janv. 2026.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Étude, concurrence, modèle</h3>
+        <ul>
+          <li>Étude primaire : questionnaires TEEQA en ligne, 32 réponses du 17 oct. au 24 nov. 2026 (25 clients, 2 entreprises du BTP, 3 artisans, 2 bureaux de contrôle). Prix : méthode Van Westendorp, 10 réponses en euros.</li>
+          <li>Benchmark : soustraitant.ma, inspectimmo.ma, reaconsult.ma, Morocco World News et Challenge (AMG Building), Le360 (TACHRONE.ma), consultés le 14 nov. 2026.</li>
+          <li>Prix et décomposition : annexe tarifaire de l'appli TEEQA (« Le modèle de TEEQA en chiffres »). Euros indicatifs : 1 € pour 10,74 DH, Bank Al-Maghrib, 27 oct. 2026.</li>
+          <li>Tests d'usage : 26 itérations, audit d'accessibilité automatique, tests de parcours au doigt, parcours P0 à P6 rejoués au clic (26 nov. 2026).</li>
+        </ul>
+      </div>
+    </div>
+    <aside class="notes" data-orateur="—" data-duree="annexe">
+      <p class="cle">Diapo de réserve : à montrer si le jury demande une source.</p>
+    </aside>
+  </section>
+
+</main>
+
+<!-- Progression par partie, panneau des notes, écran noir, aide -->
+<nav class="parties" id="parties" aria-label="Parties de l'oral"></nav>
+<div class="compteur" id="compteur" aria-hidden="true"></div>
+<aside class="panneau-notes" id="panneau" hidden aria-label="Notes d'orateur"></aside>
+<div class="noir" id="noir" hidden></div>
+<div class="aide" id="aide" hidden>
+  <p><b>→ Espace</b> suivante · <b>←</b> précédente · <b>N</b> notes · <b>P</b> fenêtre de l'orateur · <b>F</b> plein écran · <b>B</b> écran noir · <b>D</b> démo · <b>numéro + Entrée</b> aller à · <b>?</b> cette aide</p>
+</div>
+<script type="module" src="js/oral.js"></script>
+</body>
+</html>

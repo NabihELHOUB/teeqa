@@ -1,0 +1,102 @@
+/* Prévisionnel 2027-2029 (26 nov. 2026). Rôles de couleur du thème : clair et sombre automatiques.
+   Deux mondes : chaux + encre pour le contenu, vert de Fès + chaux pour les deux encadrés forts ; safran rare. */
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scrollbar-width: none; }
+html::-webkit-scrollbar { display: none; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 600 16px/1.5 var(--font-text); }
+.pv { max-width: 1080px; margin: 0 auto; padding: 44px 24px 88px; display: grid; gap: 20px; }
+.pv > * { min-width: 0; }
+.pv h3 { font: 800 17px/1.25 var(--font-title); margin: 0 0 8px; }
+.pv p { margin: 0 0 10px; }
+.pv p:last-child { margin-bottom: 0; }
+
+.pv-head h1 { font: 900 clamp(32px, 5.4vw, 54px)/1.04 var(--font-title); margin: 6px 0 14px; letter-spacing: -.015em; }
+.pv-kicker { margin: 0; color: var(--saffron-ink); font: 800 13px var(--font-title); text-transform: uppercase; letter-spacing: .09em; }
+.pv-lead { color: var(--ink-2); max-width: 64ch; font-size: 17px; }
+
+.pv-panel, .pv-card { background: var(--paper-0); border: 1px solid var(--line); border-radius: var(--r-xl); padding: 22px; }
+.pv-card h2 { font: 900 clamp(20px, 2.6vw, 25px)/1.2 var(--font-title); margin: 0 0 12px; letter-spacing: -.005em; }
+.pv-sub { color: var(--ink-3); font-size: 14px; }
+.pv-note { color: var(--ink-2); font-size: 15px; margin-top: 14px !important; }
+.hy { display: inline-block; margin-left: 4px; padding: 1px 8px; border-radius: 999px; background: var(--saffron-soft); color: var(--saffron-ink); font: 800 11.5px/1.6 var(--font-title); text-transform: uppercase; letter-spacing: .05em; }
+
+/* Encadrés vert de Fès (aplat de marque : ne change pas avec le thème) */
+.pv-fes { background: var(--fes); border-color: var(--fes-edge); color: var(--fes-ink); }
+.pv-fes .pv-sub, .pv-fes .pv-note { color: var(--sage-ink); }
+.pv-fes b { color: var(--chaux); }
+.pv-big { font: 900 clamp(34px, 5vw, 46px)/1.05 var(--font-title); font-variant-numeric: tabular-nums; margin: 4px 0 10px !important; }
+.pv-big small { font-size: .45em; font-weight: 800; opacity: .8; margin-left: 6px; }
+.pv-tag { display: inline-block; margin: 0 0 6px !important; padding: 4px 12px; border-radius: 999px; border: 1.5px solid var(--line-fes); font: 800 12px var(--font-title); text-transform: uppercase; letter-spacing: .06em; }
+.pv-tag-on { background: var(--saffron); border-color: var(--saffron-edge); color: var(--ink); }
+
+.pv-duo { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px 28px; margin-bottom: 14px; }
+.pv-fes .pv-duo > article + article { border-left: 1px solid var(--line-fes); padding-left: 28px; }
+
+/* Réglages */
+.pv-panel { display: grid; gap: 14px; }
+.pv-row { display: grid; grid-template-columns: 210px 1fr; gap: 10px 16px; align-items: center; }
+.pv-lab { margin: 0 !important; font: 800 14px var(--font-title); color: var(--ink-2); }
+.pv-seg { display: flex; flex-wrap: wrap; gap: 8px; }
+.pv-seg button {
+  min-height: 44px; padding: 0 16px; border-radius: 999px; cursor: pointer;
+  border: 1.5px solid var(--line-strong); background: transparent; color: var(--ink);
+  font: 800 12.5px var(--font-title); text-transform: uppercase; letter-spacing: .05em;
+  transition: transform var(--press-out) var(--ease), background-color .15s;
+}
+.pv-seg button:active { transform: translateY(1px) scale(.98); transition-duration: var(--press-in); }
+.pv-seg button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--on-ink); box-shadow: 0 2px 0 var(--ink-lip); }
+.pv-seg button:focus-visible { outline: 3px solid var(--saffron); outline-offset: 2px; }
+
+.pv-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+.pv-kpi { background: var(--paper-0); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 16px 18px; }
+.pv-kpi p { margin: 0; font-size: 13px; color: var(--ink-3); }
+.pv-kpi strong { display: block; font: 900 25px/1.15 var(--font-title); font-variant-numeric: tabular-nums; margin-top: 4px; }
+.pv-kpi .neg { color: var(--danger-ink); }
+.pv-kpi .pos { color: var(--success-ink); }
+
+.pv-chart svg { width: 100%; height: auto; display: block; }
+.pv-chart text { fill: var(--ink-3); font: 700 12px var(--font-text); }
+.pv-chart .axis { stroke: var(--line); }
+.pv-chart .bar-pos { fill: var(--success-ink); }
+.pv-chart .bar-neg { fill: var(--danger-ink); opacity: .85; }
+.pv-chart .line { fill: none; stroke: var(--saffron); stroke-width: 3; stroke-linejoin: round; }
+.pv-chart .dot { fill: var(--saffron); }
+.pv-legend { margin: 10px 0 0; font-size: 13px; color: var(--ink-2); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.pv-legend .k { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+.k-res { background: var(--danger-ink); }
+.k-tre { background: var(--saffron); border-radius: 50% !important; margin-left: 10px; }
+
+.pv-table-wrap { overflow-x: auto; scrollbar-width: none; }
+.pv-table-wrap::-webkit-scrollbar { display: none; }
+.pv-table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; min-width: 560px; }
+.pv-table-s { min-width: 420px; }
+.pv-table th, .pv-table td { padding: 8px 10px; text-align: right; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.pv-table th:first-child, .pv-table td:first-child { text-align: left; white-space: normal; }
+.pv-table thead th { font: 900 13px var(--font-title); color: var(--ink-2); }
+.pv-table tr.hd td { color: var(--ink-2); }
+.pv-table tr.sec td { font: 900 12px var(--font-title); text-transform: uppercase; letter-spacing: .06em; color: var(--ink-3); padding-top: 16px; }
+.pv-table tr.tot td { font-weight: 900; border-bottom-color: var(--line-strong); }
+.pv-table td.neg { color: var(--danger-ink); }
+
+.pv-src-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 14px; margin-top: 6px; }
+.pv-rev { border: 1px solid var(--line); border-radius: var(--r-lg); padding: 16px 18px; background: var(--paper); }
+.pv-rev-qui { font: 800 12px var(--font-title); text-transform: uppercase; letter-spacing: .06em; color: var(--ink-3); margin-bottom: 4px !important; }
+.pv-rev p { font-size: 15px; color: var(--ink-2); }
+.pv-h { border-top: 1px dashed var(--line-strong); padding-top: 10px; margin-top: 10px !important; color: var(--ink) !important; font-size: 14px !important; }
+
+.pv-regles ul, .pv-decide { margin: 0; padding-left: 20px; display: grid; gap: 8px; color: var(--ink-2); }
+.pv-regles b, .pv-decide b { color: var(--ink); }
+.pv-calc { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-md); padding: 12px 14px; }
+
+.pv-notes ul { margin: 0; padding-left: 18px; color: var(--ink-2); font-size: 14px; }
+.pv-notes li { margin-bottom: 6px; }
+.pv-src { font-size: 13px; color: var(--ink-3); margin: 12px 0 0; }
+.pv-src code { font-family: ui-monospace, monospace; font-size: 12px; }
+
+@media (max-width: 640px) {
+  .pv { padding: 28px 16px 64px; }
+  .pv-row { grid-template-columns: 1fr; }
+  .pv-fes .pv-duo > article + article { border-left: 0; padding-left: 0; border-top: 1px solid var(--line-fes); padding-top: 16px; }
+  .pv-panel, .pv-card { padding: 18px 16px; }
+}
+@media (prefers-reduced-motion: reduce) { .pv-seg button { transition: none; } }

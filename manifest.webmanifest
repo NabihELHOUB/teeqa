@@ -1,0 +1,20 @@
+{
+  "id": "./",
+  "name": "TEEQA",
+  "short_name": "TEEQA",
+  "description": "Suivez votre chantier au Maroc, même à distance : étapes, photos datées, avis du contrôleur.",
+  "lang": "fr",
+  "dir": "auto",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0E3B31",
+  "theme_color": "#0E3B31",
+  "categories": ["productivity", "business"],
+  "icons": [
+    { "src": "assets/icone/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icone/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icone/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

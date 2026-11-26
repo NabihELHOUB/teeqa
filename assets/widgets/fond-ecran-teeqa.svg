@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 402 874" preserveAspectRatio="xMidYMid slice">
+  <!-- Fond d'écran TEEQA (v3.14, 13 nov. 2026) : ciel du soir safran → vert de Fès, trame de zellige ton sur ton,
+       et la silhouette d'une ville marocaine (maisons cubiques, arcs, palmiers) en bas. -->
+  <defs>
+    <linearGradient id="ciel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#E9A646"/>
+      <stop offset=".22" stop-color="#B9893E"/>
+      <stop offset=".42" stop-color="#2F7457"/>
+      <stop offset=".7" stop-color="#14503F"/>
+      <stop offset="1" stop-color="#0A2E25"/>
+    </linearGradient>
+    <radialGradient id="soleil" cx=".79" cy=".38" r=".42">
+      <stop offset="0" stop-color="#FFE3A6" stop-opacity=".95"/>
+      <stop offset=".18" stop-color="#F6C46A" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#F6C46A" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="zel" width="58" height="58" patternUnits="userSpaceOnUse">
+      <g fill="none" stroke="#FFF6E0" stroke-opacity=".09" stroke-width="1.4">
+        <path d="M29 4l7 18 18 7-18 7-7 18-7-18-18-7 18-7z"/>
+        <path d="M11 11l18 8 18-8-8 18 8 18-18-8-18 8 8-18z"/>
+        <circle cx="29" cy="29" r="5"/>
+      </g>
+    </pattern>
+    <linearGradient id="fondu" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#000" stop-opacity="0"/>
+      <stop offset=".35" stop-color="#000" stop-opacity="1"/>
+    </linearGradient>
+    <mask id="mz"><rect width="402" height="874" fill="url(#fondu)"/></mask>
+  </defs>
+  <rect width="402" height="874" fill="url(#ciel)"/>
+  <rect width="402" height="874" fill="url(#soleil)"/>
+  <circle cx="318" cy="330" r="30" fill="#FFE7B0" opacity=".9"/>
+  <rect width="402" height="874" fill="url(#zel)" mask="url(#mz)"/>
+  <!-- ville : arrière-plan -->
+  <path fill="#0F4335" d="M0 700h30v-34h26v20h22v-46h40v30h18v-22h34v38h30v-54h20l10-14 10 14h12v40h34v-26h28v34h22v-18h30v28h56V874H0z"/>
+  <!-- ville : premier plan, maisons cubiques avec arcs -->
+  <g fill="#0A2E25">
+    <path d="M0 760h44v-48h52v30h28v-60h58v44h24v-32h46v52h34v-40h62v34h54v134H0z"/>
+    <path d="M124 682a29 29 0 0 1 58 0z"/>
+    <path d="M306 720a31 31 0 0 1 62 0z"/>
+  </g>
+  <g fill="#E9A646" opacity=".85">
+    <path d="M146 712h14v20h-14zM66 734h10v14H66zM222 724h10v14h-10zM330 742h12v18h-12z"/>
+    <path d="M253 716a8 8 0 0 1 16 0v18h-16z"/>
+  </g>
+  <!-- palmiers -->
+  <g fill="#0A2E25">
+    <path d="M374 760c2-40 4-70 2-96h5c2 26 0 56-2 96z"/>
+    <path d="M378 664c-16-12-34-12-46-4 14-2 30 0 46 8zM378 664c14-14 32-16 44-10-14 0-30 4-44 14zM378 664c-6-16-20-24-34-24 12 6 24 14 32 26zM378 664c8-16 22-22 34-20-12 4-24 12-32 24z"/>
+    <path d="M22 770c1-30 2-52 0-72h4c2 20 1 42-1 72z"/>
+    <path d="M24 698c-12-9-26-9-34-3 10-1 22 0 34 6zM24 698c10-10 24-12 33-7-10 0-22 3-33 10zM24 698c4-12 15-17 25-15-9 3-17 8-23 18z"/>
+  </g>
+</svg>

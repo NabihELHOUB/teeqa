@@ -1,0 +1,78 @@
+/* Vitrine TEEQA, 13 nov. 2026 : ouverture pilotée par le défilement et projecteur.
+   Techniques reprises de trois modèles MotionSites (prompts dans refs/motionsites/) :
+   - « Norva » : scène collante, vidéo avancée par le défilement, titre qui bascule dans le décor, liste d'étapes qui s'ouvrent ;
+   - « Monolith » : titres qui se décodent lettre par lettre à l'arrivée ;
+   - « Lithos » : projecteur qui suit la souris et révèle une seconde image.
+   Couleurs et polices : celles de l'appli (vitrine.css). */
+
+/* ---------- Ouverture ---------- */
+.cine { position: relative; height: 420vh; height: 420svh; background: var(--nuit); }
+.cine-scene { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; color: #F1ECE2; perspective: 900px; }
+.cine-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; background: #c9a77c; }
+.cine-ombre { position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(to bottom, rgba(8, 38, 31, .78) 0%, rgba(8, 38, 31, .45) 30%, rgba(8, 38, 31, 0) 52%),
+              linear-gradient(to top, rgba(8, 38, 31, .7) 0%, rgba(8, 38, 31, 0) 34%); }
+.cine-titre { position: absolute; left: 50%; top: max(118px, 15vh); width: min(980px, calc(100vw - 40px)); translate: -50% 0; text-align: center;
+  transform-origin: 50% 100%; will-change: transform, opacity; display: grid; justify-items: center; gap: 14px; }
+.cine-over { margin: 0; font-size: 13px; font-weight: 900; letter-spacing: .16em; text-transform: uppercase; color: #F2B84E; }
+.cine-titre h1 { margin: 0; font-family: var(--font-title, "Nunito"), system-ui, sans-serif; font-weight: 900; letter-spacing: -.025em; line-height: .98;
+  font-size: clamp(40px, 7.2vw, 96px); text-shadow: 0 2px 30px rgba(8, 38, 31, .45); }
+.cine-titre h1 span { display: inline-block; }
+.cine-titre h1 .saf { color: #F2B84E; }
+.cine-sous { margin: 0; max-width: 34em; font-size: clamp(15px, 1.35vw, 19px); color: rgba(241, 236, 226, .86); text-shadow: 0 1px 14px rgba(8, 38, 31, .5); }
+[data-decode] { white-space: pre; }
+
+.cine-etapes { position: absolute; left: 28px; bottom: 28px; width: min(430px, calc(100vw - 36px)); margin: 0; padding: 0; list-style: none; display: grid; gap: 6px;
+  opacity: 0; translate: 0 40px; will-change: opacity, translate; }
+.cine-etapes li { display: grid; grid-template-columns: 38px 1fr; gap: 12px; align-items: start; }
+.cine-etapes b { display: grid; place-items: center; height: 30px; border-radius: 9px; font-size: 12.5px; font-weight: 900; color: rgba(241, 236, 226, .72);
+  transition: background .35s, color .35s; }
+.cine-etapes span { display: block; padding-top: 5px; font-weight: 900; font-size: 14px; color: rgba(241, 236, 226, .72); transition: font-size .35s, color .35s; }
+.cine-etapes li > div { display: grid; grid-template-rows: auto 0fr; transition: grid-template-rows .45s ease; }
+.cine-etapes p { margin: 0; overflow: hidden; font-size: 15px; line-height: 1.45; color: rgba(241, 236, 226, .82); border-left: 1px solid rgba(241, 236, 226, .3); padding-left: 12px; }
+.cine-etapes li.on b { background: #F1ECE2; color: var(--fes); }
+.cine-etapes li.on span { font-size: 19px; color: #fff; }
+.cine-etapes li.on > div { grid-template-rows: auto 1fr; }
+.cine-etapes li.on p { margin-top: 6px; }
+
+.cine-fin { position: absolute; right: 32px; bottom: 34px; margin: 0; text-align: right; display: grid; gap: 4px; opacity: 0; translate: 0 18px; }
+.cine-fin b { font-size: clamp(28px, 3.6vw, 48px); font-weight: 900; color: #F2B84E; letter-spacing: -.02em; line-height: 1; text-shadow: 0 2px 24px rgba(8, 38, 31, .5); }
+.cine-fin span { font-size: 16px; color: rgba(241, 236, 226, .9); }
+.cine-defile { position: absolute; left: 50%; bottom: 30px; translate: -50% 0; margin: 0; font-size: 11.5px; font-weight: 900; letter-spacing: .14em; text-transform: uppercase;
+  color: rgba(241, 236, 226, .85); display: grid; justify-items: center; gap: 6px; }
+.cine-defile i { width: 64px; height: 1px; background: rgba(241, 236, 226, .85); transform-origin: left; }
+
+/* Le menu reste lisible au-dessus du film. */
+.nav.sur-film:not(.scrolled) .nav-logo, .nav.sur-film:not(.scrolled) nav a { color: #F1ECE2; }
+.nav.sur-film:not(.scrolled) nav a:hover { background: rgba(241, 236, 226, .14); }
+
+@media (max-width: 760px) {
+  .cine-titre { top: 96px; }
+  [data-decode] { white-space: normal; } .cine-titre h1 span { display: inline; }
+  .cine-etapes { left: 18px; bottom: 22px; }
+  .cine-etapes li.on span { font-size: 17px; }
+  .cine-fin { right: 18px; left: 18px; bottom: auto; top: 52%; text-align: center; }
+  .cine-defile { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cine-etapes li > div, .cine-etapes b, .cine-etapes span { transition: none; }
+}
+
+/* ---------- Projecteur ---------- */
+.projecteur { display: grid; grid-template-columns: .95fr 1.05fr; gap: 48px; align-items: center; }
+.proj-aide { margin: 14px 0 0; font-size: 14px; font-weight: 800; color: var(--saf-bord); }
+.proj-carte { position: relative; aspect-ratio: 880 / 1168; max-height: 78vh; justify-self: center; width: 100%; max-width: 560px; border-radius: 28px; overflow: hidden;
+  box-shadow: 0 30px 60px rgba(14, 36, 30, .22), 0 0 0 1px rgba(14, 36, 30, .08); --x: 50%; --y: 45%; --r: 170px; cursor: crosshair; touch-action: pan-y; }
+.proj-base, .proj-revele { position: absolute; inset: 0; background: url("../assets/vitrine/gros-oeuvre.jpg") center / cover no-repeat; }
+.proj-base { filter: grayscale(1) blur(5px) brightness(.78) contrast(.9); transform: scale(1.04); }
+.proj-revele { -webkit-mask-image: radial-gradient(circle var(--r) at var(--x) var(--y), #000 0, #000 40%, rgba(0, 0, 0, .75) 60%, rgba(0, 0, 0, .4) 75%, rgba(0, 0, 0, .12) 88%, transparent 100%);
+  mask-image: radial-gradient(circle var(--r) at var(--x) var(--y), #000 0, #000 40%, rgba(0, 0, 0, .75) 60%, rgba(0, 0, 0, .4) 75%, rgba(0, 0, 0, .12) 88%, transparent 100%); }
+.proj-tampon { position: absolute; padding: 7px 12px; border-radius: 999px; background: rgba(14, 59, 49, .9); color: #F1ECE2; font-size: 13.5px; font-weight: 900;
+  box-shadow: 0 0 0 2px rgba(226, 163, 59, .9), 0 8px 18px rgba(8, 38, 31, .3); white-space: nowrap; }
+.proj-tampon.t1 { left: 8%; top: 22%; } .proj-tampon.t2 { right: 6%; top: 46%; } .proj-tampon.t3 { left: 12%; top: 68%; }
+.proj-meta { position: absolute; left: 0; right: 0; bottom: 0; padding: 30px 18px 16px; font-size: 13px; font-weight: 800; color: #fff;
+  background: linear-gradient(to top, rgba(8, 38, 31, .78), rgba(8, 38, 31, 0)); }
+@media (max-width: 860px) { .projecteur { grid-template-columns: 1fr; gap: 28px; } .proj-carte { --r: 130px; } }
+
+/* L'ancien titre principal devient le titre de la section « en direct » (le h1 est maintenant dans l'ouverture). */
+.vt .hero-h { font-size: clamp(34px, 4.8vw, 62px); }

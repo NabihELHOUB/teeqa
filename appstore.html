@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <meta name="robots" content="noindex">
+  <title>TEEQA · Projection de la fiche dans une boutique d'applications</title>
+  <meta name="description" content="Maquette : à quoi ressemblerait la fiche de TEEQA une fois l'application publiée. Les notes, avis et chiffres affichés sont imaginés.">
+  <link rel="icon" href="assets/icone/icon-32.png" type="image/png">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/bellarej.css">
+  <link rel="stylesheet" href="css/appstore.css">
+</head>
+<body>
+  <!-- Projection (11 nov. 2026) : la fiche de TEEQA telle qu'elle pourrait apparaître une fois l'appli publiée.
+       Cahier : refs/CHANTIER-PAGE-APP-STORE-TEEQA.md. Tout le contenu est dessiné par js/appstore.js.
+       Rien ici n'est réel : notes, avis, récompenses et nombres sont imaginés, et c'est écrit en bas de la fiche. -->
+  <div class="as" id="as" aria-live="polite"></div>
+  <script type="module" src="js/appstore.js"></script>
+  <script>
+    // Ouverte comme simple fichier (double-clic, aperçu), la page reste vide : le navigateur refuse alors de charger ses scripts.
+    setTimeout(function () { var el = document.getElementById('as'); if (el && !el.firstChild) el.innerHTML = '<p style="padding:28px 22px;font:17px/1.45 -apple-system,sans-serif;color:#fff">Cette page ne s\'affiche pas quand on l\'ouvre comme un fichier.<br><br>Ouvrez-la par le serveur du projet :<br><b>http://127.0.0.1:5179/appstore.html</b> sur l\'ordinateur,<br><b>http://192.168.1.36:5180/appstore.html</b> sur l\'iPhone.</p>'; }, 1500);
+  </script>
+</body>
+</html>

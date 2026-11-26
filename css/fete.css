@@ -1,0 +1,276 @@
+/* Héros de la célébration (js/fete-hero.js). Temps mesurés sur la référence de l'utilisateur ; classes p1…p6 cumulées.
+   L'ordre des règles compte : une règle d'un temps plus tardif écrase celle d'un temps plus tôt. */
+.fete-hero.fh { position: relative; display: block; width: 260px; height: 250px; transform: none; transition: transform .5s var(--spring); }
+.fh > * { position: absolute; }
+
+/* --- la goutte de flamme du début --- */
+.fh-blob { left: 50%; top: 50%; width: 92px; height: 112px; margin: -56px 0 0 -46px; background: #F6D98A; border-radius: 50% 50% 46% 54% / 36% 36% 64% 64%; transform: rotate(26deg) scale(1.06); transition: transform .16s cubic-bezier(.3, 1.4, .5, 1), border-radius .14s ease-out; animation: fhBlobIn .13s ease-out both; }
+.fh-blob::after { content: ''; position: absolute; inset: 11px; border-radius: inherit; background: linear-gradient(#EDB24C, #CF892A); }
+@keyframes fhBlobIn { from { transform: rotate(40deg) translate(-26px, 30px) scale(.7); opacity: 0; } }
+.fh.p1 .fh-blob { transform: rotate(0deg) scale(1); border-radius: 46%; animation: none; }
+.fh.p2 .fh-blob { animation: fhBlobCharge .3s ease-in-out infinite alternate; }
+@keyframes fhBlobCharge { from { transform: scale(.94, .9); } to { transform: scale(.9, .96); } }
+.fh.hot .fh-blob { box-shadow: 0 0 0 7px #FFF6D8, 0 0 26px 12px rgba(255, 246, 216, .7); animation: fhBlobSwell .13s ease-out forwards; }
+@keyframes fhBlobSwell { from { transform: scale(.94); } to { transform: scale(1.34); } }
+.fh.p3 .fh-blob { animation: fhBlobPop .2s ease-out forwards; }
+@keyframes fhBlobPop { from { transform: scale(1.34); opacity: 1; } to { transform: scale(2.6); opacity: 0; } }
+
+/* --- Bellarej de profil (arrivée), puis de face --- */
+.fh-prof { left: 50%; top: 50%; width: 115px; height: 150px; margin: -78px 0 0 -58px; transform: rotate(24deg) scale(.44); transition: transform .09s ease-in, opacity .02s .08s; animation: fhBlobIn .13s ease-out both; }
+.fh.p1 .fh-prof { transform: rotate(0deg) scale(0, .44); opacity: 0; animation: none; }
+.fh-front { left: 50%; top: 50%; width: 200px; height: 250px; margin: -125px 0 0 -100px; overflow: visible; transform-origin: 50% 56%; transform: scale(0, .3); opacity: 0; filter: drop-shadow(0 4px 4px rgba(8, 38, 31, .3)); }
+.fh.p1 .fh-front { opacity: 1; transform: scale(.4); transition: transform .14s .07s cubic-bezier(.3, 1.6, .5, 1), opacity .01s .07s; }
+.fh.p2 .fh-front { animation: fhShake .09s linear infinite; }
+@keyframes fhShake { 0%, 100% { transform: translateX(-1.6px) scale(.4, .35); } 50% { transform: translateX(1.6px) scale(.41, .34); } }
+.fh.p3 .fh-front { animation: fhLeap .5s cubic-bezier(.2, .9, .3, 1) both, fhHover .46s ease-in-out .5s infinite alternate; }
+@keyframes fhLeap { 0% { transform: scale(.44, .3); } 20% { transform: translateY(-62px) scale(1, 1.22); } 50% { transform: translateY(-30px) scale(1.08, .96); } 100% { transform: translateY(-38px) scale(1.04); } }
+@keyframes fhHover { from { transform: translateY(-38px) scale(1.04); } to { transform: translateY(-26px) scale(1.05, 1.02); } }
+.fh.p4 .fh-front { animation: fhSettle .46s cubic-bezier(.3, 1.3, .5, 1) both, fhIdle 1.3s ease-in-out .46s infinite alternate; }
+@keyframes fhSettle { 0% { transform: translateY(-30px) scale(1.04); } 35% { transform: translateY(30px) rotate(-10deg) scale(.94, .76); } 70% { transform: translateY(18px) rotate(-6deg) scale(.84, .9); } 100% { transform: translateY(20px) rotate(-7deg) scale(.86); } }
+@keyframes fhIdle { from { transform: translateY(20px) rotate(-7deg) scale(.86); } to { transform: translateY(18px) rotate(-5deg) scale(.87, .885); } }
+.fh.p6 .fh-front { animation: fhNod .5s cubic-bezier(.3, 1.4, .5, 1) both, fhIdle 1.3s ease-in-out .5s infinite alternate; }
+@keyframes fhNod { 0% { transform: translateY(20px) rotate(-7deg) scale(.86); } 30% { transform: translateY(25px) rotate(-3deg) scale(.91, .8); } 60% { transform: translateY(16px) rotate(-9deg) scale(.85, .91); } 100% { transform: translateY(20px) rotate(-7deg) scale(.86); } }
+
+/* --- ailes : repliées le long du corps, puis ouvertes en V à l'éclat --- */
+.fhw { transition: transform .22s cubic-bezier(.3, 1.4, .5, 1); }
+.fhw-r { transform-origin: 144px 176px; transform: rotate(150deg) scale(.6); }
+.fhw-l { transform-origin: 96px 176px; transform: rotate(-150deg) scale(.6); }
+.fh.p3 .fhw-r { animation: fhFlapR .23s ease-in-out infinite alternate; }
+.fh.p3 .fhw-l { animation: fhFlapL .23s ease-in-out infinite alternate; }
+@keyframes fhFlapR { from { transform: rotate(4deg) scale(1.62); } to { transform: rotate(26deg) scale(1.5); } }
+@keyframes fhFlapL { from { transform: rotate(-4deg) scale(1.62); } to { transform: rotate(-26deg) scale(1.5); } }
+.fh.p4 .fhw-r, .fh.p4 .fhw-l { animation: none; }
+
+/* --- yeux et bec --- */
+.fe { opacity: 0; }
+.fe-open { opacity: 1; }
+.fh.p1 .fe-pupil { animation: fhPeek .3s ease-out both; }
+@keyframes fhPeek { 0% { transform: translate(4px, 0); } 50% { transform: translate(-3px, 1px); } 100% { transform: none; } }
+.fh.p2 .fe-open { opacity: 0; } .fh.p2 .fe-shut { opacity: 1; }
+.fh.p3 .fe-shut { opacity: 0; } .fh.p3 .fe-glow { opacity: 1; filter: drop-shadow(0 0 7px #FFE9A8); }
+.fh.p4 .fe-glow { opacity: 0; } .fh.p4 .fe-slit { opacity: 1; filter: drop-shadow(0 0 6px #FFE9A8); }
+.fh.p5 .fe-slit { opacity: 0; } .fh.p5 .fe-joy { opacity: 1; }
+.fh-head { transform-origin: 120px 130px; }
+.fh.p3 .fh-head { animation: fhHeadUp .5s cubic-bezier(.3, 1.4, .5, 1) both; }
+@keyframes fhHeadUp { 0% { transform: translateY(8px); } 30% { transform: translateY(-9px); } 100% { transform: translateY(-3px); } }
+.fh.p4 .fh-head { animation: none; transform: rotate(4deg); transition: transform .3s var(--spring); }
+.fh-beak { transform-origin: 120px 94px; transition: transform .16s cubic-bezier(.3, 1.6, .5, 1); }
+.fh.p2 .fh-beak { transform: scale(.92, .9); }
+.fh.p3 .fh-beak { transform: scale(1.22, .8); }
+.fh.p4 .fh-beak { transform: none; }
+
+/* --- médaille en zellige et éclats --- */
+.fh-medal { transform-origin: 120px 168px; transform: scale(0); opacity: 0; }
+.fh.p6 .fh-medal { opacity: 1; animation: fhMedal .55s cubic-bezier(.3, 1.5, .5, 1) both; }
+@keyframes fhMedal { 0% { transform: translateY(-70px) rotate(-30deg) scale(.4); opacity: 0; } 45% { transform: translateY(4px) rotate(10deg) scale(1.12); opacity: 1; } 70% { transform: rotate(-6deg) scale(.97); } 100% { transform: none; } }
+.fh.p6 .fh-star { opacity: 0; }
+.fh-twinkle { transform-origin: 58px 150px; transform: scale(0); }
+.fh-glint { transform-origin: 150px 198px; transform: scale(0); }
+.fh.p5 .fh-twinkle { animation: fhGlint .5s ease-out both; }
+.fh.p6 .fh-glint { animation: fhGlint .6s .12s ease-out both; }
+@keyframes fhGlint { 0% { transform: scale(0) rotate(-40deg); } 45% { transform: scale(1.25) rotate(10deg); } 100% { transform: scale(0) rotate(60deg); } }
+
+/* --- traits qui tournent pendant qu'elle se charge --- */
+.fh-orbit { left: 50%; top: 50%; width: 0; height: 0; opacity: 0; }
+.fh-orbit i { position: absolute; left: -9px; top: -3px; width: 18px; height: 6px; border-radius: 3px; background: #F6D98A; transform: rotate(var(--a)) translateY(-78px) rotate(90deg); }
+.fh-orbit i.dot { left: -6px; top: -6px; width: 12px; height: 12px; border-radius: 50%; background: #F9E6AE; }
+.fh.p1 .fh-orbit { opacity: 1; animation: fhSpin 1.5s linear infinite; }
+.fh.p1 .fh-orbit i { animation: fhDash .34s ease-in-out var(--d) infinite alternate; }
+@keyframes fhSpin { to { transform: rotate(360deg); } }
+@keyframes fhDash { from { opacity: 0; transform: rotate(var(--a)) translateY(-92px) rotate(90deg) scale(.5); } to { opacity: 1; transform: rotate(var(--a)) translateY(-66px) rotate(90deg) scale(1); } }
+.fh.p3 .fh-orbit { opacity: 0; animation: none; } .fh.p3 .fh-orbit i { animation: none; }
+
+/* --- éclat : halo, croissant blanc qui contourne --- */
+.fh-aura { left: 50%; top: 36%; width: 330px; height: 330px; margin: -165px 0 0 -165px; border-radius: 50%; background: radial-gradient(closest-side, rgba(246, 217, 138, .95), rgba(226, 163, 59, .55) 55%, rgba(226, 163, 59, 0)); transform: scale(0); opacity: 0; }
+.fh.p3 .fh-aura { opacity: 1; transform: scale(1); transition: transform .3s cubic-bezier(.2, 1.5, .4, 1), opacity .1s; animation: fhAura .46s ease-in-out .3s infinite alternate; }
+@keyframes fhAura { from { transform: scale(1); } to { transform: scale(1.08); } }
+.fh.p4 .fh-aura { opacity: 0; transform: scale(.6); animation: none; transition: transform .3s, opacity .25s; }
+.fh-swoosh { left: 50%; top: 42%; width: 176px; height: 176px; margin: -88px 0 0 -88px; border-radius: 50%; box-shadow: inset 10px -10px 0 0 #FFF6D8; opacity: 0; }
+.fh.p3 .fh-swoosh { animation: fhSwoosh .62s cubic-bezier(.2, .6, .3, 1) both; }
+@keyframes fhSwoosh { 0% { opacity: 1; transform: rotate(-80deg) scale(.6); } 60% { opacity: .9; } 100% { opacity: 0; transform: rotate(190deg) scale(1.12); box-shadow: inset 2px -2px 0 0 #FFF6D8; } }
+.fh .fete-sparks { top: 42%; }
+
+/* --- la grande flamme de la fin --- */
+.fh .fete-flame { opacity: 0; transform: scale(.3); transform-origin: 50% 80%; }
+.fh.p4 .fete-flame { opacity: 1; transform: none; transition: transform .5s cubic-bezier(.3, 1.5, .5, 1), opacity .1s; }
+
+.fete.calm .fh-orbit, .fete.calm .fh-swoosh, .fete.calm .fh-aura, .fete.calm .fh-blob, .fete.calm .fh-prof, .fete.calm .fh-twinkle, .fete.calm .fh-glint { display: none; }
+/* .fh.p1 en plus : sans lui, « .fh.p1 .fh-front { scale(.45) } » (plus bas, plus précis) l'emportait et Bellarej restait petite */
+.fete.calm .fh.p1 .fh-front { opacity: 1; transform: translateY(20px) rotate(-7deg) scale(.86); }
+.fete.calm .fh-medal { opacity: 1; transform: none; }
+@media (max-height: 720px) { .fete-hero.fh { transform: scale(.84); margin: -18px 0; } }
+
+/* ================= Passe 2 : corrections après lecture de TOUTES les images de la référence (30 i/s) =================
+   Voir refs/ANIMATIONS-REFERENCE.md. Ces règles écrasent celles du dessus. */
+/* 1,03 s : le fond change en deux images, par fondu (pas un cercle qui grandit) */
+.fete .fete-flood { left: 0; top: 0; width: 100%; height: 100%; margin: 0; border-radius: 0; transform: none; opacity: 0; transition: opacity .07s linear; }
+.fete.flood .fete-flood { transform: none; opacity: 1; }
+/* 0,00 - 0,90 s : les traits courbes tournent dès l'arrivée */
+.fh .fh-orbit { opacity: 1; animation: fhSpin 1.5s linear infinite; }
+.fh .fh-orbit i { animation: fhDash .34s ease-in-out var(--d) infinite alternate; }
+.fh.rays .fh-orbit, .fh.p3 .fh-orbit { opacity: 0; animation: none; }
+/* 0,47 s : la goutte rétrécit d'environ 15 % et descend un peu */
+.fh.p2 .fh-blob { animation: fhBlobCharge2 .3s ease-in-out infinite alternate; }
+@keyframes fhBlobCharge2 { from { transform: translateY(6px) scale(.86, .83); } to { transform: translateY(6px) scale(.83, .87); } }
+.fh.p2 .fh-front { animation: fhShake2 .09s linear infinite; }
+@keyframes fhShake2 { 0%, 100% { transform: translate(-1.4px, 6px) scale(.35, .31); } 50% { transform: translate(1.4px, 6px) scale(.36, .3); } }
+/* 0,93 - 1,00 s : de longs traits fins partent de la goutte */
+.fh-rays { left: 50%; top: 52%; width: 0; height: 0; }
+.fh-rays i { position: absolute; left: -3px; top: 0; width: 6px; height: 44px; border-radius: 3px; background: #F6D98A; transform-origin: 50% 0; transform: rotate(var(--a)) translateY(46px) scaleY(0); opacity: 0; }
+.fh.rays .fh-rays i { animation: fhRay .2s ease-out both; }
+@keyframes fhRay { 0% { opacity: 1; transform: rotate(var(--a)) translateY(46px) scaleY(.2); } 60% { opacity: 1; transform: rotate(var(--a)) translateY(54px) scaleY(1); } 100% { opacity: 0; transform: rotate(var(--a)) translateY(86px) scaleY(.3); } }
+.fh.rays .fh-blob { box-shadow: inset 0 0 0 5px #FBEFC6; }
+.fh.hot .fh-blob { box-shadow: 0 0 0 7px #FFF6D8, 0 0 26px 12px rgba(255, 246, 216, .7); animation: fhBlobSwell2 .13s ease-out forwards; }
+@keyframes fhBlobSwell2 { from { transform: translateY(6px) scale(.86); } to { transform: translateY(2px) scale(1.24); } }
+.fh.hot .fh-front { animation: fhSwellBird .13s ease-out forwards; }
+@keyframes fhSwellBird { from { transform: translateY(6px) scale(.35, .31); } to { transform: translateY(2px) scale(.5); } }
+.fh.p3 .fh-blob { animation: fhBlobPop .1s ease-out forwards; }
+/* 1,17 s : l'éclat arrive en UNE image, décalé en haut à droite, puis se recentre ; ailes immenses */
+.fh.p3 .fh-front { animation: fhLeap2 .34s cubic-bezier(.2, .8, .3, 1) both, fhHover2 .9s ease-in-out .34s infinite alternate; }
+@keyframes fhLeap2 { 0% { transform: translate(26px, -66px) rotate(7deg) scale(1.1, 1.16); } 40% { transform: translate(-4px, -30px) rotate(-2deg) scale(1.06, 1); } 100% { transform: translate(0, -36px) scale(1.04); } }
+@keyframes fhHover2 { from { transform: translateY(-36px) scale(1.04); } to { transform: translateY(-28px) scale(1.045, 1.03); } }
+.fh.p3 .fhw-r { animation: fhFlapR2 .45s ease-in-out infinite alternate; }
+.fh.p3 .fhw-l { animation: fhFlapL2 .45s ease-in-out infinite alternate; }
+@keyframes fhFlapR2 { from { transform: rotate(14deg) scale(2); } to { transform: rotate(24deg) scale(1.9); } }
+@keyframes fhFlapL2 { from { transform: rotate(-14deg) scale(2); } to { transform: rotate(-24deg) scale(1.9); } }
+/* le croissant blanc passe sous le corps, s'amincit et disparaît vers 1,55 s */
+.fh.p3 .fh-swoosh { top: 40%; animation: fhSwoosh2 .4s cubic-bezier(.2, .6, .3, 1) both; }
+@keyframes fhSwoosh2 { 0% { opacity: 1; transform: rotate(-20deg) scale(.9); box-shadow: inset 12px -12px 0 0 #FFF6D8; } 55% { opacity: 1; transform: rotate(35deg) scale(1.02); box-shadow: inset 7px -7px 0 0 #FFF6D8; } 100% { opacity: 0; transform: rotate(70deg) scale(1.06); box-shadow: inset 2px -2px 0 0 #FFF6D8; } }
+/* 2,07 s : deux images d'élan avant de retomber (ailes à la verticale, corps tassé) */
+.fh.pre .fh-front { animation: fhPre .07s ease-in both; }
+@keyframes fhPre { from { transform: translateY(-30px) scale(1.04); } to { transform: translateY(-14px) scale(.9, .96); } }
+.fh.pre .fhw-r { animation: none; transform: rotate(-18deg) scale(1.7, 1.9); transition: transform .06s; }
+.fh.pre .fhw-l { animation: none; transform: rotate(18deg) scale(1.7, 1.9); transition: transform .06s; }
+/* 2,13 s : coupe franche vers la grande flamme, d'abord large et écrasée, puis elle s'étire en penchant à droite (2,33 s) */
+.fh.p4 .fh-front { animation: fhSettle2 .2s cubic-bezier(.3, 1.3, .5, 1) both, fhIdle 1.3s ease-in-out .2s infinite alternate; }
+@keyframes fhSettle2 { 0% { transform: translateY(26px) rotate(-9deg) scale(.94, .78); } 55% { transform: translateY(18px) rotate(-6deg) scale(.84, .9); } 100% { transform: translateY(20px) rotate(-7deg) scale(.86); } }
+.fh.p4 .fhw-r { animation: none; transform: rotate(150deg) scale(.6); transition: none; }
+.fh.p4 .fhw-l { animation: none; transform: rotate(-150deg) scale(.6); transition: none; }
+.fh.p4 .fete-flame { transition: none; opacity: 1; animation: fhFlameIn .22s cubic-bezier(.3, 1.2, .5, 1) both; }
+@keyframes fhFlameIn { 0% { transform: scale(1.16, .72); } 45% { transform: scale(.96, 1.1) skewX(-5deg); } 75% { transform: scale(1.02, .98) skewX(-2deg); } 100% { transform: skewX(-3deg); } }
+.fh.p4 .fh-aura { transition: none; }
+/* 2,63 s : étincelle à gauche ; 2,73 - 2,80 s : la médaille glisse depuis la gauche ; l'éclat file à droite jusqu'à 2,97 s */
+.fh.p6 .fh-medal { animation: fhMedal2 .13s cubic-bezier(.3, 1.4, .5, 1) both; }
+@keyframes fhMedal2 { 0% { transform: translateX(-46px) rotate(-18deg) scale(.7); opacity: 0; } 60% { transform: translateX(3px) rotate(4deg) scale(1.06); opacity: 1; } 100% { transform: none; opacity: 1; } }
+.fh.p6 .fh-glint { animation: fhGlint2 .26s ease-out both; }
+@keyframes fhGlint2 { 0% { transform: translateX(-10px) scale(1.5) rotate(0deg); } 40% { transform: translateX(8px) scale(1.2) rotate(20deg); } 100% { transform: translateX(26px) scale(0) rotate(45deg); } }
+.fh.p6 .fh-front { animation: fhIdle 1.3s ease-in-out infinite alternate; }
+
+/* ================= Passe 3 : derniers écarts avec la référence ================= */
+/* 0,00 - 0,13 s : de profil, immobile ; à 0,10 s la tête se tourne seule vers nous */
+.fh-prof .br, .fh-prof .br * { animation: none !important; }
+.fh.turn .fh-prof .br-head { transform: rotate(-38deg); transition: transform .03s; }
+/* de face, elle remplit la goutte (dans la référence le personnage occupe presque toute la goutte) */
+.fh.p1 .fh-front { transform: scale(.45); }
+@keyframes fhShake2 { 0%, 100% { transform: translate(-1.4px, 6px) scale(.4, .355); } 50% { transform: translate(1.4px, 6px) scale(.41, .345); } }
+@keyframes fhSwellBird { from { transform: translateY(6px) scale(.4, .355); } to { transform: translateY(2px) scale(.56); } }
+/* 1,07 - 1,13 s : un œil s'ouvre pendant que la goutte gonfle */
+.fh.peek .fe-shut { opacity: 0; } .fh.peek .fe-wink { opacity: 1; }
+.fh.p3 .fe-wink { opacity: 0; }
+/* 1,17 s : éclat entièrement dans l'écran (le héros et le chiffre sont posés 34 px plus bas jusqu'à l'arrivée du libellé) */
+/* Remontée (3,20 - 4,05 s sur la référence) : départ lent, milieu vif, longue fin amortie, aucun dépassement. */
+.fete-hero.fh, .fete .fete-num { translate: 0 34px; transition: translate .85s cubic-bezier(.55, 0, .2, 1); }
+.fete.up .fete-hero.fh, .fete.up .fete-num, .fete.calm .fete-hero.fh, .fete.calm .fete-num { translate: 0 0; }
+@keyframes fhLeap2 { 0% { transform: translate(22px, -44px) rotate(7deg) scale(1.06, 1.12); } 40% { transform: translate(-4px, -8px) rotate(-2deg) scale(1.02, .97); } 100% { transform: translate(0, -14px) scale(1); } }
+@keyframes fhHover2 { from { transform: translateY(-14px) scale(1); } to { transform: translateY(-6px) scale(1.005, .99); } }
+@keyframes fhFlapR2 { from { transform: rotate(16deg) scale(1.72); } to { transform: rotate(26deg) scale(1.64); } }
+@keyframes fhFlapL2 { from { transform: rotate(-16deg) scale(1.72); } to { transform: rotate(-26deg) scale(1.64); } }
+@keyframes fhPre { from { transform: translateY(-8px) scale(1); } to { transform: translateY(4px) scale(.88, .94); } }
+.fh.pre .fhw-r { transform: rotate(-16deg) scale(1.5, 1.7); }
+.fh.pre .fhw-l { transform: rotate(16deg) scale(1.5, 1.7); }
+/* 2,73 - 2,80 s : la médaille glisse et se cale en deux images ; l'éclat part à 2,80 s */
+.fh.p6 .fh-medal { animation: fhMedal2 .075s cubic-bezier(.3, 1.4, .5, 1) both; }
+.fh.p6 .fh-glint { animation: fhGlint2 .2s .07s ease-out both; }
+/* Passe 3 bis : les ailes se replient bien à 2,13 s (cette règle doit rester après celle de l'élan) ; V plus fermé à l'éclat, comme la référence */
+.fh.p4 .fhw-r { animation: none; transform: rotate(150deg) scale(.6); transition: none; }
+.fh.p4 .fhw-l { animation: none; transform: rotate(-150deg) scale(.6); transition: none; }
+@keyframes fhFlapR2 { from { transform: rotate(-2deg) scale(1.72); } to { transform: rotate(9deg) scale(1.64); } }
+@keyframes fhFlapL2 { from { transform: rotate(2deg) scale(1.72); } to { transform: rotate(-9deg) scale(1.64); } }
+
+/* ================= Passe 4 : un dessin par pose, comme la référence (dos, trois quarts, face) ================= */
+/* Le svg .fh-front porte les trois dessins ; un seul est visible à la fois. Il est visible dès l'image 0 (plus de profil séparé). */
+.fh .fh-front { opacity: 1; transform: rotate(24deg) scale(.45); animation: fhBlobIn .13s ease-out both; transition: none; }
+.fh.p1 .fh-front { transform: scale(.45); animation: none; transition: transform .1s cubic-bezier(.3, 1.4, .5, 1); }
+.pz { display: none; }
+.pz-back { display: block; }
+.fh.turn .pz-back { display: none; } .fh.turn .pz-q { display: block; }
+.fh.face .pz-q { display: none; } .fh.face .pz-front { display: block; }
+.fh.p4 .pz-front { display: none; } .fh.p4 .pz-q { display: block; }
+/* 0,10 - 0,25 s : la tête arrive tournée, puis le corps suit (léger dépassement) */
+.fh-qhead { transform-origin: 124px 130px; }
+.fh.turn .fh-qhead { animation: fhQTurn .15s cubic-bezier(.3, 1.5, .5, 1) both; }
+@keyframes fhQTurn { from { transform: rotate(14deg) translateX(8px); } to { transform: none; } }
+.fh.face .pz-front { animation: fhFaceIn .12s cubic-bezier(.3, 1.6, .5, 1) both; transform-origin: 120px 160px; }
+@keyframes fhFaceIn { from { transform: scale(.8, 1.04) translateX(10px); } to { transform: none; } }
+/* yeux du dessin de trois quarts */
+.fq-open { opacity: 1; }
+.fh.p4 .fq-open { opacity: 0; } .fh.p4 .fq-slit { opacity: 1; filter: drop-shadow(0 0 6px #FFE9A8); }
+.fh.p5 .fq-slit { opacity: 0; } .fh.p5 .fq-joy { opacity: 1; }
+/* pattes : elles pendent tant qu'elle flotte (goutte, éclat), elle est posée dans la flamme */
+.fh-leg.l { transform-origin: 106px 240px; } .fh-leg.r { transform-origin: 134px 240px; }
+.pz-q .fh-leg.l { transform-origin: 110px 240px; } .pz-q .fh-leg.r { transform-origin: 132px 240px; }
+.fh .fh-leg.l { animation: fhLegL .5s ease-in-out infinite alternate; }
+.fh .fh-leg.r { animation: fhLegR .5s ease-in-out .12s infinite alternate; }
+@keyframes fhLegL { from { transform: rotate(7deg); } to { transform: rotate(-5deg); } }
+@keyframes fhLegR { from { transform: rotate(-7deg); } to { transform: rotate(5deg); } }
+.fh.p2 .fh-leg.l { animation: none; transform: rotate(16deg) scaleY(.8); }
+.fh.p2 .fh-leg.r { animation: none; transform: rotate(-16deg) scaleY(.8); }
+.fh.p3 .fh-leg.l { animation: fhKickL .34s cubic-bezier(.3, 1.4, .5, 1) both, fhLegL .7s ease-in-out .34s infinite alternate; }
+.fh.p3 .fh-leg.r { animation: fhKickR .34s cubic-bezier(.3, 1.4, .5, 1) both, fhLegR .7s ease-in-out .4s infinite alternate; }
+@keyframes fhKickL { 0% { transform: rotate(34deg) scaleY(1.15); } 100% { transform: rotate(7deg); } }
+@keyframes fhKickR { 0% { transform: rotate(-12deg) scaleY(1.25); } 100% { transform: rotate(-7deg); } }
+.fh.pre .fh-leg.l, .fh.pre .fh-leg.r { animation: none; transform: scaleY(.6); }
+.fh-qlegs-stand { display: none; }
+.fh.p4 .fh-qlegs-hang { display: none; } .fh.p4 .fh-qlegs-stand { display: block; }
+/* bras croisés sur le ventre (traits), visibles seulement ailes repliées */
+.fh.p3 .fh-arms { opacity: 0; }
+/* bec : fermé, puis ouvert tête levée à l'éclat ; la tête se baisse juste avant (1,02 s), puis se lève */
+.fh-beak-open { display: none; }
+.fh.p3 .fh-beak { display: none; } .fh.p3 .fh-beak-open { display: block; }
+.fh.hot .fh-head { transform: translateY(7px); transition: transform .1s ease-in; }
+.fh.p3 .fh-head { animation: fhHeadUp2 .34s cubic-bezier(.3, 1.5, .5, 1) both; }
+@keyframes fhHeadUp2 { 0% { transform: translateY(-14px) rotate(-5deg); } 100% { transform: translateY(-5px); } }
+.fh.p3 .fe-glow circle { animation: fhGlowPulse .45s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: 50% 50%; }
+@keyframes fhGlowPulse { from { transform: scale(1); } to { transform: scale(1.1); } }
+.fh.pre .fh-head { animation: none; transform: translateY(6px); transition: transform .06s; }
+/* 2,13 s : dans la flamme, elle est de trois quarts, penchée ; tête qui se pose avec un léger rebond */
+.fh.p4 .fh-qhead { animation: fhQHead .3s cubic-bezier(.3, 1.5, .5, 1) both; }
+@keyframes fhQHead { 0% { transform: translateY(12px) rotate(8deg); } 100% { transform: none; } }
+.fh.p5 .fh-qhead { animation: fhQNod .3s cubic-bezier(.3, 1.5, .5, 1) both; }
+@keyframes fhQNod { 0% { transform: none; } 40% { transform: translateY(5px) rotate(4deg); } 100% { transform: rotate(-3deg); } }
+.pz-q .fh-medal { transform-origin: 130px 168px; }
+.pz-q .fh-twinkle { transform-origin: 72px 96px; }
+.pz-q .fh-glint { transform-origin: 158px 200px; }
+/* pétales à la place des carreaux : ils jaillissent puis retombent en tournant */
+.fh .fete-sparks i { border-radius: 80% 12% 80% 12%; background: #F6D98A; }
+.fh .fete-sparks i.c1 { background: #FBEFC6; } .fh .fete-sparks i.c2 { background: #E2A33B; }
+.fete.burst .fh .fete-sparks i { animation: fhPetal 1.1s cubic-bezier(.15, .7, .3, 1) var(--d, 0ms) both; }
+@keyframes fhPetal { 0% { opacity: 1; transform: rotate(var(--a)) translateY(-34px) rotate(40deg) scale(.5); } 35% { opacity: 1; transform: rotate(var(--a)) translateY(calc(var(--r) * -1)) rotate(160deg) scale(1); } 100% { opacity: 0; transform: rotate(var(--a)) translateY(calc(var(--r) * -1)) translate(0, 70px) rotate(380deg) scale(.7); } }
+.fete.calm .pz-front, .fete.calm .pz-back { display: none; } .fete.calm .pz-q { display: block; }
+/* Passe 4 bis : la règle de p1 ci-dessus coupait les mouvements des temps suivants ; on les redonne ici, dans l'ordre. */
+.fh.p2 .fh-front { animation: fhShake2 .09s linear infinite; }
+.fh.hot .fh-front { animation: fhSwellBird .13s ease-out forwards; }
+.fh.p3 .fh-front { animation: fhLeap2 .34s cubic-bezier(.2, .8, .3, 1) both, fhHover2 .9s ease-in-out .34s infinite alternate; }
+.fh.pre .fh-front { animation: fhPre .07s ease-in both; }
+.fh.p4 .fh-front { animation: fhSettle2 .2s cubic-bezier(.3, 1.3, .5, 1) both, fhIdle 1.3s ease-in-out .2s infinite alternate; }
+.fh.p6 .fh-front { animation: fhIdle 1.3s ease-in-out infinite alternate; }
+
+/* ================= Passe 5 (11 nov.) : trois défauts vus image par image ================= */
+/* 1,17 s : les ailes frôlaient le haut de l'écran (îlot). V un peu moins grand, bond moins haut. */
+@keyframes fhLeap2 { 0% { transform: translate(20px, -30px) rotate(7deg) scale(1.04, 1.1); } 40% { transform: translate(-4px, -4px) rotate(-2deg) scale(1.02, .97); } 100% { transform: translate(0, -10px) scale(1); } }
+@keyframes fhHover2 { from { transform: translateY(-10px) scale(1); } to { transform: translateY(-3px) scale(1.005, .99); } }
+@keyframes fhFlapR2 { from { transform: rotate(-2deg) scale(1.56); } to { transform: rotate(9deg) scale(1.5); } }
+@keyframes fhFlapL2 { from { transform: rotate(2deg) scale(1.56); } to { transform: rotate(-9deg) scale(1.5); } }
+@keyframes fhPre { from { transform: translateY(-6px) scale(1); } to { transform: translateY(4px) scale(.88, .94); } }
+.fh.pre .fhw-r { transform: rotate(-16deg) scale(1.4, 1.56); }
+.fh.pre .fhw-l { transform: rotate(16deg) scale(1.4, 1.56); }
+.fh.p4 .fhw-r { animation: none; transform: rotate(150deg) scale(.6); transition: none; }
+.fh.p4 .fhw-l { animation: none; transform: rotate(-150deg) scale(.6); transition: none; }
+/* 2,13 - 2,62 s : yeux en fentes lumineuses lisibles sur la tête blanche (amande safran clair, contour foncé, halo) */
+.fh.p4 .fq-slit { filter: drop-shadow(0 0 5px #FFD76A); animation: fhSlit .5s ease-in-out infinite alternate; }
+@keyframes fhSlit { from { opacity: 1; } to { opacity: .82; } }
+.fh.p5 .fq-slit { animation: none; opacity: 0; }
+/* 3,17 - 3,5 s : le libellé apparaissait à sa place finale pendant que le chiffre était encore plus bas : il passait dessus.
+   Il part maintenant du même décalage et remonte avec le groupe. */
+.fete .fete-label, .fete .fete-title { translate: 0 34px; transition: opacity .35s linear, translate .85s cubic-bezier(.55, 0, .2, 1); }
+.fete.up .fete-label, .fete.up .fete-title, .fete.calm .fete-label, .fete.calm .fete-title { translate: 0 0; }

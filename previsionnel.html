@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TEEQA · Prévisionnel 2027-2029</title>
+  <meta name="description" content="Prévisionnel de TEEQA sur 3 ans (2027-2029) : un seul prix par chantier, compte de résultat, point mort, besoin de financement et sensibilité au prix d'une visite.">
+  <link rel="icon" href="assets/icone/icon-32.png" type="image/png">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/previsionnel.css">
+</head>
+<body>
+  <!-- Prévisionnel 2027-2029 (26 nov. 2026), refait pour l'oral du 1er décembre.
+       Hypothèses et calculs : js/previsionnel-modele.js (un seul fichier, lu aussi par refs/oral-1-dec/verifier-previsionnel.mjs).
+       Les nombres entre <span data-v> sont écrits par js/previsionnel.js à partir du modèle : ne pas les taper à la main.
+       Ancienne version (5 ans, euros, abonnement entreprise) : .sauvegarde-avant-previsionnel-3ans-26nov/ à la racine. -->
+  <main class="pv" id="pv">
+    <header class="pv-head">
+      <p class="pv-kicker">TEEQA · Prévisionnel 2027-2029</p>
+      <h1>Un seul prix par chantier,<br>et un modèle qui tient.</h1>
+      <p class="pv-lead">Le client paie TEEQA une fois par chantier : le suivi, plus un prix par visite. L'argent des travaux ne passe jamais par TEEQA. Ce prévisionnel dit ce que ce modèle rapporte, ce qu'il coûte, et à partir de combien de chantiers il s'équilibre.</p>
+    </header>
+
+    <!-- 1 · Le diagnostic -->
+    <section class="pv-card pv-fes" aria-labelledby="t-diag">
+      <h2 id="t-diag">Le constat : aux prix de l'appli, chaque chantier rapporte trop peu</h2>
+      <div class="pv-duo">
+        <article>
+          <p class="pv-tag">Grille de l'appli · 1 500 DH + 1 100 DH par visite</p>
+          <p class="pv-big"><span data-v="mcA4"></span> DH</p>
+          <p>de marge brute sur un chantier à 4 visites (5 900 DH TTC). Après le temps du conseiller et de l'aide (780 DH, que l'annexe de l'appli compte par chantier), il reste <b>610 DH</b>.</p>
+          <p>Il faudrait <b><span data-v="pmA"></span> chantiers par an</b> pour payer l'équipe de 2029, soit le tiers du marché estimé. Une visite rapporte <span data-v="mvA"></span> DH de marge brute (60 DH après le temps d'aide) : en ajouter ne change presque rien.</p>
+        </article>
+        <article>
+          <p class="pv-tag pv-tag-on">Grille cible · 3 000 DH + 2 000 DH par visite</p>
+          <p class="pv-big"><span data-v="mcC4"></span> DH</p>
+          <p>de marge brute sur le même chantier à 4 visites (11 000 DH TTC, ≈ 1 020 €). Même règle, même structure : un seul prix, qui monte avec le nombre de visites.</p>
+          <p>Point mort : <b><span data-v="pm29"></span> chantiers par an</b> avec l'équipe de 2029. Et même si la visite coûte 1 500 DH (le seul tarif réel), chaque visite reste payée par son prix.</p>
+        </article>
+      </div>
+      <p class="pv-note">Les autres sources (banque, entreprises, assurance) ajoutent <span data-v="autres29"></span> DH en 2029 : utiles, mais elles ne remplacent pas un bon prix. Le levier principal reste celui que l'oral annonçait : le prix, testé au pilote.</p>
+    </section>
+
+    <!-- 2 · Réglages -->
+    <section class="pv-panel" aria-label="Réglages">
+      <div class="pv-row">
+        <p class="pv-lab" id="l-grille">Prix au client</p>
+        <div class="pv-seg" role="group" aria-labelledby="l-grille" data-k="grille">
+          <button type="button" data-val="central" aria-pressed="true">Pilote à l'appli, puis cible</button>
+          <button type="button" data-val="appli">Appli sur 3 ans</button>
+          <button type="button" data-val="cible">Cible sur 3 ans</button>
+        </div>
+      </div>
+      <div class="pv-row">
+        <p class="pv-lab" id="l-agence">Payé à l'agence par visite</p>
+        <div class="pv-seg" role="group" aria-labelledby="l-agence" data-k="agence">
+          <button type="button" data-val="700" aria-pressed="true">700 DH · appli</button>
+          <button type="button" data-val="1100">1 100 DH</button>
+          <button type="button" data-val="1500">1 500 DH · tarif réel</button>
+        </div>
+      </div>
+      <div class="pv-row">
+        <p class="pv-lab" id="l-vol">Volumes</p>
+        <div class="pv-seg" role="group" aria-labelledby="l-vol" data-k="volume">
+          <button type="button" data-val="0.6">Prudents · − 40 %</button>
+          <button type="button" data-val="1" aria-pressed="true">Équipe · 10, 40, 100</button>
+          <button type="button" data-val="1.3">Ambitieux · + 30 %</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="pv-kpis" id="kpis" aria-live="polite" aria-label="Chiffres clés"></section>
+
+    <section class="pv-card">
+      <h2>Résultat et trésorerie, année par année</h2>
+      <div id="chart" class="pv-chart"></div>
+      <p class="pv-legend"><span class="k k-res"></span> Résultat de l'année <span class="k k-tre"></span> Trésorerie cumulée en fin d'année (après l'investissement de départ)</p>
+    </section>
+
+    <!-- 3 · Compte de résultat -->
+    <section class="pv-card">
+      <h2>Compte de résultat simplifié</h2>
+      <p class="pv-sub">En dirhams, hors taxes. La TVA (20 %) encaissée sur les forfaits est reversée à l'État : elle n'est ni un revenu ni une charge.</p>
+      <div class="pv-table-wrap"><table class="pv-table" id="table"></table></div>
+    </section>
+
+    <!-- 4 · Sensibilité -->
+    <section class="pv-card">
+      <h2>Et si la visite coûte 1 500 DH ?</h2>
+      <p class="pv-sub">L'appli paie 700 DH à l'agence pour une visite courte, ciblée sur les points clés : c'est notre hypothèse. La seule donnée réelle est de 1 500 MAD pour une demi-journée (un bureau de contrôle interrogé, questionnaire du 16 nov.). Chaque grille est ici appliquée aux 3 années.</p>
+      <div class="pv-table-wrap"><table class="pv-table" id="sensi"></table></div>
+      <p class="pv-note">Lecture : à 1 500 DH, la grille de l'appli perd de l'argent à chaque visite vendue. La grille cible reste positive visite par visite ; le point mort monte, mais le modèle ne s'effondre pas. D'où l'urgence des 3 devis de bureaux de contrôle.</p>
+    </section>
+
+    <!-- 5 · Les sources de revenus -->
+    <section class="pv-card">
+      <h2>D'où vient l'argent</h2>
+      <p class="pv-sub">Un seul paiement pour le client. Les autres revenus viennent d'autres payeurs, pour d'autres services, et ne changent rien à son prix.</p>
+      <div class="pv-src-grid">
+        <article class="pv-rev">
+          <p class="pv-rev-qui">Le client · une fois par chantier</p>
+          <h3>Le forfait</h3>
+          <p>Suivi (sans visite) ou Suivi contrôlé (4 visites clés), plus chaque visite ajoutée. Pilote 2027 au prix de l'appli, grille cible ensuite.</p>
+          <p class="pv-h">Panier : <b>70 % de Suivi contrôlé</b> (80 % au pilote) et <b>5 visites en moyenne</b>. Raison : une villa compte 6 étapes de référence ; 4 sont des étapes clés (fondations, murs et poteaux, dalle, réception) ; la Villa Nador, une villa à étage, en prend 6. <span class="hy">Hypothèse à valider</span></p>
+        </article>
+        <article class="pv-rev">
+          <p class="pv-rev-qui">L'entreprise · seulement si elle l'a causée</p>
+          <h3>Les contre-visites</h3>
+          <p>Après un avis Refusé ou des points à reprendre : 950 ou 600 DH TTC, dont 600 ou 380 DH à l'agence (prix de l'appli).</p>
+          <p class="pv-h"><b>0,4 contre-visite</b> par chantier contrôlé. <span class="hy">Hypothèse à valider</span></p>
+        </article>
+        <article class="pv-rev">
+          <p class="pv-rev-qui">La banque · jamais le client</p>
+          <h3>Commission d'ouverture du séquestre</h3>
+          <p>Quand un client ouvre un compte de séquestre à son nom, la banque partenaire verse à TEEQA une somme fixe par compte ouvert. Les frais du client restent ceux de la banque, avec ou sans TEEQA.</p>
+          <p class="pv-h"><b>1 000 DH par compte</b>, à partir de 2028 ; <b>20 % puis 30 %</b> des chantiers contrôlés ouvrent un séquestre. Repère : dans l'appli, la banque facture 400 DH + 0,4 % par tranche, soit environ 4 400 DH sur un chantier d'un million. <span class="hy">Hypothèse à valider : aucune banque n'est signée</span></p>
+        </article>
+        <article class="pv-rev">
+          <p class="pv-rev-qui">L'entreprise · à son choix</p>
+          <h3>Option Visibilité de l'entreprise référencée</h3>
+          <p>Être invitée et référencée reste gratuit. L'option payante rend la fiche plus visible dans l'annuaire de sa région, signalée comme telle. Elle ne change ni les avis, ni le contrôleur, ni l'ordre des faits.</p>
+          <p class="pv-h"><b>3 000 DH par an</b> ; 0,6 entreprise par chantier ; <b>15 % puis 25 %</b> la prennent. Repères : l'option « boost » de TACHRONE.ma coûte 4 000 DH par an (Le360) ; une entreprise interrogée paie déjà plus de 200 € par mois pour trouver des clients. <span class="hy">Hypothèse à valider</span></p>
+        </article>
+        <article class="pv-rev">
+          <p class="pv-rev-qui">L'assureur · par un courtier</p>
+          <h3>Partenariat d'assurance</h3>
+          <p>L'appli demande déjà l'attestation décennale nominative du chantier. Un courtier partenaire propose la décennale ou une tous risques chantier aux entreprises qui n'en ont pas, et reverse une part.</p>
+          <p class="pv-h"><b>500 DH par contrat</b>, en 2029 seulement, sur <b>10 %</b> des chantiers. <span class="hy">Hypothèse à valider, avec un avocat : seul un intermédiaire agréé peut présenter une assurance</span></p>
+        </article>
+      </div>
+    </section>
+
+    <!-- 6 · Règles -->
+    <section class="pv-card pv-regles">
+      <h2>Ce que ces revenus ne changent pas</h2>
+      <ul>
+        <li><b>Un seul prix pour le client</b>, payé une fois (ou en 3 fois sans frais). Pas d'abonnement, pas de pourcentage des travaux.</li>
+        <li><b>TEEQA ne détient jamais l'argent des travaux.</b> Le séquestre est un compte au nom du client, dans la banque, qui garde, verse et restitue.</li>
+        <li><b>La commission de la banque est fixe, par compte ouvert</b>, jamais un pourcentage des tranches versées : TEEQA ne gagne rien de plus quand il recommande de payer.</li>
+        <li><b>TEEQA ne tranche pas et ne certifie pas.</b> L'option Visibilité n'achète ni un avis, ni une note, ni un contrôleur ; un désaccord va à une autre agence.</li>
+        <li><b>L'agence reste payée par TEEQA</b>, à l'acte, jamais par l'entreprise qu'elle contrôle.</li>
+      </ul>
+    </section>
+
+    <!-- 7 · Marché et entonnoir -->
+    <section class="pv-card">
+      <h2>Des volumes à la mesure du marché</h2>
+      <div class="pv-duo">
+        <div>
+          <h3>Un ordre de grandeur, pas une mesure</h3>
+          <p>Aucune statistique ne compte les chantiers des Marocains de l'étranger. Avec les seules sources de l'oral :</p>
+          <p class="pv-calc">122 Mds DH transférés en 2025 × 10 % investis × 16,6 % dans la construction ≈ <b>2 Mds DH par an</b>. Divisé par 1 million de DH par villa (la Villa Nador, notre exemple) : <b>≈ <span data-v="marche"></span> chantiers par an</b>.</p>
+          <p class="pv-sub">Les trois chiffres viennent d'années et d'enquêtes différentes (2025, 2021, 2018-2019), et le coût d'une villa est une hypothèse. 100 chantiers en 2029 font <span data-v="part29"></span> % de cet ordre de grandeur ; le point mort, <span data-v="partPm"></span> %.</p>
+        </div>
+        <div>
+          <h3>L'entonnoir d'acquisition</h3>
+          <div class="pv-table-wrap"><table class="pv-table pv-table-s" id="funnel"></table></div>
+          <p class="pv-sub">Sur 5 contacts qualifiés, 2 ouvrent un chantier dans l'appli, et 2 chantiers ouverts sur 5 paient le forfait. Repère : sur 18 répondants, 10 utiliseraient « certainement » ou « probablement » le service au bon prix (étude TEEQA) ; une intention n'est pas un achat, d'où 40 %. <span class="hy">Hypothèse à valider au pilote</span></p>
+        </div>
+      </div>
+      <h3>Ce que coûte un chantier payant</h3>
+      <div class="pv-table-wrap"><table class="pv-table pv-table-s" id="cac"></table></div>
+      <p class="pv-sub">Publicité vers les Marocains de France (groupes, réseaux, associations) : 1 800 DH par chantier payant, repère d'un ancien plan de l'équipe, jamais mesuré. Entreprise qui invite son client : 400 DH de temps commercial. Parrainage : la visite offerte au parrain, soit 812 DH (700 à l'agence + 112 de frais). <span class="hy">Hypothèses à valider</span></p>
+    </section>
+
+    <!-- 8 · Équipe et frais -->
+    <section class="pv-card">
+      <h2>Une équipe qui grandit avec les chantiers</h2>
+      <div class="pv-table-wrap"><table class="pv-table pv-table-s" id="equipe"></table></div>
+      <p class="pv-sub">Coût employeur annuel, salaire et charges, au Maroc (société dans l'Oriental). Les fondateurs ne se paient pas pendant le pilote. Frais généraux (outils, hébergement, comptable, avocat, déplacements) : 70 000, 90 000 puis 110 000 DH. Mise en production de l'appli : 100 000 DH début 2027, amortis sur 3 ans. <span class="hy">Hypothèses à valider</span></p>
+      <p class="pv-sub">Pas de double compte : l'annexe de l'appli compte 600 DH de conseiller par chantier et 45 DH d'aide par visite. Ici, ce temps humain est payé par les salaires ; il est retiré des coûts directs.</p>
+    </section>
+
+    <!-- 9 · Financement -->
+    <section class="pv-card pv-fes">
+      <h2>Le besoin de financement</h2>
+      <p class="pv-big"><span data-v="besoin"></span> DH <small>≈ <span data-v="besoinEur"></span> €</small></p>
+      <p>C'est le creux de trésorerie sur les 3 ans : l'investissement de départ et les pertes de 2027 à 2029. Le forfait est payé avant les visites (ou par tiers, avant chacune des 3 premières) et l'agence est payée après : le chantier ne demande pas d'avance de trésorerie.</p>
+      <p>À couvrir par les apports des associés, un prêt d'honneur et une aide à l'innovation, à chercher pendant la préparation (déc. 2026 – mars 2027). L'équilibre arrive vers <span data-v="pm29"></span> chantiers par an, soit l'année qui suit 2029 si la croissance continue.</p>
+    </section>
+
+    <!-- 10 · À décider -->
+    <section class="pv-card">
+      <h2>Ce qui reste à décider</h2>
+      <ol class="pv-decide">
+        <li><b>La grille cible</b> (3 000 DH + 2 000 DH par visite) : le groupe l'assume-t-il ? L'appli garde 1 500 DH + 1 100 DH, présentés comme prix du pilote.</li>
+        <li><b>Le vrai prix d'une visite</b> : 3 devis de bureaux de contrôle, avant mars 2027.</li>
+        <li><b>Une banque</b> qui accepte de verser une commission fixe par compte ouvert, et le statut de TEEQA vis-à-vis d'elle (avis d'un avocat).</li>
+        <li><b>L'option Visibilité</b> : la proposer en 2028, sans toucher au référencement gratuit.</li>
+        <li><b>Le courtier d'assurance</b> : piste pour 2029, et seulement avec un intermédiaire agréé.</li>
+      </ol>
+    </section>
+
+    <section class="pv-card pv-notes">
+      <h2>Sources</h2>
+      <ul>
+        <li>Transferts des MRE 2025 (> 122 Mds DH) : Office des changes, rapporté par Hespress, 2 févr. 2026.</li>
+        <li>≈ 10 % des transferts à l'investissement : ministre de l'Économie et des Finances, rapporté par FNH, 16 févr. 2021.</li>
+        <li>16,6 % des investissements des migrants à la construction : HCP, Enquête nationale sur la migration internationale 2018-2019.</li>
+        <li>Étude primaire TEEQA : 32 réponses du 17 oct. au 24 nov. 2026 ; prix par la méthode Van Westendorp, 10 réponses en euros (médianes : trop bon marché 1 000 €, bonne affaire 2 000 €, cher 3 750 €, trop cher 5 500 €) ; un bureau de contrôle à 1 500 MAD la demi-journée.</li>
+        <li>Benchmark, consulté le 14 nov. 2026 : TACHRONE.ma (Le360), inspectimmo.ma, reaconsult.ma (suivi de travaux, 4 à 8 % du montant des travaux).</li>
+        <li>Prix, part de l'agence et coûts par visite et par chantier : annexe tarifaire de l'appli TEEQA (js/store.js). Euros indicatifs : 1 € pour 10,74 DH, Bank Al-Maghrib, 27 oct. 2026.</li>
+      </ul>
+      <p class="pv-src">Calculs : <code>js/previsionnel-modele.js</code> · vérification : <code>node teeqa/refs/oral-1-dec/verifier-previsionnel.mjs</code></p>
+    </section>
+  </main>
+  <script type="module" src="js/previsionnel.js"></script>
+</body>
+</html>

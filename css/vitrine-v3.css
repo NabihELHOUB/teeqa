@@ -1,0 +1,1125 @@
+/* Vitrine TEEQA, 13 nov. 2026 (v3) : retours de Nabih sur la v2, section par section. Chargé après vitrine-v2.css. */
+
+/* ---------- Ouverture ---------- */
+/* Plus de lueur sous la flèche ni sous les pays ; le vert ne fonce plus en bas : il se prolonge dans la section suivante. */
+.monde { height: auto; min-height: max(100svh, 760px); background: linear-gradient(180deg, #0E3B31 0%, #124A3A 34%, #15574A 70%, #17604B 100%); }
+.monde::after { opacity: .35; }
+.monde .pays { filter: drop-shadow(0 18px 14px rgba(4, 22, 18, .34)); }
+.monde .plateau { bottom: 196px; height: min(40vh, 400px); }
+.monde .fleche { inset: 0; left: 0; right: 0; bottom: 0; width: 100%; height: 100%; transform: translateZ(90px); filter: drop-shadow(0 10px 8px rgba(4, 22, 18, .3)); }
+.monde .fleche .fl-dos, .monde .fleche .fl-face { stroke-width: var(--ep, 15px); }
+.monde .fleche .fl-pts { stroke-width: calc(var(--ep, 15px) * .2); }
+.monde .objet { filter: drop-shadow(0 12px 9px rgba(4, 22, 18, .3)); }
+.monde-marque { margin: 4px 0 0; display: inline-flex; align-items: center; gap: .38em; font-size: clamp(26px, 3.3vw, 46px); font-weight: 900; letter-spacing: -.02em; line-height: 1.05; color: #F1ECE2; }
+.monde-marque img { width: 1.25em; height: 1.25em; border-radius: .3em; display: block; box-shadow: 0 .12em 0 rgba(4, 22, 18, .5); }
+.monde-marque b { color: #F2B84E; font-weight: 900; }
+.fondu { background: linear-gradient(180deg, #17604B 0%, #2A7359 12%, #5C956F 24%, #C9A85C 37%, #EBCB8B 45%, #F6E6C6 54%, #FBF4E6 64%, #FFFDF8 74%, rgba(241, 236, 226, 0) 100%); }
+/* Le chemin de l'appli, couché de gauche à droite, sous les deux pays ; Bellarej marche juste en dessous. */
+.monde-chemin { position: absolute; left: 0; right: 0; bottom: 34px; height: 150px; pointer-events: none; overflow: hidden; }
+.monde-chemin .rail { position: absolute; left: 50%; top: 8px; translate: -50% 0; display: flex; align-items: center; gap: clamp(6px, 1.2vw, 16px); width: max-content; max-width: 96vw; }
+.monde-chemin .past { flex: none; width: clamp(40px, 5.4vw, 72px); aspect-ratio: 1 / .92; display: block; }
+.monde-chemin .past svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.monde-chemin .dalles { display: flex; align-items: center; gap: clamp(2px, .5vw, 7px); }
+.monde-chemin .dalles i { width: clamp(9px, 1.25vw, 17px); aspect-ratio: 1; display: block; color: var(--c); translate: 0 var(--dy, 0); animation: dallePose .5s cubic-bezier(.2, 1.5, .4, 1) both; animation-delay: calc(1.6s + var(--n) * 55ms); }
+.monde-chemin .dalles i svg { display: block; width: 100%; height: 100%; filter: drop-shadow(0 2px 0 rgba(4, 22, 18, .45)); }
+@keyframes dallePose { from { opacity: 0; scale: .2; rotate: -80deg; } to { opacity: 1; scale: 1; rotate: 0deg; } }
+.monde-chemin .past.encours .anneau { transform-origin: 50% 50%; animation: anneauTourne 5s linear infinite; }
+@keyframes anneauTourne { to { stroke-dashoffset: -1; } }
+.monde-chemin .oiseau { position: absolute; left: 0; top: 78px; width: clamp(44px, 4.6vw, 62px); aspect-ratio: 120 / 140; will-change: transform; }
+.monde-chemin .oiseau svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.monde-chemin .oiseau .mk-pg, .monde-chemin .oiseau .mk-pd { transform-box: fill-box; transform-origin: center; }
+@media (max-width: 760px) { .monde .plateau { bottom: 176px; height: 30vh; } .monde-chemin { height: 132px; bottom: 26px; } .monde-chemin .oiseau { top: 66px; } .monde-chemin .dalles i:nth-child(n+4) { display: none; } }
+
+/* ---------- Fonds vivants : nuages dessinés (vert, liseré doré) et étoiles de zellige qui dérivent ---------- */
+.avec-ciel { position: relative; isolation: isolate; }
+.ciel { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.ciel > * { position: absolute; left: 0; top: var(--y); width: var(--w); will-change: transform; animation: cielDerive var(--d, 60s) linear infinite; animation-delay: var(--r, 0s); opacity: var(--o, .5); }
+.ciel svg { display: block; width: 100%; height: auto; overflow: visible; }
+.ciel .nuage path.corps { fill: #14503F; fill-opacity: .17; }
+.ciel .nuage path.lisere { fill: none; stroke: #E2A33B; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; stroke-opacity: .95; }
+.ciel .nuage path.eclat { fill: none; stroke: #FFF3D2; stroke-width: 3; stroke-linecap: round; stroke-dasharray: .1 .9; animation: cielEclat 5.5s ease-in-out infinite; animation-delay: var(--e, 0s); }
+.ciel .astre { color: #14503F; }
+.ciel .astre.or { color: #E2A33B; }
+.ciel .astre svg { animation: zelTourne var(--t, 40s) linear infinite; }
+@keyframes cielDerive { from { transform: translateX(-30vw); } to { transform: translateX(112vw); } }
+@keyframes cielEclat { 0% { stroke-dashoffset: 1; opacity: 0; } 20% { opacity: .9; } 60%, 100% { stroke-dashoffset: -.1; opacity: 0; } }
+
+/* ---------- Héros : les bulles sont À CÔTÉ du téléphone, plus dessus ; Bellarej passe deux fois plus vite ---------- */
+.hb-fly { animation-duration: 10s; }
+.hero .fl { animation: none; transform: none; }
+.hero .fl-1 { left: calc(100% + 16px); right: auto; top: 9%; }
+.hero .fl-2 { left: calc(100% + 16px); right: auto; top: 30%; }
+.hero .fl-3 { left: calc(100% + 16px); right: auto; top: 52%; bottom: auto; max-width: 250px; white-space: normal; }
+.hero .fl { opacity: 0; translate: -14px 0; transition: opacity .5s, translate .6s cubic-bezier(.2, .9, .2, 1); }
+.hero .hero-scene.vu .fl { opacity: 1; translate: 0 0; } .hero .hero-scene.vu .fl-2 { transition-delay: .25s; } .hero .hero-scene.vu .fl-3 { transition-delay: .5s; }
+@media (min-width: 1081px) { .hero .hero-scene { justify-self: start; margin-left: 2%; } }
+@media (max-width: 1080px) { .hero .hero-scene { display: grid; justify-items: center; gap: 10px; } .hero .fl { position: static; white-space: normal; translate: 0 12px; } .hero .fl-3 { max-width: 320px; } }
+
+/* ---------- Les quatre repères : une image, une arrivée, un peu de vie ---------- */
+.proofs li { position: relative; padding-top: 86px; transition: translate .35s cubic-bezier(.2, .9, .2, 1), background .35s; }
+.proofs li:hover { translate: 0 -6px; background: #FFFDF8; }
+.proofs li > img { position: absolute; left: 20px; top: 18px; width: 58px; height: 58px; object-fit: contain; filter: drop-shadow(0 8px 7px rgba(26, 28, 32, .18)); animation: objFlotte 5s ease-in-out infinite; animation-delay: calc(var(--k, 0) * -1.2s); --a: -5deg; }
+.proofs li::after { content: ""; position: absolute; left: 22px; right: 22px; bottom: 0; height: 4px; border-radius: 4px 4px 0 0; background: linear-gradient(90deg, #14503F, #E2A33B); scale: 0 1; transform-origin: 0 50%; transition: scale .9s cubic-bezier(.2, .8, .2, 1) calc(.2s + var(--k, 0) * .14s); }
+.proofs li.in::after { scale: 1 1; }
+
+/* ---------- La maison : fête à la sixième étape ---------- */
+.maison-fete { position: absolute; inset: 0; pointer-events: none; }
+.maison-fete .bel { position: absolute; right: 2%; bottom: 20%; width: 34%; opacity: 0; scale: .4; transform-origin: 50% 100%; transition: opacity .3s, scale .6s cubic-bezier(.2, 1.5, .4, 1); }
+.maison-fete.on .bel { opacity: 1; scale: 1; }
+.maison-fete .bel svg { display: block; width: 100%; height: auto; overflow: visible; }
+.maison-fete i.cf { position: absolute; left: 50%; top: 46%; width: 11px; height: 11px; border-radius: 2px; background: var(--c); opacity: 0; }
+.maison-fete.on i.cf { animation: cfVole 1.5s cubic-bezier(.15, .7, .3, 1) both; animation-delay: var(--r, 0s); }
+@keyframes cfVole { 0% { opacity: 1; translate: 0 0; rotate: 0deg; scale: .4; } 70% { opacity: 1; } 100% { opacity: 0; translate: var(--x) var(--y); rotate: var(--a); scale: 1; } }
+
+/* ---------- Comment ça marche : une flèche dessinée à la main, qui suit le défilement ---------- */
+.comment-liste::before, .comment-liste::after { display: none; }
+.comment-liste { padding-left: 132px; gap: 38px; }
+.comment-fil { position: absolute; left: 0; top: -30px; width: 132px; height: calc(100% + 60px); overflow: visible; pointer-events: none; z-index: 0; }
+.comment-fil path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.comment-fil .fond { stroke: rgba(20, 80, 63, .13); stroke-width: 7; stroke-dasharray: 2 14; }
+.comment-fil .trace { stroke: url(#filDeg); stroke-width: 7; }
+.comment-fil .pointe { stroke: #E2A33B; stroke-width: 7; }
+.comment-liste li { z-index: 1; }
+.comment-liste li::before { left: -86px; top: 30px; width: 54px; height: 54px; font-size: 16px; z-index: 2; background: #FBF8F2; box-shadow: 0 0 0 3px rgba(20, 80, 63, .2), 0 6px 0 rgba(20, 80, 63, .12); }
+.comment-liste li.vu::before { background: #14503F; color: #F2B84E; box-shadow: 0 0 0 7px rgba(226, 163, 59, .28), 0 6px 0 #082A22; scale: 1.08; }
+.comment-liste li.vu .comment-illu .gros { animation: illuPose .7s cubic-bezier(.2, 1.4, .4, 1) both, objFlotte 5s ease-in-out infinite .7s; --a: -4deg; }
+@media (max-width: 900px) { .comment-liste { padding-left: 74px; } .comment-fil { width: 74px; } .comment-liste li::before { left: -62px; width: 42px; height: 42px; font-size: 14px; } }
+
+/* ---------- Familles : une rosace qui tourne lentement derrière le titre ---------- */
+.conf-scene { isolation: isolate; }
+.conf-rosace { position: absolute; left: 50%; top: 46%; width: min(1100px, 150vw); aspect-ratio: 1; translate: -50% -50%; z-index: -1; pointer-events: none; color: #14503F; opacity: .5; }
+.conf-rosace svg { display: block; width: 100%; height: 100%; animation: zelTourne 140s linear infinite; }
+.conf-rosace svg + svg { position: absolute; inset: 14%; width: 72%; height: 72%; animation-duration: 90s; animation-direction: reverse; color: #E2A33B; }
+.conf-poussiere { z-index: 0; } .conf-ava { z-index: 2; } .conf-h, .conf-sous, .conf-cta, .conf-points { position: relative; z-index: 1; }
+
+/* ---------- Passage vers « d'un coup d'œil » : la frise défile, le fond respire ---------- */
+.motif { background: linear-gradient(180deg, #fff 0%, #fbfdfb 22%, #e3eee6 46%, #9fc3ae 66%, #3f8166 84%, #14503F 100%); }
+.motif canvas { animation: motifBalance 16s ease-in-out infinite alternate; scale: 1.08; }
+@keyframes motifBalance { from { translate: -2.5% 0; } to { translate: 2.5% 0; } }
+.sec.dark > .frise { background-size: 48px 24px; animation: friseDefile 14s linear infinite; }
+@keyframes friseDefile { to { background-position-x: 48px; } }
+.sec.dark { position: relative; overflow: hidden; }
+.sec.dark::before { content: ""; position: absolute; inset: -10% -20%; pointer-events: none; background: radial-gradient(520px 320px at 24% 30%, rgba(226, 163, 59, .13), transparent 70%), radial-gradient(620px 380px at 78% 62%, rgba(31, 122, 92, .5), transparent 70%); animation: sombreRespire 18s ease-in-out infinite alternate; }
+@keyframes sombreRespire { from { translate: -4% 0; } to { translate: 4% 2%; } }
+.sec.dark > * { position: relative; }
+.w-fete { position: absolute; left: 0; right: 0; top: 0; height: 100%; pointer-events: none; overflow: hidden; }
+.w-fete i { position: absolute; left: var(--l); top: 38%; width: 10px; height: 10px; border-radius: 2px; background: var(--c); opacity: 0; animation: cfVole 1.7s cubic-bezier(.15, .7, .3, 1) both; animation-delay: var(--r, 0s); }
+
+/* ---------- L'étagère : de vraies planches, en relief ---------- */
+.etagere { background: linear-gradient(#EFE9DC, #E7DFCE 50%, #EFE9DC); }
+.etag-mur { perspective: 1400px; perspective-origin: 50% 30%; }
+.etag-rang { margin-bottom: 78px; padding-bottom: 0; transform-style: preserve-3d; }
+.etag-rang::after { left: -1%; right: -1%; bottom: -30px; height: 30px; border-radius: 0 0 8px 8px; background: linear-gradient(#D9CDB6, #C4B699 60%, #B3A587); box-shadow: 0 34px 34px -8px rgba(26, 28, 32, .32), inset 0 2px 0 rgba(255, 255, 255, .35); }
+.etag-rang::before { content: ""; position: absolute; left: 1.5%; right: 1.5%; bottom: 0; height: 64px; transform-origin: 50% 100%; transform: rotateX(74deg); background: linear-gradient(#F4EEDF, #E2D7BF); box-shadow: inset 0 -1px 0 rgba(26, 28, 32, .12); z-index: 0; }
+.etag-tel { z-index: 1; }
+.etag-tel::after { content: ""; position: absolute; left: 8%; right: 8%; bottom: -9px; height: 14px; border-radius: 50%; background: rgba(26, 28, 32, .32); filter: blur(7px); z-index: -1; }
+.etag-tel .ecran { position: relative; }
+.etag-tel .ecran video, .etag-vedette .grand video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.etag-tel em { top: auto; bottom: 10px; translate: -50% 0; max-width: 92%; white-space: normal; text-align: center; line-height: 1.15; z-index: 3; }
+.etag-tel:hover em, .etag-tel:focus-visible em { translate: -50% -4px; }
+/* Ce qui bouge dans chaque écran : une surbrillance qui va et vient sur le bouton utile, un éclair de photo, des feuilles. */
+.etag-tel .ecran .brille, .etag-vedette .grand .brille { position: absolute; left: var(--x); top: var(--y); width: var(--w); height: var(--h); border-radius: var(--ra, 12%/50%); pointer-events: none;
+  box-shadow: 0 0 0 2.5px #E2A33B, 0 0 18px 4px rgba(242, 184, 78, .55); animation: brilleVa 2.8s ease-in-out infinite; }
+@keyframes brilleVa { 0%, 100% { opacity: 0; scale: .97; } 40%, 62% { opacity: 1; scale: 1.015; } }
+.etag-tel .ecran .eclair, .etag-vedette .grand .eclair { position: absolute; inset: 0; background: #fff; pointer-events: none; animation: eclairVa 3.6s ease-out infinite; }
+@keyframes eclairVa { 0%, 86%, 100% { opacity: 0; } 88% { opacity: .85; } 96% { opacity: 0; } }
+.etag-tel .ecran .feuille, .etag-vedette .grand .feuille { position: absolute; left: var(--x); top: var(--y); width: 9%; aspect-ratio: 3 / 4; border-radius: 8%; background: #FBF8F2; box-shadow: 0 0 0 1px rgba(26, 28, 32, .14), 0 3px 6px rgba(26, 28, 32, .18); pointer-events: none;
+  animation: feuilleVole 4.2s ease-in-out infinite; animation-delay: var(--r, 0s); }
+@keyframes feuilleVole { 0% { opacity: 0; translate: 0 40%; rotate: -20deg; } 20% { opacity: 1; } 80% { opacity: 1; } 100% { opacity: 0; translate: var(--dx, 60%) -260%; rotate: 40deg; } }
+@media (max-width: 760px) { .etag-rang { margin-bottom: 56px; } .etag-rang::before { height: 40px; } .etag-rang::after { height: 20px; bottom: -20px; } .etag-tel em { display: none; } }
+
+/* ---------- Témoignages : un peu de profondeur derrière la photo ---------- */
+.temoins-deco { position: absolute; right: -4%; top: 6%; width: 52%; aspect-ratio: 1; pointer-events: none; z-index: -1; }
+.temoins-deco::before { content: ""; position: absolute; inset: 6%; border-radius: 50%; background: radial-gradient(closest-side, rgba(226, 163, 59, .3), rgba(226, 163, 59, .1) 60%, transparent); animation: sombreRespire 12s ease-in-out infinite alternate; }
+.temoins-deco svg { position: absolute; inset: 0; width: 100%; height: 100%; color: #14503F; opacity: .16; animation: zelTourne 120s linear infinite; }
+.temoins { isolation: isolate; }
+.temoin .photo { translate: 0 calc(var(--pp, 0) * -18px); }
+
+/* ---------- Trois rôles : des visages, des images, plus de « ouvrir une étape » ---------- */
+#roles .tabs { background: none; padding: 0; gap: 12px; flex-wrap: wrap; }
+#roles .tabs button { display: flex; align-items: center; gap: 12px; min-height: 72px; padding: 8px 22px 8px 8px; border-radius: 22px; background: #FBF8F2; box-shadow: inset 0 0 0 2px rgba(26, 28, 32, .1), 0 5px 0 #D8CFBC; font-size: 17px; transition: translate .25s, box-shadow .25s, background .25s; }
+#roles .tabs button::before { content: ""; width: 56px; height: 56px; border-radius: 50%; background: var(--ph) center / cover; box-shadow: 0 0 0 3px var(--an); flex: none; }
+#roles .tabs button[data-role="client"] { --ph: url("../assets/video/hybride/profils/client.jpg"); --an: #0E3B31; }
+#roles .tabs button[data-role="entreprise"] { --ph: url("../assets/video/hybride/profils/entreprise.jpg"); --an: #B8603A; }
+#roles .tabs button[data-role="controleur"] { --ph: url("../assets/video/hybride/profils/controleur.jpg"); --an: #E2A33B; }
+#roles .tabs [aria-selected="true"] { background: #14503F; color: #F1ECE2; box-shadow: 0 5px 0 #082A22; translate: 0 -3px; }
+#roles .role-panel { position: relative; margin-top: 24px; padding: 26px 26px 26px; border-radius: 28px; background: #FBF8F2; box-shadow: inset 0 0 0 1.5px rgba(26, 28, 32, .08), 0 14px 30px rgba(26, 28, 32, .08); min-height: 0; }
+#roles .role-panel ul { gap: 14px; }
+#roles .role-panel li { padding: 12px 14px 12px 64px; border-radius: 16px; background: #F3EEE2; min-height: 60px; display: flex; align-items: center; opacity: 0; translate: 16px 0; animation: roleLigne .5s cubic-bezier(.2, .9, .2, 1) forwards; }
+#roles .role-panel li:nth-child(2) { animation-delay: .1s; } #roles .role-panel li:nth-child(3) { animation-delay: .2s; }
+@keyframes roleLigne { to { opacity: 1; translate: 0 0; } }
+#roles .role-panel li::before { left: 10px; top: 50%; width: 44px; height: 44px; translate: 0 -50%; transform: none; border-radius: 0; background: var(--ic) center / contain no-repeat; }
+#roles .role-panel li:nth-child(1) { --ic: url("../assets/etapes/etape-2-gros-oeuvre.webp"); }
+#roles .role-panel li:nth-child(2) { --ic: url("../assets/icones-3d/camera.webp"); }
+#roles .role-panel li:nth-child(3) { --ic: url("../assets/icones-3d/pen.webp"); }
+#roles .roles-txt:has([data-role="client"][aria-selected="true"]) .role-panel li:nth-child(2) { --ic: url("../assets/icones-3d/bell.webp"); }
+#roles .roles-txt:has([data-role="client"][aria-selected="true"]) .role-panel li:nth-child(3) { --ic: url("../assets/icones-3d/wallet.webp"); }
+#roles .roles-txt:has([data-role="entreprise"][aria-selected="true"]) .role-panel li:nth-child(3) { --ic: url("../assets/icones-3d/wallet.webp"); }
+#roles .roles-txt:has([data-role="controleur"][aria-selected="true"]) .role-panel li:nth-child(1) { --ic: url("../assets/icones-3d/hourglass.webp"); }
+
+/* ---------- Section finale : Bellarej au centre de ses motifs, comme à la première ouverture de l'appli ---------- */
+.final { position: relative; overflow: hidden; isolation: isolate; padding-top: 96px; }
+.final-deco { position: absolute; left: 50%; top: 172px; width: 0; height: 0; z-index: -1; pointer-events: none; }
+.final-deco .tour { position: absolute; left: 0; top: 0; width: var(--d); height: var(--d); margin: calc(var(--d) / -2) 0 0 calc(var(--d) / -2); animation: zelTourne var(--t) linear infinite; animation-direction: var(--s, normal); }
+.final-deco .tour i { position: absolute; left: 50%; top: 50%; width: var(--z); height: var(--z); margin: calc(var(--z) / -2); color: var(--c); opacity: var(--o, .8); transform: rotate(var(--a)) translateY(calc(var(--d) / -2)); }
+.final-deco .tour i svg { display: block; width: 100%; height: 100%; }
+.final-deco .halo { position: absolute; left: -210px; top: -210px; width: 420px; height: 420px; border-radius: 50%; background: radial-gradient(closest-side, rgba(242, 184, 78, .34), rgba(242, 184, 78, .08) 60%, transparent); }
+.final > .frise-fin { position: absolute; left: 0; right: 0; height: 24px; background: inherit; }
+.final-bird { position: relative; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ciel > *, .ciel .astre svg, .ciel .nuage path.eclat, .monde-chemin .dalles i, .monde-chemin .past.encours .anneau, .proofs li > img, .motif canvas, .sec.dark > .frise, .sec.dark::before, .conf-rosace svg,
+  .temoins-deco svg, .temoins-deco::before, .final-deco .tour, .etag-tel .ecran .brille, .etag-tel .ecran .eclair, .etag-tel .ecran .feuille, .etag-vedette .grand .brille, .etag-vedette .grand .eclair, .etag-vedette .grand .feuille,
+  #roles .role-panel li { animation: none !important; }
+  #roles .role-panel li, .hero .fl { opacity: 1; translate: 0 0; } .etag-tel .ecran .eclair, .etag-vedette .grand .eclair { opacity: 0; } .ciel > * { transform: translateX(var(--x0, 30vw)); }
+}
+
+/* ---------- v3, suite (13 nov., 10 h 30) : ce que le code de js/vitrine-v3.js pose dans la page ---------- */
+/* Ouverture : plus de petit texte, la marque en grand ; la flèche est redessinée par le script (elle vise toujours le Maroc). */
+.monde-txt { gap: 14px; }
+.monde-marque { margin: 2px 0 6px; font-size: clamp(30px, 4vw, 54px); }
+.monde-marque img { width: 1.15em; height: 1.15em; }
+.monde .sol { display: none; }
+.monde .fleche .fl-dos { translate: 0 calc(var(--ep, 15px) * .35); }
+.monde .pays span { background: rgba(8, 38, 31, .85); }
+.monde-chemin { z-index: 2; }
+.monde-chemin .oiseau { left: 0; top: 70px; filter: drop-shadow(0 4px 3px rgba(3, 20, 15, .25)); }
+@media (max-width: 760px) { .monde-marque { font-size: clamp(24px, 7vw, 32px); } .monde-chemin .oiseau { top: 62px; } }
+/* Pas de trait entre l'ouverture et la suite : le vert continue, puis s'éclaircit. */
+.monde::after { background: none; }
+.fondu { margin-top: -1px; }
+
+/* Héros et rôles : les nuages passent derrière le contenu. */
+.hero > *:not(.ciel):not(.hero-bird), #roles > *:not(.ciel), .comment > *:not(.ciel), .proofs > *:not(.ciel) { position: relative; z-index: 1; }
+.hero .hero-bird { z-index: 3; }
+.proofs { position: relative; overflow: hidden; }
+.comment { overflow: hidden; }
+
+/* Les quatre repères : l'image vole, la carte se soulève. */
+.proofs li { overflow: visible; }
+
+/* L'étagère : plus de languettes sous les téléphones (on ouvre un écran en touchant le téléphone). */
+.etag-fil { display: none !important; }
+
+/* La maison : Bellarej qui fête, en bas à droite de la maison. */
+.maison-fete { z-index: 4; }
+.maison-fete .bel { right: -4%; bottom: 6%; width: 30%; max-width: 150px; }
+
+/* Familles : la rosace derrière, des cartes de familles lisibles par-dessus. */
+.conf-rosace { opacity: .22; }
+
+/* Coup d'œil : la fête de la sixième étape. */
+#coup-doeil { isolation: isolate; }
+.w-fete { z-index: 3; }
+.w-fete i { top: 62%; }
+
+/* Rôles : une légende au-dessus du téléphone, Bellarej habillé pour le rôle à côté. */
+.roles-phone { position: relative; display: grid; justify-items: center; gap: 14px; }
+.role-legende { margin: 0; padding: 8px 16px; border-radius: 99px; background: #14503F; color: #F1ECE2; font-weight: 800; font-size: 14px; text-align: center; box-shadow: 0 4px 0 #082A22; }
+.role-illu { position: absolute; left: -22%; bottom: 4%; width: 34%; max-width: 170px; pointer-events: none; z-index: 2; filter: drop-shadow(0 12px 10px rgba(26, 28, 32, .18)); }
+.role-illu svg { display: block; width: 100%; height: auto; overflow: visible; }
+.role-illu.arrive { animation: illuPose .6s cubic-bezier(.2, 1.4, .4, 1) both; }
+@keyframes roleArrive0 { from { opacity: 0; translate: 0 30px; scale: .7; } to { opacity: 1; translate: 0 0; scale: 1; } }
+@media (max-width: 900px) { .role-illu { left: -4%; width: 30%; } }
+
+/* La fin : le fond vert de l'appli, Bellarej au centre de ses anneaux d'étoiles. */
+.final { background: radial-gradient(ellipse at 50% 30%, #1F7A5C 0%, #14503F 46%, #0E3B31 100%); }
+.final-deco { top: 150px; }
+.final h2, .final .btn { position: relative; z-index: 1; }
+@media (max-width: 760px) { .final-deco { top: 140px; scale: .7; } }
+@media (prefers-reduced-motion: reduce) { .monde-chemin .oiseau, .role-illu.arrive { animation: none !important; } }
+
+/* Ouverture, mise en page verticale (13 nov., 11 h) : le texte en haut, les deux pays dessous sans le toucher, puis le chemin
+   et Bellarej. La hauteur du plateau suit celle de l'écran, sans descendre sous 250 px. */
+.monde { min-height: max(100svh, 900px); }
+.monde-txt { top: max(84px, 9vh); }
+.monde .plateau { bottom: 168px; height: clamp(250px, calc(max(100svh, 900px) - 600px), 430px); }
+.monde-chemin { bottom: 14px; height: 146px; }
+@media (max-width: 760px) {
+  .monde { min-height: max(100svh, 760px); }
+  .monde .plateau { bottom: 150px; height: clamp(190px, calc(max(100svh, 760px) - 560px), 300px); }
+  .monde-chemin { bottom: 10px; height: 132px; }
+}
+/* Retouches après captures (13 nov., 11 h 15). */
+.confiance { overflow: hidden; }
+.conf-rosace { opacity: .1; }
+#stepChips[hidden] { display: none !important; }
+/* Le titre de « Comment ça marche » reste collé en haut sur ordinateur (règle de la v2, écrasée par erreur), normal sur téléphone. */
+.comment > .comment-fixe { position: sticky; }
+@media (max-width: 900px) { .comment > .comment-fixe { position: relative; top: auto; } }
+/* « TEEQA est là pour vous » : sur téléphone, une ligne centrée qui se coupe proprement. */
+@media (max-width: 760px) { .monde-marque { display: block; text-align: center; line-height: 1.15; } .monde-marque img { display: inline-block; vertical-align: -.22em; margin-right: .3em; } }
+/* L'étagère : la vie des écrans (posée par js/vitrine-v3.js). La vidéo du chemin n'apparaît qu'une fois lancée. */
+.etag-tel .ecran .vie, .etag-vedette .grand .ecran .vie { position: absolute; inset: 0; pointer-events: none; z-index: 2; overflow: hidden; border-radius: inherit; }
+.ecran .vie video { opacity: 0; transition: opacity .4s; }
+.ecran .vie.joue video { opacity: 1; }
+.etag-tel em { z-index: 4; }
+.maison-fete .bel { left: -8%; right: auto; bottom: 22%; width: 32%; max-width: 160px; z-index: 5; }
+.role-illu { left: -30%; bottom: 0; width: 44%; max-width: 210px; }
+@media (max-width: 900px) { .role-illu { left: -6%; width: 34%; } }
+
+/* ==================== v3.1 (13 nov., midi) : deuxième série de retours de Nabih ==================== */
+
+/* ---------- Ouverture : profondeur (motifs dorés en trois nappes), chemin plus bas et plus grand, Bellarej de profil ---------- */
+.monde-motifs { position: absolute; inset: -80px; z-index: 0; pointer-events: none; overflow: hidden;
+  -webkit-mask-image: radial-gradient(ellipse 60% 46% at 50% 26%, transparent 30%, #000 78%); mask-image: radial-gradient(ellipse 60% 46% at 50% 26%, transparent 30%, #000 78%); }
+.monde-motifs i { position: absolute; inset: 0; will-change: transform;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-30 -30 60 60'%3E%3Cpath d='M0-10 2.3-5.5 7.1-7.1 5.5-2.3 10 0 5.5 2.3 7.1 7.1 2.3 5.5 0 10-2.3 5.5-7.1 7.1-5.5 2.3-10 0-5.5-2.3-7.1-7.1-2.3-5.5Z' transform='scale(2.3)' fill='none' stroke='%23F2B84E' stroke-width='.45'/%3E%3Cpath d='M0-10 2.3-5.5 7.1-7.1 5.5-2.3 10 0 5.5 2.3 7.1 7.1 2.3 5.5 0 10-2.3 5.5-7.1 7.1-5.5 2.3-10 0-5.5-2.3-7.1-7.1-2.3-5.5Z' transform='scale(1.05) rotate(22.5)' fill='none' stroke='%23F2B84E' stroke-width='.6'/%3E%3Ccircle r='2.2' fill='%23F2B84E'/%3E%3C/svg%3E"); }
+.monde-motifs .n1 { background-size: 92px 92px; opacity: .07; filter: blur(.6px); }
+.monde-motifs .n2 { background-size: 170px 170px; background-position: 40px 60px; opacity: .1; }
+.monde-motifs .n3 { background-size: 300px 300px; background-position: -60px 120px; opacity: .14; }
+.monde .scene25 { z-index: 1; } .monde-txt { z-index: 3; } .monde-chemin { z-index: 2; }
+
+.monde { min-height: max(100svh, 960px); }
+.monde .plateau { bottom: 222px; height: clamp(250px, calc(max(100svh, 960px) - 660px), 430px); }
+.monde-chemin { bottom: 8px; height: 196px; }
+.monde-chemin .rail { top: 30px; gap: clamp(4px, .9vw, 14px); }
+.monde-chemin .past { width: clamp(64px, 7.2vw, 106px); aspect-ratio: auto; }
+.monde-chemin .past img { display: block; width: 100%; height: auto; filter: drop-shadow(0 7px 6px rgba(3, 20, 15, .38)); }
+.monde-chemin .past.encours { width: clamp(80px, 9.2vw, 136px); margin: -14px 0; }
+.monde-chemin .past.encours img { animation: encoursRespire 2.6s ease-in-out infinite; }
+@keyframes encoursRespire { 0%, 100% { scale: 1; } 50% { scale: 1.05; } }
+.monde-chemin .dalles { gap: clamp(3px, .5vw, 7px); }
+.monde-chemin .dalles i { width: clamp(17px, 2.1vw, 30px); aspect-ratio: 24 / 27; color: inherit; }
+.monde-chemin .dalles i svg { filter: drop-shadow(0 3px 2px rgba(3, 20, 15, .35)); }
+/* Bellarej de profil (le dessin de l'appli), qui marche : les deux pattes se balancent, le corps rebondit à chaque pas. */
+.monde-chemin .oiseau { top: 112px; width: clamp(58px, 5.6vw, 78px); aspect-ratio: 200 / 260; filter: drop-shadow(0 9px 4px rgba(3, 20, 15, .3)); }
+.monde-chemin .oiseau svg { width: 100%; height: 100%; }
+.monde-chemin .oiseau .br-all { animation: marcheRebond .36s ease-in-out infinite alternate; }
+.monde-chemin .oiseau .br-leg-back { transform-origin: 90px 172px; animation: marchePatte .72s ease-in-out infinite; }
+.monde-chemin .oiseau .br-leg-front { transform-origin: 108px 174px; animation: marchePatte .72s ease-in-out infinite reverse; }
+.monde-chemin .oiseau .br-shin { animation: none; }
+@keyframes marchePatte { 0%, 100% { rotate: -20deg; } 50% { rotate: 20deg; } }
+@keyframes marcheRebond { from { translate: 0 0; } to { translate: 0 -5px; } }
+@media (max-width: 760px) {
+  .monde { min-height: max(100svh, 800px); }
+  .monde .plateau { bottom: 190px; height: clamp(190px, calc(max(100svh, 800px) - 600px), 300px); }
+  .monde-chemin { height: 168px; } .monde-chemin .rail { top: 26px; }
+  .monde-chemin .past { width: 46px; } .monde-chemin .past.encours { width: 60px; margin: -8px 0; }
+  .monde-chemin .dalles i { width: 13px; } .monde-chemin .dalles i:nth-child(n+3) { display: none; }
+  .monde-chemin .oiseau { top: 92px; width: 52px; }
+}
+
+/* ---------- Héros : deux bulles à gauche du téléphone, une à droite, plus étroites ---------- */
+@media (min-width: 1081px) {
+  .hero .hero-txt { max-width: 470px; }
+  .hero .hero-scene { justify-self: center; margin-left: 0; }
+  .hero .fl { max-width: 200px; white-space: normal; line-height: 1.25; }
+  .hero .fl-1 { left: auto; right: calc(100% + 18px); top: 16%; }
+  .hero .fl-2 { left: calc(100% + 18px); right: auto; top: 38%; }
+  .hero .fl-3 { left: auto; right: calc(100% + 18px); top: 60%; }
+  .hero .fl-1, .hero .fl-3 { translate: 14px 0; } .hero .hero-scene.vu .fl { translate: 0 0; }
+}
+
+/* ---------- Les quatre repères : à tour de rôle, de gauche à droite, une carte se soulève et dore, en boucle ---------- */
+.proofs li { animation: repereDore 8s ease-in-out infinite; animation-delay: calc(var(--k, 0) * 2s); }
+@keyframes repereDore {
+  0%, 30%, 100% { translate: 0 0; background-color: transparent; box-shadow: none; }
+  8%, 20% { translate: 0 -8px; background-color: #FBEFD2; box-shadow: inset 0 0 0 2px rgba(226, 163, 59, .55), 0 14px 26px rgba(184, 128, 30, .2); }
+}
+.proofs li:hover { animation-play-state: paused; }
+
+/* ---------- La maison : la fiche de l'étape descend sous la maison, elle ne la cache plus ---------- */
+.maison-fiche { bottom: -78px; z-index: 3; }
+.maison-scene { margin-bottom: 70px; }
+@media (max-width: 900px) { .maison-fiche { bottom: -64px; } .maison-scene { margin-bottom: 60px; } }
+
+/* ---------- Comment ça marche : icônes centrées (le centrage n'est plus fait par « translate », que les animations écrasaient) ---------- */
+.comment-illu .gros { top: 50%; translate: none; margin-top: -52px; }
+@media (max-width: 900px) { .comment-illu .gros { margin-top: -42px; } }
+/* Le fil, façon dessin animé : un trait plein et rond, cerné de vert sombre, avec un reflet. */
+.comment-fil .cerne { stroke: #0A2E25; stroke-width: 12; }
+.comment-fil .trace { stroke-width: 7; }
+.comment-fil .reflet { stroke: rgba(255, 255, 255, .45); stroke-width: 2; }
+.comment-fil .fond { stroke-width: 6; stroke-dasharray: 1 13; }
+.comment-fil .pointe { stroke-width: 8; }
+
+/* Les rôles : l'arrivée de Bellarej a sa propre animation (elle écrasait celle des icônes de « Comment ça marche »). */
+.role-illu.arrive { animation-name: roleArrive; }
+@keyframes roleArrive { from { opacity: 0; translate: 0 30px; scale: .7; } to { opacity: 1; translate: 0 0; scale: 1; } }
+
+/* ---------- Bande de motifs : le blanc devient vert comme une brume qui passe, lentement ---------- */
+.motif canvas { animation: none; scale: 1; }
+.motif::before, .motif::after { content: ""; position: absolute; inset: -30% -20%; pointer-events: none; z-index: 1; }
+.motif::before { background: radial-gradient(42% 60% at 20% 30%, rgba(255, 255, 255, .85), transparent 70%), radial-gradient(36% 50% at 70% 20%, rgba(255, 255, 255, .7), transparent 70%); animation: brume 26s ease-in-out infinite alternate; }
+.motif::after { background: radial-gradient(40% 50% at 40% 80%, rgba(20, 80, 63, .35), transparent 70%), radial-gradient(30% 40% at 85% 70%, rgba(20, 80, 63, .3), transparent 70%); animation: brume 32s ease-in-out infinite alternate-reverse; }
+@keyframes brume { from { translate: -8% 0; } to { translate: 8% -6%; } }
+
+/* ---------- Coup d'œil : des ondes de notification partent des trois téléphones à chaque étape ---------- */
+.w-ondes { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
+.w-ondes i { position: absolute; width: 60px; height: 60px; margin: -30px; border-radius: 50%; border: 2px solid rgba(242, 184, 78, .55); opacity: 0; animation: onde 2.6s cubic-bezier(.15, .6, .3, 1) forwards; }
+.w-ondes i.v { border-color: rgba(143, 208, 179, .45); }
+@keyframes onde { 0% { opacity: .9; scale: .4; } 100% { opacity: 0; scale: 9; } }
+.w-trame { position: absolute; inset: 0; pointer-events: none; z-index: 0; opacity: .08;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Cpath d='M40 4 L76 40 L40 76 L4 40 Z M40 20 L60 40 L40 60 L20 40 Z' fill='none' stroke='%23F2B84E' stroke-width='1'/%3E%3C/svg%3E");
+  background-size: 80px 80px; animation: trame 60s linear infinite;
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 60%, #000 20%, transparent 80%); mask-image: radial-gradient(ellipse 70% 60% at 50% 60%, #000 20%, transparent 80%); }
+@keyframes trame { to { background-position: 80px 160px; } }
+#coup-doeil > .wframe, #coup-doeil > .sec-head, #coup-doeil > .cta-row { z-index: 1; }
+
+/* ---------- L'étagère : plus de tremblement (le téléphone se soulève, pas sa zone de survol) ---------- */
+.etag-tel:hover, .etag-tel:focus-visible { transform: none; }
+.etag-tel .ecran { transition: transform .45s cubic-bezier(.2, .8, .2, 1); transform-origin: 50% 100%; }
+.etag-tel:hover .ecran, .etag-tel:focus-visible .ecran { transform: translateY(-12px) rotateX(4deg); }
+.ecran .vie .brille { display: none; }
+/* Des effets différents d'un écran à l'autre. */
+.ecran .vie svg.contour { position: absolute; left: var(--x); top: var(--y); width: var(--w); height: var(--h); overflow: visible; }
+.ecran .vie svg.contour rect { fill: none; stroke: var(--c, #E2A33B); stroke-width: 3; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-dasharray: 1 1; stroke-dashoffset: 1; animation: contourTrace 3.4s cubic-bezier(.6, 0, .3, 1) infinite; filter: drop-shadow(0 0 4px rgba(242, 184, 78, .8)); }
+@keyframes contourTrace { 0% { stroke-dashoffset: 1; opacity: 1; } 45% { stroke-dashoffset: 0; opacity: 1; } 75% { stroke-dashoffset: 0; opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 0; } }
+.ecran .vie .reflet { position: absolute; left: var(--x); top: var(--y); width: var(--w); height: var(--h); border-radius: 8px; overflow: hidden; box-shadow: 0 0 0 2px rgba(242, 184, 78, .0); animation: refletCadre 3.2s ease-in-out infinite; }
+.ecran .vie .reflet::after { content: ""; position: absolute; top: -20%; bottom: -20%; width: 40%; left: -50%; background: linear-gradient(100deg, transparent, rgba(255, 246, 214, .85), transparent); animation: refletPasse 3.2s ease-in-out infinite; }
+@keyframes refletPasse { 0%, 20% { left: -50%; } 70%, 100% { left: 120%; } }
+@keyframes refletCadre { 0%, 100% { box-shadow: 0 0 0 2px rgba(242, 184, 78, 0); } 45% { box-shadow: 0 0 0 2px rgba(242, 184, 78, .7), 0 0 16px rgba(242, 184, 78, .5); } }
+.ecran .vie .appui { position: absolute; left: var(--x); top: var(--y); width: var(--w); height: var(--h); }
+.ecran .vie .appui::before, .ecran .vie .appui::after { content: ""; position: absolute; left: 50%; top: 50%; width: 14%; aspect-ratio: 1; max-width: 22px; translate: -50% -50%; border-radius: 50%; }
+.ecran .vie .appui::before { background: rgba(26, 28, 32, .32); border: 2px solid #fff; animation: appuiDoigt 2.8s ease-in-out infinite; }
+.ecran .vie .appui::after { border: 2px solid #E2A33B; animation: appuiOnde 2.8s ease-out infinite; }
+@keyframes appuiDoigt { 0%, 18% { opacity: 0; scale: 1.4; } 30% { opacity: 1; scale: 1; } 38% { scale: .8; } 46%, 60% { opacity: 1; scale: 1; } 72%, 100% { opacity: 0; } }
+@keyframes appuiOnde { 0%, 36% { opacity: 0; scale: .6; } 40% { opacity: 1; } 75%, 100% { opacity: 0; scale: 3.2; } }
+.ecran .vie .viseur { position: absolute; inset: 22% 14% 40%; animation: viseurCadre 3.6s ease-in-out infinite; }
+.ecran .vie .viseur b { position: absolute; width: 18%; aspect-ratio: 1; border: 3px solid #F2B84E; }
+.ecran .vie .viseur b:nth-child(1) { left: 0; top: 0; border-right: 0; border-bottom: 0; } .ecran .vie .viseur b:nth-child(2) { right: 0; top: 0; border-left: 0; border-bottom: 0; }
+.ecran .vie .viseur b:nth-child(3) { left: 0; bottom: 0; border-right: 0; border-top: 0; } .ecran .vie .viseur b:nth-child(4) { right: 0; bottom: 0; border-left: 0; border-top: 0; }
+@keyframes viseurCadre { 0% { opacity: 0; scale: 1.25; } 25%, 80% { opacity: 1; scale: 1; } 88%, 100% { opacity: 0; scale: 1; } }
+/* L'avis signé : Bellarej de face, tout content, brandit le stylo ; des feuilles volent derrière lui (comme dans le film). */
+.ecran .vie .joie { position: absolute; left: 36.6%; top: 56.8%; width: 26.9%; height: 16%; }
+.ecran .vie .joie .jb { position: absolute; left: 50%; top: 50%; height: 150%; aspect-ratio: 240 / 300; translate: -50% -60%; transform-origin: 50% 90%; animation: joieSaute 1.6s cubic-bezier(.3, 0, .3, 1) infinite; }
+.ecran .vie .joie .jb svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.ecran .vie .joie .js { position: absolute; left: 70%; top: -9%; width: 42%; transform-origin: 20% 90%; animation: styloBrandi 1.6s ease-in-out infinite; }
+@keyframes joieSaute { 0%, 100% { translate: -50% -60%; scale: 1 1; } 30% { translate: -50% -74%; scale: .96 1.04; } 55% { translate: -50% -60%; scale: 1.05 .95; } }
+@keyframes styloBrandi { 0%, 100% { rotate: -8deg; } 50% { rotate: 14deg; } }
+.ecran .vie .joie .fv { position: absolute; left: 50%; top: 40%; width: 34%; aspect-ratio: 3 / 4; margin: -22% 0 0 -17%; border-radius: 6%; opacity: 0;
+  background: linear-gradient(#FFFDF7 0 18%, #CFC8B8 18% 23%, #FFFDF7 23% 36%, #CFC8B8 36% 41%, #FFFDF7 41% 54%, #CFC8B8 54% 59%, #FFFDF7 59% 72%, #E2A33B 72% 77%, #FFFDF7 77%) center / 70% 100% no-repeat, #FFFDF7;
+  box-shadow: 0 2px 6px rgba(8, 38, 31, .28); animation: feuilleEnvol 2.4s ease-out infinite; animation-delay: var(--r); }
+@keyframes feuilleEnvol { 0% { opacity: 0; translate: 0 0; rotate: 0deg; scale: .6; } 12% { opacity: 1; } 80% { opacity: 1; } 100% { opacity: 0; translate: var(--dx) var(--dy); rotate: var(--a); scale: 1; } }
+
+/* ---------- Témoignages : un album, des photos du chantier qui flottent autour, des fondus avec les sections voisines ---------- */
+.temoins { max-width: none; padding-left: max(28px, calc((100vw - 1180px) / 2 + 28px)); padding-right: max(28px, calc((100vw - 1180px) / 2 + 28px));
+  background: linear-gradient(180deg, #EEE8DB 0%, #F4EFE4 30%, #F4EFE4 70%, #ECE6D9 100%); overflow: hidden; }
+.temoins-deco { display: none; }
+.temoins-souvenirs { position: absolute; inset: 0; pointer-events: none; z-index: -1; }
+.temoins-souvenirs figure { position: absolute; left: var(--x); top: var(--y); width: var(--w); margin: 0; padding: 6px 6px 18px; background: #FFFDF7; border-radius: 4px; box-shadow: 0 10px 22px rgba(26, 28, 32, .12);
+  rotate: var(--a); opacity: var(--o); filter: blur(var(--b)); animation: souvenirFlotte var(--d) ease-in-out infinite alternate; }
+.temoins-souvenirs figure img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 2px; }
+@keyframes souvenirFlotte { from { translate: 0 0; } to { translate: var(--dx) var(--dy); } }
+/* L'album : les photos se suivent comme dans un paquet ; celle qui part glisse vers la gauche et passe derrière. */
+.temoin .photo { clip-path: none !important; transition: none !important; }
+.temoins-album { position: relative; aspect-ratio: 1 / 1.08; grid-area: 1 / 2; align-self: end; }
+.temoins-album figure { position: absolute; inset: 0; margin: 0; border-radius: 28px; overflow: hidden; background: #E4DCCB; box-shadow: 0 18px 40px rgba(26, 28, 32, .18);
+  transition: transform .9s cubic-bezier(.3, .9, .2, 1), opacity .9s, filter .9s; transform-origin: 50% 90%; }
+.temoins-album figure img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.temoins-album figure[data-r="0"] { z-index: 3; transform: none; }
+.temoins-album figure[data-r="1"] { z-index: 2; transform: translate(9%, 3%) rotate(5deg) scale(.92); filter: brightness(.92); }
+.temoins-album figure[data-r="2"] { z-index: 1; transform: translate(16%, 6%) rotate(9deg) scale(.84); filter: brightness(.85); }
+.temoins-album figure.part { z-index: 4; transform: translate(-115%, -2%) rotate(-12deg); opacity: 0; }
+.temoins-cadre .temoin .photo { visibility: hidden; }
+@media (max-width: 800px) { .temoins-album { grid-area: auto; order: -1; aspect-ratio: 1 / .8; margin-right: 18%; } }
+
+/* ---------- Trois rôles : un plan d'architecte qui se dessine en fond ---------- */
+.ciel .plan-trait { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .5; }
+.ciel .plan-trait path { fill: none; stroke: #14503F; stroke-width: 1.4; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; opacity: .35; animation: planTrace 14s ease-in-out infinite; animation-delay: var(--r); }
+.ciel .plan-trait path.or { stroke: #E2A33B; opacity: .5; }
+@keyframes planTrace { 0% { stroke-dashoffset: 1; opacity: 0; } 8% { opacity: .4; } 45%, 80% { stroke-dashoffset: 0; opacity: .4; } 100% { stroke-dashoffset: 0; opacity: 0; } }
+#roles .tabs button.auto::after { content: ""; position: absolute; left: 20px; right: 20px; bottom: 6px; height: 3px; border-radius: 3px; background: #E2A33B; transform-origin: 0 50%; animation: roleMinute 6s linear forwards; }
+#roles .tabs button { position: relative; }
+@keyframes roleMinute { from { scale: 0 1; } to { scale: 1 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .monde-chemin .oiseau *, .monde-chemin .past.encours img, .proofs li, .motif::before, .motif::after, .w-ondes i, .w-trame, .ecran .vie *, .temoins-souvenirs figure, .ciel .plan-trait path { animation: none !important; }
+}
+/* Bulles du héros : leur largeur suit leur texte (elles ne se replient plus mot par mot). */
+@media (min-width: 1081px) { .hero .fl { width: max-content; max-width: 220px; } }
+/* Dalles du chemin : toujours visibles ; une vague de lumière les parcourt une à une, de gauche à droite, comme quand elles se posent. */
+.monde-chemin .dalles i { width: clamp(20px, 2.4vw, 34px); opacity: 1; animation: dalleVague 4.8s ease-in-out infinite; animation-delay: calc(var(--n) * .16s); }
+@keyframes dalleVague { 0%, 14%, 100% { translate: 0 var(--dy, 0); filter: none; } 6% { translate: 0 calc(var(--dy, 0px) - 6px); filter: brightness(1.25) drop-shadow(0 0 6px rgba(242, 184, 78, .8)); } }
+@media (max-width: 760px) { .monde-chemin .dalles i { width: 15px; } }
+/* Ouverture sur téléphone : plus de hauteur pour que les pays ne touchent pas les boutons ; les petits objets du haut, qui passaient
+   sur les boutons, sont cachés (l'étape posée sur la flèche reste). */
+@media (max-width: 760px) {
+  .monde { min-height: max(100svh, 860px); }
+  .monde .plateau { height: clamp(190px, calc(max(100svh, 860px) - 640px), 300px); }
+  .monde .plateau > .objet:not(:has(img[src*="etape-2"])) { display: none; }
+}
+
+/* ==================== v3.2 (13 nov., après-midi) : troisième série de retours ==================== */
+/* Ouverture : quelques grandes étoiles éparses (au lieu d'une trame), le chemin en zigzag posé en absolu, qui sort de la page. */
+.monde-motifs i { background: none !important; opacity: 1 !important; filter: none !important; }
+.monde-motifs span { position: absolute; color: #F2B84E; aspect-ratio: 1; }
+.monde-motifs span svg { display: block; width: 100%; height: 100%; animation: zelTourne var(--t, 90s) linear infinite; }
+.monde-motifs .n1 span { opacity: .06; filter: blur(1.2px); } .monde-motifs .n2 span { opacity: .09; } .monde-motifs .n3 span { opacity: .11; }
+.monde-chemin { left: 0; right: 0; bottom: 6px; height: 210px; overflow: hidden; }
+.monde-chemin .rail { position: absolute; inset: 0; top: 0; left: 0; translate: none; display: block; width: 100%; max-width: none; }
+.monde-chemin .rail > * { position: absolute; translate: -50% -50%; }
+.monde-chemin .past { display: block; margin: 0; aspect-ratio: 362 / 314; z-index: 2; }
+.monde-chemin .past img { display: block; width: 100%; height: auto; position: relative; z-index: 1; filter: drop-shadow(0 8px 6px rgba(3, 20, 15, .35)); animation: none; }
+.monde-chemin .past.encours { margin: 0; }
+/* L'anneau de l'appli, posé au sol autour de la pastille en cours (mêmes tracés, mêmes couleurs), qui se remplit en boucle. */
+.monde-chemin .anneau { position: absolute; left: -1.1%; top: -1%; width: 102.2%; height: auto; aspect-ratio: 1; overflow: visible; z-index: 0; }
+.monde-chemin .anneau path { fill: none; stroke-width: 7; }
+.monde-chemin .anneau .lip { stroke: #8F8672; transform: translateY(3px); }
+.monde-chemin .anneau .bg { stroke: #C9C0AC; }
+.monde-chemin .anneau .flip { stroke: #B57A1E; stroke-linecap: round; transform: translateY(3px); stroke-dasharray: 0 1; animation: anneauRemplit 5s cubic-bezier(.4, 0, .3, 1) infinite; }
+.monde-chemin .anneau .fg { stroke: #F0B648; stroke-linecap: round; stroke-dasharray: 0 1; animation: anneauRemplit 5s cubic-bezier(.4, 0, .3, 1) infinite; }
+@keyframes anneauRemplit { 0%, 8% { stroke-dasharray: 0 1; } 70%, 90% { stroke-dasharray: .78 1; } 100% { stroke-dasharray: .78 1; opacity: 0; } }
+.monde-chemin .dalle { z-index: 1; height: auto; filter: drop-shadow(0 3px 2px rgba(3, 20, 15, .35)); animation: dalleVague 5.6s ease-in-out infinite; animation-delay: calc(var(--n) * .14s); }
+.monde-chemin .dalle.avenir { opacity: .42; filter: grayscale(.7) drop-shadow(0 3px 2px rgba(3, 20, 15, .25)); animation: none; }
+@keyframes dalleVague { 0%, 14%, 100% { margin-top: 0; filter: drop-shadow(0 3px 2px rgba(3, 20, 15, .35)); } 6% { margin-top: -6px; filter: brightness(1.2) drop-shadow(0 0 6px rgba(242, 184, 78, .8)); } }
+/* Bellarej vu d'en haut, tourné vers la droite : il marche (pattes qui se balancent, petit rebond). */
+.monde-chemin .oiseau { left: 0; top: auto; bottom: 4px; width: clamp(74px, 6.4vw, 98px); aspect-ratio: 150 / 112; z-index: 3; filter: none; }
+.monde-chemin .oiseau svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.monde-chemin .oiseau .pg { transform-origin: 60px 74px; animation: piedA .7s ease-in-out infinite; }
+.monde-chemin .oiseau .pd { transform-origin: 76px 74px; animation: piedA .7s ease-in-out infinite reverse; }
+.monde-chemin .oiseau .corps { animation: marcheRebond .35s ease-in-out infinite alternate; }
+.monde-chemin .oiseau .tete { transform-origin: 92px 54px; animation: teteHoche .7s ease-in-out infinite; }
+@keyframes piedA { 0%, 100% { rotate: -22deg; } 50% { rotate: 22deg; } }
+@keyframes teteHoche { 0%, 100% { rotate: -2deg; translate: 0 0; } 50% { rotate: 3deg; translate: 2px 1px; } }
+.monde .plateau { bottom: 236px; }
+.monde { min-height: max(100svh, 980px); }
+@media (max-width: 760px) {
+  .monde-chemin { height: 150px; } .monde-chemin .oiseau { width: 64px; }
+  .monde .plateau { bottom: 168px; } .monde { min-height: max(100svh, 860px); }
+}
+@media (prefers-reduced-motion: reduce) { .monde-chemin .anneau path { animation: none; stroke-dasharray: .7 1; } .monde-chemin .dalle, .monde-chemin .oiseau * , .monde-motifs span svg { animation: none !important; } }
+.monde { overflow: clip; }
+.monde-chemin { height: 250px; }
+.monde-chemin .oiseau { width: clamp(100px, 8vw, 132px); bottom: 0; }
+.monde .plateau { bottom: 270px; }
+.monde { min-height: max(100svh, 1010px); }
+@media (max-width: 760px) { .monde-chemin { height: 170px; } .monde-chemin .oiseau { width: 76px; } .monde .plateau { bottom: 186px; } .monde { min-height: max(100svh, 880px); } }
+
+/* ---------- v3.2 : plus aucun trait entre deux sections. Les sections claires n'ont plus de fond à elles (on voit le même papier
+   partout) ; quand une section a une teinte, elle apparaît et disparaît en fondu, en haut comme en bas. ---------- */
+.etagere, .temoins, #roles { background: none !important; margin-top: 0; }
+.etagere, #roles { position: relative; isolation: isolate; }
+.etagere::before, #roles::before { content: ""; position: absolute; inset: 0; z-index: -2; pointer-events: none;
+  -webkit-mask-image: linear-gradient(transparent, #000 220px, #000 calc(100% - 220px), transparent); mask-image: linear-gradient(transparent, #000 220px, #000 calc(100% - 220px), transparent); }
+.etagere::before { background: linear-gradient(#E7DFCE, #E2D9C6 50%, #E7DFCE); }
+#roles::before { background: #E8E1D3; }
+.temoins { background: none !important; }
+/* La section verte des widgets se fond dans le papier en bas, au lieu de s'arrêter net. */
+#coup-doeil { -webkit-mask-image: linear-gradient(#000 calc(100% - 260px), transparent); mask-image: linear-gradient(#000 calc(100% - 260px), transparent); padding-bottom: 220px; }
+/* Les familles : le blanc arrive et repart en fondu. */
+.confiance { margin-top: 0; background: linear-gradient(rgba(255, 255, 255, 0), #fff 260px, #fff calc(100% - 40px), #fff) !important; }
+.conf-rosace { -webkit-mask-image: radial-gradient(closest-side, #000 62%, transparent 98%); mask-image: radial-gradient(closest-side, #000 62%, transparent 98%); top: 44%; width: min(980px, 140vw); }
+
+/* ---------- Le terrain entre la maison et « Comment ça marche » : le sol vu d'en haut, le décor de l'appli ---------- */
+.terrain { position: relative; height: clamp(240px, 26vw, 360px); margin: 10px 0 0; overflow: hidden; pointer-events: none;
+  -webkit-mask-image: linear-gradient(transparent, #000 26%, #000 74%, transparent); mask-image: linear-gradient(transparent, #000 26%, #000 74%, transparent); }
+.terrain .sol { position: absolute; inset: 0; background: radial-gradient(60% 70% at 50% 55%, rgba(226, 205, 160, .45), transparent 75%); }
+.terrain .dec { position: absolute; height: auto; translate: 0 0; filter: drop-shadow(0 10px 8px rgba(26, 28, 32, .12)); opacity: calc(.55 + var(--z) * .45); transform: scale(calc(.75 + var(--z) * .3)); transform-origin: 50% 100%; }
+.terrain .pas, .passage-dalles .pas { position: absolute; width: clamp(26px, 2.6vw, 40px); height: auto; translate: -50% -50%; filter: drop-shadow(0 3px 2px rgba(26, 28, 32, .18)); animation: pasVague 5s ease-in-out infinite; animation-delay: calc(var(--n) * .18s); }
+@keyframes pasVague { 0%, 16%, 100% { margin-top: 0; } 7% { margin-top: -7px; } }
+@media (max-width: 760px) { .terrain .dec { width: calc(var(--z) * 60px + 70px) !important; } .terrain .dec:nth-child(n+22) { display: none; } }
+
+/* ---------- Passage vers les familles (réf. Opacity, Microsoft AI) ---------- */
+.passage { position: relative; pointer-events: none; }
+.passage-dalles { height: clamp(220px, 22vw, 320px); overflow: hidden; background: linear-gradient(170deg, transparent 20%, rgba(255, 255, 255, .7) 70%, #fff); }
+.passage-dalles .flou { position: absolute; border-radius: 50%; filter: blur(46px); opacity: .5; animation: flouPasse 18s ease-in-out infinite alternate; }
+.passage-dalles .f1 { left: -6%; top: 10%; width: 46%; height: 70%; background: #F2D597; }
+.passage-dalles .f2 { left: 38%; top: 30%; width: 34%; height: 60%; background: #BFDCCB; animation-duration: 22s; }
+.passage-dalles .f3 { right: -8%; top: 0; width: 40%; height: 80%; background: #F4E3BD; animation-duration: 26s; }
+@keyframes flouPasse { from { translate: -4% 0; } to { translate: 6% 10%; } }
+
+/* ---------- Passage « chapitre suivant » : la cote d'architecte (réf. Analogue Agency) ---------- */
+.passage-cote { max-width: 1180px; margin: 0 auto; padding: 70px 28px 40px; text-align: center; }
+.passage-cote svg { display: block; width: 100%; height: 60px; overflow: visible; }
+.passage-cote path { fill: none; stroke: #14503F; stroke-width: 2; vector-effect: non-scaling-stroke; stroke-linecap: round; }
+.passage-cote .ligne { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.6s cubic-bezier(.5, 0, .2, 1); }
+.passage-cote .bout, .passage-cote .fl { stroke: #E2A33B; opacity: 0; transition: opacity .4s 1.3s; }
+.passage-cote.trace .ligne { stroke-dashoffset: 0; } .passage-cote.trace .bout, .passage-cote.trace .fl { opacity: 1; }
+.passage-cote p { margin: -44px auto 0; display: inline-grid; gap: 2px; padding: 6px 22px; background: #F1ECE2; position: relative; }
+.passage-cote p span { font-size: 12px; font-weight: 900; letter-spacing: .16em; text-transform: uppercase; color: #6A6A66; }
+.passage-cote p b { font-size: clamp(26px, 3vw, 40px); font-weight: 900; letter-spacing: -.02em; color: #14503F; opacity: .35; transition: opacity .8s 1.1s; }
+.passage-cote.trace p b { opacity: 1; }
+
+/* ---------- La maison : la fiche nettement sous la maison (elle touchait encore l'image aux étapes 1 et 2) ---------- */
+.maison-fiche { bottom: -112px; }
+.maison-scene { margin-bottom: 110px; }
+@media (max-width: 900px) { .maison-fiche { bottom: -96px; } .maison-scene { margin-bottom: 96px; } }
+
+/* ---------- Le fil : la pointe a le même dessin que le trait ---------- */
+.comment-fil .pointe-cerne { stroke: #0A2E25; stroke-width: 13; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+.comment-fil .pointe { stroke: #E2A33B; stroke-width: 7; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+.comment-fil .fond { display: none; }
+
+/* ---------- L'étagère : reflet vert sur l'écran 3, Bellarej et son stylo à la bonne taille sur l'écran 5 ---------- */
+.ecran .vie .reflet { animation-name: refletCadreVert; }
+.ecran .vie .reflet::after { background: linear-gradient(100deg, transparent, rgba(143, 208, 179, .75), transparent); }
+@keyframes refletCadreVert { 0%, 100% { box-shadow: 0 0 0 2px rgba(20, 80, 63, 0); } 45% { box-shadow: 0 0 0 2.5px rgba(20, 80, 63, .85), 0 0 14px rgba(31, 122, 92, .45); } }
+.ecran .vie svg.contour rect { stroke-width: 3.5; filter: drop-shadow(0 0 4px rgba(31, 122, 92, .6)); }
+.ecran .vie .joie .js { left: 66%; top: 6%; width: 26%; }
+
+/* ---------- Témoignages : la photo de devant part vers la droite, les autres attendent à gauche ---------- */
+.temoins-album figure[data-r="1"] { transform: translate(-9%, 3%) rotate(-5deg) scale(.92); }
+.temoins-album figure[data-r="2"] { transform: translate(-16%, 6%) rotate(-9deg) scale(.84); }
+.temoins-album figure.part { transform: translate(115%, -2%) rotate(12deg); }
+
+/* ---------- Rôles : la minuterie devient un anneau doré qui fait le tour de la photo ---------- */
+@property --tour { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+#roles .tabs button.auto::after { content: ""; position: absolute; left: 4px; top: 50%; right: auto; bottom: auto; width: 64px; height: 64px; margin-top: -32px; border-radius: 50%; scale: 1;
+  background: conic-gradient(#F2B84E var(--tour), rgba(242, 184, 78, .18) 0); transform: none;
+  -webkit-mask: radial-gradient(closest-side, transparent 28px, #000 29px, #000 31px, transparent 32px); mask: radial-gradient(closest-side, transparent 28px, #000 29px, #000 31px, transparent 32px);
+  animation: roleTour 6s linear forwards; }
+@keyframes roleTour { from { --tour: 0deg; } to { --tour: 360deg; } }
+
+@media (prefers-reduced-motion: reduce) { .terrain .pas, .passage-dalles .pas, .passage-dalles .flou { animation: none !important; } .passage-cote .ligne { stroke-dashoffset: 0; } }
+.terrain { height: clamp(300px, 30vw, 440px); }
+.passage-cote p { background: none; }
+@media (max-width: 760px) { .terrain { height: 260px; } .terrain .dec { width: calc(var(--z) * 70px + 70px) !important; } }
+
+/* ==================== v3.3 (13 nov., 13 h) : retours des deux vidéos de Nabih ==================== */
+/* Bellarej : c'est le script qui fait marcher les pattes (pas calés sur la distance) ; plus d'animation CSS dessus. */
+.monde-chemin .oiseau .pg, .monde-chemin .oiseau .pd, .monde-chemin .oiseau .corps, .monde-chemin .oiseau .tete { animation: none !important; }
+.monde-chemin .oiseau { aspect-ratio: 160 / 120; width: clamp(110px, 8.6vw, 140px); bottom: 2px; }
+@media (max-width: 760px) { .monde-chemin .oiseau { width: 84px; } }
+
+/* Le fil : un seul vert, uni (le dégradé vert-safran était jugé laid), cerné de vert sombre ; il passe SOUS les numéros. */
+.comment-fil .trace { stroke: #1F7A5C; }
+.comment-fil .pointe { stroke: #1F7A5C; }
+.comment-fil .cerne, .comment-fil .pointe-cerne { stroke: #0A2E25; }
+.comment-fil { z-index: 0; }
+.comment-liste li::before { z-index: 3; }
+
+/* Héros : si la place manque à droite, la bulle de droite passe sous le téléphone. */
+.hero .hero-scene.serre .fl-2 { left: 50%; right: auto; top: calc(100% + 14px); translate: -50% 0; }
+
+/* Terrain : tout bouge, doucement, chacun à son rythme. */
+.terrain .dec { transform-origin: 50% 92%; animation-delay: var(--r); }
+.terrain .dec.palme { animation: decPalme 4.8s ease-in-out infinite; }
+.terrain .dec.marteau { animation: decMarteau .9s ease-in-out infinite; }
+.terrain .dec.maison { animation: decRespire 5.5s ease-in-out infinite; }
+.terrain .dec.grue { animation: decGrue 7s ease-in-out infinite; }
+.terrain .dec.saut { animation: decSaut 1.8s cubic-bezier(.3, 0, .3, 1) infinite; }
+@keyframes decPalme { 0%, 100% { rotate: -1.6deg; } 50% { rotate: 1.6deg; } }
+@keyframes decMarteau { 0%, 100% { translate: 0 0; } 30% { translate: 0 -5px; } 45% { translate: 0 1px; } }
+@keyframes decRespire { 0%, 100% { scale: 1; } 50% { scale: 1.025; } }
+@keyframes decGrue { 0%, 100% { rotate: -2.5deg; } 50% { rotate: 2.5deg; } }
+@keyframes decSaut { 0%, 60%, 100% { translate: 0 0; } 75% { translate: 0 -10px; } }
+.terrain .dec { transform: none; opacity: calc(.7 + var(--z) * .3); }
+@media (max-width: 760px) { .terrain .dec { width: calc(var(--z) * 80px + 50px) !important; } }
+
+/* Passage vers les familles : il finit en blanc, et les familles commencent en blanc (plus de marche entre les deux). */
+.confiance { background: #fff !important; }
+.conf-rosace { opacity: .2; top: 46%; width: min(820px, 120vw); }
+.conf-rosace svg { animation-duration: 55s; } .conf-rosace svg + svg { animation-duration: 38s; }
+
+/* Coup d'œil : des lueurs vertes et dorées qui dérivent lentement derrière les téléphones (comme la lumière d'écrans). */
+#coup-doeil > .frise { display: none; }
+.lueurs { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.lueurs i { position: absolute; width: 46vw; height: 46vw; max-width: 720px; max-height: 720px; border-radius: 50%; filter: blur(70px); opacity: .5; animation: lueurDerive 22s ease-in-out infinite alternate; }
+.lueurs i:nth-child(1) { left: -10%; top: 8%; background: #1F7A5C; }
+.lueurs i:nth-child(2) { right: -12%; top: 20%; background: #2A8C6A; animation-duration: 27s; }
+.lueurs i:nth-child(3) { left: 30%; top: 46%; background: rgba(226, 163, 59, .55); animation-duration: 31s; }
+.lueurs i:nth-child(4) { left: 6%; bottom: 0; background: rgba(143, 208, 179, .35); animation-duration: 25s; }
+@keyframes lueurDerive { from { translate: 0 0; scale: 1; } to { translate: 12% -8%; scale: 1.15; } }
+
+/* Témoignages : les photos qui flottent ne sont jamais coupées par le bord de la section. */
+.temoins { overflow: visible; overflow-x: clip; }
+
+/* Rôles : l'anneau de la minuterie se voit sur le fond vert (doré) comme sur le fond clair (vert). */
+#roles .tabs button.auto::after { background: conic-gradient(#14503F var(--tour), rgba(20, 80, 63, .16) 0); }
+#roles .tabs button.auto[aria-selected="true"]::after { background: conic-gradient(#F2B84E var(--tour), rgba(242, 184, 78, .25) 0); }
+
+/* La cote d'architecte : un trait, des graduations, et deux bouts dessinés en entier. */
+.passage-cote .cote { position: relative; height: 44px; margin: 0 6px; }
+.passage-cote .trait { position: absolute; left: 0; right: 0; top: 50%; height: 2px; margin-top: -1px; background: #14503F; transform-origin: 0 50%; scale: 0 1; transition: scale 1.6s cubic-bezier(.5, 0, .2, 1); }
+.passage-cote .grad { position: absolute; top: 50%; width: 2px; height: 10px; margin: -5px 0 0 -1px; background: #14503F; opacity: 0; transition: opacity .3s; transition-delay: calc(.2s + var(--k) * 70ms); }
+.passage-cote .grad:nth-child(odd) { height: 16px; margin-top: -8px; }
+.passage-cote .bout { position: absolute; top: 50%; width: 18px; height: 30px; margin-top: -15px; opacity: 0; transition: opacity .4s 1.4s; }
+.passage-cote .bout::before { content: ""; position: absolute; top: 0; bottom: 0; width: 2.5px; background: #E2A33B; border-radius: 2px; }
+.passage-cote .bout::after { content: ""; position: absolute; top: 50%; width: 12px; height: 12px; margin-top: -6px; border: solid #E2A33B; border-width: 0 0 2.5px 2.5px; }
+.passage-cote .bout.g { left: 0; } .passage-cote .bout.g::before { left: 0; } .passage-cote .bout.g::after { left: 4px; rotate: 45deg; }
+.passage-cote .bout.d { right: 0; } .passage-cote .bout.d::before { right: 0; } .passage-cote .bout.d::after { right: 4px; rotate: -135deg; }
+.passage-cote.trace .trait { scale: 1 1; } .passage-cote.trace .grad { opacity: .55; } .passage-cote.trace .bout { opacity: 1; }
+.passage-cote p { margin-top: 14px; }
+
+@media (prefers-reduced-motion: reduce) { .terrain .dec, .lueurs i { animation: none !important; } }
+/* Passage vers les familles : tout le bas est déjà blanc quand les familles commencent (plus de marche). */
+.passage-dalles { background: linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, .55) 55%, #fff 92%); }
+
+
+/* ================= v3.4 (13 nov., retour enregistré de 16 h 49) ================= */
+/* Chemin de l'ouverture : pastilles plus petites, plus d'anneau ; Bellarej du film marche sur le chemin. */
+.monde-chemin .past.encours img { animation: encoursLueur 2.8s ease-in-out infinite; }
+@keyframes encoursLueur { 0%, 100% { scale: 1; filter: drop-shadow(0 6px 5px rgba(3, 20, 15, .35)); } 50% { scale: 1.06; filter: drop-shadow(0 0 14px rgba(242, 184, 78, .75)) drop-shadow(0 6px 5px rgba(3, 20, 15, .3)); } }
+.monde-chemin .past img { filter: drop-shadow(0 6px 5px rgba(3, 20, 15, .35)); }
+.monde-chemin .oiseau { position: absolute; left: 0; top: 0; bottom: auto; width: clamp(54px, 4.4vw, 68px); aspect-ratio: 120 / 140; z-index: 4; filter: drop-shadow(0 3px 2px rgba(3, 20, 15, .25)); }
+.monde-chemin .oiseau .mk-pg, .monde-chemin .oiseau .mk-pd { transform-box: fill-box; transform-origin: center; }
+@media (max-width: 760px) { .monde-chemin .oiseau { width: 46px; } }
+
+/* Comment ça marche : les numéros sont opaques (on ne voit jamais le fil à travers), gris tant que le fil ne les a pas atteints,
+   verts dès qu'il y arrive. Seul le contenu des cartes s'éclaire au défilement, plus la carte entière. */
+.comment-liste li { opacity: 1 !important; }
+.comment-liste li > :not(.comment-fil) { opacity: .45; transition: opacity .5s; }
+.comment-liste li.vu > * { opacity: 1; }
+.comment-liste li::before, .comment-liste li.vu::before { background: #EDE7DA; color: #8A8780; box-shadow: inset 0 0 0 2.5px rgba(20, 80, 63, .22), 0 0 0 6px #F4EFE6; scale: 1; transition: background .35s, color .35s, scale .35s, box-shadow .35s; }
+.comment-liste li.atteint::before { background: #14503F; color: #F2B84E; box-shadow: 0 0 0 7px rgba(226, 163, 59, .28), 0 6px 0 #082A22; scale: 1.08; }
+
+/* Terrain : une rangée posée sur le même sol, pas de nuage « fumée » derrière, à peine un fondu en haut et en bas. */
+.terrain { height: clamp(250px, 24vw, 360px); -webkit-mask-image: linear-gradient(transparent, #000 10%, #000 92%, transparent); mask-image: linear-gradient(transparent, #000 10%, #000 92%, transparent); }
+.terrain .sol { background: none; }
+.terrain .dec-pose { position: absolute; bottom: 14%; translate: -50% 0; display: block; z-index: calc(var(--z) * 10); }
+.terrain .dec-pose .dec { position: static; display: block; width: 100% !important; height: auto; opacity: 1; filter: drop-shadow(0 8px 6px rgba(26, 28, 32, .1)); transform-origin: 50% 92%; }
+@media (max-width: 760px) { .terrain { height: 190px; } .terrain .dec-pose.petit { display: none; } .terrain .dec-pose { bottom: 12%; } }
+
+/* Passage vers les familles : plus de formes floues (« on dirait de la fumée »), un fondu simple du papier vers le blanc. */
+.passage-dalles .flou { display: none; }
+.passage-dalles { background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, .6) 50%, #fff 100%); }
+/* Familles : la rosace est entière, sans masque qui la ronge, et n'est plus coupée par le haut de la section. */
+.confiance { overflow: visible; overflow-x: clip; }
+.conf-rosace { -webkit-mask-image: none; mask-image: none; width: min(760px, 108vw); top: 50%; opacity: .16; }
+
+/* Coup d'œil : un seul fond vert, sans bord de dégradé visible ; des étoiles de zellige vivantes. */
+#coup-doeil { background: linear-gradient(180deg, #14503F 0%, #0F4033 30%, #0C3329 70%, #0B3027 100%) !important; }
+#coup-doeil::before { display: none; }
+.cd-motifs { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.cd-motifs span { position: absolute; display: block; aspect-ratio: 1; translate: 0 0; transition: translate 1.2s cubic-bezier(.2, .8, .2, 1); }
+.cd-motifs span svg { display: block; width: 100%; height: 100%; animation: cdTourne 60s linear infinite, cdBrille 7s ease-in-out infinite; animation-delay: calc(var(--k) * -4.3s), calc(var(--k) * -1.1s); }
+.cd-motifs .z0 { color: #F2B84E; opacity: .28; } .cd-motifs .z1 { color: #8FD0B3; opacity: .2; } .cd-motifs .z2 { color: #F2B84E; opacity: .16; filter: blur(.4px); } .cd-motifs .z3 { color: #8FD0B3; opacity: .12; filter: blur(1.2px); }
+@keyframes cdTourne { to { rotate: 360deg; } }
+@keyframes cdBrille { 0%, 100% { scale: 1; } 50% { scale: 1.12; } }
+
+/* Étagère : de la vraie profondeur. La planche se voit de dessus, les téléphones sont posés DESSUS (au milieu de la planche, pas
+   au bord), avec leur ombre de contact ; le chant de la planche passe devant, plus bas. */
+.etag-rang { padding-bottom: 30px; margin-bottom: 92px; }
+.etag-rang::before { left: -2%; right: -2%; bottom: 0; height: 62px; transform: none; clip-path: polygon(4% 0, 96% 0, 100% 100%, 0 100%);
+  background: linear-gradient(180deg, #D8CCB3 0%, #E9DFCB 45%, #F3ECDD 100%); box-shadow: none; z-index: 0; }
+.etag-rang::after { left: -2%; right: -2%; bottom: -26px; height: 26px; border-radius: 0 0 6px 6px; background: linear-gradient(#CDBFA5, #B5A688 70%, #A6977A); box-shadow: 0 30px 30px -10px rgba(26, 28, 32, .3), inset 0 1px 0 rgba(255, 255, 255, .55); }
+.etag-tel::after { left: 4%; right: 4%; bottom: -10px; height: 18px; background: radial-gradient(closest-side, rgba(26, 28, 32, .42), transparent); filter: blur(3px); }
+.etag-tel .ecran { box-shadow: 0 0 0 3px #15171a, 0 0 0 4px #3a3d42, 0 18px 18px -8px rgba(26, 28, 32, .3), 12px 0 24px -14px rgba(26, 28, 32, .25); }
+@media (max-width: 760px) { .etag-rang { padding-bottom: 18px; margin-bottom: 60px; } .etag-rang::before { height: 38px; } .etag-rang::after { bottom: -16px; height: 16px; } }
+
+@media (prefers-reduced-motion: reduce) { .cd-motifs span svg, .monde-chemin .past.encours img { animation: none !important; } }
+/* Les deux couches de fond du coup d'œil restent derrière tout (la règle « .sec.dark > * » les remettait dans le flux). */
+#coup-doeil > .cd-motifs, #coup-doeil > .lueurs { position: absolute; inset: 0; z-index: 0; }
+/* Coup d'œil : le cadre des trois téléphones (une page intégrée) laissait voir un rectangle aux bords nets (ombres coupées à la
+   limite du cadre). Ses bords se fondent maintenant dans le vert ; les lueurs sont plus discrètes, et aucune étoile sous le texte. */
+#coup-doeil .wframe iframe { -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent), linear-gradient(#000 95%, transparent);
+  -webkit-mask-composite: source-in; mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent), linear-gradient(#000 95%, transparent); mask-composite: intersect; }
+#coup-doeil .lueurs i { opacity: .26; }
+#coup-doeil .lueurs i:nth-child(3) { background: rgba(226, 163, 59, .35); }
+
+
+/* ================= v3.5 (13 nov., retour enregistré de 17 h 09) ================= */
+/* Chemin : gris tant que l'étape n'est pas validée, doré quand elle attend, vert quand Bellarej a appuyé. */
+.monde-chemin .past img { display: block; width: 100%; height: auto; transition: filter .35s, opacity .35s; }
+.monde-chemin .past img.e { display: none; }
+.monde-chemin .past[data-s="attente"] img.e { scale: 1.12; }
+.monde-chemin .past[data-s="attente"] img.v { display: none; }
+.monde-chemin .past[data-s="attente"] img.e { display: block; animation: encoursLueur 2.2s ease-in-out infinite; }
+.monde-chemin .past[data-s="gris"] img.v { filter: grayscale(1) brightness(1.08) contrast(.75) drop-shadow(0 5px 4px rgba(3, 20, 15, .25)); opacity: .5; }
+.monde-chemin .past[data-s="ok"] img.v { animation: pastValide .6s cubic-bezier(.2, 1.6, .4, 1); }
+@keyframes pastValide { 0% { scale: .82; } 55% { scale: 1.16; filter: brightness(1.25) drop-shadow(0 0 16px rgba(143, 208, 179, .9)); } 100% { scale: 1; } }
+.monde-chemin .dalle { opacity: .32; filter: grayscale(1) brightness(1.15); animation: none !important; transition: opacity .3s, filter .3s; }
+.monde-chemin .dalle.posee { opacity: 1; filter: drop-shadow(0 3px 2px rgba(3, 20, 15, .35)); animation: dallePosee .38s cubic-bezier(.2, 1.5, .4, 1) !important; }
+@keyframes dallePosee { 0% { margin-top: -16px; scale: 1.35; opacity: 0; } 60% { opacity: 1; } 100% { margin-top: 0; scale: 1; } }
+
+/* Terrain : le socle reste immobile, seul ce qui est posé dessus bouge. */
+.terrain .dec-pose { position: absolute; }
+.terrain .dec-pose .dec { animation: none; }
+.terrain .dec-pose .dec.socle { clip-path: inset(70% -10% -10% -10%); }
+.terrain .dec-pose .dec.dessus { position: absolute !important; left: 0; top: 0; clip-path: inset(-30% -30% 30% -30%); animation-delay: var(--r); }
+.terrain .dec-pose:has(.dessus) .dec.socle { clip-path: inset(70% -10% -10% -10%); }
+.terrain .dec-pose:not(:has(.dessus)) .dec.socle { clip-path: none; }
+.terrain .dessus.palme { transform-origin: 50% 70%; animation: ventPalme 4.6s ease-in-out infinite; }
+.terrain .dessus.marteau { transform-origin: 48% 70%; animation: bellarejCorps 1.3s ease-in-out infinite; }
+.terrain .dessus.grue { transform-origin: 45% 70%; animation: grueTourne 8s ease-in-out infinite; }
+.terrain .dessus.saut { transform-origin: 50% 70%; animation: petitSaut 1.7s cubic-bezier(.3, 0, .3, 1) infinite; }
+.terrain .dessus.maison { animation: none; }
+@keyframes ventPalme { 0%, 100% { transform: rotate(-1.4deg) skewX(.8deg); } 35% { transform: rotate(2.2deg) skewX(-1.6deg); } 60% { transform: rotate(.6deg) skewX(-.4deg); } }
+@keyframes bellarejCorps { 0%, 100% { transform: rotate(0deg) scaleY(1); } 30% { transform: rotate(-2.2deg) scaleY(1.025); } 55% { transform: rotate(1.4deg) scaleY(.975); } }
+@keyframes grueTourne { 0%, 100% { transform: perspective(260px) rotateY(-28deg); } 50% { transform: perspective(260px) rotateY(28deg); } }
+@keyframes petitSaut { 0%, 55%, 100% { transform: translateY(0) scaleY(1); } 62% { transform: translateY(0) scaleY(.9); } 78% { transform: translateY(-9px) scaleY(1.05); } 92% { transform: translateY(0) scaleY(.95); } }
+
+/* La médina à l'horizon, au-dessus du terrain, et les cigognes qui passent (elles comblent le vide entre les étapes et le terrain). */
+.terrain { overflow: visible; height: clamp(330px, 32vw, 480px); margin-top: clamp(-120px, -6vw, -40px); -webkit-mask-image: none; mask-image: none; }
+.terrain .horizon { position: absolute; left: 0; right: 0; bottom: 26%; height: clamp(90px, 11vw, 160px); color: #14503F; opacity: .13; z-index: 0;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
+.terrain .horizon svg { display: block; width: 100%; height: 100%; }
+.terrain .sol { z-index: 1; }
+.terrain .vols { position: absolute; inset: 0 0 40% 0; overflow: hidden; z-index: 0; }
+.terrain .vol { position: absolute; left: 0; width: clamp(34px, 3.2vw, 52px); color: #1A1C20; opacity: .55; animation: volTraverse 34s linear infinite; }
+.terrain .vol svg { display: block; width: 100%; overflow: visible; fill: currentColor; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; }
+.terrain .vol .ai { stroke: none; transform-origin: 30px 15px; animation: aileBat .9s ease-in-out infinite; }
+.terrain .vol .a2 { animation-name: aileBat2; }
+.terrain .vol.v0 { top: 18%; } .terrain .vol.v1 { top: 34%; width: clamp(26px, 2.4vw, 40px); opacity: .4; animation-duration: 46s; animation-delay: -18s; }
+.terrain .vol.v2 { top: 8%; width: clamp(22px, 2vw, 34px); opacity: .32; animation-duration: 52s; animation-delay: -36s; }
+@keyframes volTraverse { from { translate: -8vw 0; } 50% { translate: 50vw -14px; } to { translate: 108vw 6px; } }
+@keyframes aileBat { 0%, 100% { scale: 1 1; } 50% { scale: 1 -0.7; } }
+@keyframes aileBat2 { 0%, 100% { scale: 1 1; } 50% { scale: 1 -0.7; } }
+@media (max-width: 760px) { .terrain { height: 230px; margin-top: -20px; } .terrain .horizon { bottom: 30%; } }
+@media (prefers-reduced-motion: reduce) { .terrain .dessus, .terrain .vol, .terrain .vol .ai, .monde-chemin .past img, .monde-chemin .dalle { animation: none !important; } }
+/* Sur téléphone, la rosace des familles faisait défiler la page de côté : elle tient dans la largeur, et rien ne peut dépasser. */
+.conf-rosace { width: min(760px, 94vw); }
+main#contenu { overflow-x: clip; }
+
+
+/* ================= v3.6 (13 nov., retour enregistré de 17 h 26) ================= */
+/* Terrain : le vrai Bellarej animé de l'appli (bellarej-rig, humeur « batit ») plante son piquet, posé sur le socle de sable. */
+.terrain .dec-pose .rig { position: absolute; left: 20%; bottom: 16%; width: 66%; z-index: 2; }
+.terrain .dec-pose .rig svg { display: block; width: 100%; height: auto; overflow: visible; }
+.terrain .dec-pose:has(.rig) .dec.socle { clip-path: inset(70% -10% -10% -10%); }
+/* La guirlande de lanternes au-dessus du chantier. */
+.terrain .guirlande { position: absolute; left: 4%; right: 4%; top: 2%; height: 30%; z-index: 0; pointer-events: none; }
+.terrain .guirlande .fil-g { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.terrain .guirlande .fil-g path { fill: none; stroke: #9C7442; stroke-width: 1.4; vector-effect: non-scaling-stroke; opacity: .7; }
+.terrain .lanterne { position: absolute; width: clamp(18px, 2vw, 30px); translate: -50% 0; transform-origin: 50% 0; animation: lanterneBalance 4.4s ease-in-out infinite; animation-delay: calc(var(--k) * -.7s); }
+.terrain .lanterne svg { display: block; width: 100%; height: auto; overflow: visible; filter: drop-shadow(0 4px 3px rgba(26, 28, 32, .12)); }
+.terrain .lanterne .verre { animation: lanterneAllume 6s ease-in-out infinite; animation-delay: calc(var(--k) * .45s); }
+.terrain .lanterne::after { content: ""; position: absolute; left: 50%; top: 58%; width: 260%; aspect-ratio: 1; translate: -50% -50%; border-radius: 50%; background: radial-gradient(closest-side, rgba(242, 184, 78, .45), transparent); opacity: 0; animation: lanterneHalo 6s ease-in-out infinite; animation-delay: calc(var(--k) * .45s); pointer-events: none; }
+@keyframes lanterneBalance { 0%, 100% { rotate: -4deg; } 50% { rotate: 4deg; } }
+@keyframes lanterneAllume { 0%, 100% { fill: #D9B77A; } 30%, 70% { fill: #F7C451; } }
+@keyframes lanterneHalo { 0%, 100% { opacity: 0; } 30%, 70% { opacity: 1; } }
+@media (max-width: 760px) { .terrain .guirlande { height: 26%; } }
+
+/* Familles : la toile déborde de la scène ; la section passe devant ses voisines pour que les cercles ne soient jamais coupés. */
+.conf-poussiere { inset: -300px -90px; width: calc(100% + 180px); height: calc(100% + 600px); }
+.confiance { position: relative; z-index: 2; }
+.confiance .conf-scene { position: relative; }
+
+/* Coup d'œil : le bandeau de zellige revient en haut et défile ; le bas n'est plus un fondu, ce sont les arcades. */
+#coup-doeil > .frise { display: block !important; position: absolute; left: 0; right: 0; top: 0; height: 24px; z-index: 2; background-size: 48px 24px; animation: friseDefile 14s linear infinite; }
+#coup-doeil { -webkit-mask-image: none !important; mask-image: none !important; padding-bottom: 110px; }
+.etagere > .arcades { position: absolute; left: 0; right: 0; top: 0; height: 72px; z-index: 1; pointer-events: none; }
+.etagere > .arcades svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.etagere > .arcades .plein { fill: #0B3027; }
+.etagere > .arcades .filet { fill: none; stroke: #E2A33B; stroke-width: 2.4; stroke-dasharray: 18 10; animation: filetCourt 3s linear infinite; }
+.etagere > .arcades .et { fill: #F2B84E; transform-box: fill-box; transform-origin: center; animation: etScintille 3.2s ease-in-out infinite; animation-delay: calc(var(--k) * -.4s); }
+@keyframes filetCourt { to { stroke-dashoffset: -56; } }
+@keyframes etScintille { 0%, 100% { opacity: .55; scale: .85; } 50% { opacity: 1; scale: 1.15; } }
+.etagere { padding-top: 150px; }
+.etagere::before { -webkit-mask-image: linear-gradient(#000, #000 calc(100% - 220px), transparent) !important; mask-image: linear-gradient(#000, #000 calc(100% - 220px), transparent) !important; }
+
+/* Rôles : sur le bouton choisi (vert), l'anneau qui se remplit est crème : il se voit même autour de la photo à bord jaune. */
+#roles .tabs button.auto[aria-selected="true"]::after { background: conic-gradient(#FBF8F2 var(--tour), rgba(251, 248, 242, .22) 0) !important; }
+#roles .tabs button.auto::after { -webkit-mask: radial-gradient(closest-side, transparent 28px, #000 29px, #000 32px, transparent 33px) !important; mask: radial-gradient(closest-side, transparent 28px, #000 29px, #000 32px, transparent 33px) !important; }
+
+@media (prefers-reduced-motion: reduce) { .terrain .lanterne, .terrain .lanterne *, .terrain .lanterne::after, .etagere > .arcades *, #coup-doeil > .frise { animation: none !important; } }
+
+
+/* ================= v3.7 (13 nov., retour enregistré de 17 h 41) ================= */
+/* Terrain : le petit Bellarej de l'appli fait coucou de l'aile, entier (rien n'est découpé). */
+.terrain .dec-pose .rig.petit { left: 4%; width: 92%; bottom: 22%; }
+.terrain .dec-pose:has(.rig.petit) .dec.socle { clip-path: inset(70% -10% -10% -10%); }
+
+/* L'étagère est un vrai mur : enduit à la chaux (grain d'enduit), et en bas un soubassement de zellige posé au mur, avec sa frise.
+   Le mur apparaît et disparaît en fondu (jamais de trait). Les planches tiennent sur des consoles. */
+.etagere::before { background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .38 0 0 0 0 .28 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23f)' opacity='.35'/%3E%3C/svg%3E"),
+    url("../assets/textures/chaux.webp") center / 520px,
+    linear-gradient(#E9E0CD, #E4D9C3) !important;
+  background-blend-mode: multiply, multiply, normal; }
+.etagere::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: clamp(170px, 19%, 300px); z-index: -1; pointer-events: none;
+  background: linear-gradient(#0E3B31, #0E3B31) top / 100% 10px no-repeat, linear-gradient(#E2A33B, #E2A33B) 0 10px / 100% 3px no-repeat, url("../assets/textures/zellige.webp") 0 13px / 150px repeat;
+  box-shadow: inset 0 14px 18px -10px rgba(0, 0, 0, .35);
+  -webkit-mask-image: linear-gradient(#000 70%, transparent); mask-image: linear-gradient(#000 70%, transparent); opacity: .92; }
+.etag-fil { position: relative; z-index: 2; width: fit-content; padding: 6px 8px; border-radius: 99px; background: rgba(251, 248, 242, .94); box-shadow: 0 6px 18px rgba(26, 28, 32, .18); }
+.etag-rang .console { position: absolute; bottom: -78px; width: 34px; height: 54px; z-index: 0; pointer-events: none;
+  background: linear-gradient(135deg, #3B3027 0 48%, transparent 50%); clip-path: polygon(0 0, 100% 0, 100% 14%, 18% 100%, 0 100%); filter: drop-shadow(3px 5px 4px rgba(0, 0, 0, .3)); }
+.etag-rang .console::after { content: ""; position: absolute; left: 0; top: 0; width: 100%; height: 6px; background: #2A221C; }
+.etag-rang .console.g { left: 9%; } .etag-rang .console.d { right: 9%; transform: scaleX(-1); }
+@media (max-width: 760px) { .etag-rang .console { width: 20px; height: 32px; bottom: -48px; } .etagere::after { height: 120px; } }
+
+/* Témoignages : des polaroïds de plus ; au premier plan, grands et flous. Les portraits sont, eux aussi, des polaroïds. */
+.temoins-avant { position: absolute; inset: 0; pointer-events: none; z-index: 4; }
+.temoins-avant figure { position: absolute; left: var(--x); top: var(--y); width: var(--w); margin: 0; padding: 8px 8px 26px; background: #FFFDF7; border-radius: 4px; box-shadow: 0 24px 40px rgba(26, 28, 32, .22);
+  rotate: var(--a); filter: blur(var(--b)); animation: souvenirFlotte var(--d) ease-in-out infinite alternate; }
+.temoins-avant figure img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; }
+.temoins-album figure { background: #FFFDF7; padding: 12px 12px 58px; border-radius: 6px; box-sizing: border-box; }
+.temoins-album figure img { border-radius: 3px; }
+.temoins-album figure::after { content: ""; position: absolute; left: 50%; top: -12px; width: 92px; height: 26px; translate: -50% 0; rotate: -3deg; background: rgba(242, 228, 196, .82); box-shadow: 0 1px 2px rgba(0, 0, 0, .08); }
+@media (max-width: 800px) { .temoins-avant { display: none; } }
+
+/* Rôles → « Chapitre suivant » → tiers de confiance : un papier de plan (fin quadrillage d'architecte, grain de papier) qui
+   apparaît progressivement après les témoignages et s'efface progressivement avant la suite. On garde la couleur crème. */
+#roles::before, .passage-cote::before, #gains::before { content: ""; position: absolute; inset: 0; z-index: -2; pointer-events: none;
+  background:
+    linear-gradient(rgba(20, 80, 63, .09) 1px, transparent 1px) 0 0 / 120px 120px,
+    linear-gradient(90deg, rgba(20, 80, 63, .09) 1px, transparent 1px) 0 0 / 120px 120px,
+    linear-gradient(rgba(20, 80, 63, .045) 1px, transparent 1px) 0 0 / 24px 24px,
+    linear-gradient(90deg, rgba(20, 80, 63, .045) 1px, transparent 1px) 0 0 / 24px 24px,
+    url("../assets/textures/chaux.webp") center / 600px,
+    #ECE5D4 !important;
+  background-blend-mode: normal, normal, normal, normal, multiply, normal; }
+#roles::before { -webkit-mask-image: linear-gradient(transparent, #000 320px) !important; mask-image: linear-gradient(transparent, #000 320px) !important; }
+.passage-cote { position: relative; isolation: isolate; }
+.passage-cote::before { -webkit-mask-image: none; mask-image: none; }
+#gains { position: relative; isolation: isolate; }
+#gains::before { -webkit-mask-image: linear-gradient(#000 calc(100% - 320px), transparent) !important; mask-image: linear-gradient(#000 calc(100% - 320px), transparent) !important; }
+.ciel .plan-trait.petit path { stroke-width: 1.4; }
+@media (prefers-reduced-motion: reduce) { .temoins-avant figure { animation: none !important; } }
+/* Le papier de plan couvre toute la largeur de l'écran, même quand la section est plus étroite (sinon : deux traits verticaux). */
+#roles::before, .passage-cote::before, #gains::before { left: 50% !important; right: auto !important; width: 100vw; translate: -50% 0; }
+/* Sur téléphone, les polaroïds ajoutés (placés pour l'écran large) passeraient derrière la citation : on ne les montre pas. */
+@media (max-width: 800px) { .temoins-souvenirs figure:nth-child(n+7) { display: none; } }
+
+/* v3.8 — chemin : la pastille s'enfonce sous Bellarej, s'éteint en fin de tour, et la première se rallume avec une animation. */
+.monde-chemin .past { transform-origin: 50% 80%; }
+.monde-chemin .past[data-s="attente"] img.e { animation: pastEveil .8s cubic-bezier(.2, 1.5, .4, 1), encoursLueur 2.2s ease-in-out .8s infinite; }
+@keyframes pastEveil { 0% { scale: .7; opacity: .3; filter: grayscale(1); } 45% { scale: 1.3; opacity: 1; filter: brightness(1.3) drop-shadow(0 0 22px rgba(242, 184, 78, .95)); } 100% { scale: 1.12; } }
+.monde-chemin .past[data-s="attente"]::after { content: ""; position: absolute; inset: -18%; border-radius: 50%; border: 3px solid #F2B84E; opacity: 0; pointer-events: none; animation: pastOnde .9s ease-out; }
+@keyframes pastOnde { 0% { scale: .5; opacity: .9; } 100% { scale: 1.5; opacity: 0; } }
+.monde-chemin .past[data-s="gris"] img.v { animation: pastEteint .5s ease-out; }
+@keyframes pastEteint { 0% { scale: 1; filter: none; opacity: 1; } 40% { scale: .88; } 100% { scale: 1; } }
+.monde-chemin .dalle:not(.posee) { transition: opacity .45s, filter .45s, translate .45s; translate: 0 -6px; }
+@media (prefers-reduced-motion: reduce) { .monde-chemin .past[data-s="attente"] img.e, .monde-chemin .past[data-s="attente"]::after, .monde-chemin .past[data-s="gris"] img.v { animation: none; } }
+
+/* v3.8 — la maison en carrousel « sélection de personnage » : devant, en fond à gauche (la précédente), en fond à droite (la suivante). */
+.maison-vue img { position: absolute; inset: 0; transition: translate .8s cubic-bezier(.3, .9, .25, 1), scale .8s cubic-bezier(.3, .9, .25, 1), opacity .6s, filter .6s; will-change: translate, scale; }
+.maison-vue img[data-d="0"] { z-index: 3; translate: 0 0; scale: 1; opacity: 1; }
+.maison-vue img[data-d="-1"], .maison-vue img[data-d="1"] { z-index: 1; scale: .5; opacity: .5; filter: saturate(.75) blur(1.5px) drop-shadow(0 14px 12px rgba(26, 28, 32, .16)); animation: none; }
+.maison-vue img[data-d="-1"] { translate: -34% -22%; }
+.maison-vue img[data-d="1"] { translate: 30% -26%; }
+.maison-vue img[data-d="-2"], .maison-vue img[data-d="2"] { z-index: 0; scale: .3; opacity: 0; animation: none; pointer-events: none; }
+.maison-vue img[data-d="-2"] { translate: -50% -30%; }
+.maison-vue img[data-d="2"] { translate: 46% -34%; }
+.maison-vue.change img:not([data-d="0"]) { animation: none; }
+.maison-rail { position: relative; z-index: 4; }
+@media (max-width: 900px) { .maison-vue img[data-d="-1"] { translate: -38% -18%; } .maison-vue img[data-d="1"] { translate: 38% -18%; } }
+@media (prefers-reduced-motion: reduce) { .maison-vue img { transition: none; } }
+
+/* v3.8 — plus d’écran vert avec logo pendant que l’appli se charge : le fond crème de l’appli, sans logo. */
+.lp-wait { background: #F1ECE2; } .lp-wait img { opacity: 0; }
+
+/* v3.8 — l'étagère : un vrai mur marocain (enduit à la chaux nuancé, un peu de chaos : fissures, enduit tombé sur la brique),
+   un rappel de zellige en haut, le soubassement de zellige en bas, et des consoles en cèdre sculpté vissées au mur. */
+.etagere::before { background: url("../assets/textures/mur-maroc.webp") center top / 1150px repeat, #E4D6BC !important; background-blend-mode: normal !important; }
+.etagere > .frise-mur { position: absolute; left: 0; right: 0; top: 96px; height: 46px; z-index: 0; pointer-events: none;
+  background: linear-gradient(#E2A33B, #E2A33B) top / 100% 3px no-repeat, linear-gradient(#0E3B31, #0E3B31) 0 3px / 100% 6px no-repeat,
+    linear-gradient(#0E3B31, #0E3B31) bottom / 100% 6px no-repeat, url("../assets/textures/zellige.webp") 0 9px / 92px repeat-x;
+  box-shadow: 0 8px 12px -6px rgba(40, 28, 16, .35); animation: friseMur 9s linear infinite; }
+@keyframes friseMur { to { background-position: 0 0, 0 3px, 0 100%, 92px 9px; } }
+.etag-rang .console { position: absolute; bottom: -104px; width: 84px; height: 101px; background: none; clip-path: none; z-index: 0; pointer-events: none;
+  filter: drop-shadow(10px 12px 6px rgba(60, 40, 20, .32)); }
+.etag-rang .console::after { content: none; }
+.etag-rang .console svg { display: block; width: 100%; height: 100%; }
+.etag-rang .console.d { transform: none; filter: drop-shadow(-10px 12px 6px rgba(60, 40, 20, .32)); }
+@media (max-width: 760px) { .etag-rang .console { width: 36px; height: 44px; bottom: -50px; } .etagere > .frise-mur { top: 70px; height: 30px; background-size: 100% 3px, 100% 5px, 100% 5px, 60px; } .etagere::before { background-size: 640px !important; } }
+@media (prefers-reduced-motion: reduce) { .etagere > .frise-mur { animation: none; } }
+
+/* v3.8 — témoignages : le nom et le rôle écrits dans la marge blanche du polaroïd. */
+.temoins-album figcaption { position: absolute; left: 12px; right: 12px; bottom: 8px; height: 46px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 1px; text-align: center; rotate: -1.2deg; }
+.temoins-album figcaption b { font: italic 800 clamp(16px, 1.5vw, 21px)/1.1 Nunito, system-ui, sans-serif; color: #14503F; letter-spacing: .01em; }
+.temoins-album figcaption span { font: 700 clamp(11px, .95vw, 13px)/1.2 Nunito, system-ui, sans-serif; color: #8A6A3A; text-transform: uppercase; letter-spacing: .08em; }
+.temoins-avant figure { transition: left .4s, top .4s; }
+@media (max-width: 900px) { .maison-rail { margin-top: 118px; z-index: 1; } .maison-vue img[data-d="-1"], .maison-vue img[data-d="1"] { scale: .42; } .maison-vue img[data-d="-1"] { translate: -30% -22%; } .maison-vue img[data-d="1"] { translate: 30% -22%; } }
+
+/* v3.9 — l'étagère sur un mur propre : l'enduit de la même couleur, avec des carreaux de zellige ton sur ton gravés dedans
+   (Nabih : « le mur doit être propre… comme motif, des carreaux, les traits de la même couleur à un autre degré »). */
+.etagere::before { background:
+    radial-gradient(120% 70% at 50% 30%, rgba(255, 252, 244, .55), transparent 70%),
+    url("../assets/textures/mur-zellige.svg") center top / 160px repeat,
+    #E6DAC2 !important; background-blend-mode: normal !important; }
+@media (max-width: 760px) { .etagere::before { background-size: auto, 110px, auto !important; } }
+
+/* v3.9 — « Votre argent » plus grand (Nabih : « ce texte-là, un peu plus grand ») ; plus de fond derrière, il se pose sur le papier. */
+.passage-cote p { background: none; margin-top: 6px; }
+.passage-cote p span { font-size: 14px; }
+.passage-cote p b { font-size: clamp(40px, 5.2vw, 72px); line-height: 1.05; }
+
+/* v3.10 (Nabih, 19 h 22 : « ça arrive dans la gueule, il faut que ça glisse, comme si on te présentait plusieurs cartes ») :
+   le flottement de la maison animait la même propriété que le glissement et l'écrasait. Le flottement passe sur le cadre entier ;
+   chaque maison glisse comme une carte (elle s'incline un peu en reculant) et rien ne saute. */
+.maison-vue { animation: maisonFlotte 5s ease-in-out infinite; }
+.maison-vue img, .maison-vue.change img, .maison-vue.change img[data-d="0"] { animation: none !important; transition: translate 1.6s cubic-bezier(.45, 0, .25, 1), scale 1.6s cubic-bezier(.45, 0, .25, 1), rotate 1.6s cubic-bezier(.45, 0, .25, 1), opacity 1.3s ease-in-out, filter 1.3s ease-in-out; }
+.maison-vue img[data-d="0"] { rotate: 0deg; }
+.maison-vue img[data-d="-1"], .maison-vue img[data-d="-2"] { rotate: -7deg; }
+.maison-vue img[data-d="1"], .maison-vue img[data-d="2"] { rotate: 7deg; }
+@media (prefers-reduced-motion: reduce) { .maison-vue { animation: none; } }
+
+/* ---------- v3.11 (Nabih, retour de 19 h 22) ---------- */
+/* Ouverture : une carte du monde posée sur la table (ton sur ton, quadrillage safran), bien centrée, et cinq outils de chantier
+   aux couleurs de TEEQA posés autour, coupés par les bords comme sur sa référence. Les icônes flottantes sont retirées. */
+.monde-table { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+.monde-carte { position: absolute; left: 50%; top: 47%; width: max(1560px, 122vw); aspect-ratio: 1600 / 746; translate: -50% -50%;
+  background: url("../assets/vitrine/monde-carte.svg") center / cover no-repeat; transform: perspective(1900px) rotateX(16deg); transform-origin: 50% 60%;
+  -webkit-mask-image: radial-gradient(ellipse 62% 66% at 50% 50%, #000 62%, transparent 100%); mask-image: radial-gradient(ellipse 62% 66% at 50% 50%, #000 62%, transparent 100%);
+  animation: carteArrive 1.6s cubic-bezier(.2, .8, .2, 1) both; }
+@keyframes carteArrive { from { opacity: 0; scale: 1.06; } to { opacity: 1; scale: 1; } }
+.monde .scene25, .monde .monde-chemin, .monde .monde-txt { z-index: 1; }
+.monde-table .outil { position: absolute; display: block; height: auto; filter: drop-shadow(0 14px 10px rgba(3, 20, 15, .42)); animation: outilPose .9s cubic-bezier(.2, 1.2, .4, 1) both; }
+@keyframes outilPose { from { opacity: 0; translate: 0 -26px; } to { opacity: 1; translate: 0 0; } }
+.monde-table .metre { width: clamp(96px, 9.5vw, 150px); left: clamp(-34px, -1.5vw, -14px); top: 104px; rotate: 14deg; animation-delay: .5s; }
+.monde-table .crayon { width: clamp(190px, 21vw, 330px); left: clamp(-120px, -6vw, -70px); top: 43%; rotate: 31deg; animation-delay: .65s; }
+.monde-table .equerre { width: clamp(150px, 16vw, 250px); right: clamp(-90px, -4vw, -50px); top: 84px; rotate: -100deg; animation-delay: .8s; }
+.monde-table .boussole { width: clamp(120px, 12.5vw, 196px); left: clamp(-70px, -3.4vw, -44px); bottom: 232px; animation-delay: .95s; }
+.monde-table .truelle { width: clamp(180px, 20vw, 310px); right: clamp(-130px, -7vw, -84px); bottom: 262px; rotate: -27deg; animation-delay: 1.1s; }
+@media (max-width: 1100px) { .monde-table .metre, .monde-table .truelle { display: none; } .monde-table .equerre { top: auto; bottom: 300px; rotate: -96deg; } }
+@media (max-width: 760px) { .monde-carte { width: 230vw; top: 52%; } .monde-table .equerre { display: none; } .monde-table .crayon { width: 150px; left: -84px; top: 50%; } .monde-table .boussole { width: 78px; left: -46px; bottom: 150px; } }
+
+/* Le ciel du héros : les nuages restent comme ils sont, mais le fond devient un vrai ciel sans passer au bleu. Plus dense en haut
+   (vert sauge très clair), plus lumineux vers l'horizon (crème chaud), un soleil voilé d'un côté, des voiles de brume en bas, et
+   trois profondeurs de nuages : les lointains sont petits, pâles et lents, les proches grands et nets. */
+.hero.avec-ciel > .ciel::before { content: ""; position: absolute; inset: 0; pointer-events: none; background:
+  radial-gradient(560px 400px at 86% 20%, rgba(255, 238, 196, .9), rgba(255, 238, 196, .3) 46%, transparent 72%),
+  linear-gradient(180deg, rgba(241, 236, 226, 0) 0%, #DCE8DF 15%, #E6EEE3 36%, #F3EEDC 62%, #FBF3E2 82%, rgba(241, 236, 226, 0) 100%); }
+.hero.avec-ciel > .ciel::after { content: ""; position: absolute; left: -10%; right: -10%; bottom: 6%; height: 34%; pointer-events: none; filter: blur(14px); opacity: .9; background:
+  radial-gradient(60% 26% at 22% 40%, rgba(255, 253, 248, .85), transparent 70%), radial-gradient(52% 22% at 70% 62%, rgba(255, 253, 248, .75), transparent 70%), radial-gradient(40% 18% at 48% 86%, rgba(255, 246, 226, .8), transparent 70%);
+  animation: brumeDerive 46s ease-in-out infinite alternate; }
+@keyframes brumeDerive { from { translate: -3% 0; } to { translate: 3% 0; } }
+.hero.avec-ciel > .ciel > .nuage:nth-child(3n) { width: calc(var(--w) * .46); opacity: .34; filter: blur(1.4px); animation-duration: calc(var(--d, 60s) * 1.9); }
+.hero.avec-ciel > .ciel > .nuage:nth-child(3n+1) { width: calc(var(--w) * 1.22); opacity: .85; animation-duration: calc(var(--d, 60s) * .8); }
+.hero.avec-ciel > .ciel > .nuage:nth-child(3n+2) { width: calc(var(--w) * .76); opacity: .58; filter: blur(.5px); animation-duration: calc(var(--d, 60s) * 1.3); }
+@media (prefers-reduced-motion: reduce) { .monde-carte, .monde-table .outil, .hero.avec-ciel > .ciel::after { animation: none; } }
+/* Le ciel va d'un bord à l'autre de la fenêtre et se fond en haut et en bas : plus de rectangle visible. */
+.hero.avec-ciel > .ciel { left: 50%; right: auto; width: 100vw; translate: -50% 0; top: -8%; bottom: -6%;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 16%, #000 84%, transparent 100%); mask-image: linear-gradient(180deg, transparent 0, #000 16%, #000 84%, transparent 100%); }
+.monde-carte { opacity: .9; }
+
+/* ---------- v3.12 (Nabih, retour de 19 h 46) ---------- */
+/* La carte défile lentement de droite à gauche, en boucle : elle fait 360° de large, la jointure ne se voit pas. */
+.monde-carte { background: none; overflow: hidden; }
+.monde-carte::before { content: ""; position: absolute; left: 0; top: 0; width: 200%; height: 100%; background: url("../assets/vitrine/monde-carte.svg") 0 0 / 50% 100% repeat-x; animation: carteDefile 170s linear infinite; will-change: transform; }
+@keyframes carteDefile { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .monde-carte::before { animation: none; } }
+/* Le ciel du héros (Nabih : « je te parlais du fond, pas des nuages ») : une vraie photo de ciel, avec ses nuages en volume et sa
+   profondeur vers l'horizon, ramenée dans nos couleurs (sauge en haut, doré vers l'horizon, pas de bleu). Elle dérive très lentement. */
+.hero.avec-ciel > .ciel::before { inset: -4% -6%; background: url("../assets/vitrine/ciel/ciel.webp") center 30% / cover no-repeat; animation: cielPhoto 70s ease-in-out infinite alternate; }
+@keyframes cielPhoto { from { transform: translateX(-3%) scale(1.04); } to { transform: translateX(3%) scale(1.1); } }
+.hero.avec-ciel > .ciel::after { opacity: .45; }
+.hero.avec-ciel > .ciel { top: -22%; bottom: -10%; -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 22%, #000 80%, transparent 100%); mask-image: linear-gradient(180deg, transparent 0, #000 22%, #000 80%, transparent 100%); }
+@media (prefers-reduced-motion: reduce) { .hero.avec-ciel > .ciel::before { animation: none; } }
+/* Proposition pour le vide autour de « Votre maison monte » (Nabih : « tu ne m'as rien proposé ici ») : la table de l'architecte.
+   Un papier quadrillé très pâle, plus net au centre, et le plan de la maison qui se trace derrière elle, trait par trait. */
+.maison.avec-ciel > .ciel { left: 50%; right: auto; width: 100vw; translate: -50% 0; top: -120px; bottom: -60px;
+  background: linear-gradient(rgba(20, 80, 63, .075) 1px, transparent 1px) 0 0 / 34px 34px, linear-gradient(90deg, rgba(20, 80, 63, .075) 1px, transparent 1px) 0 0 / 34px 34px,
+    linear-gradient(rgba(20, 80, 63, .11) 1.5px, transparent 1.5px) 0 0 / 170px 170px, linear-gradient(90deg, rgba(20, 80, 63, .11) 1.5px, transparent 1.5px) 0 0 / 170px 170px;
+  -webkit-mask-image: radial-gradient(ellipse 60% 62% at 50% 52%, #000 30%, transparent 78%); mask-image: radial-gradient(ellipse 60% 62% at 50% 52%, #000 30%, transparent 78%);
+  animation: papierGlisse 40s linear infinite; }
+@keyframes papierGlisse { to { background-position: 34px 34px, 34px 34px, 170px 170px, 170px 170px; } }
+@media (prefers-reduced-motion: reduce) { .maison.avec-ciel > .ciel { animation: none; } }
+/* Les cinq outils sont maintenant en pâte d'argile, comme les icônes de l'appli (images générées, assets/vitrine/outils/).
+   Le casque de chantier remplace la boussole, sans rapport avec la construction. */
+.monde-table .outil { filter: drop-shadow(0 16px 12px rgba(3, 20, 15, .45)); }
+.monde-table .metre { width: clamp(110px, 11vw, 176px); left: clamp(-40px, -1.6vw, -18px); top: 98px; rotate: 12deg; }
+.monde-table .crayon { width: clamp(200px, 22vw, 340px); left: clamp(-120px, -6vw, -70px); top: 42%; rotate: 29deg; }
+.monde-table .equerre { width: clamp(150px, 15vw, 236px); right: clamp(-84px, -4vw, -46px); top: 78px; rotate: 24deg; }
+.monde-table .casque { width: clamp(128px, 13vw, 204px); left: clamp(-66px, -3vw, -40px); bottom: 222px; rotate: -14deg; animation-delay: .95s; }
+.monde-table .truelle { width: clamp(66px, 7vw, 108px); right: clamp(-8px, 1vw, 22px); bottom: 150px; rotate: 62deg; }
+@media (max-width: 1100px) { .monde-table .equerre { top: auto; bottom: 320px; rotate: 20deg; } }
+@media (max-width: 760px) { .monde-table .crayon { width: 150px; left: -84px; top: 50%; } .monde-table .casque { width: 84px; left: -40px; bottom: 150px; } }
+
+
+/* ---------- v3.13 (Nabih, retour de 20 h 05) ---------- */
+/* Outils : redétourés proprement (détourage du sujet de macOS : plus de halo clair ni de liseré blanc). L'équerre est retirée
+   (objet inventé, graduations fausses) ; la truelle prend sa place en haut à droite. Le crayon monte.
+   Ombres : les objets sont POSÉS sur la carte et vus de haut, éclairés du haut à gauche. Trois ombres chacun : une de contact,
+   nette et sombre, une moyenne, une portée large et douce. Leur direction est la même à l'écran pour tous (les décalages sont
+   calculés pour l'angle de chaque objet, car l'ombre tourne avec lui). */
+.monde-table .outil { filter: drop-shadow(var(--cx) var(--cy) 2px rgba(2, 16, 12, .6)) drop-shadow(calc(var(--ox) * .45) calc(var(--oy) * .45) 9px rgba(2, 16, 12, .4)) drop-shadow(var(--ox) var(--oy) 26px rgba(2, 16, 12, .45)); }
+.monde-table .metre { --cx: 4px; --cy: 4.3px; --ox: 18px; --oy: 19px; }
+.monde-table .crayon { --cx: 5px; --cy: 2.9px; --ox: 23px; --oy: 12.5px; top: 29%; }
+.monde-table .casque { --cx: 2.4px; --cy: 7.8px; --ox: 11.6px; --oy: 34.6px; width: clamp(140px, 14vw, 220px); left: clamp(-34px, -1vw, -12px); bottom: 200px; }
+.monde-table .truelle { --cx: 4.8px; --cy: 3.4px; --ox: 21.7px; --oy: 14.4px; width: clamp(64px, 6.4vw, 104px); right: clamp(14px, 3.5vw, 64px); top: 92px; bottom: auto; rotate: 24deg; }
+@media (max-width: 760px) { .monde-table .casque { width: 96px; left: -30px; bottom: 150px; } .monde-table .truelle { width: 44px; right: 6px; top: 110px; } .monde-table .crayon { top: 44%; } }
+/* Ciel du héros : la photo est refaite en sable doré et crème (plus aucun bleu ni gris-vert), nuages blancs crème en volume.
+   Les nuages dessinés par-dessus ne sont plus grisés : leur corps est blanc crème, leur liseré doré reste. */
+.hero.avec-ciel > .ciel::before { background-image: url("../assets/vitrine/ciel/ciel.webp?v=313"); }
+.hero.avec-ciel > .ciel .nuage path.corps { fill: #FFFDF5; fill-opacity: .62; }
+.hero.avec-ciel > .ciel > .nuage:nth-child(3n) { opacity: .5; } .hero.avec-ciel > .ciel > .nuage:nth-child(3n+2) { opacity: .75; }
+/* « Votre maison monte » : la table de l'architecte était trop pâle pour se voir. Quadrillage et plans tracés nettement plus présents,
+   sur une zone plus large ; le papier garde un centre calme derrière le texte. */
+.maison.avec-ciel > .ciel { background: linear-gradient(rgba(20, 80, 63, .13) 1px, transparent 1px) 0 0 / 34px 34px, linear-gradient(90deg, rgba(20, 80, 63, .13) 1px, transparent 1px) 0 0 / 34px 34px,
+    linear-gradient(rgba(20, 80, 63, .24) 1.5px, transparent 1.5px) 0 0 / 170px 170px, linear-gradient(90deg, rgba(20, 80, 63, .24) 1.5px, transparent 1.5px) 0 0 / 170px 170px;
+  -webkit-mask-image: radial-gradient(ellipse 78% 74% at 50% 50%, #000 42%, transparent 92%); mask-image: radial-gradient(ellipse 78% 74% at 50% 50%, #000 42%, transparent 92%); }
+.maison.avec-ciel > .ciel .plan-trait { opacity: .95; }
+.maison.avec-ciel > .ciel .plan-trait path { stroke-width: 2; opacity: .5; }
+.maison.avec-ciel > .ciel .plan-trait path.or { opacity: .8; }
+
+/* ---------- v3.14 (Nabih, retour de 21 h 11) ---------- */
+/* Maison : au changement d'étape, les deux maisons ne se touchent plus et ne deviennent plus transparentes l'une sur l'autre.
+   Les maisons d'à côté attendent en hauteur (en arrière, à gauche et à droite), assez loin pour ne pas toucher celle de devant ;
+   celle qui part recule d'abord, celle qui arrive ne descend qu'une fois la place libre. */
+.maison-vue img[data-d="-1"], .maison-vue img[data-d="1"] { scale: .4; opacity: .92; filter: saturate(.8) blur(.6px) drop-shadow(0 12px 10px rgba(26, 28, 32, .14)); }
+.maison-vue img[data-d="-1"] { translate: -40% -72%; }
+.maison-vue img[data-d="1"] { translate: 40% -72%; }
+.maison-vue img[data-d="-2"] { translate: -62% -96%; scale: .25; }
+.maison-vue img[data-d="2"] { translate: 62% -96%; scale: .25; }
+.maison-vue img, .maison-vue.change img, .maison-vue.change img[data-d="0"] {
+  transition: translate 1.1s cubic-bezier(.45, 0, .25, 1), scale 1.1s cubic-bezier(.45, 0, .25, 1), rotate 1.1s cubic-bezier(.45, 0, .25, 1), opacity .9s ease-in-out, filter .9s ease-in-out; }
+.maison-vue img.entre { transition-delay: .7s; }
+@media (max-width: 900px) { .maison-vue img[data-d="-1"] { translate: -36% -64%; scale: .34; } .maison-vue img[data-d="1"] { translate: 36% -64%; scale: .34; } }
+.maison-vue img.entre { transition-delay: .5s; }
+/* Celles qui sortent du carrousel s'effacent vite, sans croiser les autres (saut de plusieurs étapes au clic). */
+.maison-vue img[data-d="-2"], .maison-vue img[data-d="2"] { transition: opacity .3s ease-out, scale .3s ease-out, translate .3s ease-out, filter .3s; }
+
+/* « Comment ça marche » : le titre restait en haut et la colonne de gauche se vidait. `overflow: hidden` empêchait le titre de
+   suivre (il en faisait un cadre de défilement) : `clip` coupe pareil sans casser le collant. Sous le titre, la scène de l'étape. */
+.comment { overflow: clip; }
+.comment > .comment-fixe { top: 110px; }
+.comment-scene { position: relative; margin-top: 18px; width: min(100%, 400px); aspect-ratio: 1 / .92; display: grid; place-items: center; }
+.comment-scene::before { content: ""; position: absolute; inset: 6% 4% 12%; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(242, 184, 78, .34), rgba(242, 184, 78, .12) 55%, transparent 72%); }
+.comment-scene::after { content: ""; position: absolute; left: 22%; right: 22%; bottom: 13%; height: 7%; border-radius: 50%; background: radial-gradient(closest-side, rgba(20, 50, 40, .28), transparent); }
+.comment-scene .rosace { position: absolute; inset: 0; margin: auto; width: 92%; color: rgba(20, 80, 63, .22); animation: rosaceTourne 60s linear infinite; }
+@keyframes rosaceTourne { to { rotate: 360deg; } }
+.comment-scene img { position: absolute; width: 58%; z-index: 1; opacity: 0; scale: .7; translate: 0 18px; rotate: -8deg;
+  transition: opacity .45s ease, scale .7s cubic-bezier(.2, 1.4, .4, 1), translate .7s cubic-bezier(.2, 1.4, .4, 1), rotate .7s; filter: drop-shadow(0 18px 16px rgba(30, 40, 30, .22)); }
+.comment-scene img.on { opacity: 1; scale: 1; translate: 0 0; rotate: -3deg; animation: objFlotte 5s ease-in-out infinite .7s; }
+.comment-compte { position: absolute; left: 0; bottom: 0; margin: 0; display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; z-index: 2; }
+.comment-compte b { font: 900 46px/1 Nunito, system-ui, sans-serif; color: #14503F; letter-spacing: -.03em; }
+.comment-compte span { font-weight: 800; color: #8A8478; }
+.comment-compte em { flex-basis: 100%; font-style: normal; font-weight: 800; color: #B07A1E; }
+@media (max-width: 900px) { .comment-scene { display: none; } }
+@media (prefers-reduced-motion: reduce) { .comment-scene .rosace, .comment-scene img.on { animation: none; } }
+
+/* Ouverture : nouveau mètre ruban en volume (Nabih : « trop plat comparé au stylo »), un peu plus grand, moins coupé. */
+.monde-table .metre { width: clamp(130px, 12vw, 200px); left: clamp(-36px, -1.6vw, -16px); top: 92px; rotate: -10deg; }
+@media (max-width: 760px) { .monde-table .metre { width: 92px; left: -24px; top: 84px; } }
+/* L'équerre revient, mais une vraie (modélisée dans Blender d'après des photos d'équerres 45° : angle droit, trou, graduations
+   au centimètre ; plus l'objet inventé par l'IA). Posée en bas à droite, coupée par le bord. */
+.monde-table .equerre { display: block; --cx: 4px; --cy: 4px; --ox: 18px; --oy: 18px; width: clamp(170px, 17vw, 270px); right: clamp(-70px, -3.4vw, -36px); top: auto; bottom: 120px; rotate: -18deg; animation-delay: 1.2s; }
+@media (max-width: 1100px) { .monde-table .equerre { bottom: 90px; width: 150px; } }
+@media (max-width: 760px) { .monde-table .equerre { display: none; } }
+.monde-table .equerre { bottom: auto; top: min(58%, 520px); }
+
+/* ---------- v3.15 (Nabih, retour de 21 h 51) ---------- */
+/* Le chemin de Bellarej descend (Nabih : « baisse-le à ce niveau-là ») : il y avait un grand vide vert dessous. */
+.monde-chemin { bottom: -84px; }
+@media (max-width: 760px) { .monde-chemin { bottom: -40px; } }
+/* Outils « posés » sur la carte (Nabih : « il manque la sensation que l'objet est posé ») : l'ombre colle à l'objet
+   (contact très sombre et serré, ombre portée courte), au lieu d'une grande ombre lointaine qui le faisait flotter. */
+.monde-table .outil { filter: drop-shadow(calc(var(--cx) * .5) calc(var(--cy) * .5) 1px rgba(1, 10, 8, .75)) drop-shadow(var(--cx) var(--cy) 4px rgba(1, 12, 9, .5)) drop-shadow(calc(var(--ox) * .55) calc(var(--oy) * .55) 14px rgba(2, 16, 12, .38)); }
+/* Casque : il ne touche plus la France. Équerre : plus bas, elle ne touche plus le Maroc. Truelle : même taille et même place qu'avant. */
+.monde-table .casque { width: clamp(120px, 11.5vw, 180px); left: clamp(-64px, -3.6vw, -36px); bottom: 150px; top: auto; }
+.monde-table .equerre { top: auto; bottom: 150px; right: clamp(-96px, -5.5vw, -64px); width: clamp(160px, 15.5vw, 240px); rotate: -14deg; }
+.monde-table .truelle { width: clamp(84px, 8.4vw, 136px); right: clamp(10px, 3vw, 54px); top: 86px; rotate: 24deg; }
+@media (max-width: 1100px) { .monde-table .equerre { bottom: 140px; width: 150px; } }
+@media (max-width: 760px) { .monde-table .casque { width: 86px; left: -34px; bottom: 150px; } .monde-table .truelle { width: 54px; right: 4px; top: 110px; } }
+/* « Comment ça marche » : à gauche, sous le titre, le vrai écran de l'appli à l'étape en cours, dans un téléphone net
+   (captures 1206 × 2622, jamais agrandies). Sa hauteur suit la fenêtre : il ne déborde jamais du bas de l'écran. */
+.comment-scene { aspect-ratio: auto; width: auto; display: grid; justify-items: start; gap: 14px; margin-top: 26px; }
+.comment-scene::before, .comment-scene::after, .comment-scene .rosace { display: none; }
+.cs-tel { --h: clamp(260px, calc(100svh - 470px), 470px); position: relative; height: var(--h); aspect-ratio: 1206 / 2622; border-radius: calc(var(--h) * .072); overflow: hidden;
+  background: #F1ECE2; box-shadow: 0 0 0 calc(var(--h) * .012) #101413, 0 0 0 calc(var(--h) * .016) #39413E, 0 24px 40px -14px rgba(20, 40, 30, .35); rotate: -2deg; }
+.cs-tel img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; scale: 1.02; translate: none; rotate: none; filter: none; animation: none !important;
+  transition: opacity .5s ease, scale .6s cubic-bezier(.2, .9, .3, 1); }
+.cs-tel img.on { opacity: 1; scale: 1; }
+.comment-scene .comment-compte { position: static; display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
+.comment-compte span { flex-basis: 100%; order: -1; font-size: 13px; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; color: #8A8478; }
+.comment-compte b { font-size: 34px; }
+.comment-compte em { flex-basis: auto; color: #8A8478; font-weight: 800; }
+@media (max-height: 700px), (max-width: 900px) { .comment-scene { display: none; } }
+.comment-scene { grid-template-columns: auto 1fr; align-items: end; column-gap: 22px; }
+.cs-tel { --h: clamp(260px, calc(100svh - 430px), 480px); }
+.comment-scene .comment-compte { padding-bottom: 8px; }
+
+/* v3.16 (14 nov.) : le cercle qui se propage autour d'une étape et la tête de Bellarej quand il saute ne doivent plus être coupés.
+   On ne coupe plus qu'à gauche et à droite ; en haut et en bas, le chemin peut déborder sur la section suivante. */
+.monde { overflow-x: clip; overflow-y: visible; }
+.monde-motifs { clip-path: inset(80px 0 80px 0); }
+.monde-chemin { overflow-x: clip; overflow-y: visible; }
+.monde + .fondu { z-index: 0; }
+
+/* v3.17 (Nabih, 14 nov. 9 h 07 : « c'est décalé, mal fait », le téléphone sortait par le bas de l'écran) :
+   la colonne de gauche fait exactement la hauteur de l'écran sous le menu ; le téléphone prend la place qui reste sous le titre,
+   sans jamais déborder. S'il reste trop peu de place, il se cache. */
+@media (min-width: 901px) {
+  .comment > .comment-fixe { top: 104px; height: calc(100svh - 128px); max-height: 820px; display: flex; flex-direction: column; }
+  .comment-fixe h2 { flex: none; }
+  .comment-scene { display: flex !important; flex: 1 1 0; min-height: 0; align-items: flex-end; gap: 22px; margin-top: 20px; padding: 0 0 6px 6px; container-type: size; }
+  .cs-tel { --h: 100cqh; height: min(100%, 480px); flex: none; border-radius: calc(min(100cqh, 480px) * .072);
+    box-shadow: 0 0 0 calc(min(100cqh, 480px) * .012) #101413, 0 0 0 calc(min(100cqh, 480px) * .016) #39413E, 0 18px 30px -12px rgba(20, 40, 30, .32); }
+  .comment-scene .comment-compte { padding-bottom: 4px; }
+}
+@container (max-height: 200px) { .cs-tel, .comment-scene .comment-compte { display: none; } }

@@ -1,0 +1,173 @@
+/* TEEQA — jetons alignés sur la DA source (brand-source/tokens.css, 01-palette.md, 02-typographie.md).
+   Deux mondes seulement : chaux + encre, ou vert de Fès + chaux. Safran rare (validation, action).
+   Les noms historiques de variables de l'app sont conservés et pointent vers les valeurs DA. */
+@font-face {
+  font-family: "Archivo";
+  src: url("../assets/fonts/archivo-latin-var.woff2") format("woff2");
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-display: swap;
+}
+/* Nunito (Google Fonts, licence libre OFL) : police unique de l'appli depuis le 10 nov. (décision de l'utilisateur,
+   référence : captures Duolingo, dont la police DIN Next Rounded est payante). Variable, graisses 200 à 1000. */
+@font-face {
+  font-family: "Nunito";
+  src: url("../assets/fonts/nunito-latin-var.woff2") format("woff2");
+  font-weight: 200 1000;
+  font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("../assets/fonts/ibmplexmono-latin-400.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("../assets/fonts/ibmplexmono-latin-500.woff2") format("woff2");
+  font-weight: 500 700;
+  font-display: swap;
+}
+
+:root {
+  /* Palette DA (01-palette.md) */
+  --chaux: #F1ECE2;
+  --papier: #E8E1D3;
+  --ink: #1A1C20;
+  --ink-soft: #4A4A48;
+  --fes: #0E3B31;
+  --fes-2: #14503F;
+  --fes-ink: #E9E4D6;
+  --saffron: #E2A33B;
+  --pise: #B8603A;
+  --cobalt: #234F8E;
+  --rouge: #A8262C;
+  --line: rgba(26, 28, 32, .18);
+  --line-fes: rgba(233, 228, 214, .25);
+  --line-fes-soft: rgba(233, 228, 214, .12);
+
+  /* Noms utilisés par l'app → valeurs DA */
+  --night: var(--fes);          /* plus de 3e fond : l'ancien « nuit » devient le vert de Fès */
+  --surface: var(--fes-2);
+  --paper: var(--chaux);
+  --paper-0: #FBF8F2;           /* carte sur chaux (site de référence : --card) */
+  --paper-2: var(--papier);
+  --paper-3: #CFC6B4;
+  --ink-2: var(--ink-soft);     /* 7,9:1 sur chaux */
+  --ink-3: #5A5A57;             /* méta : 5,9:1 sur chaux */
+  --fes-edge: #082A22;
+  --saffron-edge: #B07A1E;
+  --saffron-ink: #8A5A12;       /* site de référence --accent-ink */
+  --saffron-soft: #F6E6C8;
+  --success: var(--fes-2);      /* « vert = validé » (06-composants.md) */
+  --success-edge: var(--fes);
+  --success-ink: var(--fes-2);
+  --success-soft: #DDE9E3;
+  --danger: var(--rouge);
+  --danger-edge: #7A1A1F;
+  --danger-soft: #F4DCDA;
+  --pise-soft: #F3E1D6;
+  --sage: #B9C7BD;
+  --sage-ink: #B9C7BD;          /* texte secondaire sur vert de Fès */
+
+  /* Typographie (02-typographie.md) */
+  --font-title: "Nunito", ui-rounded, "SF Pro Rounded", system-ui, sans-serif;   /* titres, boutons */
+  --font-text: "Nunito", ui-rounded, "SF Pro Rounded", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, sans-serif; /* texte : la même police, plus légère */
+  --font-sans: var(--font-text);
+  --font-mono: "Nunito", ui-rounded, system-ui, sans-serif;   /* plus de police à chasse fixe (10 nov.) : Nunito partout, chiffres alignés */
+  --title-stretch: 100%;
+  --sub-stretch: 100%;
+  --fs-display: 32px;
+  --fs-h1: 26px;
+  --fs-h2: 20px;
+  --fs-body: 17px;
+  --fs-small: 15px;
+  --fs-meta: 12.5px;
+  --fs-over: 11.5px;
+
+  /* Formes et mouvements (05-mouvements-et-interactions.md) */
+  --r-sm: 10px;
+  --r-md: 14px;
+  --r-lg: 18px;
+  --r-xl: 26px;
+  --arch: 50% 50% 0 0 / 34% 34% 0 0;
+  --gap: 16px;
+  --pad: 20px;
+  --tap: 48px;
+  --shadow-sheet: 0 -10px 40px rgba(14, 59, 49, .28);
+  --ease: cubic-bezier(.2, .8, .2, 1);
+  --ease-draw: cubic-bezier(.6, 0, .2, 1);
+  --ease-spring: cubic-bezier(.34, 1.56, .64, 1);
+  /* Mouvement (docs/motion-duolingo.md) : une seule courbe de ressort, un seul press. */
+  --spring: cubic-bezier(.3, 1.35, .5, 1);
+  --press-in: 50ms;
+  --press-out: 160ms;
+
+  /* Rôles sémantiques qui changent avec le thème (voir le bloc sombre plus bas) */
+  color-scheme: light dark;
+  --on-ink: var(--chaux);            /* texte posé sur un aplat --ink */
+  --ink-lip: #07080A;                /* rebord des boutons et cartes encre */
+  --line-strong: rgba(26, 28, 32, .3);
+  --press-tint: rgba(26, 28, 32, .06);
+  --chip-bg: rgba(255, 255, 255, .4);
+  --danger-ink: var(--rouge);
+  --pise-ink: #8E4526;
+  --kw: var(--pise);
+  --success-fill: var(--fes-2);
+  --toggle-on: var(--fes);
+  --msg-mine: var(--fes);
+  --scrim: rgba(14, 59, 49, .6);
+  --backdrop: #0A2B24;               /* autour du cadre iPhone, sur ordinateur */
+
+  /* Verre : réservé à la navigation (barre d'app, onglets), jamais au contenu */
+  --glass: rgba(241, 236, 226, .72);
+  --glass-dark: rgba(14, 59, 49, .7);
+  --glass-edge: rgba(255, 255, 255, .6);
+  --glass-shadow: 0 10px 30px rgba(14, 59, 49, .16), 0 1px 0 rgba(255, 255, 255, .5) inset;
+  --glass-blur: blur(22px) saturate(1.7);
+
+  /* Zones sûres : celles du téléphone ; le cadre de bureau les remplace (app.css) */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --appbar-h: 56px;
+  --tabbar-h: 70px;
+}
+
+/* ---------- Thème sombre automatique : le monde vert de Fès ---------- */
+@media screen and (prefers-color-scheme: dark) {
+  :root {
+    --paper: #0A2B24;               /* fond de page */
+    --paper-0: #0E3B31;             /* cartes */
+    --papier: #14503F;              /* aplats secondaires */
+    --paper-2: #14503F;
+    --paper-3: #2C6253;
+    --ink: #E9E4D6;
+    --ink-soft: #C9D2C8;
+    --ink-2: #C9D2C8;
+    --ink-3: #9DB3A8;
+    --on-ink: #0E3B31;
+    --ink-lip: #B5AE9C;
+    --line: rgba(233, 228, 214, .16);
+    --line-strong: rgba(233, 228, 214, .36);
+    --press-tint: rgba(233, 228, 214, .08);
+    --chip-bg: rgba(233, 228, 214, .07);
+    --saffron-ink: #F0C06A;
+    --saffron-soft: rgba(226, 163, 59, .16);
+    --success-ink: #8FD0B3;
+    --success-soft: rgba(143, 208, 179, .13);
+    --danger-ink: #F4A39C;
+    --danger-soft: rgba(168, 38, 44, .3);
+    --pise-ink: #EBAA8A;
+    --pise-soft: rgba(184, 96, 58, .22);
+    --kw: var(--saffron);
+    --success-fill: #1F6F58;
+    --toggle-on: #2F8F6F;
+    --msg-mine: #1F6F58;
+    --scrim: rgba(3, 16, 13, .66);
+    --backdrop: #04130F;
+    --shadow-sheet: 0 -10px 40px rgba(0, 0, 0, .45);
+    --glass: rgba(10, 43, 36, .7);
+    --glass-edge: rgba(233, 228, 214, .14);
+    --glass-shadow: 0 10px 30px rgba(0, 0, 0, .35), 0 1px 0 rgba(233, 228, 214, .08) inset;
+  }
+}

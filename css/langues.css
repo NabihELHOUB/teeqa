@@ -1,0 +1,82 @@
+/* 19 nov. : langues (arabe de droite à gauche, tamazight, darija), échanges traduits, vocaux, prix.
+   L'arabe s'écrit avec Baloo Bhaijaan 2 (Google Fonts, arrondie comme Nunito) ; le reste garde Nunito. */
+#app[lang="ar"] { --font-title: "Nunito", "Baloo Bhaijaan 2", ui-rounded, system-ui, sans-serif; --font-text: "Nunito", "Baloo Bhaijaan 2", ui-rounded, system-ui, sans-serif; }
+[lang="ar"], [lang="ar"] * { letter-spacing: 0 !important; }            /* l'espacement casse les liaisons des lettres arabes */
+#app[lang="ar"] .btn, #app[lang="ar"] .over, #app[lang="ar"] .chip { text-transform: none; }
+:where([lang="ar"]) { font-family: "Nunito", "Baloo Bhaijaan 2", system-ui, sans-serif; }
+
+/* De droite à gauche : flèches et chevrons retournés, avatars et marges en miroir. */
+#app[dir="rtl"] svg[data-icon="chevron"], #app[dir="rtl"] svg[data-icon="back"], #app[dir="rtl"] svg[data-icon="send"], #app[dir="rtl"] svg[data-icon="undo"] { transform: scaleX(-1); }
+#app[dir="rtl"] .bubble-row.theirs { margin-left: 0; margin-right: 38px; }
+#app[dir="rtl"] .msg-av { left: auto; right: -38px; }
+#app[dir="rtl"] .bubble-row .who { margin: 0 12px 2px 0; }
+#app[dir="rtl"] .msg .when { float: left; margin: 7px 10px -2px 0; }
+#app[dir="rtl"] .bubble-row.mine.first .msg { border-top-right-radius: 19px; border-top-left-radius: 6px; }
+#app[dir="rtl"] .bubble-row.theirs.first .msg { border-top-left-radius: 19px; border-top-right-radius: 6px; }
+/* Une phrase restée en français garde son propre sens (ponctuation à sa place), aligné selon sa langue. */
+#app[dir="rtl"] :is(p, li, dd, dt, h1, h2, .h1, .h2, .meta, .s, .t, .over, .msg-text, .notice > span, .sys-msg, .sys-line) { unicode-bidi: plaintext; }
+#app[dir="rtl"] .losange, #app[dir="rtl"] ul, #app[dir="rtl"] ol { padding-right: 18px; padding-left: 0; }
+/* Les chiffres, les prix et les dates restent de gauche à droite dans une phrase arabe. */
+#app[dir="rtl"] .mono, #app[dir="rtl"] .price, #app[dir="rtl"] .voice-dur { direction: ltr; unicode-bidi: isolate; }
+
+/* Échanges : traduction et original. */
+.thread-lang { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center; margin: 2px 0 6px; }
+.thread-lang .chip { min-height: 44px; }
+.thread-lang .meta { font-size: 12px; }
+.msg-by { display: block; font-size: 11.5px; font-weight: 800; color: var(--ink-2); margin-bottom: 2px; }
+.bubble-row.mine .msg-by { color: inherit; opacity: .8; }
+.tr-note { display: flex; gap: 5px; align-items: flex-start; margin-top: 6px; font-size: 11.5px; font-weight: 700; color: var(--ink-3); line-height: 1.3; }
+.bubble-row.mine .tr-note { color: inherit; opacity: .75; }
+.tr-note .i { flex: none; margin-top: 1px; }
+.msg-orig { display: grid; gap: 2px; margin-top: 6px; padding: 6px 9px; border-radius: 12px; background: color-mix(in srgb, var(--ink) 6%, transparent); border-inline-start: 3px solid var(--line-strong); font-size: 13.5px; line-height: 1.35; overflow-wrap: anywhere; }
+.msg-orig .over { font-size: 10.5px; }
+.bubble-row.mine .msg-orig { background: color-mix(in srgb, currentColor 9%, transparent); border-inline-start-color: currentColor; }
+
+/* Vocal : bouton de lecture (44 px), onde, durée. */
+.voice-row { display: flex; align-items: center; gap: 8px; min-width: 190px; }
+.voice-play { width: 44px; height: 44px; border-radius: 50%; border: 0; flex: none; display: grid; place-items: center; background: var(--ink); color: var(--on-ink); }
+.bubble-row.mine .voice-play { background: var(--fes-ink, var(--ink)); color: var(--msg-mine, var(--on-ink)); }
+.voice-wave { display: flex; align-items: center; gap: 2px; height: 24px; flex: 1; }
+.voice-wave i { display: block; width: 3px; border-radius: 2px; background: currentColor; opacity: .55; }
+.voice-dur { font-size: 12px; font-weight: 800; }
+.voice-lang { margin: 4px 0 2px; font-size: 11.5px; display: flex; gap: 4px; align-items: center; color: inherit; opacity: .8; }
+.composer .mic-btn { width: 44px; height: 44px; flex: none; }
+.voice-rec .btn { min-height: 56px; }
+
+/* Prix : toujours avec leurs chiffres alignés. */
+.price { font-variant-numeric: tabular-nums; white-space: normal; font-weight: 900; }   /* vague 17 : le taux et sa date suivent le montant converti, la ligne peut passer à la suivante */
+.price-line { margin: 4px 0 2px; font-size: 13.5px; color: var(--ink); }
+
+/* Le nom TEEQA, ses lettres animées une à une, se lit toujours de gauche à droite. */
+.wordmark { direction: ltr; unicode-bidi: isolate; }
+/* Compteurs « 2 / 6 » : jamais lus à l'envers. */
+#app[dir="rtl"] :is(.pc-pct, .ub-over b, .statusline .chip) { direction: ltr; unicode-bidi: isolate; }
+/* De droite à gauche, l'écran précédent (gardé sous l'écran pour le retour au doigt) et l'interrupteur caché des vibrations
+   iOS débordaient à gauche du cadre. Le cadre reste en sens gauche-droite ; chaque écran, feuille et toast passe à droite-gauche. */
+#app[dir="rtl"] { direction: ltr; }
+#app[dir="rtl"] > * { direction: rtl; }
+#app [data-haptic-trigger] > input { left: 0; top: 0; }
+
+/* Vague 8 : mode simple (gros texte, l'essentiel, une action), pour les personnes âgées ou peu à l'aise. Réglé dans Profil. */
+.simple-only { display: none !important; }
+html.simple-mode .simple-only { display: inline-flex !important; }
+html.simple-mode #app .screen .scroll :is(p, .meta, .s, .small, .t, li, dd, dt, .notice > span, .advice-title, .chip) { font-size: 17px !important; line-height: 1.45; }
+html.simple-mode #app .screen .h1 { font-size: 30px; }
+html.simple-mode #app .btn { font-size: 17px; min-height: 52px; }
+html.simple-mode #app .screen:not(.show-all) .hero-step > :not(.keep):not(.row):not(.chips) { display: none; }
+html.simple-mode #app .screen:not(.show-all) .step-dock > :not(:first-child) { display: none; }
+html.simple-mode #app .screen:not(.show-all) .advice .def, html.simple-mode #app .screen:not(.show-all) .advice details { display: none; }
+/* Ligne « Qui agit maintenant » : le nom et l'action en deux morceaux (traduction). */
+.qa-who { font-weight: 800; }
+html.simple-mode #app .hero-step .h1 { overflow-wrap: anywhere; }
+
+/* Vague 9 : haut de l'étape en trois lignes ; mots du chantier et « pourquoi » repliés en une ligne. */
+.resume { padding: 10px 12px; border-radius: 14px; background: var(--paper-0); border: 1px solid var(--line); }
+details.def { margin-top: 2px; }
+details.def > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; min-height: 32px; color: var(--ink-2); }
+details.def > summary::-webkit-details-marker { display: none; }
+details.def[open] > p { margin-top: 2px; }
+.pilote { border: 1px dashed var(--line-strong); border-radius: 14px; padding: 12px; }
+/* Vague 9 : en mode simple (par défaut pour le client), une puce longue passe à la ligne au lieu de déborder à 360 px. */
+html.simple-mode #app .chip { white-space: normal; height: auto; min-height: 28px; text-align: left; line-height: 1.25; padding-top: 4px; padding-bottom: 4px; }
+html.simple-mode #app .hero-step > * , html.simple-mode #app .content > * { min-width: 0; }

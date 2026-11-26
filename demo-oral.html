@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>TEEQA · Maquettage et UX</title>
+<link rel="icon" href="assets/icone/icon-32.png">
+<link rel="stylesheet" href="css/bellarej.css">
+<link rel="stylesheet" href="css/demo-oral.css">
+<!-- Soutenance du 1er déc. 2026, partie « Maquettage & UX » (mode d'emploi : refs/demo-oral/MODE-EMPLOI.md).
+     Une seule page plein écran, avancée au clic ou au clavier : fil d'un réseau social → pub vidéo → profil @teeqa.app →
+     fiche de l'appli → « Ouvrir » → trois téléphones (client, entreprise, contrôleur) qui partagent le même chantier.
+     Les trois téléphones sont la vraie appli (index.html?oral&role=…) : le chantier passe de l'un à l'autre par le stockage
+     du navigateur (crochet « ORAL » de js/store.js), sans serveur spécial. Tout est dessiné par js/demo-oral.js. -->
+</head>
+<body>
+<div id="scene" class="scene" data-beat="0">
+  <div class="nuit" aria-hidden="true"></div>
+  <div class="monde" aria-hidden="true"></div>
+
+  <!-- 1 à 4 : un seul téléphone, au centre -->
+  <section class="acte1" aria-label="Du fil à la fiche de l'appli">
+    <div class="recit" id="recit" aria-live="polite"></div>
+    <div class="tel" id="tel">
+      <div class="tel-ecran" id="ecran"></div>
+      <i class="ilot" aria-hidden="true"></i>
+    </div>
+    <ol class="jalons" id="jalons" aria-hidden="true"></ol>
+  </section>
+
+  <!-- 5 : trois téléphones, la vraie appli -->
+  <section class="acte2" id="acte2" aria-label="Trois téléphones, un seul chantier">
+    <div class="trio" id="trio"></div>
+    <aside class="guide" id="guide" aria-label="Fil conducteur">
+      <header><b>Fil conducteur</b><span class="chrono" id="chrono">0:00</span><button class="mini" id="masquer" title="Masquer (touche H)">Masquer</button></header>
+      <ol id="gestes"></ol>
+      <footer><a class="mini" id="retour-oral" href="oral-1-dec.html#14" title="Revenir à la diapo de conclusion (touche O)">Retour à l'oral</a> <button class="mini" id="zero" title="Le chantier repart du même point sur les trois téléphones">Tout remettre à zéro</button></footer>
+    </aside>
+    <button class="rouvrir" id="rouvrir" title="Afficher le fil conducteur (touche H)">Fil conducteur</button>
+  </section>
+
+  <div class="voile" id="voile" aria-hidden="true"></div>
+</div>
+<script type="module" src="js/demo-oral.js"></script>
+</body>
+</html>

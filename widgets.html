@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#08261F">
+  <title>TEEQA · Activité en direct, Dynamic Island et widget</title>
+  <meta name="description" content="Laboratoire des widgets iOS de TEEQA : Dynamic Island, activité en direct sur l'écran verrouillé et widget d'écran d'accueil.">
+  <link rel="icon" href="assets/icone/icon-32.png" type="image/png">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/bellarej.css">
+  <link rel="stylesheet" href="css/widgets.css">
+</head>
+<body class="wl">
+  <header class="wl-head">
+    <a class="wl-back" href="./#/settings" aria-label="Retour à l'appli">‹ Appli</a>
+    <div>
+      <p class="wl-over">TEEQA · hors de l'appli</p>
+      <h1>Votre chantier d'un coup d'œil</h1>
+      <p class="wl-lead">Dynamic Island, écran verrouillé et écran d'accueil : l'avancement de Villa Nador sans ouvrir l'appli. Utilisez les boutons du bas pour voir chaque mise à jour.</p>
+    </div>
+  </header>
+
+  <main class="wl-stage" id="stage">
+    <!-- 1. Dynamic Island -->
+    <section class="wl-col" aria-labelledby="t-ilot">
+      <h2 id="t-ilot">Dynamic Island</h2>
+      <div class="ph-wrap"><div class="ph ph-app" id="ph-ilot">
+        <div class="ph-status"><span>9:41</span><span class="ph-sig" aria-hidden="true"></span></div>
+        <div class="di di-com" id="di" role="button" tabindex="0" aria-label="Dynamic Island : toucher pour agrandir ou réduire">
+          <div class="di-compact">
+            <span class="di-lead" data-gauge></span>
+            <span class="di-trail"><i class="di-glyph" data-glyph></i><b data-short></b></span>
+          </div>
+          <div class="di-expanded">
+            <div class="di-top">
+              <span class="di-lead" data-gauge-big></span>
+              <div class="di-txt"><span class="di-site">Villa Nador</span><b class="di-headline" data-headline></b></div>
+              <span class="di-bird still" data-bird="56"></span>
+            </div>
+            <ol class="di-jalons" data-jalons aria-label="Les six étapes"></ol>
+            <div class="di-bottom"><span class="di-sub" data-sub></span><span class="di-cta">Voir l'étape</span></div>
+          </div>
+        </div>
+        <div class="di-mini" id="di-mini" aria-hidden="true"><span data-gauge></span></div>
+        <!-- v3.14 (Nabih, 21 h 11) : plus de faux écran gris : l'appli TEEQA elle-même, derrière la Dynamic Island. -->
+        <img class="ph-vraie" src="assets/video/hybride/ecrans/H01-chemin-avant.png" alt="" decoding="async">
+        <div class="ph-home"></div>
+      </div></div>
+      <div class="seg" role="group" aria-label="État de la Dynamic Island">
+        <button data-di="min">Minimal</button><button data-di="com" class="on">Compact</button><button data-di="exp">Étendu</button>
+      </div>
+      <p class="wl-note" data-note-ilot></p>
+    </section>
+
+    <!-- 2. Écran verrouillé -->
+    <section class="wl-col" aria-labelledby="t-lock">
+      <h2 id="t-lock">Écran verrouillé</h2>
+      <div class="ph-wrap"><div class="ph ph-lock">
+        <div class="ph-status"><span></span><span class="ph-sig" aria-hidden="true"></span></div>
+        <div class="di di-rest" aria-hidden="true"></div>
+        <div class="lk-date">mer. 11 novembre</div>
+        <div class="lk-time">9:41</div>
+        <div class="la" id="la">
+          <div class="la-deco" data-ladeco aria-hidden="true"></div>
+          <div class="la-main">
+            <div class="la-over"><img src="assets/icone/icon-180.png" alt="" width="18" height="18">TEEQA · Villa Nador</div>
+            <b class="la-headline" data-headline></b>
+            <div class="la-bar" data-bar></div>
+            <span class="la-sub" data-sub></span>
+          </div>
+          <span class="la-bird still" data-bird="92"></span>
+          <span class="la-count"><span class="roll" data-roll></span><i>/6</i></span>
+        </div>
+        <div class="lk-tools" aria-hidden="true"><i></i><i></i></div>
+        <div class="ph-home"></div>
+      </div></div>
+      <p class="wl-note" data-note-verrou></p>
+    </section>
+
+    <!-- 3. Écran d'accueil -->
+    <section class="wl-col" aria-labelledby="t-home">
+      <h2 id="t-home">Écran d'accueil</h2>
+      <div class="ph-wrap"><div class="ph ph-homescreen">
+        <div class="ph-status"><span>9:41</span><span class="ph-sig" aria-hidden="true"></span></div>
+        <div class="di di-rest" aria-hidden="true"></div>
+        <div class="hs-grid">
+          <div class="wg" id="wg">
+            <div class="wg-deco" data-wgdeco aria-hidden="true"></div>
+            <div class="wg-in">
+              <span class="wg-tag"><span class="wg-over">Villa Nador</span>
+              <span class="wg-num"><span class="roll" data-roll></span><i>/6</i></span>
+              <span class="wg-step" data-wstep></span></span>
+              <span class="wg-bird still" data-bird="64"></span>
+              <span class="wg-tiles zt" data-segs></span>
+              <span class="wg-cta" data-wcta></span>
+            </div>
+          </div>
+          <i class="app a1"></i><i class="app a2"></i><i class="app a3"></i><i class="app a4"></i>
+          <i class="app a5"></i><i class="app a6"></i><i class="app a7"></i><i class="app teeqa"><img src="assets/icone/icon-180.png" alt="TEEQA"></i>
+        </div>
+        <div class="hs-dock" aria-hidden="true"><i class="app a2"></i><i class="app a5"></i><i class="app a3"></i><i class="app a7"></i></div>
+        <div class="ph-home"></div>
+      </div></div>
+      <p class="wl-note" data-note-widget></p>
+    </section>
+  </main>
+
+  <p class="sr" id="live" aria-live="polite"></p>
+
+  <nav class="wl-controls" aria-label="Commandes de l'essai">
+    <button class="c-main" data-do="next">+ Avancer d'une étape</button>
+    <button data-do="reserves">Simuler Réserves</button>
+    <button data-do="offline" aria-pressed="false">Simuler Hors-ligne</button>
+    <button data-do="reset">Réinitialiser</button>
+  </nav>
+
+  <script type="module" src="js/widgets.js"></script>
+</body>
+</html>
