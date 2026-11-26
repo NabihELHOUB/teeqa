@@ -51,12 +51,14 @@
         <p class="bulle eux" style="--d:.6s">Il faut envoyer pour la dalle.<time>21:04</time></p>
         <p class="bulle moi" style="--d:1.5s">Tu peux m'envoyer une photo ?<time>21:06</time></p>
         <p class="bulle eux" style="--d:2.4s">C'est bon, fais-moi confiance.<time>21:07</time></p>
+        <p class="bulle eux ecrit" style="--d:3.4s" aria-hidden="true"><i></i><i></i><i></i></p>
         <small class="fictif">Scène fictive</small>
       </div>
       <div class="distance" data-r>
         <svg viewBox="0 0 640 420" aria-hidden="true">
           <path class="arc" d="M120 90 C 300 30, 520 160, 520 340" pathLength="1"/>
-          <circle class="ville" cx="120" cy="90" r="14"/><circle class="ville safran" cx="520" cy="340" r="14"/>
+          <circle class="jeton-arc" r="11"><animateMotion dur="3.4s" repeatCount="indefinite" path="M120 90 C 300 30, 520 160, 520 340" keyPoints="0;1" keyTimes="0;1" calcMode="spline" keySplines=".5 0 .5 1"/></circle>
+          <circle class="ville" cx="120" cy="90" r="14"/><circle class="onde" cx="520" cy="340" r="14"/><circle class="ville safran" cx="520" cy="340" r="14"/>
           <text x="120" y="54" text-anchor="middle">Lyon</text>
           <text x="520" y="396" text-anchor="middle">Nador</text>
         </svg>
@@ -96,10 +98,14 @@
         <p>TEEQA ne détient jamais l'argent des travaux, ne tranche pas un désaccord, ne certifie pas une photo.</p>
       </article>
     </div>
-    <div class="roles" data-r>
-      <span><i data-bellarej="attend" data-seat="transat" data-h="96"></i><b>Client</b> suit à distance</span>
-      <span><i data-bellarej="posee" data-gear="orange" data-h="96"></i><b>Entreprise</b> déclare l'étape</span>
-      <span><i data-bellarej="photo" data-gear="jaune" data-h="96"></i><b>Contrôleur</b> vérifie sur place</span>
+    <div class="chaine" data-r>
+      <div class="maillon"><i data-bellarej="posee" data-gear="orange" data-h="150"></i><p><b>L'entreprise</b>déclare l'étape, photos datées</p></div>
+      <span class="fleche" aria-hidden="true"><i></i></span>
+      <div class="maillon"><i data-bellarej="photo" data-gear="jaune" data-h="150"></i><p><b>Le contrôleur</b>vérifie sur place, signe l'avis</p></div>
+      <span class="fleche" aria-hidden="true"><i></i></span>
+      <div class="maillon"><i data-bellarej="attend" data-seat="transat" data-h="150"></i><p><b>Le client</b>voit la preuve depuis Lyon</p></div>
+      <span class="fleche" aria-hidden="true"><i></i></span>
+      <div class="maillon maillon-fin"><span class="tampon">Paiement<br>recommandé</span><p>il paie l'entreprise lui-même</p></div>
     </div>
     <aside class="notes" data-orateur="David" data-duree="0:35">
       <p class="cle">Notre valeur, c'est la preuve datée et signée de chaque étape ; l'argent des travaux ne passe jamais par nous.</p>
@@ -472,7 +478,12 @@
       <article data-r><p class="r-n"><b>P0 – P6</b></p><p class="r-l">tous les parcours rejoués au clic</p></article>
     </div>
     <a class="bouton-demo" data-r href="demo-oral.html" data-demo>Lancer la démo <span aria-hidden="true">→</span></a>
-    <div class="maquette-bellarej" data-r data-bellarej="vol" data-h="300"></div>
+    <div class="ecrans" data-r aria-label="Trois écrans de l'appli : client, entreprise, contrôleur">
+      <figure class="ecran e-client"><img src="assets/oral/ecran-client.webp" alt="Le chemin du chantier, côté client" width="303" height="657"><figcaption>Client</figcaption></figure>
+      <figure class="ecran e-controleur"><img src="assets/oral/ecran-controleur.webp" alt="L'étape vue par le contrôleur" width="300" height="657"><figcaption>Contrôleur</figcaption></figure>
+      <figure class="ecran e-entreprise"><img src="assets/oral/ecran-entreprise.webp" alt="L'étape vue par l'entreprise" width="300" height="657"><figcaption>Entreprise</figcaption></figure>
+    </div>
+    <div class="maquette-bellarej" data-r data-bellarej="vol" data-h="200"></div>
     <aside class="notes" data-orateur="Nabih" data-duree="5:00 (30 s + démo 4 min 30)">
       <p class="cle">Le workflow complet, de P0 à P6, se joue dans l'appli : je vous le montre au doigt, sur les trois téléphones.</p>
       <p>« Notre parcours principal tient en sept étapes, de l'accès à la garantie. Nous l'avons amélioré en 26 itérations, testées avec des panels de profils types et des tests de parcours au doigt. Les résultats sont mesurés : 152 défauts d'accessibilité ramenés à zéro, six buts sur six atteints au doigt, contre zéro au départ, et 17 gestes en moyenne au lieu de 28. »</p>
@@ -497,7 +508,14 @@
         <p>10 chantiers payants</p>
       </div>
     </div>
+    <div class="fin-chiffres">
+      <article data-r><b><span class="count" data-to="32">32</span></b><span>vraies réponses à l'étude</span></article>
+      <article data-r><b><span class="count" data-to="5900">5 900</span> DH</b><span>par chantier, 4 visites</span></article>
+      <article data-r><b>0 DH</b><span>des travaux ne passe par TEEQA</span></article>
+      <article data-r><b><span class="count" data-to="144">144</span></b><span>chantiers par an : le point mort</span></article>
+    </div>
     <p class="merci" data-r>Merci. Vos questions.</p>
+    <div class="confettis" aria-hidden="true"></div>
     <div class="fin-bellarej" data-r data-bellarej="felicite" data-h="300"></div>
     <aside class="notes" data-orateur="David" data-duree="0:20">
       <p class="cle">Le besoin existe, le modèle tient en un prix, et il nous reste trois preuves à aller chercher.</p>

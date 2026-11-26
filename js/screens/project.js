@@ -226,6 +226,9 @@ function nextAction(role, p) {
   if (p.convention && !conventionOk(p) && (role === 'client' || role === 'entreprise')) return p.convention[role]
     ? { text: `Convention acceptée · en attente ${role === 'client' ? "de l'entreprise" : 'du client'}`, btn: 'Voir', go: `#/c/${p.id}/convention`, ic: 'file' }
     : { text: 'Convention à lire et à accepter avant les travaux', btn: 'Lire', go: `#/c/${p.id}/convention`, ic: 'file', saffron: true };
+  // 26 nov. (démo de l'oral) : convention acceptée des deux côtés, forfait pas encore réglé : le client le voit ici, en un toucher.
+  if (role === 'client' && p.convention && conventionOk(p) && !(p.forfait && p.forfait.paidAt) && p.invites.entreprise && p.invites.entreprise.status === 'acceptee' && !p.steps.some(x => x.startedAt))
+    return { text: 'Forfait TEEQA à régler, une seule fois pour tout le chantier', btn: 'Payer', go: `#/c/${p.id}/forfait`, ic: 'shield', saffron: true };
   // Problème 10 : un délai dépassé se dit tout de suite (« En retard »).
   const late = overdue(p, s), lateP = overdue(p, null);
   const allDone = p.steps.every(doneLike), blockers = closeBlockers(p);

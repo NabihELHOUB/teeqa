@@ -328,73 +328,137 @@ async function sortir(els) {
   for (const el of els) { await bouge(el, [{ transform: 'none' }, { transform: 'translateX(100%)' }], VIF)?.finished; montrer(el, false); }
 }
 
+function LANCE_HTML() { return `<div class="lance"><img src="${ICONE}" alt=""><b>TEEQA</b></div>`; }
 // ---------- acte 2 : trois téléphones ----------
+// 26 nov. (retour de Nabih) : l'histoire commence par le client, sur un chantier vide. Acte A : il crée le chantier et
+// invite l'entreprise, convention acceptée des deux côtés, forfait payé. « Trois mois plus tard » fait le saut dans le
+// temps (fondations, murs et dalle faits, vérifiés, payés). Acte B : une étape contrôlée, de la fin déclarée au paiement.
 const ROLES3 = [
-  ['entreprise', 'Entreprise', 'Rachid BTP · Nador', '#B8603A'],
   ['client', 'Client', 'Karim · Lyon', '#14503F'],
-  ['controleur', 'Contrôleur', 'sur place', '#2E6FB0'],
+  ['entreprise', 'Entreprise', 'Rachid BTP · Nador', '#B8603A'],
+  ['controleur', 'Contrôleur', 'agence de l’Oriental', '#2E6FB0'],
 ];
 $('#trio').innerHTML = ROLES3.map(([r, t, q, c]) => `<div class="place" data-role="${r}" style="--c:${c}">
   <div class="etiquette"><i></i>${t}<small>${q}</small></div>
-  <div class="cadre"><iframe data-role="${r}" title="TEEQA · ${t}" tabindex="-1"></iframe></div></div>`).join('');
+  <div class="cadre"><iframe data-role="${r}" title="TEEQA · ${t}" tabindex="-1"></iframe>${LANCE_HTML()}</div></div>`).join('');
 const cadre = (r) => $(`.place[data-role="${r}"] .cadre`), fen = (r) => $(`iframe[data-role="${r}"]`);
 const urlRole = (r) => `index.html?oral&direct&role=${r}#/home`;
-async function attendreAppli(r, ms = 15000) {
+async function attendreAppli(r, ms = 60000) {
   const t0 = Date.now();
-  for (;;) { const w = fen(r).contentWindow; try { if (w && w.__teeqa && w.__teeqa.get()) return w; } catch { /* chargement */ } if (Date.now() - t0 > ms) throw new Error('appli ' + r); await dort(80); }
+  for (;;) { const w = fen(r).contentWindow; try { if (w && w.__teeqa && w.__teeqa.get()) return w; } catch { /* chargement */ } if (Date.now() - t0 > ms) throw new Error('appli ' + r); await dort(120); }
 }
 function brancher(r, w) {
+  // Devant le jury, rien qui casse la scène : ni « Changer de vue », ni le chantier d'exemple, ni les outils de présentation.
+  try { const st = w.document.createElement('style'); st.textContent = '[data-act="role-sheet"], [data-act="exemple"], [data-testid="voir-exemple"], [data-testid="voir-exemple"] + p, [data-testid="presentation-tools"] { display: none !important; }'; w.document.head.appendChild(st); } catch { /* autre origine */ }
   w.addEventListener('teeqa-salle-notif', (e) => bandeau(r, e.detail));
   // Dans un cadre, le navigateur ne prête pas la webcam : la caméra de l'appli s'ouvre directement (pas de demande à l'écran).
   if (r !== 'client') try { if (!w.__teeqa.get().drafts.camPerm) w.__teeqa.actions.setDraft('camPerm', 'simulee'); } catch { /* ancien état */ }
   relayerTouches(w);
 }
-async function chargerRole(r) { const f = fen(r); f.src = 'about:blank'; await dort(30); f.src = urlRole(r); const w = await attendreAppli(r); brancher(r, w); return w; }
+// Chaque téléphone garde son écran de lancement (jamais noir) jusqu'à ce que son appli réponde ; un échec recharge.
+const prets = {};
+async function chargerRole(r) {
+  const f = fen(r); prets[r] = false; if (!cadre(r).querySelector('.lance')) cadre(r).insertAdjacentHTML('beforeend', LANCE_HTML());
+  for (let essai = 0; essai < 3; essai++) {
+    f.src = 'about:blank'; await dort(30); f.src = urlRole(r);
+    try { const w = await attendreAppli(r); brancher(r, w); await dort(350); prets[r] = true;
+      // Une remise à zéro pendant les trois téléphones : le lancement s'efface ici (à l'entrée, c'est entrerTrio).
+      if (scene.classList.contains('trois') && !enEntree) { const l = cadre(r).querySelector('.lance'); if (l) l.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 380, fill: 'forwards' }).finished.then(() => l.remove()); }
+      return w; }
+    catch (e) { console.warn('Nouvel essai de chargement :', r); }
+  }
+  throw new Error('appli ' + r + ' injoignable');
+}
+const DOC_VIDE = { projects: [], notifications: [], reports: [], avis: [], noms: {} };
+const projetDemo = (doc) => doc && doc.projects && doc.projects.find((x) => x.name === 'Villa Nador');
+const lireDoc = () => { try { const d = JSON.parse(localStorage.getItem('teeqa-oral-chantier') || 'null'); return d && d.doc; } catch { return null; } };
+// Le formulaire du client est déjà rempli : devant le jury, on touche, on ne tape pas.
+function preremplir(w) {
+  try { if (!(w.__teeqa.get().drafts || {}).newProject) w.__teeqa.actions.setDraft('newProject', {
+    name: 'Villa Nador', city: 'Nador', address: 'Lotissement Al Matar, lot 14', type: 'neuf', email: 'contact@rachid-btp.ma', stage: 1,
+    quote: { name: 'Devis-Rachid-BTP-2026-118.pdf', size: 48213 } }); } catch { /* ancien état */ }
+}
 
-// Le chantier de départ : étapes 1 à 3 vérifiées et payées, étape 4 « Menuiseries et réseaux » débutée il y a deux jours.
-// Fait par les actions de l'appli (comme tests/e2e.mjs), dans le téléphone de l'entreprise, puis partagé aux deux autres.
-async function preparer(w) {
-  const S = await w.eval("import('/js/store.js')"), A = S.actions, PID = 'villa-demo', sig = [[[20, 60], [120, 40], [220, 70], [300, 52]]];
-  const J = 864e5, base = Date.now();
+// « Deux mois plus tard » : la préparation recule de 75 jours ; étapes 1 et 2 faites, contrôlées, payées ;
+// la dalle (étape 3, contrôlée) a commencé il y a deux jours. Fait par les actions de l'appli, comme tests/e2e.mjs.
+async function avancer() {
+  const w = fen('entreprise').contentWindow;
+  const S = await w.eval("import('/js/store.js')"), A = S.actions, sig = [[[20, 60], [120, 40], [220, 70], [300, 52]]];
+  const J = 864e5, base = Date.now(), RECUL = 75 * J;
+  let p = projetDemo(S.get());
+  if (!p) {   // l'acte A a été sauté : on crée le chantier comme l'aurait fait le client
+    const id = A.createProject({ name: 'Villa Nador', city: 'Nador', steps: [...S.TEMPLATE_STEPS], email: 'contact@rachid-btp.ma', controls: 4, prep: { type: 'neuf', address: 'Lotissement Al Matar, lot 14', quote: { name: 'Devis-Rachid-BTP-2026-118.pdf', size: 48213 } } });
+    p = S.project(id);
+  }
+  const PID = p.id;
+  if (p.invites.entreprise.status === 'envoyee') A.acceptInvite(PID, 'entreprise');
+  if (S.project(PID).convention && !S.conventionOk(S.project(PID))) { A.acceptConvention(PID, 'entreprise'); A.acceptConvention(PID, 'client'); }
+  if (!(S.project(PID).forfait && S.project(PID).forfait.paidAt)) A.payForfait(PID, 'carte');
+  // Le devis de Rachid BTP découpé par étape (1 000 000 DH), confirmé par l'entreprise : chaque étape a sa tranche.
+  if (!S.project(PID).budget) S.commit(() => { const q = S.project(PID); q.budget = { source: 'Devis Rachid BTP n° 2026-118', at: new Date().toISOString(),
+    tranches: Object.fromEntries(q.steps.map((x, i) => [x.id, [180000, 260000, 210000, 150000, 120000, 80000][i] || 0])), entrepriseAt: new Date().toISOString() }; });
+  // L'agence de contrôle a ouvert le lien de sa mission (sans compte) : elle voit le chantier.
+  if (S.project(PID).invites.controleur && S.project(PID).invites.controleur.status === 'envoyee') A.acceptInvite(PID, 'controleur');
+  // Tout ce qui date d'aujourd'hui (création, invitation, convention, forfait, nouvelles) recule de 75 jours.
+  const reculer = (o) => { for (const k in o) { const v = o[k];
+    if (typeof v === 'string' && /^\d{4}-\d\d-\d\dT/.test(v) && Date.parse(v) > base - 2 * J) o[k] = new Date(Date.parse(v) - RECUL).toISOString();
+    else if (v && typeof v === 'object') reculer(v); } };
+  S.commit((st) => { reculer(S.project(PID)); for (const n of st.notifications) reculer(n); });
   const St = (sid) => S.step(S.project(PID), sid);
   const envoyer = () => { for (let k = 0; k < 80 && S.get().uploads.some((u) => !['synchronisee', 'echec'].includes(u.status)); k++) A.uploadTick(); };
-  const photo = (sid, role, v = 0) => { if (role === 'controleur' && S.missionPending(St(sid))) A.acceptMission(PID, sid); A.addPhoto(PID, sid, { role, sim: { step: +sid.slice(1) - 1, variant: v % 3 } }); envoyer(); };
+  const photo = (sid, role, v = 0) => { if (role === 'controleur' && S.missionPending(St(sid))) A.acceptMission(PID, sid); A.addPhoto(PID, sid, { role, sim: { step: S.project(PID).steps.findIndex((x) => x.id === sid), variant: v % 3 } }); envoyer(); };
   const debut = (sid) => { const ss = S.project(PID).steps, k = ss.findIndex((x) => x.id === sid); if (k > 0 && S.coulageDue(S.project(PID), ss[k - 1])) A.declareCoulage(PID, ss[k - 1].id); photo(sid, 'entreprise'); A.declareStart(PID, sid); };
   const fin = (sid) => { for (let k = 0; k < S.MIN_PHOTOS; k++) photo(sid, 'entreprise', k); A.declareEnd(PID, sid); };
   const a = (j) => S.setClock(new Date(base - j * J).toISOString());
+  const MOTIFS = ['Fouilles, semelles et longrines conformes aux plans : ferraillage et enrobage vérifiés avant coulage.',
+    'Murs, poteaux et chaînages conformes aux plans : aplomb, ferraillage et enrobage vérifiés sur place.',
+    'Dalle et toiture-terrasse conformes : épaisseur, ferraillage et réservations des réseaux vérifiés avant coulage.'];
+  const ss = S.project(PID).steps;
+  // L'étape jouée devant le jury : la dalle (3e étape, contrôlée avec 4 visites) ; à défaut, la première contrôlée après la 2e.
+  const cible = ss.findIndex((x, i) => i >= 2 && S.isControlled(x));
+  const jours = [62, 33, 20, 12, 6];
   try {
-    [['s2', 40, 'Murs, poteaux et chaînages conformes aux plans : aplomb, ferraillage et enrobage vérifiés sur place.'],
-      ['s3', 18, 'Dalle et toiture-terrasse conformes : épaisseur, ferraillage et réservations des réseaux vérifiés avant coulage.']].forEach(([sid, j, motif]) => {
-      a(j + 8); if (['verrouillee', 'a_venir'].includes(St(sid).status)) { debut(sid); a(j + 1); fin(sid); }
-      a(j); for (let k = 0; k < 3; k++) photo(sid, 'controleur', k);
-      A.signReview(PID, sid, { verdict: 'validee', motif, pieces: [], signature: sig });
+    for (let i = 0; i < cible; i++) {
+      const sid = ss[i].id, j = jours[Math.min(i, 4)];
+      a(j + 9); if (['verrouillee', 'a_venir'].includes(St(sid).status)) debut(sid); a(j + 1); if (!['fin_declaree', 'validee', 'corrigee', 'vue'].includes(St(sid).status)) fin(sid);
+      a(j);
+      if (S.isControlled(St(sid))) { for (let k = 0; k < 3; k++) photo(sid, 'controleur', k); A.signReview(PID, sid, { verdict: 'validee', motif: MOTIFS[Math.min(i, 2)], pieces: [], signature: sig }); }
+      else A.ackStep(PID, sid);
       a(j - 1); if (S.coulageDue(S.project(PID), St(sid))) A.declareCoulage(PID, sid);
-      const t = new Date(base - (j - 2) * J).toISOString(); St(sid).decision = { status: 'indique', at: t, receivedAt: new Date(base - (j - 3) * J).toISOString() };
-    });
-    a(2); debut('s4');
+      St(sid).decision = { status: 'indique', at: new Date(base - (j - 2) * J).toISOString(), receivedAt: new Date(base - (j - 3) * J).toISOString() };
+    }
+    a(2); debut(ss[cible].id);
   } finally { S.setClock(null); }
-  // Les célébrations des étapes 2 et 3 sont déjà vues : la seule qui reste est celle de l'étape 4, jouée devant le jury.
-  for (const r of ['client', 'entreprise', 'controleur']) { for (const sid of ['s1', 's2', 's3']) A.feteVue(PID, sid, r); A.markAllRead(r); }
+  // Les rappels nés pendant le saut (« en retard », « en attente depuis… ») n'ont pas de sens : tout a été fait à temps.
+  S.commit((st) => { st.notifications = st.notifications.filter((n) => !(Date.parse(n.at) < base - J && /retard|en attente|attend votre|relance|rappel|sans réponse|toujours pas/i.test(n.text || ''))); });
+  const bilan = S.project(PID).steps.map((x) => x.status).join(' ');
+  if (!S.project(PID).steps[cible].startedAt) console.warn('Saut incomplet :', bilan, '· contrôleur', S.project(PID).invites.controleur.status);
+  S.commit(() => {});   // partage le dernier état aux deux autres téléphones
+  for (const r of ['client', 'entreprise', 'controleur']) { for (const x of ss.slice(0, cible)) A.feteVue(PID, x.id, r); A.markAllRead(r); }
+  try { localStorage.setItem('teeqa-oral-cible', ss[cible].id); } catch { /* stockage plein */ }
+  for (const r of ['client', 'entreprise', 'controleur']) try { fen(r).contentWindow.__teeqa.go('#/home'); } catch { /* chargement */ }
+  return { PID, sid: ss[cible].id };
 }
 let trioPret = null;
 function demarrerTrio({ neuf = false } = {}) {
   return trioPret = (async () => {
     if (neuf) { for (const r of ['client', 'controleur', 'entreprise']) fen(r).src = 'about:blank'; await dort(120);
       for (const k of Object.keys(localStorage)) if (k.startsWith('teeqa-oral-')) localStorage.removeItem(k); }
-    const reprise = !!localStorage.getItem('teeqa-oral-chantier');
-    const w = await chargerRole('entreprise');
-    if (!reprise) { await preparer(w); w.__teeqa.go('#/home'); }
-    await Promise.all([chargerRole('client'), chargerRole('controleur')]);
+    if (!localStorage.getItem('teeqa-oral-chantier')) localStorage.setItem('teeqa-oral-chantier', JSON.stringify({ v: 1, doc: DOC_VIDE }));
+    const [wc] = await Promise.all(['client', 'entreprise', 'controleur'].map(chargerRole));
+    preremplir(wc); wc.__teeqa.go('#/home');
     lireChantier();
   })().catch((e) => { console.warn('Trois téléphones :', e.message); });
 }
 
 // La transition « Ouvrir » : la fiche s'ouvre en vert, le téléphone recule, deux autres arrivent, la chaux remplit la scène.
-const LANCE = `<div class="lance"><img src="${ICONE}" alt=""><b>TEEQA</b></div>`;
+const LANCE = LANCE_HTML();
+let enEntree = false;
 async function entrerTrio() {
+  enEntree = true;
   lancerSplash(); await dort(calme ? 60 : 560);
-  await trioPret;
-  $$('.cadre').forEach((c) => { c.querySelector('.lance')?.remove(); c.insertAdjacentHTML('beforeend', LANCE); });
+  // On n'attend pas les trois applis : chaque téléphone garde son écran de lancement tant que la sienne charge.
+  $$('.cadre').forEach((c) => { if (!c.querySelector('.lance')) c.insertAdjacentHTML('beforeend', LANCE); });
   const tel = $('#tel').getBoundingClientRect();
   scene.classList.add('trois');
   const sc = scene.getBoundingClientRect(), k = sc.width / 1920;
@@ -402,18 +466,20 @@ async function entrerTrio() {
   const dx = ((tel.left + tel.width / 2) - (c.left + c.width / 2)) / k, dy = ((tel.top + tel.height / 2) - (c.top + c.height / 2)) / k, s0 = tel.width / c.width;
   bouge($('.monde'), [{ clipPath: 'circle(0px at 50% 50%)' }, { clipPath: 'circle(1400px at 50% 50%)' }], { ...LENT, duration: LENT.duration * 1.1, easing: 'cubic-bezier(.6, 0, .2, 1)' });
   bouge(cadre('client'), [{ transform: `translate(${dx}px, ${dy}px) scale(${s0})` }, { transform: 'none' }], DOUX);
-  bouge(cadre('entreprise'), [{ transform: 'translate(-760px, 140px) rotate(-9deg) scale(.86)', opacity: 0 }, { transform: 'none', opacity: 1 }], REBOND, { delay: 140, fill: 'backwards' });
+  bouge(cadre('entreprise'), [{ transform: 'translate(0, 720px) rotate(4deg) scale(.86)', opacity: 0 }, { transform: 'none', opacity: 1 }], REBOND, { delay: 140, fill: 'backwards' });
   bouge(cadre('controleur'), [{ transform: 'translate(760px, 140px) rotate(9deg) scale(.86)', opacity: 0 }, { transform: 'none', opacity: 1 }], REBOND, { delay: 220, fill: 'backwards' });
   $$('.etiquette').forEach((e, i) => { e.style.opacity = 1; bouge(e, [{ opacity: 0, transform: 'translateY(14px)' }, { opacity: 1, transform: 'none' }], DOUX, { delay: 700 + i * 90, fill: 'backwards' }); });
   const g = $('#guide'); g.style.opacity = 1; bouge(g, [{ opacity: 0, transform: 'translateX(60px)' }, { opacity: 1, transform: 'none' }], DOUX, { delay: 900, fill: 'backwards' });
   await dort(calme ? 100 : 1050);
-  ['client', 'entreprise', 'controleur'].forEach((r, i) => setTimeout(() => {
+  Promise.all(['client', 'entreprise', 'controleur'].map(async (r, i) => {
+    await dort(i * 150);
+    for (let t = 0; !prets[r] && t < 900; t++) await dort(100);   // jusqu'à 90 s sur une connexion lente
     const l = cadre(r).querySelector('.lance'); if (!l) return;
     const fin = () => l.remove();
     if (calme) return fin();
     l.querySelector('img').animate([{ transform: 'none', opacity: 1 }, { transform: 'scale(1.9)', opacity: 0 }], { duration: 420, easing: 'cubic-bezier(.4, 0, .2, 1)', fill: 'forwards' });
-    l.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 380, delay: 140, easing: 'ease-out', fill: 'forwards' }).finished.then(fin);
-  }, i * 150));
+    await l.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 380, delay: 140, easing: 'ease-out', fill: 'forwards' }).finished; fin();
+  })).then(() => { enEntree = false; });
   if (!chrono.t0) chrono.t0 = Date.now();
   lireChantier();
 }
@@ -437,25 +503,37 @@ function bandeau(r, liste) {
 // ---------- le fil conducteur ----------
 // Chaque geste se coche tout seul quand le chantier partagé montre qu'il est fait ; → le coche à la main s'il le faut.
 const OK = ['validee', 'corrigee', 'vue'], APRES_FIN = ['fin_declaree', 'retardee', 'refusee', ...OK];
+// [rôle, geste, précision, fait ?(chantier, étape cible)] ; rôle « saut » = le bouton « Trois mois plus tard ».
 const GESTES = [
-  ['entreprise', 'Touche « Villa Nador », l’étape 4 sur le chemin, puis « Ouvrir l’étape ».', 'Le chantier est le même sur les trois téléphones.', (s) => s.photos.filter((p) => p.by === 'entreprise').length >= 2 || APRES_FIN.includes(s.status)],
-  ['entreprise', 'Trois fois : « Ajouter une photo », déclencher, « Utiliser la photo ».', 'Photos prises dans l’appli, datées et situées.', (s) => s.photos.filter((p) => p.by === 'entreprise').length >= 4 || APRES_FIN.includes(s.status)],
-  ['entreprise', 'Touche « Déclarer la fin », puis confirme.', 'Le client et le contrôleur sont prévenus.', (s) => APRES_FIN.includes(s.status)],
-  ['controleur', 'Touche la nouvelle « Rachid a déclaré la fin… », puis « Accepter cette visite ».', 'Il reste anonyme pour l’entreprise.', (s) => !!(s.mission && s.mission.acceptedAt) || s.reviews.length > 0],
-  ['controleur', 'Sur place : « Photographier », déclencher.', null, (s) => s.photos.some((p) => p.by === 'controleur')],
-  ['controleur', '« Tout conforme : Validé », « Relire et signer » : signe au doigt, touche le code reçu, « Signer l’avis ».', 'Avis signé, horodaté.', (s) => s.reviews.length > 0],
-  ['client', 'Touche la nouvelle de l’avis, « Continuer » après la fête, puis « J’ai payé cette tranche » et confirme.', '« Paiement recommandé » : l’argent ne passe jamais par TEEQA.', (s) => !!s.decision],
-  ['entreprise', '« Continuer » après la fête, puis « Paiement reçu » et « J’ai reçu le paiement ».', 'La tranche 4 est soldée.', (s) => !!(s.decision && s.decision.receivedAt)],
-  ['client', 'Touche « Retour », puis « Villa Nador » : 4 étapes closes sur 6, l’étape 5 s’ouvre.', null, null],
+  ['client', 'Touche « Nouveau chantier » : tout est déjà rempli (Villa Nador, devis de Rachid BTP). « Continuer » deux fois.', 'Le client commence : c’est lui qui fait construire.', (p) => !!p],
+  ['client', '« Suivi contrôlé », puis « Créer et envoyer l’invitation », et confirme.', 'Un seul prix pour tout le chantier, payé une fois.', (p) => !!p],
+  ['entreprise', 'Touche la nouvelle « Invitation reçue », puis « Accepter et confirmer les étapes ».', 'L’entreprise s’inscrit gratuitement.', (p) => p && p.invites.entreprise.status === 'acceptee'],
+  ['entreprise', 'En bas : « Lire » la convention, puis « J’accepte la convention ».', 'Rien ne commence sans elle.', (p) => p && p.convention && !!p.convention.entreprise],
+  ['client', 'En bas : « Lire » la convention, puis « J’accepte la convention ».', 'TEEQA confie les visites à une agence de la zone.', (p) => p && p.convention && !!p.convention.client],
+  ['client', 'En bas : « Payer » le forfait TEEQA, puis « Payer ».', 'Le forfait TEEQA, jamais l’argent des travaux.', (p) => !!(p && p.forfait && p.forfait.paidAt)],
+  ['saut', 'Deux mois plus tard.', 'Fondations et murs : faits, vérifiés, payés. Aujourd’hui, la dalle.', (p, s) => !!s && !!s.startedAt],
+  ['entreprise', 'Touche « Villa Nador », puis l’étape 3 « Dalle et toiture-terrasse » : « Ouvrir l’étape ».', 'Le même chantier sur les trois téléphones.', (p, s) => !!s && (s.photos.filter((x) => x.by === 'entreprise').length >= 2 || APRES_FIN.includes(s.status))],
+  ['entreprise', 'Trois fois : « Ajouter une photo », déclencher, « Utiliser la photo ».', 'Les aciers, photographiés dans l’appli, datés et situés.', (p, s) => !!s && (s.photos.filter((x) => x.by === 'entreprise').length >= 4 || APRES_FIN.includes(s.status))],
+  ['entreprise', '« Ferraillage prêt : déclarer la fin », puis confirme.', 'Avant de couler : le contrôleur doit voir les aciers.', (p, s) => !!s && APRES_FIN.includes(s.status)],
+  ['controleur', 'Touche la nouvelle « Mission de contrôle… », puis « Accepter cette visite ».', 'Il reste anonyme pour l’entreprise.', (p, s) => !!s && (!!(s.mission && s.mission.acceptedAt) || s.reviews.length > 0)],
+  ['controleur', 'Sur place : « Photographier », un toucher par point clé.', null, (p, s) => !!s && s.photos.some((x) => x.by === 'controleur')],
+  ['controleur', 'Tape les 2 mesures (épaisseur 16 cm, enrobage 3 cm), « Validé », « Relire et signer » : signe, code, « Signer l’avis », « Fermer ».', 'Avis signé, horodaté, avec ses mesures.', (p, s) => !!s && s.reviews.length > 0],
+  ['entreprise', '« Coulage fait », puis confirme.', 'Deux photos du béton coulé, après l’avis.', (p, s) => !!s && !!s.coulage],
+  ['client', 'Touche la nouvelle, puis « J’ai payé cette tranche » et confirme.', '« Paiement recommandé » : l’argent ne passe jamais par TEEQA.', (p, s) => !!s && !!s.decision],
+  ['entreprise', 'Touche la nouvelle, « Paiement reçu », puis « J’ai reçu le paiement ».', 'La tranche de la dalle est soldée.', (p, s) => !!(s && s.decision && s.decision.receivedAt)],
+  ['client', 'Touche « Retour » : 3 étapes closes sur 6, la suivante s’ouvre.', null, null],
 ];
-const NOM = Object.fromEntries(ROLES3.map(([r, t, , c]) => [r, [t, c]]));
-$('#gestes').innerHTML = GESTES.map(([r, t, d], i) => `<li data-i="${i}" style="--c:${NOM[r][1]}"><span class="qui"><i></i>${NOM[r][0]}</span><span>${t}</span>${d ? `<small>${d}</small>` : ''}</li>`).join('');
+const SAUT = GESTES.findIndex((g) => g[0] === 'saut');
+const NOM = { ...Object.fromEntries(ROLES3.map(([r, t, , c]) => [r, [t, c]])), saut: ['Le temps passe', '#C9962E'] };
+$('#gestes').innerHTML = GESTES.map(([r, t, d], i) => r === 'saut'
+  ? `<li data-i="${i}" class="saut-li" style="--c:${NOM[r][1]}"><button class="saut" id="saut" type="button"><b>${t}</b><small>${d}</small></button></li>`
+  : `<li data-i="${i}" style="--c:${NOM[r][1]}"><span class="qui"><i></i>${NOM[r][0]}</span><span>${t}</span>${d ? `<small>${d}</small>` : ''}</li>`).join('');
 const main = new Set();   // gestes cochés à la main (→)
 let auto = [];
 function lireChantier() {
-  let s = null;
-  try { const d = JSON.parse(localStorage.getItem('teeqa-oral-chantier') || 'null'); const p = d && d.doc.projects.find((x) => x.id === 'villa-demo'); s = p && p.steps.find((x) => x.id === 's4'); } catch { /* illisible */ }
-  auto = GESTES.map((g) => !!(s && g[3] && g[3](s)));
+  const p = projetDemo(lireDoc()); let sid = null; try { sid = localStorage.getItem('teeqa-oral-cible'); } catch { /* */ }
+  const s = p && sid ? p.steps.find((x) => x.id === sid) : null;
+  auto = GESTES.map((g) => !!(g[3] && g[3](p, s)));
   // Un geste coché par le chantier coche aussi ceux d'avant.
   for (let i = auto.length - 1; i > 0; i--) if (auto[i]) for (let j = 0; j < i; j++) auto[j] = true;
   peindreGuide();
@@ -473,7 +551,22 @@ function peindreGuide() {
 addEventListener('storage', (e) => { if (e.key === 'teeqa-oral-chantier') lireChantier(); });
 setInterval(lireChantier, 1500);
 $('#gestes').addEventListener('click', (e) => { const li = e.target.closest('li'); if (!li) return; const i = +li.dataset.i; if (main.has(i)) main.delete(i); else main.add(i); peindreGuide(); });
-function gesteSuivant() { const f = faits(), i = f.indexOf(false); if (i >= 0) { main.add(i); peindreGuide(); } }
+function gesteSuivant() { const f = faits(), i = f.indexOf(false); if (i === SAUT) return sauter(); if (i >= 0) { main.add(i); peindreGuide(); } }
+// « Deux mois plus tard » : un voile de chaux traverse la scène, les mois défilent, puis le chantier a avancé.
+let enSaut = false;
+async function sauter() {
+  if (enSaut) return; enSaut = true;
+  const v = document.createElement('div'); v.className = 'saut-voile';
+  v.innerHTML = `<div class="saut-carte"><small>Villa Nador · Nador</small><b>Deux mois plus tard</b><div class="saut-mois"><span>Fondations</span><span>Murs et poteaux</span><span>Dalle</span></div><p>Fondations et murs : faits, vérifiés, payés. Aujourd’hui, la dalle.</p></div>`;
+  scene.appendChild(v);
+  await bouge(v, [{ opacity: 0 }, { opacity: 1 }], DOUX)?.finished;
+  const t0 = Date.now();
+  try { await trioPret; await avancer(); } catch (e) { console.warn('Saut :', e.message); }
+  await dort(Math.max(0, (calme ? 300 : 2600) - (Date.now() - t0)));
+  await bouge(v, [{ opacity: 1 }, { opacity: 0 }], DOUX, { fill: 'forwards' })?.finished; v.remove();
+  enSaut = false; lireChantier();
+}
+document.addEventListener('click', (e) => { if (e.target.closest('#saut')) { e.stopPropagation(); sauter(); } }, true);
 function gestePrecedent() { const f = faits(); for (let i = f.length - 1; i >= 0; i--) if (main.has(i)) { main.delete(i); peindreGuide(); return true; } return false; }
 const chrono = { t0: 0 };
 setInterval(() => { const s = chrono.t0 ? Math.floor((Date.now() - chrono.t0) / 1000) : 0; $('#chrono').textContent = `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`; }, 500);

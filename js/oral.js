@@ -19,6 +19,15 @@ addEventListener('resize', ajuste); ajuste();
 // ---------- Cascade : --i sur chaque [data-r], dans l'ordre du document ----------
 for (const s of slides) [...s.querySelectorAll('[data-r]')].forEach((el, i) => el.style.setProperty('--i', i));
 
+// ---------- Vie de fond : taches de couleur qui dérivent, zellige en coin, chemin de l'oral (parties 1 à 7) ----------
+const ETAPES = [1, 2, 3, 4, 5, 6, 7];
+for (const s of slides) {
+  const part = Number(s.dataset.part);
+  s.insertAdjacentHTML('afterbegin', '<div class="vie" aria-hidden="true"><i class="tache t1"></i><i class="tache t2"></i><i class="tache t3"></i><i class="coin-zellige"></i></div>');
+  if (part >= 1 && part <= 7) s.insertAdjacentHTML('beforeend', `<div class="chemin-oral" aria-hidden="true">${ETAPES.map((k, n) => `${n ? `<span class="trait${k <= part ? ' fait' : ''}"></span>` : ''}<span class="pas${k < part ? ' fait' : k === part ? ' ici' : ''}" style="--j:${n}">${k < part ? '✓' : k}</span>`).join('')}</div>`);
+}
+for (const c of document.querySelectorAll('.confettis')) c.innerHTML = Array.from({ length: 22 }, (_, k) => `<i style="--x:${(k * 37) % 100}%;--t:${(k * 0.53) % 4.2}s;--r:${(k * 47) % 360}deg;--c:${['var(--saffron)', 'var(--fes-2)', 'var(--sage)', 'var(--saffron-edge)'][k % 4]}"></i>`).join('');
+
 // ---------- Bellarej (vectorielle, animée) ----------
 for (const el of document.querySelectorAll('[data-bellarej]')) {
   try {

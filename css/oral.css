@@ -468,3 +468,125 @@ body.orateur .deck, body.orateur .parties, body.orateur .compteur { display: non
   [data-r] { opacity: 1; transform: none; }
   .parties, .compteur, .panneau-notes, .aide { display: none !important; }
 }
+
+/* =====================================================================
+   Vague « vie partout » (26 nov.) : aucune diapo immobile, moins de blanc.
+   ===================================================================== */
+/* Fond vivant : trois taches douces qui dérivent lentement, un coin de zellige */
+.slide > .vie { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
+.vie .tache { position: absolute; border-radius: 50%; filter: blur(60px); opacity: .55; animation: derive 22s ease-in-out infinite alternate; }
+.vie .t1 { width: 760px; height: 760px; right: -220px; top: -260px; background: var(--saffron-soft); }
+.vie .t2 { width: 680px; height: 680px; left: -260px; bottom: -300px; background: var(--success-soft); animation-duration: 27s; animation-delay: -9s; }
+.vie .t3 { width: 420px; height: 420px; left: 46%; top: 58%; background: #EFE3CF; opacity: .45; animation-duration: 31s; animation-delay: -4s; }
+.fes .vie .tache { opacity: .32; }
+.fes .vie .t1 { background: #1D6A53; } .fes .vie .t2 { background: #0A2F27; opacity: .6; } .fes .vie .t3 { background: #2A6B4F; opacity: .22; }
+@keyframes derive { 0% { transform: translate(0, 0) scale(1); } 50% { transform: translate(-70px, 50px) scale(1.08); } 100% { transform: translate(50px, -40px) scale(.95); } }
+.vie .coin-zellige {
+  position: absolute; right: -40px; bottom: -40px; width: 560px; height: 560px;
+  background: url("../assets/textures/zellige.webp") 0 0 / 300px repeat; opacity: .085; mix-blend-mode: multiply;
+  -webkit-mask: radial-gradient(circle at 100% 100%, #000 15%, transparent 70%); mask: radial-gradient(circle at 100% 100%, #000 15%, transparent 70%);
+  animation: glisse 60s linear infinite;
+}
+.fes .vie .coin-zellige { opacity: .1; mix-blend-mode: screen; }
+@keyframes glisse { to { background-position: 300px 300px; } }
+.zellige { animation: glisse 80s linear infinite; }
+
+/* Chemin de l'oral, en haut à droite : les 7 parties comme les étapes du chemin de l'appli */
+.slide > .chemin-oral { position: absolute; right: 128px; top: 92px; display: flex; align-items: center; z-index: 3; }
+.chemin-oral .pas {
+  width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; font-size: 18px; font-weight: 1000;
+  background: var(--chaux-0); color: var(--ink-3); border: 2px solid var(--line-strong); box-shadow: 0 3px 0 var(--line-strong);
+}
+.chemin-oral .pas.fait { background: var(--fes-2); color: var(--chaux-0); border-color: var(--fes-edge); box-shadow: 0 3px 0 var(--fes-edge); }
+.chemin-oral .pas.ici { width: 50px; height: 50px; font-size: 22px; background: var(--saffron); color: var(--ink); border-color: var(--saffron-edge); box-shadow: 0 4px 0 var(--saffron-edge); position: relative; }
+.chemin-oral .pas.ici::after { content: ""; position: absolute; inset: -8px; border-radius: 50%; border: 3px solid var(--saffron); animation: onde 2s ease-out infinite; }
+.chemin-oral .trait { width: 22px; height: 4px; background: var(--line-strong); border-radius: 2px; }
+.chemin-oral .trait.fait { background: var(--fes-2); }
+.fes .chemin-oral .pas:not(.fait):not(.ici) { background: transparent; color: var(--sage); border-color: rgba(233, 228, 214, .35); box-shadow: none; }
+.fes .chemin-oral .pas.fait { background: var(--fes-ink); color: var(--fes); border-color: var(--fes-ink); box-shadow: none; }
+.fes .chemin-oral .trait { background: rgba(233, 228, 214, .3); } .fes .chemin-oral .trait.fait { background: var(--fes-ink); }
+.slide.active .chemin-oral .pas { animation: pop .5s var(--ressort) calc(.3s + var(--j) * .06s) both; }
+@keyframes pop { from { transform: scale(.4); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes onde { 0% { transform: scale(.8); opacity: .9; } 100% { transform: scale(1.5); opacity: 0; } }
+
+/* Reflet qui passe sur l'élément fort de chaque diapo */
+.carte-forte, .chiffre-xl, .palier-reco, .primaire-xl, .agence-q { position: relative; overflow: hidden; }
+.carte-forte::after, .chiffre-xl::after, .palier-reco::after {
+  content: ""; position: absolute; top: -20%; bottom: -20%; width: 34%; left: -60%; pointer-events: none;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .16), transparent); transform: skewX(-14deg);
+}
+.slide.active .carte-forte::after, .slide.active .chiffre-xl::after, .slide.active .palier-reco::after { animation: reflet 5.5s ease-in-out 1.6s infinite; }
+@keyframes reflet { 0%, 55% { left: -60%; } 85%, 100% { left: 130%; } }
+.slide.active tr.nous td { animation: respire 3.6s ease-in-out 1.5s infinite; }
+@keyframes respire { 50% { filter: brightness(1.12); } }
+
+/* 2 · le jeton qui voyage de Lyon à Nador, l'onde à l'arrivée, « en train d'écrire » */
+.distance .jeton-arc { fill: var(--saffron); stroke: var(--chaux-0); stroke-width: 4; }
+.distance .onde { fill: none; stroke: var(--saffron); stroke-width: 3; transform-box: fill-box; transform-origin: center; animation: onde 1.7s ease-out infinite; }
+.bulle.ecrit { display: inline-flex; gap: 8px; padding: 20px 24px; width: auto; }
+.bulle.ecrit i { width: 12px; height: 12px; border-radius: 50%; background: var(--ink-3); animation: point 1.2s ease-in-out infinite; }
+.bulle.ecrit i:nth-child(2) { animation-delay: .15s; } .bulle.ecrit i:nth-child(3) { animation-delay: .3s; }
+@keyframes point { 0%, 60%, 100% { transform: none; opacity: .45; } 30% { transform: translateY(-8px); opacity: 1; } }
+.constats li { background: var(--chaux-0); border: 2px solid var(--line); border-radius: 22px; padding: 20px 24px 20px 58px; box-shadow: 0 5px 0 var(--line-strong); }
+.constats li::before { left: 24px; top: 1.05em; background: var(--saffron); box-shadow: 0 0 0 5px var(--saffron-soft); }
+
+/* 3 · la chaîne : entreprise → contrôleur → client → paiement recommandé */
+.chaine { display: flex; align-items: center; gap: 0; margin-top: 44px; }
+.maillon { display: flex; align-items: center; gap: 14px; background: var(--chaux-0); border: 2px solid var(--line); border-radius: 26px; padding: 10px 22px 10px 12px; box-shadow: 0 6px 0 var(--line-strong); }
+.maillon i { display: block; width: 120px; height: 150px; flex: none; }
+.maillon p { font-size: 25px; line-height: 1.25; color: var(--ink-2); max-width: 230px; }
+.maillon p b { display: block; font-size: 29px; font-weight: 1000; color: var(--ink); }
+.maillon-fin { background: var(--fes); border-color: var(--fes-edge); box-shadow: 0 6px 0 var(--fes-edge); padding: 22px 24px; flex-direction: column; align-items: flex-start; gap: 8px; }
+.maillon-fin p { color: var(--fes-ink); font-size: 23px; }
+.tampon { display: inline-block; font-size: 24px; line-height: 1.1; font-weight: 1000; letter-spacing: .1em; text-transform: uppercase; color: var(--saffron); border: 3px solid var(--saffron); border-radius: 12px; padding: 8px 12px; transform: rotate(-4deg); }
+.slide.active .tampon { animation: tamponne .5s var(--ressort) 2.2s both; }
+@keyframes tamponne { from { transform: rotate(-4deg) scale(2.2); opacity: 0; } to { transform: rotate(-4deg); opacity: 1; } }
+.fleche { flex: 1; min-width: 34px; height: 4px; margin: 0 8px; background: repeating-linear-gradient(90deg, var(--line-strong) 0 10px, transparent 10px 18px); position: relative; }
+.fleche i { position: absolute; top: 50%; left: 0; width: 16px; height: 16px; margin-top: -8px; border-radius: 50%; background: var(--saffron); box-shadow: 0 0 0 4px var(--saffron-soft); animation: file 2.4s ease-in-out infinite; }
+.fleche:nth-of-type(2) i { animation-delay: .8s; } .fleche:nth-of-type(3) i { animation-delay: 1.6s; }
+@keyframes file { 0% { left: 0; opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { left: calc(100% - 16px); opacity: 0; } }
+
+/* 13 · les trois écrans réels de l'appli, en éventail, qui flottent */
+.slide > .ecrans { position: absolute; right: 110px; bottom: 30px; width: 560px; height: 600px; }
+.ecran { position: absolute; bottom: 0; width: 240px; margin: 0; }
+.ecran img { display: block; width: 100%; height: auto; border-radius: 40px; box-shadow: 0 30px 60px rgba(0, 0, 0, .45), 0 0 0 6px #0A1F1A, 0 0 0 8px rgba(233, 228, 214, .25); }
+.ecran figcaption { position: absolute; left: 50%; top: -40px; translate: -50% 0; font-size: 20px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; color: var(--sage); white-space: nowrap; }
+.e-client { left: 0; transform: rotate(-7deg) translateY(10px); z-index: 1; }
+.e-entreprise { left: 160px; transform: translateY(-40px); z-index: 3; }
+.e-controleur { left: 320px; transform: rotate(7deg) translateY(10px); z-index: 2; }
+.e-entreprise figcaption { color: var(--saffron); }
+.slide.active .ecran img { animation: flotte 5s ease-in-out infinite; }
+.slide.active .e-entreprise img { animation-delay: -1.6s; } .slide.active .e-controleur img { animation-delay: -3.2s; }
+@keyframes flotte { 50% { transform: translateY(-14px); } }
+.s-maquette .methode, .s-maquette .resultats { max-width: 1120px; }
+.s-maquette .resultats { grid-template-columns: repeat(2, 1fr); gap: 24px 40px; }
+.maquette-bellarej { right: auto !important; left: 640px; bottom: 44px !important; }
+
+/* 14 · les chiffres à retenir, et la fête */
+.fin-chiffres { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 46px; max-width: 1500px; }
+.fin-chiffres article { background: var(--chaux-0); border: 2px solid var(--line); border-radius: 24px; padding: 20px 24px; box-shadow: 0 6px 0 var(--line-strong); }
+.fin-chiffres article:nth-child(3) { background: var(--fes); border-color: var(--fes-edge); box-shadow: 0 6px 0 var(--fes-edge); }
+.fin-chiffres b { display: block; font-size: 58px; line-height: 1; font-weight: 1000; color: var(--ink); white-space: nowrap; }
+.fin-chiffres span { font-size: 22px; color: var(--ink-2); font-weight: 700; }
+.fin-chiffres article:nth-child(3) b { color: var(--saffron); } .fin-chiffres article:nth-child(3) span { color: var(--fes-ink); }
+.s-fin { padding-top: 96px; }
+.s-fin .fin-grille { margin-top: 40px; }
+.s-fin .fin-recap li { font-size: 31px; }
+.slide > .confettis { position: absolute; right: 60px; bottom: 0; width: 620px; height: 1080px; pointer-events: none; z-index: 1; }
+.confettis i { position: absolute; top: -30px; left: var(--x); width: 14px; height: 22px; border-radius: 4px; background: var(--c); opacity: 0; transform: rotate(var(--r)); }
+.slide.active .confettis i { animation: tombe 4.2s linear var(--t) infinite; }
+@keyframes tombe { 0% { opacity: 0; transform: translateY(0) rotate(var(--r)); } 10% { opacity: .9; } 85% { opacity: .9; } 100% { opacity: 0; transform: translateY(1100px) rotate(calc(var(--r) + 540deg)); } }
+.fin-bellarej { z-index: 2; }
+
+@media (prefers-reduced-motion: reduce) {
+  .vie .tache, .vie .coin-zellige, .zellige, .chemin-oral .pas, .chemin-oral .pas.ici::after, .fleche i, .confettis i, .ecran img,
+  .carte-forte::after, .chiffre-xl::after, .palier-reco::after, tr.nous td, .bulle.ecrit i, .distance .onde, .tampon { animation: none !important; }
+  .confettis, .jeton-arc { display: none; }
+}
+@media print { .vie, .confettis { display: none; } }
+/* Corrections après capture (26 nov.) */
+.fin-chiffres span.count { font-size: inherit; color: inherit; font-weight: inherit; }
+.fin-chiffres { max-width: 1340px; margin-top: 56px; }
+.s-fin > .chemin-oral { display: none; }
+.slide > .confettis { width: 330px; right: 40px; }
+.slide > .ecrans { bottom: 52px; }
