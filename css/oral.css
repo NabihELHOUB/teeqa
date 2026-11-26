@@ -590,3 +590,5 @@ body.orateur .deck, body.orateur .parties, body.orateur .compteur { display: non
 .s-fin > .chemin-oral { display: none; }
 .slide > .confettis { width: 330px; right: 40px; }
 .slide > .ecrans { bottom: 52px; }
+.slide > .ecrans { bottom: 26px; }
+.e-entreprise { transform: translateY(-18px); }

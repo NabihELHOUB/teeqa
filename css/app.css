@@ -2367,3 +2367,6 @@ summary { min-height: 44px; display: flex; align-items: center; gap: 6px; cursor
 }
 /* Vague 26 (rejeu au doigt : Mimouna) : un chip qui se touche (bouton) fait 44 px de haut ; les étiquettes restent petites. */
 button.chip { min-height: 44px; }
+/* 26 nov. : le nom de l'étape passe au-dessus des pavés du chemin (ils le barraient : « Gros●œuvre »). */
+.node-label { z-index: 2; }
+.node-label .nn { display: inline-block; padding: 2px 8px 3px; border-radius: 999px; background: var(--paper); }
