@@ -585,10 +585,13 @@ svg.flux{position:absolute;inset:0;width:1920px;height:1080px;overflow:visible}
 
 /* ---------- les roues de chiffres (tampon dateur) ---------- */
 [data-count]{font-variant-numeric:tabular-nums}
-.roue{display:inline-block;height:1em;line-height:1em;overflow:hidden;vertical-align:var(--roue-v,-.12em)}
-.roue .col{display:block}
+[data-count]{font-variant-numeric:tabular-nums lining-nums}
+/* une roue = un chiffre fantôme invisible (largeur, ligne de base) + une colonne 0-9 qui avance d'un cran à la fois, découpée net */
+.roue{display:inline-block;position:relative;height:1em;line-height:1em;margin:-.3em 0;vertical-align:baseline;clip-path:inset(0);font-variant-numeric:tabular-nums lining-nums}
+.roue .fantome{visibility:hidden}
+.roue .col{position:absolute;left:0;right:0;top:0;display:block}
 .roue .col i{display:block;height:1em;line-height:1em;font-style:normal;text-align:center}
-.compteur{position:relative}
+.compteur{position:relative;display:inline-block}
 .anneau{position:absolute;left:50%;top:50%;width:1.7em;height:1.7em;margin:-.85em 0 0 -.85em;border-radius:50%;border:.07em solid var(--safran);pointer-events:none;opacity:0}
 
 /* ---------- le fil de la preuve : un trait safran, d'une diapo à l'autre ---------- */
@@ -851,6 +854,95 @@ svg.flux{position:absolute;inset:0;width:1920px;height:1080px;overflow:visible}
 /* impression : les portes de la diapo 3 sont ouvertes, les cartes se lisent */
 @media print{.qdoor .leaf{display:none!important}}
 
+/* ====================================================================
+   TOUR 2 · EXPERT (27 nov.)
+   ==================================================================== */
+/* 8 · la maison : canevas plus haut (le socle tient dedans), légende du récit, pas de pastilles flottantes */
+.m3d{top:92px;height:960px}
+.m3d canvas{height:960px}
+.m3d::before{top:690px}
+.m3d .m3d-tag{bottom:40px}
+.s-maison .ho-legende{margin-top:22px;max-width:620px;min-height:68px;font:800 26px/1.3 var(--font);color:var(--safran-c);text-wrap:balance}
+/* zellige des parties : de vrais carreaux (étoile à huit branches), clairs, foncés ou du soir */
+.tr-zel i b{background:var(--chaux) center/100% 100% no-repeat}
+.tr-zel i b::after{display:none}
+.tr-zel i b.zel-clair{background-image:url("assets/oral/tour2/zel-clair.svg")}
+.tr-zel i b.zel-fonce{background-image:url("assets/oral/tour2/zel-fonce.svg")}
+.tr-zel i b.zel-soir{background-image:url("assets/oral/tour2/zel-soir.svg")}
+.tr-zel-lab{z-index:2}
+/* 4 · la carte est là dès la première image (repli plat), la 3D prend le relais en fondu quand elle est prête */
+.map3d.gl-wait:not(.gl) .map-flat{opacity:1}
+.map3d .map-flat{transition:opacity .8s}
+/* 2→3 : la porte qui vole garde le dessin d'une porte fermée */
+.tr-porte{box-shadow:0 40px 90px rgba(0,0,0,.35)}
+/* 7 : le téléphone de la photo est visible, la carte « Notre décision » se pose sur le béton, en bas */
+.s-diff .df-photo img{object-position:100% 50%}
+.df-decision{top:auto;bottom:70px;right:70px;width:640px}
+/* HUD lisible sur les photos sombres */
+.s-diff .hud,.s-probleme .hud{background:rgba(10,20,16,.55);padding:8px 14px 8px 10px;border-radius:999px}
+/* 12 : l'agence est remplaçable */
+.ag-arche{overflow:hidden}
+.ag-relais{position:absolute;left:820px;top:690px;display:flex;align-items:center;gap:22px;z-index:2}
+.ag-relais .med{display:flex;align-items:center;gap:12px;background:rgba(241,235,223,.1);border:2px solid rgba(242,190,92,.45);border-radius:999px;padding:10px 22px 10px 10px;font:900 24px/1 var(--font);color:var(--chaux-n)}
+.ag-relais .med img{width:58px;height:58px;object-fit:contain}
+.ag-relais .med.b{animation:relais 6s ease-in-out infinite}
+.ag-relais .med.a{animation:relais 6s ease-in-out -3s infinite}
+.ag-relais .med.dossier{margin-left:30px;border-color:var(--safran);background:rgba(224,163,58,.16);color:var(--safran-c)}
+.ag-relais .fleche svg{width:150px;height:30px;fill:none;stroke:var(--safran);stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:10 10;animation:fourmis 1.6s linear infinite}
+@keyframes relais{0%,100%{opacity:1}45%,55%{opacity:.45}}
+@keyframes fourmis{to{stroke-dashoffset:-40}}
+/* 15 : Bellarej attend au pied de l'arche (plus sur le toit, plus près du chemin), un vrai soleil derrière la maison */
+.fin-envol{display:none!important}
+.fin-pose{left:1110px;top:640px;width:190px;height:190px}
+.fin-soleil::before{content:"";position:absolute;left:30px;top:-60px;width:300px;height:300px;border-radius:50%;background:radial-gradient(closest-side,#FFE2A0 0%,#F7B865 55%,rgba(242,150,80,.0) 100%);filter:blur(2px)}
+/* 16 : l'horizon de Nador la nuit, des fenêtres qui s'allument ; Bellarej s'endort sur un toit */
+.so-horizon{position:absolute;left:0;bottom:0;width:1920px;height:260px;pointer-events:none;z-index:-1}
+.so-horizon .bati{fill:#0B1412}
+.so-horizon .palme{fill:none;stroke:#0B1412;stroke-width:9;stroke-linecap:round}
+.so-horizon .fen{fill:#F2BE5C;opacity:.85;animation:fenetre 7s ease-in-out infinite}
+.so-horizon .fen:nth-child(3n){animation-delay:-2.3s;opacity:.55}.so-horizon .fen:nth-child(4n){animation-delay:-4.1s}
+@keyframes fenetre{0%,100%{opacity:.85}50%{opacity:.4}}
+.so-frise.nuit{display:none}
+.so-bellarej{right:120px;bottom:150px;width:200px;height:200px}
+.so-bellarej video{width:100%;height:100%;animation:dort 5s ease-in-out infinite;transform-origin:50% 90%}
+@keyframes dort{0%,100%{transform:scale(1,1)}50%{transform:scale(1.015,.985)}}
+.zzz{position:absolute;left:120px;top:10px;font:900 26px/1 var(--font);color:#F6E7C1}
+.zzz i{position:absolute;font-style:normal;opacity:0;animation:zzz 4.5s ease-out infinite}
+.zzz i:nth-child(2){animation-delay:1.5s;font-size:.8em}.zzz i:nth-child(3){animation-delay:3s;font-size:.62em}
+@keyframes zzz{0%{opacity:0;transform:translate(0,0)}20%{opacity:.9}100%{opacity:0;transform:translate(40px,-70px)}}
+@media print{.zzz{display:none}.so-horizon .fen{animation:none}}
+/* impression : la diapo remplit la page (rien ne dépasse de la scène), sans calques de mélange (PDF léger) */
+.m3d .m3d-print{display:none}
+@media print{
+  #grain,#poussiere,.lumiere,#fil,.papier,#notes-pan,.tr-zel{display:none!important}
+  #stage,.slide{overflow:hidden!important}
+  .m3d .m3d-fallback{display:none!important}
+  .m3d .m3d-print{display:block;position:absolute;left:0;top:0;width:1100px;height:960px}
+  .s-maison .ho-legende{visibility:hidden}
+}
+/* 9 : chaque étiquette est posée sur une pastille couleur du fond : aucun trait ne barre un mot */
+.flux .lab{paint-order:stroke fill;stroke:#F3E9D6;stroke-width:12px;stroke-linejoin:round}
+.fx-leg{bottom:30px}
+/* 8 : la légende du récit sous le fil doré du titre */
+.s-maison .ho-legende{margin-top:44px}
+@media print{#stage *{filter:none!important;mix-blend-mode:normal!important;backdrop-filter:none!important}}
+@media print{.fin-pose{opacity:1!important;animation:none!important}}
+/* 11 : l'échelle de la barre */
+.rt-cap .echelle{display:inline-block;margin-left:14px;font:900 16px/1 var(--font);letter-spacing:.08em;text-transform:uppercase;color:var(--fes);background:rgba(31,107,79,.1);border-radius:999px;padding:7px 12px;vertical-align:3px}
+/* 6 : le dessin d'architecte, petit, au-dessus du tableau, à droite du titre ; l'équerre et le crayon à côté, hors du tableau */
+.bn-coupe{right:300px;top:96px;bottom:auto;width:300px;height:207px}
+.bn-outil{right:110px;top:120px;width:150px}
+.bn-crayon{right:180px;bottom:auto;top:262px;width:150px}
+/* 4 : la cigogne remplit le trou de la grille des chiffres */
+.mk-cigogne{left:790px;top:770px}
+/* 3 : la chaîne remonte, l'îlot de palmiers ne touche plus la 3e porte */
+.va-chaine{bottom:70px}
+.va-ilot.v2{left:1640px;top:300px}
+
+/* vidéo transparente mise en pause pour garder 60 images/s : elle respire au lieu de jouer */
+video.en-image:not(.ecran){animation:respire 5.5s ease-in-out infinite;transform-origin:50% 90%}
+@keyframes respire{0%,100%{scale:1 1}50%{scale:1.012 1.03}}
+
 /* ====== repris du moteur du 3 nov. ====== */
 /* repli SVG isométrique */
 .m3d-fallback .plot{fill:#6B4A34;opacity:.9}
@@ -1016,7 +1108,7 @@ body.mouse #ui-btns{opacity:1}
     <p class="pt-team" data-enter data-fx="fade" data-at="2.2">David Lescure · Nabih El Houb · Manuela Dongmo · Evrard Dedo<br><span>M2 · IAE Savoie Mont Blanc</span></p>
   </div>
   <div class="bab" data-enter data-fx="lift" data-at=".15" data-dur="1.3">
-    <div class="bab-in"><video class="loop" data-mp4="chemin/arrivee"></video></div>
+    <div class="bab-in"><video class="loop" data-vedette data-mp4="chemin/arrivee"></video></div>
     <svg class="bab-cadre" viewBox="0 0 760 900" aria-hidden="true"><path class="b1" d="M60 900V420A320 320 0 0 1 700 420V900"/><path class="b2" d="M92 900V424A288 288 0 0 1 668 424V900"/></svg>
     <img class="bab-cle enc" src="assets/oral/clay/pastille-encours.webp" alt="">
     <img class="bab-cle val" src="assets/oral/clay/pastille-validee.webp" alt="" data-enter data-fx="frappe" data-at="3.1">
@@ -1133,13 +1225,13 @@ body.mouse #ui-btns{opacity:1}
   </div>
   <div class="mk-stats">
     <div class="st grand" data-enter data-at=".5"><b><span class="op">&gt;</span> <span data-count="122">122</span> <small>Mds DH</small></b><p>transférés au Maroc par les Marocains de l'étranger en 2025 (118,9 Mds DH en 2024).</p><cite>Office des changes, via Hespress, 2 févr. 2026</cite></div>
-    <div class="st" data-enter data-at=".65"><b><span data-count="40.7" data-dec="1">40,7</span> <small>%</small></b><p>de leurs investissements vont à l'immobilier, et 16,6 % à la construction.</p><cite>HCP, enquête migration 2018-2019</cite></div>
+    <div class="st" data-enter data-at=".65"><b><span data-count="40.7" data-dec="1">40,7</span> <small>%</small></b><p>de leurs investissements vont à l'immobilier, et 16,6 % à la construction.</p><cite>HCP, enquête migration 2018-2019</cite></div>
     <div class="st" data-enter data-at=".8"><b>≈ <span data-count="10">10</span> <small>%</small></b><p>des transferts vont chaque année à l'investissement, surtout foncier et immobilier.</p><cite>Ministre de l'Économie, via FNH, 16 févr. 2021</cite></div>
     <div class="st" data-enter data-at=".95"><b><span data-count="3.4" data-dec="1">3,4</span> <small>Md€</small></b><p>envoyés de France vers le Maroc par les ménages en 2024.</p><cite>Eurostat, via Bladi, 17 déc. 2025</cite></div>
     <div class="st" data-enter data-at="1.1"><b>≈ <span data-count="932000" data-sep=" ">932 000</span></b><p>immigrés nés au Maroc vivent en France (11,7 % des 7,97 millions).</p><cite>Insee, 2025, provisoire</cite></div>
     <div class="st" data-enter data-at="1.25"><b><span data-count="14.8" data-dec="1">14,8</span> <small>Mt</small></b><p>de ciment livrées au Maroc en 2025 (+ 8,2 %) : le bâtiment accélère.</p><cite>Ministère de l'Habitat (APC), via Médias24</cite></div>
   </div>
-  <div class="map3d" data-3d-host="map" data-enter data-fx="fade" data-at=".1" role="img" aria-label="Carte : la France et le Maroc, reliés par un arc d'environ 1 350 km entre Lyon et Nador">
+  <div class="map3d" data-3d-host="map" role="img" aria-label="Carte : la France et le Maroc, reliés par un arc d'environ 1 350 km entre Lyon et Nador">
     <svg id="map-flat" class="map-flat" viewBox="-12.9 -12.2 26.4 26.4" aria-hidden="true"></svg>
     <span class="lb lb-city" data-lb="lyon" data-enter data-fx="fade" data-at="2.0">Lyon</span>
     <span class="lb lb-city lb-ma" data-lb="nador" data-enter data-fx="fade" data-at="2.1">Nador · l'Oriental</span>
@@ -1177,11 +1269,11 @@ body.mouse #ui-btns{opacity:1}
     </ul>
   </div>
   <ul class="pr-faits">
-    <li data-enter data-at="1.6"><b>18 sur 25</b> ont fait construire à distance (8) ou en ont le projet (10).</li>
-    <li data-enter data-at="1.8"><b>3 sur 9</b> concernés ont déjà payé une étape sans pouvoir la vérifier.</li>
-    <li data-enter data-at="2.0"><b>10 sur 18</b> l'utiliseraient au bon prix : 3 « certainement », 7 « probablement » ; 7 « peut-être », 1 « probablement pas ».</li>
+    <li data-enter data-at=".8"><b>18 sur 25</b> ont fait construire à distance (8) ou en ont le projet (10).</li>
+    <li data-enter data-at=".95"><b>3 sur 9</b> concernés ont déjà payé une étape sans pouvoir la vérifier.</li>
+    <li data-enter data-at="1.1"><b>10 sur 18</b> l'utiliseraient au bon prix : 3 « certainement », 7 « probablement » ; 7 « peut-être », 1 « probablement pas ».</li>
   </ul>
-  <div class="pr-prix" data-enter data-at="2.3">
+  <div class="pr-prix" data-enter data-at="1.3">
     <p class="cap">Prix jugé pour tout le chantier · médianes de 10 réponses, en euros</p>
     <div class="regle">
       <i class="zone" aria-hidden="true"></i>
@@ -1189,12 +1281,12 @@ body.mouse #ui-btns{opacity:1}
       <span style="left:31%"><b>2 000 €</b>bonne affaire</span>
       <span style="left:63%"><b>3 750 €</b>cher</span>
       <span style="left:91%"><b>5 500 €</b>trop cher</span>
-      <img class="curseur" src="assets/oral/clay/pastille-encours.webp" alt="" style="left:2.6%" data-enter data-fx="glisse" data-dx="1120" data-at="2.9">
-      <em class="teeqa" style="left:2.6%" data-enter data-fx="frappe" data-at="4.1">TEEQA ≈ 549 € <small>(4 visites)</small></em>
+      <img class="curseur" src="assets/oral/clay/pastille-encours.webp" alt="" style="left:2.6%" data-enter data-fx="glisse" data-dx="1120" data-at="1.9">
+      <em class="teeqa" style="left:2.6%" data-enter data-fx="frappe" data-at="3.2">TEEQA ≈ 549 € <small>(4 visites)</small></em>
     </div>
   </div>
-  <p class="pr-pros" data-enter data-at="2.8"><b>Côté pros :</b> un bureau de contrôle de l'Oriental facture 1 500 MAD une visite d'une demi-journée et préfère être payé par le service ; une entreprise de 21 à 50 salariés paie déjà plus de 200 € par mois pour trouver des clients.</p>
-  <p class="pr-limite" data-enter data-fx="fade" data-at="3.1">Échantillon petit et non représentatif : 6 répondants seulement ont un chantier au Maroc, passé ou en projet. Aucun entretien à ce jour. À faire : entretiens, devis de 3 bureaux de contrôle.</p>
+  <p class="pr-pros" data-enter data-at="1.6"><b>Côté pros :</b> un bureau de contrôle de l'Oriental facture 1 500 MAD une visite d'une demi-journée et préfère être payé par le service ; une entreprise de 21 à 50 salariés paie déjà plus de 200 € par mois pour trouver des clients.</p>
+  <p class="pr-limite" data-enter data-fx="fade" data-at="1.9">Échantillon petit et non représentatif : 6 répondants seulement ont un chantier au Maroc, passé ou en projet. Aucun entretien à ce jour. À faire : entretiens, devis de 3 bureaux de contrôle.</p>
 
   <aside class="notes" data-orateur="Manuela" data-duree="1:05">
       <p class="cle">32 vraies réponses : un besoin réel chez ceux qui construisent à distance, et une disposition à payer bien au-dessus de notre prix.</p>
@@ -1239,7 +1331,7 @@ body.mouse #ui-btns{opacity:1}
 </section>
 
 <!-- ================================================================ 7 · la différenciation -->
-<section class="slide w-nuit s-diff" data-scene="df" data-part="3" data-speaker="manuela" data-time="0:35" data-title="Différenciation" data-titre="Différenciation" data-tr="objectif" data-tr-x="1330" data-tr-y="700">
+<section class="slide w-nuit s-diff" data-scene="df" data-part="3" data-speaker="manuela" data-time="0:35" data-title="Différenciation" data-titre="Différenciation" data-tr="objectif" data-tr-x="1520" data-tr-y="530">
   <div class="df-photo"><img src="assets/oral/visuels/preuve-terrain.webp" alt=""><i class="flash"></i></div>
   <div class="df-voile" aria-hidden="true"></div>
   <div class="df-plan" aria-hidden="true"></div>
@@ -1271,7 +1363,7 @@ body.mouse #ui-btns{opacity:1}
 
 <!-- ================================================================ 8 · le concept : la maison -->
 <section class="slide w-fes s-maison" data-scene="house" data-part="4" data-speaker="evrard" data-time="0:40" data-title="Concept · l&#x27;argent suit la preuve" data-titre="Concept · l'argent suit la preuve" data-tr="arche" data-tr-x="1330" data-tr-y="560">
-  <div class="ho-chantier" aria-hidden="true"><video class="loop" data-mp4="chemin/milieu-bellarej"></video></div>
+  <div class="ho-chantier" aria-hidden="true"><video class="loop" data-mp4="chemin/milieu-a"></video></div>
   <div class="glow-fes"></div>
   <div class="zellige-fond doux" aria-hidden="true"></div>
   <div class="ho-decor" aria-hidden="true">
@@ -1279,13 +1371,11 @@ body.mouse #ui-btns{opacity:1}
     <img class="ho-palmes" src="assets/vitrine/chemin/decor-0.webp" alt="">
     <img class="ho-roc r1" src="assets/vitrine/chemin/decor-1.webp" alt="">
     <img class="ho-roc r2" src="assets/vitrine/chemin/decor-5.webp" alt="">
-    <img class="ho-dalle d1" src="assets/vitrine/chemin/dalle-1.webp" alt="">
-    <img class="ho-dalle d2" src="assets/vitrine/chemin/dalle-0.webp" alt="">
-    <img class="ho-dalle d3" src="assets/vitrine/chemin/dalle-2.webp" alt="">
   </div>
   <div class="ho-left">
     <p class="kicker"><b>04</b> Concept et business model · le concept</p>
     <h2 class="title">À chaque étape, la preuve d'abord. L'argent ensuite.</h2>
+    <p class="ho-legende" aria-live="polite">Le terrain est piqueté : rien n’est encore payé.</p>
   </div>
   <ol class="jal" aria-label="Jalons du chantier">
     <li class="rail" aria-hidden="true"><i class="rail-fill"></i></li>
@@ -1303,6 +1393,7 @@ body.mouse #ui-btns{opacity:1}
 <g data-j="0"><polygon class="b-beton top" points="444.0,342.5 719.4,501.5 496.0,630.5 220.6,471.5"/><polygon class="b-beton rx" points="719.4,515.0 496.0,644.0 496.0,630.5 719.4,501.5"/><polygon class="b-beton fz" points="220.6,485.0 496.0,644.0 496.0,630.5 220.6,471.5"/><line class="fer" x1="444.0" y1="346.1" x2="444.0" y2="307.1"/><line class="fer" x1="444.0" y1="356.9" x2="444.0" y2="317.9"/><line class="fer" x1="340.1" y1="406.1" x2="340.1" y2="367.1"/><line class="fer" x1="340.1" y1="416.9" x2="340.1" y2="377.9"/><line class="fer" x1="236.2" y1="466.1" x2="236.2" y2="427.1"/><line class="fer" x1="236.2" y1="476.9" x2="236.2" y2="437.9"/><line class="fer" x1="573.9" y1="421.1" x2="573.9" y2="382.1"/><line class="fer" x1="573.9" y1="431.9" x2="573.9" y2="392.9"/><line class="fer" x1="470.0" y1="481.1" x2="470.0" y2="442.1"/><line class="fer" x1="470.0" y1="491.9" x2="470.0" y2="452.9"/><line class="fer" x1="366.1" y1="541.1" x2="366.1" y2="502.1"/><line class="fer" x1="366.1" y1="551.9" x2="366.1" y2="512.9"/><line class="fer" x1="703.8" y1="496.1" x2="703.8" y2="457.1"/><line class="fer" x1="703.8" y1="506.9" x2="703.8" y2="467.9"/><line class="fer" x1="599.9" y1="556.1" x2="599.9" y2="517.1"/><line class="fer" x1="599.9" y1="566.9" x2="599.9" y2="527.9"/><line class="fer" x1="496.0" y1="616.1" x2="496.0" y2="577.1"/><line class="fer" x1="496.0" y1="626.9" x2="496.0" y2="587.9"/></g><g data-j="1"><polygon class="b-parp top" points="444.0,261.5 703.8,411.5 496.0,531.5 236.2,381.5"/><polygon class="b-parp rx" points="703.8,501.5 496.0,621.5 496.0,531.5 703.8,411.5"/><polygon class="b-parp fz" points="236.2,471.5 496.0,621.5 496.0,531.5 236.2,381.5"/><line class="jt" x1="235.9" y1="462.6" x2="495.7" y2="612.6"/><line class="jt" x1="496.2" y1="612.6" x2="704.1" y2="492.6"/><line class="jt" x1="235.9" y1="453.6" x2="495.7" y2="603.6"/><line class="jt" x1="496.2" y1="603.6" x2="704.1" y2="483.6"/><line class="jt" x1="235.9" y1="444.6" x2="495.7" y2="594.6"/><line class="jt" x1="496.2" y1="594.6" x2="704.1" y2="474.6"/><line class="jt" x1="235.9" y1="435.6" x2="495.7" y2="585.6"/><line class="jt" x1="496.2" y1="585.6" x2="704.1" y2="465.6"/><line class="jt" x1="235.9" y1="426.6" x2="495.7" y2="576.6"/><line class="jt" x1="496.2" y1="576.6" x2="704.1" y2="456.6"/><line class="jt" x1="235.9" y1="417.6" x2="495.7" y2="567.6"/><line class="jt" x1="496.2" y1="567.6" x2="704.1" y2="447.6"/><line class="jt" x1="235.9" y1="408.6" x2="495.7" y2="558.6"/><line class="jt" x1="496.2" y1="558.6" x2="704.1" y2="438.6"/><line class="jt" x1="235.9" y1="399.6" x2="495.7" y2="549.6"/><line class="jt" x1="496.2" y1="549.6" x2="704.1" y2="429.6"/><line class="jt" x1="235.9" y1="390.6" x2="495.7" y2="540.6"/><line class="jt" x1="496.2" y1="540.6" x2="704.1" y2="420.6"/><polygon class="b-dalle top" points="444.0,246.5 714.2,402.5 496.0,528.5 225.8,372.5"/><polygon class="b-dalle rx" points="714.2,411.5 496.0,537.5 496.0,528.5 714.2,402.5"/><polygon class="b-dalle fz" points="225.8,381.5 496.0,537.5 496.0,528.5 225.8,372.5"/><polygon class="b-parp top" points="444.0,162.5 703.8,312.5 496.0,432.5 236.2,282.5"/><polygon class="b-parp rx" points="703.8,402.5 496.0,522.5 496.0,432.5 703.8,312.5"/><polygon class="b-parp fz" points="236.2,372.5 496.0,522.5 496.0,432.5 236.2,282.5"/><line class="jt" x1="235.9" y1="363.6" x2="495.7" y2="513.6"/><line class="jt" x1="496.2" y1="513.6" x2="704.1" y2="393.6"/><line class="jt" x1="235.9" y1="354.6" x2="495.7" y2="504.6"/><line class="jt" x1="496.2" y1="504.6" x2="704.1" y2="384.6"/><line class="jt" x1="235.9" y1="345.6" x2="495.7" y2="495.6"/><line class="jt" x1="496.2" y1="495.6" x2="704.1" y2="375.6"/><line class="jt" x1="235.9" y1="336.6" x2="495.7" y2="486.6"/><line class="jt" x1="496.2" y1="486.6" x2="704.1" y2="366.6"/><line class="jt" x1="235.9" y1="327.6" x2="495.7" y2="477.6"/><line class="jt" x1="496.2" y1="477.6" x2="704.1" y2="357.6"/><line class="jt" x1="235.9" y1="318.6" x2="495.7" y2="468.6"/><line class="jt" x1="496.2" y1="468.6" x2="704.1" y2="348.6"/><line class="jt" x1="235.9" y1="309.6" x2="495.7" y2="459.6"/><line class="jt" x1="496.2" y1="459.6" x2="704.1" y2="339.6"/><line class="jt" x1="235.9" y1="300.7" x2="495.7" y2="450.7"/><line class="jt" x1="496.2" y1="450.7" x2="704.1" y2="330.7"/><line class="jt" x1="235.9" y1="291.7" x2="495.7" y2="441.7"/><line class="jt" x1="496.2" y1="441.7" x2="704.1" y2="321.7"/><polygon class="b-dalle top" points="444.0,147.5 714.2,303.5 496.0,429.5 225.8,273.5"/><polygon class="b-dalle rx" points="714.2,312.5 496.0,438.5 496.0,429.5 714.2,303.5"/><polygon class="b-dalle fz" points="225.8,282.5 496.0,438.5 496.0,429.5 225.8,273.5"/><polygon class="baie" points="277.2,464.3 324.0,491.3 324.0,449.3 277.2,422.3"/><polygon class="baie" points="407.1,539.3 453.9,566.3 453.9,524.3 407.1,497.3"/><polygon class="baie" points="675.8,486.8 631.6,512.3 631.6,470.3 675.8,444.8"/><polygon class="baie" points="569.2,548.3 525.1,573.8 525.1,531.8 569.2,506.3"/><polygon class="baie" points="277.2,366.8 324.0,393.8 324.0,351.8 277.2,324.8"/><polygon class="baie" points="407.1,441.8 453.9,468.8 453.9,426.8 407.1,399.8"/><polygon class="baie" points="675.8,389.3 631.6,414.8 631.6,372.8 675.8,347.3"/><polygon class="baie" points="569.2,450.8 525.1,476.3 525.1,434.3 569.2,408.8"/><polygon class="baie" points="347.4,536.3 383.7,557.3 383.7,488.3 347.4,467.3"/></g><g data-j="2"><polygon class="b-enduit top" points="444.0,259.4 706.4,410.9 496.0,532.4 233.6,380.9"/><polygon class="b-enduit rx" points="706.4,501.5 496.0,623.0 496.0,532.4 706.4,410.9"/><polygon class="b-enduit fz" points="233.6,471.5 496.0,623.0 496.0,532.4 233.6,380.9"/><polygon class="b-enduit top" points="444.0,160.4 706.4,311.9 496.0,433.4 233.6,281.9"/><polygon class="b-enduit rx" points="706.4,403.1 496.0,524.6 496.0,433.4 706.4,311.9"/><polygon class="b-enduit fz" points="233.6,373.1 496.0,524.6 496.0,433.4 233.6,281.9"/><polygon class="baie e" points="277.2,464.3 324.0,491.3 324.0,449.3 277.2,422.3"/><polygon class="baie e" points="407.1,539.3 453.9,566.3 453.9,524.3 407.1,497.3"/><polygon class="baie e" points="675.8,486.8 631.6,512.3 631.6,470.3 675.8,444.8"/><polygon class="baie e" points="569.2,548.3 525.1,573.8 525.1,531.8 569.2,506.3"/><polygon class="baie e" points="277.2,366.8 324.0,393.8 324.0,351.8 277.2,324.8"/><polygon class="baie e" points="407.1,441.8 453.9,468.8 453.9,426.8 407.1,399.8"/><polygon class="baie e" points="675.8,389.3 631.6,414.8 631.6,372.8 675.8,347.3"/><polygon class="baie e" points="569.2,450.8 525.1,476.3 525.1,434.3 569.2,408.8"/><polygon class="baie e" points="346.1,537.0 382.4,558.0 382.4,489.0 346.1,468.0"/></g><g data-j="3"><polygon class="b-enduit par top" points="444.0,123.5 714.2,279.5 496.0,405.5 225.8,249.5"/><polygon class="b-enduit par rx" points="714.2,303.5 496.0,429.5 496.0,405.5 714.2,279.5"/><polygon class="b-enduit par fz" points="225.8,273.5 496.0,429.5 496.0,405.5 225.8,249.5"/><polygon class="cadre" points="277.2,464.3 324.0,491.3 324.0,449.3 277.2,422.3"/><polygon class="cadre" points="407.1,539.3 453.9,566.3 453.9,524.3 407.1,497.3"/><polygon class="cadre" points="675.8,486.8 631.6,512.3 631.6,470.3 675.8,444.8"/><polygon class="cadre" points="569.2,548.3 525.1,573.8 525.1,531.8 569.2,506.3"/><polygon class="cadre" points="277.2,366.8 324.0,393.8 324.0,351.8 277.2,324.8"/><polygon class="cadre" points="407.1,441.8 453.9,468.8 453.9,426.8 407.1,399.8"/><polygon class="cadre" points="675.8,389.3 631.6,414.8 631.6,372.8 675.8,347.3"/><polygon class="cadre" points="569.2,450.8 525.1,476.3 525.1,434.3 569.2,408.8"/><polygon class="vitre" points="280.3,462.5 320.9,485.9 320.9,451.1 280.3,427.7"/><polygon class="vitre" points="410.2,537.5 450.8,560.9 450.8,526.1 410.2,502.7"/><polygon class="vitre" points="672.6,485.0 634.7,506.9 634.7,472.1 672.6,450.2"/><polygon class="vitre" points="566.1,546.5 528.2,568.4 528.2,533.6 566.1,511.7"/><polygon class="vitre" points="280.3,365.0 320.9,388.4 320.9,353.6 280.3,330.2"/><polygon class="vitre" points="410.2,440.0 450.8,463.4 450.8,428.6 410.2,405.2"/><polygon class="vitre" points="672.6,387.5 634.7,409.4 634.7,374.6 672.6,352.7"/><polygon class="vitre" points="566.1,449.0 528.2,470.9 528.2,436.1 566.1,414.2"/><polygon class="zel" points="338.0,532.7 390.0,562.7 390.0,484.7 338.0,454.7"/><polygon class="porte" points="345.3,537.5 381.7,558.5 381.7,489.5 345.3,468.5"/></g><g data-j="4"><polygon class="lit" points="280.3,462.5 320.9,485.9 320.9,451.1 280.3,427.7"/><polygon class="lit" points="410.2,537.5 450.8,560.9 450.8,526.1 410.2,502.7"/><polygon class="lit" points="672.6,485.0 634.7,506.9 634.7,472.1 672.6,450.2"/><polygon class="lit" points="566.1,546.5 528.2,568.4 528.2,533.6 566.1,511.7"/><polygon class="lit" points="280.3,365.0 320.9,388.4 320.9,353.6 280.3,330.2"/><polygon class="lit" points="410.2,440.0 450.8,463.4 450.8,428.6 410.2,405.2"/><polygon class="lit" points="672.6,387.5 634.7,409.4 634.7,374.6 672.6,352.7"/><polygon class="lit" points="566.1,449.0 528.2,470.9 528.2,436.1 566.1,414.2"/><g class="h-seal" transform="translate(800.0 150.0) scale(.9)"><circle class="h-ring" r="62"/><polygon class="h-star" points="50,0 35.36,14.64 35.36,35.36 14.64,35.36 0,50 -14.64,35.36 -35.36,35.36 -35.36,14.64 -50,0 -35.36,-14.64 -35.36,-35.36 -14.64,-35.36 0,-50 14.64,-35.36 35.36,-35.36 35.36,-14.64"/><circle class="h-hole" r="15"/></g></g>
 <rect class="h-held" data-held x="0" y="0" width="0" height="0"/>
 </svg>
+    <img class="m3d-print" src="assets/oral/tour2/maison-3d.webp" alt="" aria-hidden="true">
     <p class="m3d-tag">Maquette illustrative · le chantier de Karim, à Nador</p>
   </div>
   <div class="ho-macon" aria-hidden="true"><video class="clay" data-v="decor-v3/bellarej-batit"></video></div>
@@ -1340,13 +1431,13 @@ body.mouse #ui-btns{opacity:1}
     <g class="fl" data-k="3"><path id="f-preuve" class="preuve" d="M1440 760 C 1300 700, 1180 600, 1090 520" marker-end="url(#fl-p)"/><text x="1300" y="652" class="lab p">Photos datées</text><text x="1300" y="680" class="lab p">avis signé</text></g>
     <g class="fl" data-k="4"><path id="f-avis" class="preuve" d="M830 500 C 700 520, 620 580, 480 640" marker-end="url(#fl-p)"/><text x="470" y="725" class="lab p">Avis signé, avec</text><text x="470" y="755" class="lab p">paiement recommandé ou différé</text></g>
     <g class="fl" data-k="5"><path id="f-travaux" class="argent fort" d="M420 700 C 520 880, 700 930, 820 930" marker-end="url(#fl-a)"/><text x="520" y="822" class="lab a fort">Prix des travaux,</text><text x="520" y="854" class="lab a fort">en direct</text></g>
-    <g class="fl" data-k="6"><path id="f-sequestre" class="option" d="M240 720 C 230 830, 220 880, 240 925"/><path class="option" d="M380 960 C 560 1010, 700 1010, 820 975"/><text x="520" y="1052" class="lab o">ou par séquestre bancaire, facultatif</text></g>
+    <g class="fl" data-k="6"><path id="f-sequestre" class="option" d="M240 720 C 230 830, 220 880, 240 925"/><path class="option" d="M380 960 C 560 1010, 700 1010, 820 975"/><text x="560" y="1034" class="lab o">ou par séquestre bancaire, facultatif</text></g>
     <g class="nd" data-k="0" transform="translate(960 470)"><circle r="128" class="halo"/><circle r="104" class="coeur"/><text y="-6" class="nd-t big">TEEQA</text><text y="30" class="nd-s">date, signe, garde</text></g>
     <g class="nd" data-k="1" transform="translate(330 600)"><rect x="-150" y="-110" width="300" height="220" rx="34" class="carte"/><image href="assets/oral/clay/france.webp" x="-58" y="-96" width="116" height="122"/><text y="58" class="nd-t">Client MRE</text><text y="88" class="nd-s">paie le forfait, une fois</text></g>
-    <g class="nd" data-k="2" transform="translate(1600 300)"><rect x="-170" y="-110" width="340" height="220" rx="34" class="carte"/><image href="assets/oral/clay/casque.webp" x="-52" y="-98" width="104" height="118"/><text y="54" class="nd-t">Agence de contrôle</text><text y="84" class="nd-s">fournisseur payé par TEEQA</text></g>
+    <g class="nd" data-k="2" transform="translate(1600 300)"><rect x="-170" y="-110" width="340" height="220" rx="34" class="carte"/><image href="assets/oral/clay/signe-a.webp" x="-52" y="-100" width="104" height="120"/><text y="54" class="nd-t">Agence de contrôle</text><text y="84" class="nd-s">fournisseur payé par TEEQA</text></g>
     <g class="nd" data-k="2" transform="translate(1600 770)"><rect x="-170" y="-110" width="340" height="220" rx="34" class="carte"/><image href="assets/oral/clay/photo-a.webp" x="-50" y="-104" width="100" height="116"/><text y="50" class="nd-t">Contrôleur</text><text y="80" class="nd-s">anonyme pour l'entreprise</text></g>
     <g class="nd" data-k="3" transform="translate(960 900)"><rect x="-170" y="-100" width="340" height="200" rx="34" class="carte"/><image href="assets/oral/clay/macon.webp" x="-52" y="-96" width="104" height="104"/><text y="40" class="nd-t">Entreprise du BTP</text><text y="70" class="nd-s">invitée gratuitement</text></g>
-    <g class="nd" data-k="6" transform="translate(240 962)"><rect x="-180" y="-58" width="370" height="116" rx="28" class="carte pointille"/><image href="assets/oral/clay/wallet.webp" x="-166" y="-36" width="80" height="64"/><text x="20" y="-4" class="nd-t petit">Banque partenaire</text><text x="20" y="26" class="nd-s">compte au nom du client</text></g>
+    <g class="nd" data-k="6" transform="translate(240 962)"><rect x="-184" y="-58" width="436" height="116" rx="28" class="carte pointille"/><image href="assets/oral/clay/wallet.webp" x="-166" y="-36" width="80" height="64"/><text x="20" y="-4" class="nd-t petit">Banque partenaire</text><text x="20" y="26" class="nd-s">compte au nom du client</text></g>
     <g class="tok"><circle id="tok-a" r="15" class="t-a"/><circle id="tok-p" r="14" class="t-p"/><circle id="tok-d" r="10" class="t-d"/></g>
   </svg>
   <ul class="fx-leg" data-enter data-fx="fade" data-at="5.6"><li><i class="a"></i>argent</li><li><i class="p"></i>preuve</li><li><i class="d"></i>déclaration</li><li><i class="o"></i>en pointillé : facultatif</li></ul>
@@ -1413,7 +1504,7 @@ body.mouse #ui-btns{opacity:1}
     <h2 class="title">Chaque visite paie sa visite. Le prix cible paie aussi l'équipe.</h2>
   </div>
   <div class="rt-bloc b1">
-    <p class="rt-cap">Pilote 2027 : une visite à <b>1 100 DH TTC</b></p>
+    <p class="rt-cap">Pilote 2027 : une visite à <b>1 100 DH TTC</b> <small class="echelle">barre = 1 visite</small></p>
     <div class="barre">
       <span class="sg tva" style="flex:183" data-enter data-fx="grow" data-at=".6"><small>TVA</small><b data-count="183">183</b></span>
       <span class="sg ag" style="flex:700" data-enter data-fx="grow" data-at=".9"><small>agence</small><b data-count="700">700</b><em>dont 450 au contrôleur</em></span>
@@ -1422,7 +1513,7 @@ body.mouse #ui-btns{opacity:1}
     <p class="rt-dit" data-enter data-at="1.6">Sur un chantier à 5 900 DH, 4 visites : <b>610 DH</b> restent après tous les coûts de l'annexe de l'appli. Trop peu pour payer une équipe.</p>
   </div>
   <div class="rt-bloc b2">
-    <p class="rt-cap">Dès 2028 : un chantier à <b>11 000 DH TTC</b>, 4 visites</p>
+    <p class="rt-cap">Dès 2028 : un chantier à <b>11 000 DH TTC</b>, 4 visites <small class="echelle">barre = 1 chantier</small></p>
     <div class="barre">
       <span class="sg tva" style="flex:1833" data-enter data-fx="grow" data-at="2.0"><small>TVA</small><b data-count="1833" data-sep=" ">1 833</b></span>
       <span class="sg ag" style="flex:2800" data-enter data-fx="grow" data-at="2.3"><small>agences</small><b data-count="2800" data-sep=" ">2 800</b></span>
@@ -1430,13 +1521,13 @@ body.mouse #ui-btns{opacity:1}
       <span class="sg mg" style="flex:5589" data-enter data-fx="grow" data-at="2.9"><small>marge brute</small><b data-count="5589" data-sep=" " data-frappe>5 589</b></span>
     </div>
     <div class="ruban" data-enter data-fx="deroule" data-at="1.9" aria-hidden="true"></div>
-    <p class="rt-dit" data-enter data-at="3.3">3 000 DH de suivi + 2 000 DH par visite, ≈ 1 024 € : au seuil « trop bon marché » de notre étude (1 000 €), la moitié de la « bonne affaire » (2 000 €).</p>
+    <p class="rt-dit" data-enter data-at="3.3">3 000 DH de suivi + 2 000 DH par visite, ≈ 1 024 € : au seuil « trop bon marché » de notre étude (1 000 €), la moitié de la « bonne affaire » (2 000 €).</p>
   </div>
   <div class="rt-cartes">
     <p data-enter data-at="3.6"><b>Visite à 1 500 DH, le tarif réel</b>Au pilote, − 706 DH par visite ; au prix cible, + 35 DH.</p>
-    <p class="vert" data-enter data-at="3.8"><b>D'autres payeurs, jamais le client</b>Banque, entreprises, assurance : 71 000 DH en 2029.</p>
+    <p class="vert" data-enter data-at="3.8"><b>D'autres payeurs, jamais le client</b>Banque, entreprises, assurance : 71 000 DH en 2029.</p>
   </div>
-  <p class="src rt-src" data-enter data-fx="fade" data-at="4.0">Estimations, pas encore mesurées : 700 DH payés à l'agence pour une visite courte, sur les points clés, à confirmer par 3 devis. Détail : previsionnel.html.</p>
+  <p class="src rt-src" data-enter data-fx="fade" data-at="4.0">Estimations, pas encore mesurées : 700 DH payés à l'agence pour une visite courte, sur les points clés, à confirmer par 3 devis. Détail : annexe chiffrée.</p>
   <img class="rt-outil" src="assets/oral/clay/metre.webp" alt="" data-enter data-fx="tombe" data-at="1.0">
 
   <aside class="notes" data-orateur="Evrard" data-duree="0:40">
@@ -1454,12 +1545,11 @@ body.mouse #ui-btns{opacity:1}
   <div class="zellige-fond" aria-hidden="true"></div>
   <img class="rosace ro1" src="assets/zellige/pastille-validee.webp" alt="" aria-hidden="true">
   <img class="rosace ro2" src="assets/zellige/pastille-validee.webp" alt="" aria-hidden="true">
-  <img class="ag-autre" src="assets/oral/clay/photo-a.webp" alt="" aria-hidden="true">
   <div class="ag-head">
     <p class="kicker"><b>04</b> Concept et business model · le rôle de l'agence</p>
     <h2 class="title">La valeur, c'est la preuve datée et signée. L'agence est un fournisseur.</h2>
   </div>
-  <div class="ag-arche" data-enter data-fx="lift" data-at=".3" data-dur="1.1">
+  <div class="ag-arche">
     <p class="q">« Est-ce que ça n'en fait pas un de trop ? »</p>
     <p class="qs">Votre question du 3 novembre, sur l'agence de contrôle</p>
     <video class="clay" data-v="decor-v3/bellarej-photo"></video>
@@ -1471,6 +1561,12 @@ body.mouse #ui-btns{opacity:1}
     <li data-enter data-at="1.65"><i data-enter data-fx="frappe" data-at="1.77"></i><span><b>Photos prises dans l'appli</b>, avec l'heure et le lieu ; avis signé, gardé au dossier.</span></li>
     <li data-enter data-at="1.9"><i data-enter data-fx="frappe" data-at="2.02"></i><span><b>Un désaccord ?</b> Second avis par une autre agence de la zone, jamais celle du premier avis.</span></li>
   </ol>
+  <div class="ag-relais" aria-hidden="true" data-enter data-fx="fade" data-at="2.2">
+    <span class="med a"><img src="assets/oral/clay/signe-a.webp" alt=""><b>Agence A</b></span>
+    <i class="fleche"><svg viewBox="0 0 200 40"><path d="M6 20H186M170 8l16 12-16 12"/></svg></i>
+    <span class="med b"><img src="assets/oral/clay/signe-a.webp" alt=""><b>Agence B</b></span>
+    <span class="med dossier"><img src="assets/oral/clay/pastille-validee.webp" alt=""><b>la preuve reste</b></span>
+  </div>
   <p class="ag-fin" data-enter data-fx="words" data-at="2.4">TEEQA ne juge pas : il date et il garde. L'agence est remplaçable ; la preuve et son historique restent.</p>
 
   <aside class="notes" data-orateur="Evrard" data-duree="0:35">
@@ -1483,7 +1579,7 @@ body.mouse #ui-btns{opacity:1}
 </section>
 
 <!-- ================================================================ 13 · la trajectoire -->
-<section class="slide w-terre s-traj" data-part="5" data-speaker="david" data-time="1:20" data-title="Trajectoire 3 ans" data-titre="Trajectoire 3 ans" data-tr="zellige">
+<section class="slide w-terre s-traj" data-part="5" data-speaker="david" data-time="1:20" data-title="Trajectoire 3 ans" data-titre="Trajectoire 3 ans" data-tour data-tr="zellige">
   <div class="ciel" aria-hidden="true"><i></i><b></b></div>
   <div class="nuages-pate" aria-hidden="true"><i class="nu n1"></i><i class="nu n2"></i></div>
   <svg class="tj-collines" viewBox="0 0 1920 1080" preserveAspectRatio="none" aria-hidden="true"><path class="c1" d="M-200 760 C 100 690, 380 720, 640 700 S 1180 640, 1460 690 S 1900 660, 2120 700 V1080 H-200Z"/><path class="c2" d="M-200 850 C 160 800, 420 830, 760 800 S 1300 760, 1620 800 S 1980 780, 2120 800 V1080 H-200Z"/><path class="c3" d="M-200 950 C 200 910, 520 940, 900 915 S 1500 890, 1800 920 S 2050 910, 2120 920 V1080 H-200Z"/></svg>
@@ -1500,18 +1596,18 @@ body.mouse #ui-btns{opacity:1}
   </div>
   <div class="etp e1" data-enter data-fx="pop" data-at="1.0">
     <div class="med"><video class="loop" data-mp4="chemin/milieu-a"></video></div>
-    <div class="etp-c"><p class="an">2027</p><h3>Pilote Nador – Driouch</h3><p class="vol"><b data-count="10">10</b> chantiers</p><p class="det">1 agence · prix du pilote<br>CA ≈ 51 000 DH · résultat − 177 000 DH</p></div>
+    <div class="etp-c"><p class="an">2027</p><h3>Pilote Nador – Driouch</h3><p class="vol"><b data-count="10">10</b> chantiers</p><p class="det">1 agence · prix du pilote<br>CA ≈ 51 000 DH · résultat − 177 000 DH</p></div>
   </div>
   <div class="etp e2" data-enter data-fx="pop" data-at="1.4">
     <div class="med"><video class="loop" data-mp4="chemin/milieu-b"></video></div>
-    <div class="etp-c"><p class="an">2028</p><h3>Tout l'Oriental</h3><p class="vol"><b data-count="40">40</b> chantiers</p><p class="det">2 agences · Oujda, Berkane<br>CA ≈ 357 000 DH · résultat − 240 000 DH</p></div>
+    <div class="etp-c"><p class="an">2028</p><h3>Tout l'Oriental</h3><p class="vol"><b data-count="40">40</b> chantiers</p><p class="det">2 agences · Oujda, Berkane<br>CA ≈ 357 000 DH · résultat − 240 000 DH</p></div>
   </div>
   <div class="etp e3" data-enter data-fx="pop" data-at="1.8">
     <div class="med"><video class="loop" data-mp4="chemin/arrivee"></video></div>
-    <div class="etp-c"><p class="an">2029</p><h3>Les villes des MRE</h3><p class="vol"><b data-count="100">100</b> chantiers</p><p class="det">3 agences · Casablanca et Rabat avec un partenaire<br>CA ≈ 922 000 DH · résultat − 212 000 DH</p></div>
+    <div class="etp-c"><p class="an">2029</p><h3>Les villes des MRE</h3><p class="vol"><b data-count="100">100</b> chantiers</p><p class="det">3 agences · Casablanca et Rabat avec un partenaire<br>CA ≈ 922 000 DH · résultat − 212 000 DH</p></div>
   </div>
-  <p class="tj-mort" data-enter data-fx="frappe" data-at="2.4"><b>Point mort : 144 chantiers par an</b> · besoin de financement ≈ 630 000 DH.</p>
-  <p class="src tj-src" data-enter data-fx="fade" data-at="2.6">Volumes : hypothèses de l'équipe, à remplacer par les ventes du pilote. CA hors taxes, toutes sources. Détail : previsionnel.html.</p>
+  <p class="tj-mort" data-enter data-fx="frappe" data-at="2.4"><b>Point mort : 144 chantiers par an</b> · besoin de financement ≈ 630 000 DH.</p>
+  <p class="src tj-src" data-enter data-fx="fade" data-at="2.6">Volumes : hypothèses de l'équipe, à remplacer par les ventes du pilote. CA hors taxes, toutes sources. Détail : annexe chiffrée.</p>
 
   <aside class="notes" data-orateur="David" data-duree="1:20">
       <p class="cle">D'abord prouver sur 10 chantiers à Nador et Driouch, puis l'Oriental, puis les villes des MRE : 10, 40, puis 100 chantiers.</p>
@@ -1525,7 +1621,7 @@ body.mouse #ui-btns{opacity:1}
 </section>
 
 <!-- ================================================================ 14 · le maquettage -->
-<section class="slide w-fes s-maquette" data-part="6" data-speaker="nabih" data-time="5:00 (30 s + démo 4 min 30)" data-title="Maquettage et UX" data-titre="Maquettage et UX" data-tr="ecran">
+<section class="slide w-fes s-maquette" data-part="6" data-speaker="nabih" data-time="5:00 (30 s + démo 4 min 30)" data-title="Maquettage et UX" data-titre="Maquettage et UX" data-tour data-tr="ecran">
   <div class="zellige-fond" aria-hidden="true"></div>
   <div class="mq-halo" aria-hidden="true"></div>
   <img class="rosace ro2" src="assets/zellige/pastille-validee.webp" alt="" aria-hidden="true">
@@ -1551,8 +1647,8 @@ body.mouse #ui-btns{opacity:1}
   </ul>
   <a class="mq-demo" href="demo-oral.html" data-demo data-enter data-fx="pop" data-at="2.3">Lancer la démo <b>→</b></a>
   <div class="trio">
-    <div class="phone t1" data-enter data-fx="pop" data-at=".2"><div class="ph-ecran"><video class="loop ecran" data-mp4="vitrine/ecrans/chemin"></video></div><p class="ph-tag">Client</p></div>
-    <div class="phone t2" data-enter data-fx="pop" data-at=".35"><div class="ph-ecran"><video class="loop ecran" data-mp4="oral/valide-boucle"></video></div><p class="ph-tag">Contrôleur</p></div>
+    <div class="phone t1" data-enter data-fx="pop" data-at=".2"><div class="ph-ecran"><video class="loop ecran" data-mp4="oral/valide-boucle"></video></div><p class="ph-tag">Client</p></div>
+    <div class="phone t2" data-enter data-fx="pop" data-at=".35"><div class="ph-ecran"><img src="assets/oral/ecran-controleur.webp" alt=""></div><p class="ph-tag">Contrôleur</p></div>
     <div class="phone t3" data-enter data-fx="pop" data-at=".5"><div class="ph-ecran"><img src="assets/oral/ecran-entreprise.webp" alt=""></div><p class="ph-tag">Entreprise</p></div>
   </div>
   <img class="mq-cigogne" src="assets/oral/clay/accueil-a.webp" alt="" data-enter data-fx="tombe" data-at="2.0">
@@ -1573,7 +1669,7 @@ body.mouse #ui-btns{opacity:1}
     <h2 class="title t-xl">L'argent suit <em>la preuve</em>.</h2>
     <ul class="fin-pts">
       <li data-enter data-at=".7">Un besoin chez ceux qui construisent à distance, mesuré sur 32 vraies réponses.</li>
-      <li data-enter data-at=".9">Un prix par chantier, en paliers ; l'argent des travaux ne passe jamais par nous.</li>
+      <li data-enter data-at=".9">Un prix par chantier, en paliers ; l'argent des travaux ne passe jamais par nous.</li>
       <li data-enter data-at="1.1">Une agence fournisseur ; la valeur, c'est la preuve et son historique.</li>
     </ul>
     <div class="fin-reste" data-enter data-at="1.4"><p class="cap">Ce qu'il nous reste à prouver</p><p>3 devis de bureaux de contrôle</p><p>Des entretiens avec des MRE qui construisent au Maroc</p><p>10 chantiers payants</p></div>
@@ -1584,7 +1680,7 @@ body.mouse #ui-btns{opacity:1}
     <li class="vert" data-enter data-fx="pop" data-at="2.1"><b><span data-count="0" data-from="1" data-frappe>0</span> DH</b>des travaux ne passe par TEEQA</li>
     <li data-enter data-fx="pop" data-at="2.25"><b data-count="144">144</b>chantiers par an : le point mort</li>
   </ul>
-  <div class="bab fin-bab" data-enter data-fx="lift" data-at=".2" data-dur="1.4">
+  <div class="bab fin-bab">
     <div class="bab-in"><img src="assets/oral/visuels/maison-finie-raccord.webp" alt=""><i class="fenetre f1"></i><i class="fenetre f2"></i><i class="fenetre f3"></i><i class="fenetre f4"></i></div>
     <svg class="bab-cadre" viewBox="0 0 760 900" aria-hidden="true"><path class="b1" d="M60 900V420A320 320 0 0 1 700 420V900"/><path class="b2" d="M92 900V424A288 288 0 0 1 668 424V900"/></svg>
     <img class="bab-cle" src="assets/oral/clay/pastille-validee.webp" alt="">
@@ -1606,7 +1702,8 @@ body.mouse #ui-btns{opacity:1}
   <div class="etoiles" aria-hidden="true"><i></i><b></b></div>
   <div class="so-lune" aria-hidden="true"></div>
   <div class="so-frise nuit" aria-hidden="true"></div>
-  <div class="so-bellarej" aria-hidden="true"><video class="clay" data-v="decor-v3/bellarej-attend"></video></div>
+  <svg class="so-horizon" viewBox="0 0 1920 260" preserveAspectRatio="none" aria-hidden="true"><path class="bati" d="M0 260V170H110V260Z M110 260V110H220V260Z M220 260V190H290V260Z M290 260V110H360V260Z M360 260V90H450V260Z M464 260V170H534V260Z M534 260V130H644V260Z M644 260V150H794V260Z M794 260V190H904V260Z M904 260V90H1034V260Z M1048 260V150H1158V260Z M1158 260V190H1248V260Z M1262 260V110H1372V260Z M1372 260V130H1522V260Z M1528 260V130H1618V260Z M1624 260V90H1734V260Z M1748 260V190H1818V260Z M1818 260V90H1928V260Z M612 260V70h-10l22-36 22 36h-10V260Z M592 92h44v10h-44Z M980 260V170a60 60 0 0 1 120 0V260Z"/><path class="palme" d="M300 260c4-60 2-90 -6-128M294 132c-30-6-52 4-64 22M294 132c26-12 50-8 66 8M294 132c-14-20-36-26-58-22M294 132c16-18 38-22 58-14"/><path class="palme" d="M1380 260c4-60 2-90 -6-128M1374 132c-30-6-52 4-64 22M1374 132c26-12 50-8 66 8M1374 132c-14-20-36-26-58-22M1374 132c16-18 38-22 58-14"/><path class="palme" d="M1740 260c4-60 2-90 -6-128M1734 132c-30-6-52 4-64 22M1734 132c26-12 50-8 66 8M1734 132c-14-20-36-26-58-22M1734 132c16-18 38-22 58-14"/><g class="fens"><rect class="fen" x="20" y="192" width="14" height="18" rx="3"/><rect class="fen" x="247" y="210" width="14" height="18" rx="3"/><rect class="fen" x="305" y="200" width="14" height="18" rx="3"/><rect class="fen" x="411" y="115" width="14" height="18" rx="3"/><rect class="fen" x="410" y="182" width="14" height="18" rx="3"/><rect class="fen" x="762" y="211" width="14" height="18" rx="3"/><rect class="fen" x="681" y="174" width="14" height="18" rx="3"/><rect class="fen" x="816" y="226" width="14" height="18" rx="3"/><rect class="fen" x="815" y="227" width="14" height="18" rx="3"/><rect class="fen" x="972" y="207" width="14" height="18" rx="3"/><rect class="fen" x="958" y="167" width="14" height="18" rx="3"/><rect class="fen" x="1191" y="224" width="14" height="18" rx="3"/><rect class="fen" x="1203" y="218" width="14" height="18" rx="3"/><rect class="fen" x="1544" y="157" width="14" height="18" rx="3"/><rect class="fen" x="1701" y="182" width="14" height="18" rx="3"/><rect class="fen" x="1777" y="210" width="14" height="18" rx="3"/><rect class="fen" x="1889" y="144" width="14" height="18" rx="3"/><rect class="fen" x="1881" y="221" width="14" height="18" rx="3"/></g></svg>
+  <div class="so-bellarej" aria-hidden="true"><video class="clay" data-v="decor-v3/bellarej-attend"></video><span class="zzz"><i>z</i><i>z</i><i>z</i></span></div>
   <p class="kicker"><b>Annexe</b> Sources</p>
   <h2 class="title">Sources</h2>
   <div class="so-cols">
@@ -1976,10 +2073,10 @@ function build(i, k, opt) {
     const tl = gsap.timeline({ paused: true, delay: opt.delay || 0 });
     (sc.enter || enterDefault)(tl, s);
     for (let n = 1; n <= k; n++) { const sub = gsap.timeline(); (sc.step || stepDefault)(n, sub, s, animate); tl.add(sub, animate ? gapOf(s, sc) : '>'); }
-    if (animate && sc.loop) tl.call(startLoop, [i], '+=.4');
-    if (animate) { tl.play(); running = tl; } else tl.progress(1);
+    if (animate && sc.loop && k >= stepsCount(s)) tl.call(startLoop, [i], '+=.4');
+    if (animate) { if (opt.delay) { tl.delay(0); tl.time(.001, false); gsap.delayedCall(opt.delay, () => { if (tl.progress() < 1 && !tl.isActive()) tl.play(); }); } else tl.play(); running = tl; } else tl.progress(1);
   }, s);
-  if (!animate && sc.loop) startLoop(i);
+  if (!animate && sc.loop && k >= stepsCount(s)) startLoop(i);
   if (sc.after && !opt.deferAfter) sc.after(s, k, 'build');
 }
 SC.doors = {
@@ -2025,7 +2122,7 @@ function go(i, opt) {
   else if (!animate) {
     settle(from); s.classList.add('is-active'); build(i, k, { animate: false });
     if (G && !PRESENTER && !PRINTMODE) gsap.fromTo(s, { opacity: 0 }, { opacity: 1, duration: .22, ease: 'none', clearProps: 'opacity' });
-  } else transition(from, i);
+  } else transition(from, i, k);
   const has3D = el => !!el && (el.dataset.scene === 'house' || el.dataset.scene === 'map');
   if (has3D(s) || has3D(slides[i + 1])) T3D.preload();
   commit(animate, opt.silent);
@@ -2177,19 +2274,37 @@ const TR = {
 $$('#stage video.clay[data-v]').forEach(v => {
   const n = 'assets/' + v.dataset.v;
   v.muted = true; v.loop = true; v.playsInline = true; v.setAttribute('playsinline', ''); v.preload = 'auto';
+  v.poster = n + '.png';                                   /* affiche : la première image est là avant que la vidéo ne joue */
   v.innerHTML = '<source src="' + n + '.mov" type=\'video/mp4; codecs="hvc1"\'><source src="' + n + '.webm" type="video/webm">';
 });
 $$('#stage video.loop[data-mp4]').forEach(v => {
   v.muted = true; v.loop = true; v.playsInline = true; v.setAttribute('playsinline', ''); v.preload = 'auto';
+  const AFF = { 'vitrine/ecrans/chemin': 'oral/tour2/affiches/chemin.webp', 'oral/valide-boucle': 'oral/tour2/affiches/valide-boucle.webp' };
+  v.poster = 'assets/' + (AFF[v.dataset.mp4] || v.dataset.mp4 + '.jpg');
   v.src = 'assets/' + v.dataset.mp4 + '.mp4';
 });
 /* on ne fait tourner que les vidéos de la diapo à l'écran (et de celle qui s'en va, pendant la transition) */
+/* RÈGLE (mesurée le 27 nov. dans un vrai Chrome, sur Mac) : dès que DEUX vidéos jouent en même temps, quelles qu'elles
+   soient, l'écran tombe à 30 images/s. Donc UNE SEULE vidéo joue à la fois : la diapo qui s'en va s'arrête, et sur la
+   diapo à l'écran seule la vedette joue (data-vedette, sinon la première). Les autres restent sur leur image et
+   respirent en CSS. Une diapo marquée data-tour fait jouer ses vidéos À TOUR DE RÔLE (toutes les 6 s). */
 function videosDe(s, on) {
-  $$('video', s).forEach(v => {
-    if (on) { if (PRINTMODE) return; const p = v.play(); if (p && p.catch) p.catch(() => {}); }
-    else { v.pause(); }
+  const actif = on && s.classList.contains('is-active');
+  const vids = $$('video', s);
+  if (!actif || s._k == null) s._k = Math.max(0, vids.indexOf($('video[data-vedette]', s)));
+  vids.forEach((v, j) => {
+    const vit = actif && j === s._k && !PRINTMODE && !RM;
+    v.classList.toggle('en-image', on && !vit);
+    if (vit) { if (v.paused) { const p = v.play(); if (p && p.catch) p.catch(() => {}); } } else if (!v.paused) v.pause();
   });
 }
+/* une seule horloge : sur une diapo data-tour, la vidéo qui joue passe à la suivante toutes les 6 s */
+setInterval(() => {
+  const s = slides[cur];
+  if (!s || !s.hasAttribute('data-tour') || !s.classList.contains('is-active') || PRINTMODE || RM || document.hidden) return;
+  const n = $$('video', s).length; if (n < 2) return;
+  s._k = (s._k + 1) % n; videosDe(s, true);
+}, 6000);
 
 /* ---------- le chemin des parties (en haut à droite) et la barre de progression ---------- */
 const PARTIES = ['', 'Valeur', 'Marché', 'Concurrence', 'Modèle', 'Trajectoire', 'Maquette', 'Fin', ''];
@@ -2210,20 +2325,23 @@ slides.forEach((s, i) => {
   s.appendChild(f);
 });
 
-/* ---------- poussière dorée commune : des grains qui flottent, sans début ni fin ---------- */
+/* ---------- poussière dorée commune : des grains qui flottent, sans début ni fin ----------
+   Elle passe SOUS le texte : les zones de texte de la diapo sont relevées, et aucun grain ne s'y dessine. */
 const DUST = (() => {
   const c = document.createElement('canvas'); c.id = 'poussiere'; c.width = 1920; c.height = 1080; c.setAttribute('aria-hidden', 'true');
   const g = document.createElement('div'); g.id = 'grain'; g.setAttribute('aria-hidden', 'true');
   stage.appendChild(c); stage.appendChild(g);
   const x = c.getContext('2d'), P = [];
   for (let k = 0; k < 70; k++) P.push({ x: Math.random() * 1920, y: Math.random() * 1080, r: .8 + Math.random() * 2.6, v: 6 + Math.random() * 18, a: Math.random() * 6.28, w: .2 + Math.random() * .6, o: .15 + Math.random() * .45 });
-  let raf = 0, last = 0, dark = false, B = [];
+  let raf = 0, last = 0, dark = false, B = [], Z = [], zs = null, zT = [];
+  const libre = (px, py, m) => { for (let i = 0; i < Z.length; i++) { const z = Z[i]; if (px > z[0] - m && px < z[2] + m && py > z[1] - m && py < z[3] + m) return false; } return true; };
   function frame(t) {
     const dt = last ? Math.min(.05, (t - last) / 1000) : 0; last = t;
     x.clearRect(0, 0, 1920, 1080);
     for (const p of P) {
       p.y -= p.v * dt; p.a += p.w * dt; p.x += Math.sin(p.a) * 12 * dt;
       if (p.y < -10) { p.y = 1090; p.x = Math.random() * 1920; }
+      if (!libre(p.x, p.y, p.r + 6)) continue;
       x.beginPath(); x.arc(p.x, p.y, p.r, 0, 6.283);
       x.fillStyle = dark ? 'rgba(255,214,140,' + p.o + ')' : 'rgba(196,130,40,' + (p.o * .55) + ')';
       x.fill();
@@ -2231,14 +2349,31 @@ const DUST = (() => {
     B = B.filter(b => (b.l -= dt) > 0);
     for (const b of B) {
       b.vx *= .94; b.vy = b.vy * .94 + 30 * dt; b.x += b.vx * dt; b.y += b.vy * dt;
+      if (!libre(b.x, b.y, b.r + 4)) continue;
       x.beginPath(); x.arc(b.x, b.y, b.r, 0, 6.283); x.fillStyle = 'rgba(255,205,110,' + Math.min(1, b.l * 1.4).toFixed(2) + ')'; x.fill();
     }
     raf = requestAnimationFrame(frame);
+  }
+  /* les zones de texte de la diapo (en coordonnées de la scène), relevées plusieurs fois pendant l'arrivée */
+  function releve(s) {
+    if (!s) return;
+    const sr = stage.getBoundingClientRect(), q = sr.width / 1920 || 1, out = [];
+    const w = document.createTreeWalker(s, NodeFilter.SHOW_TEXT, { acceptNode: n => n.nodeValue.trim() && !n.parentNode.closest('.notes') ? 1 : 2 });
+    const rg = document.createRange();
+    let n; while ((n = w.nextNode()) && out.length < 600) {
+      const el = n.parentNode;
+      let L;
+      if (el instanceof SVGElement) L = [el.getBoundingClientRect()];
+      else { rg.selectNodeContents(n); L = rg.getClientRects(); }
+      for (const r of L) if (r.width > 1 && r.height > 1) out.push([(r.left - sr.left) / q - 4, (r.top - sr.top) / q - 4, (r.right - sr.left) / q + 4, (r.bottom - sr.top) / q + 4]);
+    }
+    Z = out;
   }
   return {
     start() { if (RM || PRESENTER || PRINTMODE || raf) return; last = 0; raf = requestAnimationFrame(frame); },
     stop() { cancelAnimationFrame(raf); raf = 0; x.clearRect(0, 0, 1920, 1080); },
     mode(s) { dark = /w-(fes|nuit|soir)/.test(s.className); },
+    zones(s) { zs = s; zT.forEach(clearTimeout); zT = [0, 400, 1200, 2400, 4000, 6500, 9000].map(d => setTimeout(() => { if (zs === s) releve(s); }, d)); },
     burst(cx, cy) { for (let k = 0; k < 46; k++) { const a = Math.random() * 6.283, v = 240 + Math.random() * 520; B.push({ x: cx, y: cy, vx: Math.cos(a) * v, vy: Math.sin(a) * v * .7, r: 1.5 + Math.random() * 3.5, l: .7 + Math.random() * .7 }); } }
   };
 })();
@@ -2265,34 +2400,39 @@ function compte(s) {
 }
 /* l'espace fine des milliers garde sa largeur, même avec un interlettrage serré */
 function espaces(t) { return t.replace(/\u202F/g, '<span class="sp">\u202F</span>'); }
-/* chaque chiffre est une roue 0-9 qui tourne (les unités d'abord), puis le nombre frappe comme un tampon dateur */
+/* chaque chiffre est une roue 0-9 qui avance cran par cran, comme un tampon dateur : on ne voit jamais deux chiffres à la fois.
+   La roue garde un chiffre fantôme invisible (largeur et ligne de base exactes) : les chiffres restent alignés sur le texte. */
 function roues(el, from, to, dec, sep, delay) {
   const a = fmt(from, dec, sep), b = fmt(to, dec, sep), n = Math.max(a.length, b.length);
-  const A = a.padStart(n, ' '), B = b.padStart(n, ' '), down = to < from, D = /\d/;
+  const A = a.padStart(n, ' '), B = b.padStart(n, ' '), D = /\d/;
   el.textContent = ''; el.classList.add('compteur');
   const tw = el._tw = [], cols = [];
   for (let k = 0; k < n; k++) {
     const ca = A[k], cb = B[k];
-    if (D.test(cb) || D.test(ca)) {
+    if (D.test(cb) || D.test(ca) || (cb === ' ' && ca === ' ')) {
+      /* une fenêtre d'un chiffre : on n'y voit qu'un chiffre à la fois, la vraie valeur du compteur (jamais au-delà du but) */
       const w = document.createElement('span'); w.className = 'roue';
+      w.innerHTML = '<span class="fantome">' + (D.test(cb) ? cb : D.test(ca) ? ca : '0') + '</span>';
       const c = document.createElement('span'); c.className = 'col';
-      let h = ''; for (let j = 0; j < 30; j++) h += '<i>' + (j % 10) + '</i>';
+      let h = ''; for (let j = 0; j < 10; j++) h += '<i>' + j + '</i>';
       c.innerHTML = h; w.appendChild(c); el.appendChild(w);
-      const da = D.test(ca) ? +ca : 0, db = D.test(cb) ? +cb : 0, tour = k >= n - 2 ? 20 : 10;
-      cols.push({ w, c, i0: down ? tour + da : da, i1: down ? db : tour + db, vide: !D.test(cb), r: n - k });
-    } else { const t = document.createElement('span'); t.textContent = cb === ' ' ? '' : cb; if (cb === '\u202F') t.className = 'sp'; el.appendChild(t); }
+      cols.push({ w, c, k, vide: !D.test(cb), d: -2 });
+    } else { const t = document.createElement('span'); t.textContent = cb === ' ' ? '' : cb; if (cb === ' ') t.className = 'sp'; el.appendChild(t); }
   }
-  let fin = 0;
-  cols.forEach(o => {
-    const d = .9 + o.r * .13; fin = Math.max(fin, d);
-    gsap.set(o.c, { yPercent: -o.i0 * 100 / 30 });
-    tw.push(gsap.to(o.c, { yPercent: -o.i1 * 100 / 30, duration: d, delay: delay, ease: 'back.out(1.3)' }));
-    if (o.vide) tw.push(gsap.to(o.w, { width: 0, autoAlpha: 0, duration: .3, delay: delay + d }));
-  });
+  const P = { v: from };
+  const put = () => {
+    const S = fmt(Math.round(P.v * Math.pow(10, dec)) / Math.pow(10, dec), dec, sep).padStart(n, ' ');
+    cols.forEach(o => { const ch = S[o.k], d = D.test(ch) ? +ch : -1; if (d === o.d) return; o.d = d;
+      o.w.style.visibility = d < 0 ? 'hidden' : ''; if (d >= 0) o.c.style.transform = 'translateY(' + (-d) + 'em)'; });
+  };
+  put();
+  const dur = 1.1 + Math.min(.6, n * .08);
+  tw.push(gsap.to(P, { v: to, duration: dur, delay: delay, ease: 'power3.out', onUpdate: put }));
+  cols.forEach(o => { if (o.vide) tw.push(gsap.to(o.w, { width: 0, duration: .3, delay: delay + dur })); });
   const ring = document.createElement('i'); ring.className = 'anneau'; el.appendChild(ring);
-  const t = delay + fin;
+  const t = delay + dur;
   tw.push(gsap.to(el, { keyframes: [{ scale: 1.13, rotation: -2, duration: .09, ease: 'power2.in' }, { scale: 1, rotation: 0, duration: .32, ease: 'teeqa.seal' }], delay: t, transformOrigin: '50% 60%' }));
-  tw.push(gsap.fromTo(ring, { scale: .7, opacity: .7 }, { scale: 1.5, opacity: 0, duration: .7, ease: 'power2.out', delay: t + .04 }));
+  tw.push(gsap.fromTo(ring, { scale: .7, opacity: .7 }, { scale: 1.5, opacity: 0, duration: .7, ease: 'power2.out', delay: t + .04, immediateRender: false }));
   /* au repos, on remet le texte simple (lecteurs d'écran, copier-coller) */
   tw.push(gsap.delayedCall(t + .8, () => { el.innerHTML = espaces(b); el.classList.remove('compteur'); }));
 }
@@ -2316,14 +2456,14 @@ const CONF = (() => {
   let raf = 0, P = [], ctx = null, t0 = 0, tS = 0;
   const COL = ['#E0A33A', '#F2BE5C', '#1F6B4F', '#3FA37F', '#F6F1E7', '#E39A76'];
   function add(burst) {
-    const p = { x: burst ? 1570 + (Math.random() - .5) * 200 : 1180 + Math.random() * 740, y: burst ? 560 : -20, vx: burst ? (Math.random() - .5) * 900 : (Math.random() - .5) * 40, vy: burst ? -300 - Math.random() * 700 : 60 + Math.random() * 80,
+    const p = { x: burst ? 1570 + (Math.random() - .5) * 260 : 1180 + Math.random() * 740, y: burst ? 800 : -20, vx: burst ? (Math.random() - .5) * 900 : (Math.random() - .5) * 40, vy: burst ? -300 - Math.random() * 700 : 60 + Math.random() * 80,
       w: 8 + Math.random() * 10, h: 5 + Math.random() * 7, r: Math.random() * 6.28, vr: (Math.random() - .5) * 8, c: COL[(Math.random() * COL.length) | 0] };
     P.push(p);
   }
   function frame(t) {
     const dt = t0 ? Math.min(.04, (t - t0) / 1000) : 0; t0 = t;
     ctx.clearRect(0, 0, 1920, 1080);
-    if (t - tS < 7000 && Math.random() < .22) add(false);
+    if (t > tS && t - tS < 7000 && Math.random() < .22) add(false);
     P = P.filter(p => p.y < 1120);
     for (const p of P) {
       p.vy += 520 * dt * (p.vy < 120 ? 1 : .05); p.vx *= .99; p.x += p.vx * dt; p.y += p.vy * dt; p.r += p.vr * dt;
@@ -2332,8 +2472,8 @@ const CONF = (() => {
     raf = requestAnimationFrame(frame);
   }
   return {
-    start(s) { const c = $('.confettis', s); if (!c || RM || PRESENTER || PRINTMODE || raf) return; c.width = 1920; c.height = 1080; ctx = c.getContext('2d'); P = []; t0 = 0; tS = performance.now() + 2400;
-      setTimeout(() => { for (let k = 0; k < 140; k++) add(true); }, 2400); raf = requestAnimationFrame(frame); },
+    start(s) { const c = $('.confettis', s); if (!c || RM || PRESENTER || PRINTMODE || raf) return; c.width = 1920; c.height = 1080; ctx = c.getContext('2d'); P = []; t0 = 0; tS = performance.now() + 4300;
+      clearTimeout(this._t); this._t = setTimeout(() => { if (raf) for (let k = 0; k < 140; k++) add(true); }, 4300); raf = requestAnimationFrame(frame); },
     stop() { cancelAnimationFrame(raf); raf = 0; if (ctx) ctx.clearRect(0, 0, 1920, 1080); }
   };
 })();
@@ -2342,11 +2482,12 @@ const CONF = (() => {
 const VIE = new MutationObserver(ms => {
   ms.forEach(m => {
     const s = m.target, on = s.classList.contains('is-active') || s.classList.contains('is-leaving');
+    const etat = on ? (s.classList.contains('is-active') ? 2 : 1) : 0;
+    if (etat !== s._etatVid) { s._etatVid = etat; videosDe(s, on); }   /* diapo qui s'en va : sa vidéo transparente s'arrête aussi */
     if (on === !!s._vie) return;
     s._vie = on;
-    videosDe(s, on);
     if (on && s.classList.contains('is-active')) {
-      DUST.mode(s); compte(s); pois(s);
+      DUST.mode(s); DUST.zones(s); compte(s); pois(s);
       JOUR(s); HUDFLIP(s); FIL.va(s);
       if (s.classList.contains('s-fin')) CONF.start(s);
     }
@@ -2492,7 +2633,7 @@ const FIL = (() => {
   const rond = (x, y, r) => 'M' + (x - r) + ' ' + y + 'A' + r + ' ' + r + ' 0 1 1 ' + (x + r) + ' ' + y + 'A' + r + ' ' + r + ' 0 1 1 ' + (x - r) + ' ' + y;
   const T = {
     'TEEQA': () => 'M1120 1020V540A320 320 0 0 1 1760 540V1020',
-    'Le problème': () => 'M520 500C820 340 1160 340 1420 540',
+    'Le problème': s => sous($('.pb-head .title', s), 14, true),
     'Proposition de valeur': s => $$('.va-chaine .fil', s).map(e => { const b = rect(e); return 'M' + f(b.x) + ' ' + f(b.y + b.h / 2) + 'H' + f(b.x + b.w); }).join(''),
     'Marché · données secondaires': s => cadre($('.mk-stats .grand', s), 9, 34),
     'Étude primaire': s => { const z = $('.pr-prix .zone', s); if (!z) return ''; const b = rect(z); return 'M' + f(b.x + b.w - 6) + ' ' + f(b.y + b.h / 2) + 'H' + f(b.x + 30); },
@@ -2524,8 +2665,11 @@ const FIL = (() => {
     else gsap.set([tr, lu], { drawSVG: '0% 0%' });
     const depart = fin;
     /* le tracé se mesure quand la diapo est posée (les titres ont fini d'arriver) */
-    tws.push(gsap.delayedCall(anime ? (ATT[s.dataset.titre] || 2.2) : .05, () => {
+    let essais = 0;
+    const pret = () => !trans && !(running && running.isActive()) && !gsap.isTweening(s);
+    tws.push(gsap.delayedCall(anime ? (ATT[s.dataset.titre] || 2.2) : .05, function mesure() {
       if (my !== tok) return;
+      if (anime && !pret() && essais++ < 30) { tws.push(gsap.delayedCall(.2, mesure)); return; }
       const d = trace(s);
       if (!d) { fin = null; return; }
       tr.setAttribute('d', d); lu.setAttribute('d', d);
@@ -2581,28 +2725,33 @@ function monde(s) {
   return /w-fes/.test(c) ? '#0E3B31' : /w-nuit/.test(c) ? '#121a17' : /w-soir/.test(c) ? '#7A3F38' : /w-terre/.test(c) ? '#EFD3AA' : /w-plan/.test(c) ? '#F1EBDD' : /w-chaux/.test(c) ? '#F3ECDF' : '#F2E3C6';
 }
 
-/* ---------- changement de partie : un mur de zellige se pose, chaque carreau se retourne aux couleurs du monde suivant ---------- */
+/* ---------- changement de partie : une vague de zellige part de la pastille du chemin (en haut à droite) ----------
+   Chaque carreau apparaît, se retourne aux couleurs du monde suivant, puis s'efface : la nouvelle diapo est déjà dessous.
+   On ne voit jamais d'écran uni : derrière la vague, l'ancienne diapo ; devant, la nouvelle. */
+function carreau(s) { const c = s.className; return /w-(fes|nuit)/.test(c) ? 'zel-fonce' : /w-soir/.test(c) ? 'zel-soir' : 'zel-clair'; }
 TR.zellige = function (tl, o, n) {
   const C = 12, R = 7, h = 1080 / R, box = document.createElement('div'); box.className = 'tr-zel'; TRL.appendChild(box);
-  const ca = monde(o), cb = monde(n), tiles = [];
+  const fa = carreau(o), fb = carreau(n), ox = 1780, oy = 60, DM = Math.hypot(1920, 1080), V = .8;
   for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) {
     const t = document.createElement('i'); t.style.left = c * 160 + 'px'; t.style.top = (r * h).toFixed(1) + 'px';
-    t.innerHTML = '<b style="background-color:' + ca + '"></b><b class="v" style="background-color:' + cb + '"></b>';
-    box.appendChild(t); tiles.push(t);
+    t.innerHTML = '<b class="' + fa + '"></b><b class="v ' + fb + '"></b>';
+    box.appendChild(t);
+    const d = Math.hypot(c * 160 + 80 - ox, r * h + h / 2 - oy) / DM, t0 = d * V;
+    gsap.set(t, { scale: .3, autoAlpha: 0, rotationY: 0 });
+    tl.to(t, { scale: 1.04, autoAlpha: 1, duration: .26, ease: 'power2.out' }, t0)
+      .to(t, { rotationY: 180, duration: .5, ease: 'back.out(1.3)' }, t0 + .14)
+      .to(t, { scale: 0, rotation: 30, duration: .36, ease: 'power2.in' }, t0 + .6);
   }
+  /* la nouvelle diapo s'ouvre en cercle derrière la vague (elle suit les carreaux qui s'effacent) */
+  const Q = { r: 0 }, up = () => { n.style.clipPath = 'circle(' + Q.r.toFixed(0) + 'px at ' + ox + 'px ' + oy + 'px)'; };
+  gsap.set(n, { zIndex: 3 }); up();
+  tl.to(Q, { r: DM + 260, duration: V, ease: 'none', onUpdate: up }, .72)
+    .to(o, { scale: .97, duration: 1, ease: 'power2.in', transformOrigin: ox + 'px ' + oy + 'px' }, 0);
   const p = +n.dataset.part || 0, lab = trEl('zel-lab');
   lab.innerHTML = '<img src="assets/oral/clay/pastille-encours.webp" alt=""><b>' + p + '</b><span>' + (PARTIES[p] || '') + '</span>';
-  const grid = [R, C];
-  gsap.set(tiles, { scale: .4, autoAlpha: 0, rotationY: 0 });
-  gsap.set(lab, { autoAlpha: 0 });
-  tl.to(tiles, { scale: 1.03, autoAlpha: 1, duration: .34, ease: 'power2.out', stagger: { grid, from: [0, C - 1], amount: .38 } }, 0)
-    .to(o, { scale: .97, duration: .6, ease: 'power2.in', transformOrigin: '50% 50%' }, 0)
-    .to(tiles, { rotationY: 180, duration: .6, ease: 'back.out(1.25)', stagger: { grid, from: [0, C - 1], amount: .42 } }, .3)
-    .add(() => { gsap.set(o, { autoAlpha: 0 }); }, .78)
-    .fromTo(lab, { autoAlpha: 0, scale: 1.7, rotation: -10 }, { autoAlpha: 1, scale: 1, rotation: 0, duration: .45, ease: 'teeqa.seal' }, .62)
-    .to(tiles, { scale: 0, duration: .5, ease: 'power2.in', stagger: { grid, from: 'center', amount: .4 } }, 1.12)
-    .to(lab, { autoAlpha: 0, scale: .5, y: -40, duration: .35, ease: 'power2.in' }, 1.3);
-  return 1.05;
+  tl.fromTo(lab, { autoAlpha: 0, scale: 1.7, rotation: -10 }, { autoAlpha: 1, scale: 1, rotation: 0, duration: .45, ease: 'teeqa.seal' }, .35)
+    .to(lab, { autoAlpha: 0, scale: .5, x: 820, y: -470, duration: .55, ease: 'power2.in' }, 1.25);
+  return .95;
 };
 
 /* ---------- 2 → 3 : une porte en arc s'ouvre au milieu, sur la porte du milieu de la diapo suivante ---------- */
@@ -2730,14 +2879,16 @@ TR.pousse = function (tl, o, n) {
 
 /* ---------- 11 → 12 : une arche safran grandit, couvre, puis va se poser à la place de l'arche de l'agence ---------- */
 TR.partage = function (tl, o, n) {
-  const a = trEl('arche');
+  /* 11 → 12 : l'arche safran arrive du coin et se pose ; derrière elle, la nouvelle diapo s'ouvre en cercle (jamais d'écran uni) */
+  const a = trEl('arche'), C = { r: 0 }, cx = 1500, cy = 420;
+  const u = () => { n.style.clipPath = 'circle(' + C.r.toFixed(1) + 'px at ' + cx + 'px ' + cy + 'px)'; };
   gsap.set(a, { x: 540, y: -120, scale: .1, transformOrigin: '50% 50%' });
-  gsap.set(n, { autoAlpha: 0 });
-  tl.to(a, { scale: 4.3, duration: .62, ease: 'power3.in' }, 0)
-    .add(() => { gsap.set(n, { autoAlpha: 1 }); gsap.set(o, { autoAlpha: 0 }); }, .62)
-    .to(a, { x: 0, y: 0, scale: 1, duration: .8, ease: 'power3.out' }, .64)
-    .to(a, { autoAlpha: 0, duration: .3 }, 1.38);
-  return .55;
+  gsap.set(n, { zIndex: 3 }); u();
+  tl.to(C, { r: 2300, duration: 1.0, ease: 'power2.in', onUpdate: u }, .1)
+    .to(a, { x: 0, y: 0, scale: 1, duration: 1.1, ease: 'power3.inOut' }, 0)
+    .add(() => { n.style.clipPath = ''; gsap.set(n, { clearProps: 'zIndex' }); gsap.set(o, { autoAlpha: 0 }); }, 1.12)
+    .to(a, { autoAlpha: 0, duration: .3 }, 1.2);
+  return .5;
 };
 
 /* ---------- 13 → 14 : un téléphone sort de la carte 2029, grandit, puis va prendre sa place dans le trio ---------- */
@@ -2767,6 +2918,212 @@ TR.nuit = function (tl, o, n) {
   return 1.05;
 };
 
+
+
+/* ---------- la maison (8) : un jalon n'est « validé » qu'une fois son étape construite ----------
+   (remplace house2D du moteur) Durées des étapes 3D : fondations .8 s, gros œuvre 2,1 s, second œuvre 1,4 s, finitions .6 s, réception 1,85 s ;
+   les étapes construites ensemble démarrent à .7 s d'écart. Le jalon passe « en cours » au début, le tampon frappe à la fin. */
+const HDUR = [.8, 2.1, 1.4, .6, 1.85];
+function house2D(tl, s, idx, prevIdx, anim) {
+  const st = HST[idx], pv = prevIdx == null ? null : HST[prevIdx];
+  const fin = {}; let m = 0, tard = 0;
+  if (anim && pv) for (let j = pv.built; j < st.built; j++) { fin[j] = Math.max(.25 + m * .7 + HDUR[j], j > pv.built ? fin[j - 1] + .4 : 0); m++; }
+  let sealN = 0;
+  const sealAt = j => { if (fin[j] != null) return fin[j]; return .3 + (sealN++) * .5; };
+  $$('.jal li[data-j]', s).forEach((li, j) => {
+    const state = j < st.done ? 'done' : (j === st.cur && st.held) ? 'held' : j < st.built ? 'cur' : 'wait';
+    const neuf = anim && pv && j >= pv.done && j < st.done;
+    const at = neuf ? sealAt(j) : 0;
+    /* pendant la construction : « en cours », puis l'état final quand le tampon frappe (ou quand la réserve apparaît) */
+    const pose = (etat, t) => $$('.js i', li).forEach(sp => tl.set(sp, { autoAlpha: sp.classList.contains('st-' + etat) ? 1 : 0 }, t));
+    if (anim && pv && fin[j] != null) { pose('cur', 0); pose(state, neuf ? at + .45 : fin[j]); }
+    else if (neuf) pose(state, at + .45);
+    else pose(state, 0);
+    if (neuf) tard = Math.max(tard, at);
+    const sv = $('.seal', li), fill = [$('.s-fill', sv), $('.s-c', sv)];
+    if (neuf) { tl.set(fill, { opacity: 0 }, 0); seal(tl, sv, at); }
+    else { tl.set(fill, { opacity: j < st.done ? 1 : 0 }, 0); tl.set(sv, { autoAlpha: 1, rotation: 0 }, 0); }
+    const hold = $('.hold', li);
+    const holdAt = fin[j] != null ? fin[j] : .15;
+    if (state === 'held' && anim) tl.fromTo(hold, { autoAlpha: 0, scale: .7, transformOrigin: '50% 50%' }, { autoAlpha: 1, scale: 1, duration: .45, immediateRender: false }, holdAt);
+    else tl.set(hold, { autoAlpha: state === 'held' ? 1 : 0, scale: 1 }, 0);
+  });
+  /* la pièce descend le rail jusqu'au jalon validé, après le tampon : l'argent suit la preuve */
+  const rail = $('.rail-fill', s), coin = $('.coin', s);
+  const p0 = pv ? Math.min(pv.done, 4) : 0, p1 = Math.min(st.done, 4);
+  if (anim && pv && p1 > p0) {
+    const d = .75 + (p1 - p0 - 1) * .45, t0 = tard + .75;
+    tl.set(rail, { scaleY: p0 / 4 }, 0)
+      .set(coin, { autoAlpha: 1, y: p0 * JAL }, t0)
+      .to(coin, { y: p1 * JAL, duration: d, ease: 'sine.inOut' }, t0)
+      .to(rail, { scaleY: p1 / 4, duration: d, ease: 'sine.inOut' }, t0)
+      .to(coin, { autoAlpha: 0, duration: .25 }, t0 + d);
+  } else { tl.set(rail, { scaleY: p1 / 4 }, 0); tl.set(coin, { autoAlpha: 0 }, 0); }
+  const fb = $('.m3d-fallback', s);
+  if (fb) {
+    $$('[data-j]', fb).forEach(g => {
+      const j = +g.dataset.j, on = j < st.built;
+      if (anim && pv && on && j >= pv.built) tl.fromTo(g, { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: .7 }, .2 + (j - pv.built) * .6);
+      else tl.set(g, { autoAlpha: on ? 1 : 0, y: 0 }, 0);
+    });
+    const held = $('[data-held]', fb);
+    tl.set(held, { attr: { x: 226, y: 144, width: 488, height: 488 } }, 0);
+    if (anim) tl.to(held, { autoAlpha: st.held ? 1 : 0, duration: .4 }, .1); else tl.set(held, { autoAlpha: st.held ? 1 : 0 }, 0);
+    tl.set($('.h-ghost', fb), { autoAlpha: st.built >= 5 ? 0 : 1 }, 0);
+  }
+  const glow = $('.glow-fes', s);
+  if (st.done >= 5 && anim) tl.fromTo(glow, { autoAlpha: 0 }, { autoAlpha: 1, duration: 1.2 }, tard + .4);
+  else tl.set(glow, { autoAlpha: st.done >= 5 ? 1 : 0 }, 0);
+  tl.call(() => { s._hk = idx; T3D.apply(idx, anim); }, null, 0);
+  /* le ruban de l'étape (« Fondations · en construction ») suit le récit */
+  const lg = $('.ho-legende', s);
+  if (lg && anim) tl.to(lg, { autoAlpha: 0, y: -6, duration: .18 }, 0).call(() => { lg.textContent = HLEG[idx] || ''; }, null, .19).fromTo(lg, { autoAlpha: 0, y: 8 }, { autoAlpha: 1, y: 0, duration: .4, immediateRender: false }, .2);
+  else if (lg) tl.call(() => { lg.textContent = HLEG[idx] || ''; }, null, 0);
+}
+const HLEG = ['Le terrain est piqueté : rien n’est encore payé.', 'Fondations : le contrôleur passe, signe ; la tranche est recommandée.', 'Gros œuvre : une réserve. Le paiement est différé.', 'Correction prouvée par photo : la tranche est recommandée.', 'Second œuvre et finitions : contrôlés, recommandés.', 'Réception : la maison est livrée, chaque tranche a sa preuve.'];
+
+/* ==========================================================================
+   TOUR 2 · EXPERT : récit pas à pas, mouvement réduit complet, titres qui ne se chevauchent plus
+   ========================================================================== */
+/* une étape de plus, jouée seule, sans rejouer l'arrivée */
+function pas(i, n, silent) {
+  const s = slides[i], sc = sceneOf(s), max = stepsCount(s);
+  n = clamp(n, 0, max);
+  if (!G || instant() || !ctxs[i]) { build(i, n, { animate: false }); commit(false, silent); return; }
+  stepOf[i] = n;
+  ctxs[i].add(() => {
+    const tl = gsap.timeline();
+    (sc.step || stepDefault)(n, tl, s, true);
+    if (n >= max && sc.loop) tl.call(startLoop, [i], '+=.4');
+    running = tl;
+  });
+  DUST.zones(s);
+  commit(true, silent);
+}
+
+/* M : tout s'arrête (vidéos, GSAP, canvas, CSS), au second appui tout repart */
+let PAUSES = [];
+function toggleMotion() {
+  RM = !RM; document.documentElement.classList.toggle('rm', RM);
+  try { localStorage.setItem('teeqa-motion', RM ? 'reduit' : 'plein'); } catch (e) {}
+  const s = slides[cur];
+  if (G) { endTrans(); finish(); }
+  if (RM) {
+    $$('#stage video, #tr-layer video').forEach(v => { try { v.pause(); } catch (e) {} });
+    DUST.stop(); CONF.stop();
+    if (G && cur >= 0) {
+      build(cur, stepOf[cur], { animate: false });          /* état final de la diapo, boucles coupées */
+      compte(s); FIL.va(s);
+      PAUSES = gsap.globalTimeline.getChildren(true, true, true).filter(t => t.isActive() && !t.paused());
+      PAUSES.forEach(t => t.pause());
+    }
+  } else {
+    PAUSES.forEach(t => { try { t.resume(); } catch (e) {} }); PAUSES = [];
+    if (G && cur >= 0) build(cur, stepOf[cur], { animate: false });
+    if (cur >= 0) videosDe(s, true);
+    DUST.start();
+  }
+  flash(RM ? 'Mouvement réduit (M pour relancer)' : 'Mouvement complet');
+}
+
+/* le titre de la diapo qui part s'efface tout de suite : deux titres ne se superposent jamais */
+const TITRE_GARDE = { ouvre: 1, pousse: 1, monte: 1, feuille: 1, zellige: 1 };
+function titreSort(tl, o, n) {
+  if (TITRE_GARDE[n.dataset.tr]) return;
+  const t = $$('.title, .kicker, .pt-logo', o);
+  if (!t.length) return;
+  tl.to(t, { autoAlpha: 0, duration: .14, ease: 'power1.in' }, 0);
+  tl.add(() => gsap.set(t, { clearProps: 'opacity,visibility' }), Math.max(.2, tl.duration()));   /* rendu au repos pour la prochaine visite */
+}
+
+
+/* ==========================================================================
+   TOUR 2 · transitions refaites
+   ========================================================================== */
+const rectScene = el => { const sr = stage.getBoundingClientRect(), q = sr.width / 1920 || 1, r = el.getBoundingClientRect(); return { x: (r.left - sr.left) / q, y: (r.top - sr.top) / q, w: r.width / q, h: r.height / q }; };
+
+/* 2 → 3 : une porte sort de l'écran du téléphone, grandit et va se poser exactement sur la porte du milieu de la diapo 3 ;
+   la diapo 3 s'ouvre en cercle autour d'elle. La photo de Nador ne quitte jamais l'écran avant la fin. */
+TR.portail = function (tl, o, n) {
+  const cible = $$('.qdoor', n)[1], ecran = $('.pb-phone .ph-ecran', o);
+  if (!cible || !ecran) return TR.fade(tl, o, n);
+  const T = rectScene(cible), E = rectScene(ecran);
+  const d = cible.cloneNode(true); d.classList.add('shut', 'tr-porte'); d.removeAttribute('data-door');
+  Object.assign(d.style, { position: 'absolute', left: T.x + 'px', top: T.y + 'px', width: T.w + 'px', height: T.h + 'px', margin: 0, zIndex: 2 });
+  TRL.appendChild(d);
+  const k0 = Math.min((E.w - 40) / T.w, (E.h - 120) / T.h), cx = E.x + E.w / 2, cy = E.y + E.h / 2 + 20;
+  gsap.set(d, { transformOrigin: '0 0', x: cx - T.x - T.w * k0 / 2, y: cy - T.y - T.h * k0 / 2, scale: k0, autoAlpha: 0 });
+  const Q = { r: 0 }, X = T.x + T.w / 2, Y = T.y + T.h / 2;
+  const up = () => { n.style.clipPath = 'circle(' + Q.r.toFixed(0) + 'px at ' + X + 'px ' + Y + 'px)'; };
+  gsap.set(n, { zIndex: 3 }); up();
+  tl.fromTo(d, { autoAlpha: 0, scale: k0 * .6 }, { autoAlpha: 1, scale: k0, duration: .32, ease: 'back.out(2)' }, 0)
+    .to(o, { scale: 1.06, duration: 1.3, ease: 'power2.in', transformOrigin: cx + 'px ' + cy + 'px' }, .1)
+    .to(d, { x: 0, y: 0, scale: 1, duration: .85, ease: 'power3.inOut' }, .3)
+    .to(Q, { r: 2300, duration: .95, ease: 'power2.in', onUpdate: up }, .55)
+    .to(d, { autoAlpha: 0, duration: .2 }, 1.5);
+  return .75;
+};
+
+/* 4 → 5 : la feuille tombe avec son contenu, qui s'écrit pendant qu'elle se pose */
+const feuille0 = TR.feuille;
+TR.feuille = function (tl, o, n) { feuille0(tl, o, n); return .1; };
+
+/* 13 → 14 : un seul téléphone : celui qui vole s'efface pendant que le trio arrive */
+const ecran0 = TR.ecran;
+TR.ecran = function (tl, o, n) {
+  const at = ecran0(tl, o, n), ph = TRL.lastElementChild;
+  if (ph && ph.classList.contains('tr-tel')) tl.to(ph, { autoAlpha: 0, duration: .3, overwrite: 'auto' }, 1.0);
+  return at;
+};
+
+/* 15 → 16 : la nuit tombe, la lune monte, les fenêtres de Nador s'allument une à une */
+TR.nuit = function (tl, o, n) {
+  const N_ = trEl('nuit'); N_.innerHTML = '<div class="etoiles"><i></i><b></b></div>';
+  const lune = $('.so-lune', n), fen = $$('.so-horizon .fen', n), et = $$('.etoiles i, .etoiles b', n);
+  /* jamais d'écran vide : la nuit voile la fin pendant que les sources montent par-dessus */
+  gsap.set(n, { autoAlpha: 0, zIndex: 3 }); gsap.set(N_, { autoAlpha: 0 });
+  tl.to(N_, { autoAlpha: .6, duration: .6, ease: 'power1.inOut' }, 0)
+    .to(o, { y: 60, duration: 1.3, ease: 'power1.in' }, 0)
+    .to(n, { autoAlpha: 1, duration: .7, ease: 'power1.inOut' }, .3)
+    .to(N_, { autoAlpha: 0, duration: .5, ease: 'power1.out' }, .65)
+    .add(() => { gsap.set(o, { autoAlpha: 0 }); }, 1.1);
+  if (et.length) tl.fromTo(et, { opacity: 0 }, { opacity: 1, duration: .9, stagger: .35 }, .5);
+  if (lune) tl.fromTo(lune, { y: 46, opacity: 0 }, { y: 0, opacity: 1, duration: 1.6, ease: 'power2.out', clearProps: 'transform,opacity' }, .6);
+  if (fen.length) tl.fromTo(gsap.utils.shuffle(fen.slice()), { opacity: 0 }, { opacity: 1, duration: .25, stagger: .06, clearProps: 'opacity' }, .9);
+  return 1.05;
+};
+
+/* 11 → 12 : l'arche safran se pose sur l'arche de l'agence : rien ne dépasse */
+const partage0 = TR.partage;
+TR.partage = function (tl, o, n) {
+  const a = $('.ag-arche', n);
+  const at = partage0(tl, o, n);
+  if (a) tl.fromTo(a, { autoAlpha: 0 }, { autoAlpha: 1, duration: .3 }, 1.2);
+  return at;
+};
+
+
+/* 6 → 7 : l'objectif se referme sur le tableau ; autour, c'est déjà la photo de chantier (jamais d'écran noir).
+   Au centre, le téléphone de la photo : un éclair, et la bague dorée s'ouvre jusqu'aux bords. */
+TR.objectif = function (tl, o, n) {
+  const x = +(n.dataset.trX || 1330), y = +(n.dataset.trY || 700), P = { r: 2300 }, Q = { r: 120 };
+  const v = trSvg('<circle fill="none" stroke="#E0A33A" stroke-width="6"/><circle fill="none" stroke="rgba(241,235,223,.35)" stroke-width="2"/>');
+  const c1 = v.children[0], c2 = v.children[1]; [c1, c2].forEach(c => { c.setAttribute('cx', x); c.setAttribute('cy', y); });
+  const glow = trEl('lueur', { left: x + 'px', top: y + 'px' });
+  const uo = () => { o.style.clipPath = 'circle(' + P.r.toFixed(1) + 'px at ' + x + 'px ' + y + 'px)'; c1.setAttribute('r', P.r); c2.setAttribute('r', P.r + 14); };
+  const ur = () => { c1.setAttribute('r', Q.r); c2.setAttribute('r', Q.r + 14); };
+  gsap.set(o, { zIndex: 3 }); gsap.set(glow, { autoAlpha: 0, scale: .3 }); uo();
+  tl.to(P, { r: 120, duration: .7, ease: 'power3.in', onUpdate: uo }, 0)
+    .to(o, { scale: .9, duration: .7, ease: 'power2.in', transformOrigin: x + 'px ' + y + 'px' }, 0)
+    .fromTo(n, { scale: 1.08 }, { scale: 1, duration: 1.4, ease: 'power3.out', transformOrigin: x + 'px ' + y + 'px' }, 0)
+    .add(() => { gsap.set(o, { autoAlpha: 0 }); }, .72)
+    .to(glow, { autoAlpha: .55, scale: 1, duration: .08, ease: 'power2.out' }, .7)
+    .to(glow, { autoAlpha: 0, scale: 1.6, duration: .5, ease: 'power2.out' }, .78)
+    .to(Q, { r: 1400, duration: .8, ease: 'power3.out', onUpdate: ur }, .72)
+    .to(v, { autoAlpha: 0, duration: .5 }, 1.0);
+  return .6;
+};
+
 /* ---------- notes à l'écran (N) et démo (D) ---------- */
 const NP = document.createElement('div'); NP.id = 'notes-pan'; NP.hidden = true; document.body.appendChild(NP);
 function notesEcran() {
@@ -2783,11 +3140,44 @@ addEventListener('keydown', e => {
 }, true);
 setInterval(() => { if (!NP.hidden) notesEcran(); }, 600);
 
+
+/* ---------- impression légère : chaque image est réduite à sa taille d'affichage (×1,25) ;
+   les images opaques passent en JPEG (le PDF les garde telles quelles), les détourées restent en PNG ---------- */
+const ALLEGE = (() => {
+  const cache = new Map();
+  const charge = src => new Promise(r => { const im = new Image(); im.onload = () => r(im); im.onerror = () => r(null); im.src = src; });
+  async function reduit(src, w, h) {
+    const cle = src + '|' + w + 'x' + h; if (cache.has(cle)) return cache.get(cle);
+    const pr = (async () => {
+      const im = await charge(src); if (!im || !im.naturalWidth) return null;
+      const k = Math.min(1, Math.max(w / im.naturalWidth, h / im.naturalHeight) * 1.25);
+      const cw = Math.max(1, Math.round(im.naturalWidth * k)), ch = Math.max(1, Math.round(im.naturalHeight * k));
+      const c = document.createElement('canvas'); c.width = cw; c.height = ch; const g = c.getContext('2d'); g.drawImage(im, 0, 0, cw, ch);
+      let opaque = true; try { const d = g.getImageData(0, 0, cw, ch).data; for (let i = 3; i < d.length; i += 4 * 7) if (d[i] < 250) { opaque = false; break; } } catch (e) { return null; }
+      return opaque ? c.toDataURL('image/jpeg', .76) : c.toDataURL('image/png');
+    })();
+    cache.set(cle, pr); return pr;
+  }
+  async function tout() {
+    const T = [];
+    $$('#stage img').forEach(im => { const w = im.offsetWidth || 200, h = im.offsetHeight || 200; T.push(reduit(im.currentSrc || im.src, w, h).then(u => { if (u) { im.removeAttribute('srcset'); im.src = u; } })); });
+    $$('#stage video').forEach(v => { if (!v.poster) return; const w = v.offsetWidth || 300, h = v.offsetHeight || 300; T.push(reduit(v.poster, w, h).then(u => { if (u) v.poster = u; })); });
+    $$('#stage svg image').forEach(im => { const b = im.getBBox ? im.getBBox() : { width: 120, height: 120 }; const src = im.getAttribute('href'); T.push(reduit(src, b.width || 120, b.height || 120).then(u => { if (u) im.setAttribute('href', u); })); });
+    $$('#stage *').forEach(el => { const bg = getComputedStyle(el).backgroundImage; const m = /url\("?([^")]+\.(?:webp|png|jpg))"?\)/.exec(bg); if (!m || /,/.test(bg.replace(m[0], ''))) return;
+      const w = el.offsetWidth || 1920, h = el.offsetHeight || 1080; T.push(reduit(m[1], Math.min(w, 1920), Math.min(h, 1160)).then(u => { if (u) el.style.backgroundImage = 'url("' + u + '")'; })); });
+    await Promise.all(T);
+    document.documentElement.classList.add('allege');
+  }
+  return { tout };
+})();
+if (PRINTMODE) addEventListener('load', () => setTimeout(() => ALLEGE.tout(), 300));
+
 /* impression : portes de la diapo 3 ouvertes */
 if (PRINTMODE) document.querySelectorAll(".qdoor.shut").forEach(d => d.classList.remove("shut"));
 
-function transition(from, to) {
+function transition(from, to, k) {
   const o = slides[from], n = slides[to];
+  TRL.textContent = '';
   o.classList.add('is-leaving'); n.classList.add('is-active');
   const tl = gsap.timeline({ paused: true });
   const at = (TR[n.dataset.tr] || TR.fade)(tl, o, n);
@@ -2800,17 +3190,22 @@ function transition(from, to) {
     const sc = sceneOf(n);
     if (sc.after && cur === to) sc.after(n, stepOf[to], 'build');
   });
-  build(to, stepsCount(n), { animate: true, delay: at, deferAfter: true });
+  titreSort(tl, o, n);
+  build(to, k == null ? stepsCount(n) : k, { animate: true, delay: at, deferAfter: true });
   tl.play();
 }
 
 function next() {
   if (trans) { if (trans.time() > .45) endTrans(); return; }   /* double appui de télécommande : ignoré au début de la transition */
-  if (running && running.progress() < 1 && stepsCount(slides[cur]) > 0) { if (running.timeScale() < 3) running.timeScale(4); else finish(); return; }
-  if (cur < N - 1) go(cur + 1, { animate: true });
+  const max = stepsCount(slides[cur]);
+  if (max > 0 && stepOf[cur] < max) { finish(); pas(cur, stepOf[cur] + 1); return; }
+  finish();
+  if (cur < N - 1) go(cur + 1, { animate: true, step: 0 });
 }
 function prev() {
   endTrans();
+  const max = stepsCount(slides[cur]);
+  if (max > 0 && stepOf[cur] > 0) { finish(); build(cur, stepOf[cur] - 1, { animate: false }); commit(false); return; }
   if (cur > 0) go(cur - 1, { animate: false });
 }
 function replay() { if (cur < 0) return; endTrans(); finish(); build(cur, stepsCount(slides[cur]), { animate: true, delay: .1 }); }
@@ -2850,8 +3245,8 @@ function commit(anim, silent) {
   if (!silent) Sync.post({ type: 'state', i: cur, s: stepOf[cur], anim: !!anim });
 }
 function applyRemote(i, s, anim) {
-  if (i === cur) { if (s !== stepOf[cur]) { build(cur, s, { animate: false }); commit(false, true); } }
-  else if (i === cur + 1 && anim) go(i, { animate: true, silent: true });
+  if (i === cur) { if (s === stepOf[cur] + 1 && anim) { finish(); pas(cur, s, true); } else if (s !== stepOf[cur]) { build(cur, s, { animate: false }); commit(false, true); } }
+  else if (i === cur + 1 && anim) go(i, { animate: true, step: s, silent: true });
   else go(i, { step: s, silent: true });
 }
 Sync.on(m => {
@@ -3071,7 +3466,7 @@ function glDispose(scene, renderer, canvas, lost) {
 
 /* ---------- la maison de Karim : R+1 du Rif, de la parcelle à la réception ---------- */
 function buildHouse(host, slide, onFail) {
-  const THREE = window.THREE, VW = 1100, VH = 880;
+  const THREE = window.THREE, VW = 1100, VH = 960;
   const canvas = document.createElement('canvas'); canvas.className = 'm3d-gl'; host.appendChild(canvas);
   const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
   renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -3208,7 +3603,7 @@ function buildHouse(host, slide, onFail) {
   for (let i = 0; i < 7; i++) s3.add(box(3.3, .07, .12, bois, -2.8, TOP + 2.24, .55 + i * .48));
   const leaf = mat(0x5F6F3C, { roughness: .9, flatShading: true }), trunkM = mat(0x6A5440);
   const olive = (x, z, k) => { const g = new THREE.Group(), tr = new THREE.Mesh(new THREE.CylinderGeometry(.1 * k, .16 * k, 1.5 * k, 7), trunkM); tr.position.y = .75 * k; tr.castShadow = true; g.add(tr);
-    [[0, 1.9, 0, 1.0], [.6, 1.7, .2, .75], [-.5, 1.75, -.25, .8], [.1, 2.35, -.2, .7]].forEach(([dx, dy, dz, r]) => { const m = new THREE.Mesh(new THREE.IcosahedronGeometry(r * k, 1), leaf); m.position.set(dx * k, dy * k, dz * k); m.castShadow = true; g.add(m); });
+    [[0, 1.9, 0, 1.0], [.6, 1.7, .2, .75], [-.5, 1.75, -.25, .8], [.1, 2.35, -.2, .7]].forEach(([dx, dy, dz, r]) => { const m = new THREE.Mesh(new THREE.IcosahedronGeometry(r * k, 5), leaf); m.position.set(dx * k, dy * k, dz * k); m.castShadow = true; g.add(m); });
     g.position.set(x, 0, z); return g; };
   s3.add(olive(-7.6, -3.4, 1.15), olive(7.3, 4.3, 1)); stages.push(s3);
 
@@ -3253,9 +3648,9 @@ function buildHouse(host, slide, onFail) {
   tls.forEach(t => t.progress(0));
 
   // caméra ¾ plongeante, fixe : la maquette ne bouge que lorsqu'elle se construit
-  const camR = 33, pol = THREE.MathUtils.degToRad(57), yaw = -.62;
+  const camR = 44, pol = THREE.MathUtils.degToRad(57), yaw = -.62;
   camera.position.set(Math.sin(yaw) * Math.sin(pol) * camR, Math.cos(pol) * camR + 2.4, Math.cos(yaw) * Math.sin(pol) * camR);
-  camera.lookAt(0, 3.3, 0);
+  camera.lookAt(0, 1.6, 0);
   const loop = glLoop(renderer, () => {
     renderer.render(scene, camera);
     if (!host.classList.contains('gl')) { host.classList.add('gl'); host.classList.remove('gl-wait'); }
@@ -3425,7 +3820,7 @@ addEventListener('keydown', e => {
     case 'b': case 'B': case '.': setBlack(!isBlack); break;
     case 'o': case 'O': toggleOverview(); break;
     case 'h': case 'H': case '?': toggleHelp(); break;
-    case 'm': case 'M': RM = !RM; document.documentElement.classList.toggle('rm', RM); try { localStorage.setItem('teeqa-motion', RM ? 'reduit' : 'plein'); } catch (e) {} flash(RM ? 'Mouvement réduit (mémorisé)' : 'Mouvement complet (mémorisé)'); break;
+    case 'm': case 'M': toggleMotion(); break;
     case 'a': case 'A': replay(); break;
     case 't': case 'T': Timer.toggle(); break;
     case 'r': case 'R': if (PRESENTER) Timer.resetKey(); else replay(); break;
