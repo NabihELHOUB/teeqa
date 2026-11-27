@@ -47,14 +47,14 @@ body{font-family:var(--font);-webkit-font-smoothing:antialiased;text-rendering:o
 .w-soir{background:linear-gradient(180deg,#2A1E2C 0%,#7A3F38 38%,#E0915A 74%,#F3C178 100%);color:var(--chaux-n)}
 /* le ciel : une bande deux fois large (image + son miroir), qui glisse sans fin : on ne voit ni début ni fin */
 .ciel{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:hidden;pointer-events:none;z-index:-1}
-.ciel i{position:absolute;left:0;top:-40px;width:3840px;height:1160px;background:url("assets/vitrine/ciel/ciel.webp") 0 0/1920px 1160px repeat-x;opacity:.9;animation:ciel 120s linear infinite}
+.ciel i{position:absolute;left:0;top:-40px;width:3840px;height:1160px;background:url("assets/vitrine/ciel/ciel.webp") 0 0/1920px 1160px repeat-x;opacity:.7;animation:ciel 160s ease-in-out infinite alternate}
 .ciel i::after{content:"";position:absolute;left:1920px;top:0;width:1920px;height:100%;background:inherit;background-size:1920px 1160px;transform:scaleX(-1)}
 .ciel i{background-repeat:no-repeat;background-size:1920px 1160px}
 @keyframes ciel{to{transform:translateX(-1920px)}}
 .ciel.soir i{opacity:.35;mix-blend-mode:screen}
 .sol{position:absolute;left:-60px;right:-60px;bottom:-120px;height:330px;border-radius:50% 50% 0 0/100% 100% 0 0;background:radial-gradient(80% 120% at 50% 0%,#EFC994 0%,#E2AE77 60%,#D79A64 100%);z-index:-1;pointer-events:none}
-.zellige-fond{position:absolute;inset:-120px;background:url("assets/textures/mur-zellige.svg") 0 0/260px 260px repeat;opacity:.07;z-index:-1;animation:derive 90s linear infinite;pointer-events:none}
-.zellige-fond.doux{opacity:.045}
+.zellige-fond{position:absolute;inset:-300px;background:url("assets/textures/mur-zellige.svg") 0 0/260px 260px repeat;opacity:.1;z-index:-1;animation:derive 90s linear infinite;pointer-events:none}
+.zellige-fond.doux{opacity:.08}
 @keyframes derive{to{transform:translate(-260px,-260px)}}
 .papier{position:absolute;inset:0;background:url("assets/paper-grain.png") 0 0/512px repeat;opacity:.1;mix-blend-mode:multiply;z-index:-1;pointer-events:none}
 .plan-fond{position:absolute;inset:-80px;z-index:-1;pointer-events:none;background-image:linear-gradient(rgba(31,107,79,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(31,107,79,.07) 1px,transparent 1px),linear-gradient(rgba(31,107,79,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(31,107,79,.035) 1px,transparent 1px);background-size:160px 160px,160px 160px,32px 32px,32px 32px;animation:plan 60s linear infinite}
@@ -105,7 +105,7 @@ body{font-family:var(--font);-webkit-font-smoothing:antialiased;text-rendering:o
 video.clay{display:block;width:100%;height:100%;object-fit:contain;pointer-events:none}
 video.loop{display:block;width:100%;height:100%;object-fit:cover;pointer-events:none}
 .flotte{animation:flotte 6s ease-in-out infinite}
-@keyframes flotte{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-14px) rotate(-1.2deg)}}
+@keyframes flotte{0%,100%{translate:0 0;rotate:0deg}50%{translate:0 -14px;rotate:-1.2deg}}
 
 /* ---------- l'arche (bab) ---------- */
 .bab{position:absolute;width:760px;height:900px}
@@ -114,7 +114,8 @@ video.loop{display:block;width:100%;height:100%;object-fit:cover;pointer-events:
 .bab-cadre{position:absolute;inset:0;width:760px;height:900px;overflow:visible;pointer-events:none}
 .bab-cadre .b1{fill:none;stroke:#F6F1E7;stroke-width:46;stroke-linejoin:round;filter:drop-shadow(0 18px 30px rgba(80,50,20,.28))}
 .bab-cadre .b2{fill:none;stroke:var(--safran);stroke-width:5}
-.bab-cle{position:absolute;left:338px;top:62px;width:84px;height:84px;animation:pas 3.2s ease-in-out infinite}
+.bab-cle{position:absolute;left:338px;top:62px;width:84px;height:84px}
+.bab-cle.enc{animation:respire 4.6s ease-in-out infinite}
 
 /* ============ 1 · la porte ============ */
 .s-porte .pt-left{position:absolute;left:120px;top:150px;width:900px;z-index:2}
@@ -127,7 +128,7 @@ video.loop{display:block;width:100%;height:100%;object-fit:cover;pointer-events:
 .s-porte .pt-team{font:800 24px/1.5 var(--font);color:var(--ink-2);margin-top:60px}
 .s-porte .pt-team span{color:var(--ink-3);font-weight:700}
 .s-porte .bab{left:1060px;top:120px}
-.s-porte .pt-palmiers{position:absolute;left:1640px;top:700px;width:300px;z-index:3;animation:flotte 7s ease-in-out infinite}
+.s-porte .pt-palmiers{position:absolute;left:1610px;top:700px;width:300px;z-index:3;animation:flotte 7s ease-in-out infinite}
 .s-porte .pt-caillou{position:absolute;left:960px;top:880px;width:170px;z-index:3}
 .s-porte .sol{height:260px}
 .s-porte .pt-invite{position:absolute;left:1340px;top:1030px;font:900 22px/1 var(--font);letter-spacing:.2em;text-transform:uppercase;color:var(--terre-f);z-index:4}
@@ -226,7 +227,7 @@ video.loop{display:block;width:100%;height:100%;object-fit:cover;pointer-events:
 .mk-stats .st{background:rgba(246,241,231,.06);border:1.5px solid rgba(241,235,223,.14);border-radius:26px;padding:20px 24px 18px;backdrop-filter:none}
 .mk-stats .st.grand{grid-column:1/-1;background:var(--safran);color:var(--kohl);border:0;display:grid;grid-template-columns:auto 1fr;column-gap:30px;align-items:center;padding:24px 30px}
 .mk-stats .st.grand cite{grid-column:2;color:rgba(23,32,28,.7)}
-.mk-stats b{display:block;font:1000 46px/1 var(--font);letter-spacing:-.02em;color:var(--safran-c)}
+.mk-stats b{display:block;font:1000 42px/1 var(--font);letter-spacing:-.02em;color:var(--safran-c)}
 .mk-stats .grand b{font-size:80px;color:var(--fes-n);grid-row:span 2}
 .mk-stats b small{font-size:.5em;font-weight:900;letter-spacing:0}
 .mk-stats .op{font-size:.7em}
@@ -245,7 +246,7 @@ video.loop{display:block;width:100%;height:100%;object-fit:cover;pointer-events:
 .map3d .lb-city.lb-ma{background:var(--safran-c)}
 .map3d .lb-km{font:900 24px/1 var(--font);color:#F4EFE6;background:var(--kohl);border:2px solid var(--safran);padding:10px 16px;border-radius:999px;transform:translate(-50%,-50%)}
 .mk-cigogne{position:absolute;left:1500px;top:110px;width:220px;height:192px;z-index:4;animation:plane 9s ease-in-out infinite}
-@keyframes plane{0%,100%{transform:translate(0,0) rotate(-2deg)}50%{transform:translate(-60px,26px) rotate(3deg)}}
+@keyframes plane{0%,100%{translate:0 0;rotate:-2deg}50%{translate:-60px 26px;rotate:3deg}}
 
 /* ============ 5 · l'étude primaire ============ */
 .s-primaire .pr-head{position:absolute;left:120px;top:96px;width:1500px}
@@ -467,7 +468,7 @@ svg.flux{position:absolute;inset:0;width:1920px;height:1080px;overflow:visible}
 .mq-mesures li{font:700 20px/1.25 var(--font);color:var(--mute-n);display:flex;flex-direction:column}
 .mq-mesures b{font:1000 50px/1.05 var(--font);color:#fff;letter-spacing:-.02em}
 .mq-demo{position:absolute;left:120px;top:930px;display:inline-flex;align-items:center;gap:14px;background:var(--safran);color:var(--kohl);text-decoration:none;font:1000 26px/1 var(--font);letter-spacing:.12em;text-transform:uppercase;padding:24px 36px;border-radius:24px;box-shadow:0 8px 0 var(--safran-f),0 20px 40px rgba(0,0,0,.35);z-index:5;animation:appel 2.6s ease-in-out infinite}
-@keyframes appel{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes appel{0%,100%{translate:0 0}50%{translate:0 -6px}}
 .trio{position:absolute;left:1010px;top:150px;width:840px;height:900px;perspective:1600px}
 .trio .phone{width:310px;height:660px;border-radius:56px;padding:12px}
 .trio .phone .ph-ecran{border-radius:46px}
@@ -542,13 +543,313 @@ svg.flux{position:absolute;inset:0;width:1920px;height:1080px;overflow:visible}
 
 /* lumière de la journée (soft-light, par-dessus toutes les diapos) et tampon de partie */
 .lumiere{position:absolute;inset:0;z-index:30;pointer-events:none;mix-blend-mode:soft-light;opacity:0}
-.tampon{position:absolute;left:0;top:0;width:180px;height:180px;z-index:40;pointer-events:none;display:grid;place-items:center;filter:drop-shadow(0 18px 24px rgba(0,0,0,.35))}
-.tampon img{position:absolute;inset:0;width:180px;height:180px}
-.tampon b{position:relative;font:1000 64px/1 var(--font);color:var(--kohl);padding-bottom:8px}
-.tampon span{position:absolute;top:196px;left:50%;transform:translateX(-50%);white-space:nowrap;font:1000 34px/1 var(--font);letter-spacing:.16em;text-transform:uppercase;color:#fff;background:var(--kohl);padding:12px 22px;border-radius:999px}
-@media print{.lumiere,.tampon{display:none}}
+@media print{.lumiere{display:none}}
 
 @media print{.vol-libre,.fin-envol,.pb-cigogne,.tj-cigogne,.mk-cigogne{display:none!important}}
+
+/* ======================================================================
+   TOUR 1 · EXPERT (27 nov.) : décors qui vivent, fil de la preuve, roues de chiffres, zellige des parties
+   Tous les mouvements décoratifs utilisent translate / rotate / scale (propriétés séparées) :
+   ils se composent avec les transformations de GSAP au lieu de les écraser.
+   ====================================================================== */
+@keyframes respire{0%,100%{scale:1}50%{scale:1.035}}
+@keyframes balance{0%,100%{rotate:-2deg}50%{rotate:2deg}}
+@keyframes bob{0%,100%{translate:0 0}50%{translate:0 -6px}}
+@keyframes tourne{to{rotate:360deg}}
+@keyframes tourne-inv{to{rotate:-360deg}}
+.rm #stage *,.rm #stage *::before,.rm #stage *::after{animation-play-state:paused!important}
+
+/* ---------- second calque du ciel (plus lent, plus grand : la profondeur) ---------- */
+.ciel b{position:absolute;left:0;top:-60px;width:3840px;height:1200px;background:url("assets/vitrine/ciel/ciel.webp") 0 0/1920px 1200px no-repeat;opacity:.26;transform-origin:0 0;animation:ciel2 240s ease-in-out -60s infinite alternate}
+.ciel b::after{content:"";position:absolute;left:1920px;top:0;width:1920px;height:100%;background:inherit;background-size:1920px 1200px;transform:scaleX(-1)}
+@keyframes ciel2{from{transform:translateX(-1920px) scale(1.12)}to{transform:translateX(0) scale(1.12)}}
+.ciel.soir b{opacity:.18;mix-blend-mode:screen}
+
+/* ---------- nuages en pâte : ils traversent sans fin, entrent et sortent hors champ ---------- */
+.nuages-pate{position:absolute;inset:0;pointer-events:none;z-index:-1;overflow:hidden}
+.nu{position:absolute;left:0;width:230px;height:70px;border-radius:40px;background:linear-gradient(180deg,#FFFDF8 0%,#F7EEDF 55%,#EAD9BE 100%);box-shadow:inset 0 -9px 14px rgba(176,128,72,.2),0 22px 26px -14px rgba(150,105,55,.28);animation:nu-derive 120s linear infinite;opacity:.92}
+.nu::before,.nu::after{content:"";position:absolute;border-radius:50%;background:radial-gradient(circle at 45% 35%,#FFFFFF 0%,#FBF4E8 55%,#F4E8D4 100%)}
+.nu::before{width:104px;height:96px;left:36px;top:-50px}
+.nu::after{width:80px;height:72px;left:112px;top:-32px}
+.nu.n1{top:150px;animation-delay:-20s}
+.nu.n2{top:250px;scale:.7;animation-duration:150s;animation-delay:-95s;opacity:.75}
+.nu.n3{top:60px;scale:1.25;animation-duration:180s;animation-delay:-140s;opacity:.85}
+@keyframes nu-derive{from{transform:translateX(-420px)}to{transform:translateX(2340px)}}
+.nuages-pate.haut .nu.n1{top:40px}.nuages-pate.haut .nu.n2{top:16px}
+
+/* ---------- ombre au sol d'un objet qui flotte : elle reste au sol et rétrécit quand l'objet monte ---------- */
+.ombre-sol{position:absolute;left:16%;right:16%;bottom:-22px;height:24px;border-radius:50%;background:radial-gradient(closest-side,rgba(110,70,30,.3),rgba(110,70,30,0));animation:ombre-sol 7s ease-in-out infinite}
+@keyframes ombre-sol{0%,100%{translate:0 0;scale:1;opacity:1}50%{translate:0 16px;scale:.72;opacity:.55}}
+@keyframes flotte-ilot{0%,100%{translate:0 0}50%{translate:0 -16px}}
+.rosace{position:absolute;pointer-events:none;z-index:0;opacity:.09;animation:tourne 160s linear infinite}
+
+/* ---------- les roues de chiffres (tampon dateur) ---------- */
+[data-count]{font-variant-numeric:tabular-nums}
+.roue{display:inline-block;height:1em;line-height:1em;overflow:hidden;vertical-align:var(--roue-v,-.12em)}
+.roue .col{display:block}
+.roue .col i{display:block;height:1em;line-height:1em;font-style:normal;text-align:center}
+.compteur{position:relative}
+.anneau{position:absolute;left:50%;top:50%;width:1.7em;height:1.7em;margin:-.85em 0 0 -.85em;border-radius:50%;border:.07em solid var(--safran);pointer-events:none;opacity:0}
+
+/* ---------- le fil de la preuve : un trait safran, d'une diapo à l'autre ---------- */
+#fil{position:absolute;left:0;top:0;width:1920px;height:1080px;z-index:40;pointer-events:none;overflow:visible}
+#fil path{fill:none;stroke-linecap:round;stroke-linejoin:round}
+#fil .trait{stroke:#E0A33A;stroke-width:5}
+#fil .lueur{stroke:rgba(242,190,92,.28);stroke-width:16}
+#fil .comete circle{fill:#FFE3A3}
+#fil .comete .halo{fill:rgba(242,190,92,.35)}
+.is-presenter #fil{display:none}
+@media print{#fil{display:none}}
+
+/* ---------- transitions du tour 1 ---------- */
+.tr-zel{left:0;top:0;width:1920px;height:1080px;perspective:1700px}
+.tr-zel i{position:absolute;width:160px;height:155px;transform-style:preserve-3d}
+.tr-zel i b{position:absolute;inset:-1px;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:6px;box-shadow:inset 0 -6px 0 rgba(0,0,0,.14),inset 0 3px 0 rgba(255,255,255,.12)}
+.tr-zel i b::after{content:"";position:absolute;inset:0;background:url("assets/textures/mur-zellige.svg") center/160px;opacity:.38;border-radius:inherit}
+.tr-zel i b.v{transform:rotateY(180deg)}
+.tr-zel-lab{left:960px;top:520px;width:180px;height:180px;margin:-90px 0 0 -90px;display:grid;place-items:center;filter:drop-shadow(0 18px 24px rgba(0,0,0,.35))}
+.tr-zel-lab img{position:absolute;inset:0;width:180px;height:180px}
+.tr-zel-lab b{position:relative;font:1000 64px/1 var(--font);color:var(--kohl);padding-bottom:8px}
+.tr-zel-lab span{position:absolute;top:196px;left:50%;transform:translateX(-50%);white-space:nowrap;font:1000 34px/1 var(--font);letter-spacing:.16em;text-transform:uppercase;color:#fff;background:var(--kohl);padding:12px 22px;border-radius:999px}
+.tr-coin-feuille{position:absolute;right:0;bottom:0;width:220px;height:220px;z-index:60;pointer-events:none;transform-origin:100% 100%;background:linear-gradient(135deg,rgba(0,0,0,0) 49.5%,#E6DCC8 50%,#F8F3E9 72%,#EFE6D5 100%);box-shadow:-12px -12px 30px rgba(60,40,20,.18);clip-path:polygon(100% 0,100% 100%,0 100%)}
+.tr-iris-ring{left:0;top:0;width:1920px;height:1080px;overflow:visible}
+.tr-lueur{left:0;top:0;width:900px;height:900px;margin:-450px 0 0 -450px;border-radius:50%;background:radial-gradient(closest-side,rgba(255,244,220,.75),rgba(255,226,170,.25) 45%,rgba(255,226,170,0))}
+.tr-ombre-h{left:0;width:1920px;height:60px}
+.tr-ombre-h.haut{top:480px;background:linear-gradient(0deg,rgba(0,0,0,.35),rgba(0,0,0,0))}
+.tr-ombre-h.bas{top:540px;background:linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,0))}
+.tr-ruban{left:0;top:520px;width:1920px;height:40px;transform-origin:100% 50%;border-radius:4px;background:repeating-linear-gradient(90deg,rgba(23,32,28,.6) 0 3px,transparent 3px 96px) 0 0/100% 16px no-repeat,repeating-linear-gradient(90deg,rgba(23,32,28,.4) 0 2px,transparent 2px 19.2px) 0 0/100% 9px no-repeat,linear-gradient(180deg,#F8CF66,#E3A92F);box-shadow:inset 0 -4px 0 rgba(0,0,0,.14),0 10px 24px rgba(80,50,10,.35)}
+.tr-arche{left:120px;top:340px;width:600px;height:640px;border-radius:300px 300px 34px 34px/240px 240px 34px 34px;background:linear-gradient(180deg,#F2BE5C,#E0A33A);box-shadow:0 40px 100px rgba(0,0,0,.4)}
+.tr-tel{left:770px;top:150px;width:380px;height:780px;border-radius:64px;background:#121614;padding:14px;box-shadow:0 40px 90px rgba(0,0,0,.5),inset 0 0 0 2px rgba(255,255,255,.08)}
+.tr-tel div{width:100%;height:100%;border-radius:52px;overflow:hidden;background:#EFEAE2}
+.tr-tel video{width:100%;height:100%;object-fit:cover;object-position:50% 0;display:block}
+.tr-nuit{left:0;top:0;width:1920px;height:1080px;background:linear-gradient(180deg,#0A1311 0%,#10211C 60%,#17291F 100%)}
+
+/* ---------- étoiles (diapo 16 et passage à la nuit) ---------- */
+.etoiles{position:absolute;inset:0;pointer-events:none;z-index:-1}
+.etoiles i,.etoiles b{position:absolute;inset:0;background-image:radial-gradient(1.5px 1.5px at 32.7% 11.4%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(1.2px 1.2px at 8.1% 38.0%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(0.8px 0.8px at 6.7% 36.0%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(0.9px 0.9px at 43.5% 5.8%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(0.9px 0.9px at 42.6% 58.1%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(1.8px 1.8px at 22.9% 44.3%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(1.9px 1.9px at 57.6% 28.4%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(1.1px 1.1px at 5.6% 60.2%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(1.1px 1.1px at 15.1% 9.1%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(1.4px 1.4px at 81.0% 13.5%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(1.4px 1.4px at 63.6% 26.7%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(1.0px 1.0px at 7.2% 5.1%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(1.1px 1.1px at 67.7% 30.5%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(1.1px 1.1px at 58.4% 32.3%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(1.1px 1.1px at 78.8% 49.2%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(1.8px 1.8px at 57.3% 37.2%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(1.9px 1.9px at 72.5% 20.9%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(1.6px 1.6px at 12.6% 29.9%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(0.8px 0.8px at 15.9% 34.7%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(1.4px 1.4px at 66.5% 53.8%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(1.6px 1.6px at 86.8% 22.6%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(1.3px 1.3px at 59.2% 41.0%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(1.3px 1.3px at 83.3% 66.2%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(1.6px 1.6px at 66.1% 5.2%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(1.7px 1.7px at 64.4% 69.5%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(1.5px 1.5px at 28.9% 27.6%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(1.0px 1.0px at 3.2% 32.9%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(1.6px 1.6px at 12.5% 5.1%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(1.2px 1.2px at 13.7% 18.1%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(1.3px 1.3px at 86.4% 6.6%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(1.7px 1.7px at 54.8% 62.0%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(1.3px 1.3px at 85.7% 20.2%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(1.9px 1.9px at 36.2% 62.0%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(1.1px 1.1px at 15.8% 13.2%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%);animation:scintille 5s ease-in-out infinite alternate}
+.etoiles b{background-image:radial-gradient(1.9px 1.9px at 23.9% 34.5%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(1.6px 1.6px at 26.7% 1.3%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(2.5px 2.5px at 37.2% 40.1%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(1.9px 1.9px at 68.7% 36.6%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(2.4px 2.4px at 67.3% 4.7%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(2.2px 2.2px at 77.4% 61.3%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(1.0px 1.0px at 39.5% 28.5%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(0.9px 0.9px at 63.2% 5.3%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(1.4px 1.4px at 21.5% 12.2%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(1.1px 1.1px at 6.2% 1.0%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(0.8px 0.8px at 10.9% 26.1%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(1.1px 1.1px at 86.7% 43.4%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(1.5px 1.5px at 25.7% 25.0%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(2.6px 2.6px at 13.0% 59.6%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(1.0px 1.0px at 46.7% 34.4%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(1.3px 1.3px at 11.0% 24.6%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(0.8px 0.8px at 82.2% 12.1%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(1.1px 1.1px at 94.2% 37.4%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(1.8px 1.8px at 54.2% 2.9%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(2.1px 2.1px at 96.9% 60.6%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(1.1px 1.1px at 26.6% 26.3%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(2.2px 2.2px at 76.6% 37.7%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(2.3px 2.3px at 33.3% 16.4%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(2.3px 2.3px at 97.5% 59.8%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(1.2px 1.2px at 81.2% 52.1%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%),radial-gradient(0.9px 0.9px at 51.7% 25.5%,rgba(255,246,224,.95) 50%,rgba(255,246,224,0) 100%);animation-duration:7s;animation-delay:-3s}
+@keyframes scintille{from{opacity:.35}to{opacity:1}}
+
+/* ============ 1 · la porte ============ */
+.pt-dune{position:absolute;inset:0;pointer-events:none;z-index:0}
+.pt-palmeraie{position:absolute;left:-18px;top:878px;width:236px;height:236px}
+.pt-maisonnette{position:absolute;left:470px;top:868px;width:122px;transform-origin:50% 100%;animation:respire 7s ease-in-out infinite}
+.pt-rochers{position:absolute}
+.pt-rochers.r1{left:300px;top:992px;width:96px;animation:bob 9s ease-in-out -2s infinite}
+.pt-rochers.r2{left:760px;top:966px;width:84px;animation:bob 11s ease-in-out -6s infinite}
+.pt-grue{display:none}
+.s-porte .sol{background:radial-gradient(80% 120% at 50% 0%,#F1CF9C 0%,#E2AE77 58%,#D49460 100%);box-shadow:inset 0 14px 22px rgba(255,255,255,.35),inset 0 -30px 50px rgba(150,90,40,.25)}
+.vol-libre{left:0;top:0;width:220px;height:193px;offset-path:path("M900 -230 C 1250 60, 1720 40, 2180 280");offset-rotate:0deg;animation:vol-porte 22s linear infinite}
+@keyframes vol-porte{0%{offset-distance:0%}48%{offset-distance:100%}100%{offset-distance:100%}}
+.s-porte .pt-invite{left:1290px;top:1016px;display:flex;align-items:center;gap:12px;font:1000 24px/1 var(--font);letter-spacing:.2em;color:var(--fes)}
+.s-porte .pt-invite img{width:58px;animation:presse 2.4s ease-in-out infinite}
+@keyframes presse{0%,70%,100%{translate:0 0}80%{translate:0 4px}}
+
+/* ============ 2 · le problème ============ */
+.pb-lueurs{position:absolute;inset:0;pointer-events:none;z-index:2}
+.pb-lueurs i{position:absolute;width:16px;height:16px;border-radius:50%;background:radial-gradient(circle,#FFE6B0 0,rgba(255,206,128,.55) 35%,rgba(255,180,90,0) 70%);scale:2.6;animation:lueur 6s ease-in-out infinite}
+@keyframes lueur{0%,100%{opacity:.2}50%{opacity:.95}}
+.pb-poussiere{position:absolute;left:1000px;top:0;width:920px;height:1080px;pointer-events:none;z-index:2;overflow:hidden}
+.pb-poussiere i{position:absolute;bottom:-20px;width:7px;height:7px;border-radius:50%;background:rgba(255,200,130,.75);animation:monte-p 11s linear infinite}
+.pb-poussiere i:nth-child(1){left:80px}.pb-poussiere i:nth-child(2){left:190px;animation-delay:-3s;animation-duration:13s}
+.pb-poussiere i:nth-child(3){left:330px;animation-delay:-6s}.pb-poussiere i:nth-child(4){left:460px;animation-delay:-1.5s;animation-duration:9s}
+.pb-poussiere i:nth-child(5){left:560px;animation-delay:-8s}.pb-poussiere i:nth-child(6){left:690px;animation-delay:-4.5s;animation-duration:14s}
+.pb-poussiere i:nth-child(7){left:800px;animation-delay:-10s}.pb-poussiere i:nth-child(8){left:880px;animation-delay:-2.2s;animation-duration:12s}
+@keyframes monte-p{0%{translate:0 0;opacity:0}12%{opacity:.85}100%{translate:46px -620px;opacity:0}}
+.pb-lueurs i{top:auto}
+.pb-v1{top:540px}.pb-v2{left:1372px;top:580px}
+.pb-cigogne{width:150px;height:132px;offset-path:path("M520 500 C 820 340, 1160 340, 1420 540")}
+.pb-constats{width:640px;bottom:56px;gap:14px}
+.pb-constats li{font-size:24px;padding:14px 24px}
+.pb-constats li img{width:68px;height:68px}
+
+/* ============ 3 · la proposition de valeur ============ */
+.va-ilot{position:absolute;left:1580px;top:150px;width:230px;z-index:0;animation:flotte-ilot 7s ease-in-out infinite}
+.va-ilot img{width:100%}
+.va-ilot.v2{left:1440px;top:300px;width:130px;animation-duration:8.5s;animation-delay:-3s}
+.va-ilot.v2 .ombre-sol{animation-duration:8.5s;animation-delay:-3s}
+.portes{top:412px}
+.va-chaine{bottom:40px}
+.qd-in img{transform-origin:50% 100%;animation:respire 4.5s ease-in-out infinite}
+.qdoor:nth-child(2) .qd-in img{animation-delay:-1.5s}.qdoor:nth-child(3) .qd-in img{animation-delay:-3s}
+.va-chaine .tampon{animation:tampon-frappe 2.4s linear 1.6s infinite}
+@keyframes tampon-frappe{0%{scale:1.12}7%{scale:.97}14%,100%{scale:1}}
+
+/* ============ 4 · le marché ============ */
+.mk-stats{top:318px;grid-template-columns:repeat(3,1fr);gap:14px}
+.mk-stats .st{padding:16px 18px 14px}
+.mk-stats .grand b{font-size:84px}
+.mk-stats p{font-size:19px}
+.mk-stats cite{font-size:16px}
+.s-marche .ro1{left:-110px;top:780px;width:340px}
+.mk-orbites{position:absolute;left:1440px;top:600px;width:0;height:0;z-index:0;pointer-events:none}
+.mk-orbites i{position:absolute;border-radius:50%;border:2px dashed rgba(242,190,92,.22);animation:tourne 120s linear infinite}
+.mk-orbites .o1{width:900px;height:900px;margin:-450px}
+.mk-orbites .o2{width:1000px;height:1000px;margin:-500px;border-color:rgba(242,190,92,.12);animation:tourne-inv 180s linear infinite}
+.mk-orbites .o3{width:780px;height:780px;margin:-390px;border:0;background:radial-gradient(closest-side,rgba(224,163,58,.16),rgba(224,163,58,0));animation:respire 8s ease-in-out infinite}
+.mk-orbites .brique{position:absolute;width:30px;height:18px;border-radius:5px;background:linear-gradient(180deg,#E58A5C,#B9572F);box-shadow:inset 0 -3px 0 rgba(0,0,0,.2),0 4px 8px rgba(0,0,0,.3);offset-path:circle(470px at 0 0);offset-rotate:auto;animation:orbite 40s linear infinite}
+.mk-orbites .k2{animation-delay:-13s}.mk-orbites .k3{animation-delay:-26s}
+@keyframes orbite{from{offset-distance:0%}to{offset-distance:100%}}
+
+/* ============ 5 · l'étude primaire ============ */
+.mur{position:absolute;inset:-50px;background:url("assets/textures/mur-maroc.webp") center/900px repeat;opacity:.2;z-index:-1;pointer-events:none;animation:mur-derive 70s ease-in-out infinite alternate}
+@keyframes mur-derive{from{translate:0 0}to{translate:-40px -24px}}
+.so-frise.basse{height:110px;opacity:.42;z-index:-1}
+.pr-bellarej{position:absolute;left:1600px;top:136px;width:270px;height:250px;z-index:0;pointer-events:none}
+.pr-bellarej .corps{position:absolute;right:0;bottom:0;width:200px;filter:drop-shadow(0 14px 18px rgba(60,40,20,.25));animation:flotte 6s ease-in-out infinite}
+.pr-bellarej .feuille{position:absolute;left:-24px;top:70px;width:104px;height:130px;rotate:-6deg;filter:drop-shadow(0 8px 12px rgba(60,40,20,.2))}
+.pr-bellarej .feuille rect{fill:#FFFDF8;stroke:#E2D6C2;stroke-width:3}
+.pr-bellarej .feuille g path{fill:none;stroke:#CFC3AE;stroke-width:5;stroke-linecap:round}
+.pr-bellarej .feuille .coches path{stroke:var(--fes);stroke-width:6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:30;stroke-dashoffset:30;animation:coche 7s ease-in-out infinite}
+.pr-bellarej .feuille .coches path:nth-child(2){animation-delay:.6s}.pr-bellarej .feuille .coches path:nth-child(3){animation-delay:1.2s}.pr-bellarej .feuille .coches path:nth-child(4){animation-delay:1.8s}
+@keyframes coche{0%,8%{stroke-dashoffset:30}20%,80%{stroke-dashoffset:0}92%,100%{stroke-dashoffset:30}}
+.pr-bellarej .stylo{position:absolute;left:40px;top:120px;width:120px;rotate:-38deg;animation:ecrit 1.4s ease-in-out infinite;filter:drop-shadow(0 6px 8px rgba(60,40,20,.25))}
+@keyframes ecrit{0%,100%{translate:0 0}25%{translate:-8px 6px}50%{translate:4px 12px}75%{translate:-4px 18px}}
+.pr-prix .curseur{position:absolute;top:-4px;width:56px;height:auto;margin-left:-28px;z-index:2;filter:drop-shadow(0 8px 10px rgba(60,40,20,.35))}
+.pr-prix .teeqa{top:-44px}
+.pr-prix .regle span{font-size:18px}
+.pr-32 .pois i{animation:bob 4s ease-in-out infinite}
+.pr-32 .pois i:nth-child(3n){animation-delay:-1.3s}.pr-32 .pois i:nth-child(3n+1){animation-delay:-2.6s}.pr-32 .pois i:nth-child(4n){animation-duration:5.2s}
+.pr-limite{right:120px;font-size:19px}
+
+/* ============ 6 · le benchmark ============ */
+.plan-fond{background-image:linear-gradient(rgba(31,107,79,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(31,107,79,.12) 1px,transparent 1px),linear-gradient(rgba(31,107,79,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(31,107,79,.055) 1px,transparent 1px)}
+.bn-coupe{position:absolute;right:30px;bottom:10px;width:900px;height:620px;z-index:0;pointer-events:none;overflow:visible}
+.bn-coupe path{fill:none;stroke:var(--fes);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;opacity:.26;stroke-dasharray:1 1;stroke-dashoffset:1;animation:trace 28s ease-in-out infinite}
+.bn-coupe path.cote{stroke:var(--safran-f);opacity:.3;animation-delay:2s}
+@keyframes trace{0%{stroke-dashoffset:1}45%,62%{stroke-dashoffset:0}100%{stroke-dashoffset:-1}}
+.bn-outil{animation:outil 9s ease-in-out infinite}
+@keyframes outil{0%,100%{translate:0 0}50%{translate:-14px 8px}}
+.bn-crayon{position:absolute;right:70px;bottom:78px;width:200px;rotate:-20deg;z-index:0;filter:drop-shadow(0 8px 10px rgba(60,40,20,.25));animation:outil 11s ease-in-out -4s infinite}
+.bn th{font-size:19px}
+.bn td small{font-size:18px}
+
+/* ============ 7 · la différenciation ============ */
+.df-decision{top:150px;bottom:auto}
+.df-points i{border-radius:20px;background:radial-gradient(circle at 35% 30%,#FFD98A,#E0A33A 55%,#B9801F);box-shadow:inset 0 -5px 0 rgba(0,0,0,.18),0 8px 14px rgba(0,0,0,.35)}
+.df-plan{position:absolute;left:0;top:0;width:900px;height:1080px;pointer-events:none;background-image:linear-gradient(rgba(241,235,223,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(241,235,223,.045) 1px,transparent 1px);background-size:64px 64px;-webkit-mask-image:linear-gradient(90deg,#000 60%,transparent);mask-image:linear-gradient(90deg,#000 60%,transparent);animation:plan-glisse 40s linear infinite}
+@keyframes plan-glisse{to{background-position:64px 64px}}
+.df-pile{position:absolute;left:110px;top:842px;width:600px;height:220px;pointer-events:none;z-index:2}
+.polaroid{position:absolute;left:0;top:0;width:150px;height:170px;background:#FBF7EE;border-radius:8px;padding:10px 10px 32px;box-shadow:0 14px 26px rgba(0,0,0,.45)}
+.polaroid::before{content:"";display:block;width:100%;height:100%;border-radius:4px;background:url("assets/oral/visuels/preuve-terrain.webp") 66% 66%/520px auto no-repeat}
+.polaroid::after{content:"VALIDÉ";position:absolute;left:10px;right:10px;bottom:7px;text-align:center;font:1000 13px/1 var(--font);letter-spacing:.16em;color:var(--fes)}
+.df-camera{position:absolute;left:640px;top:880px;width:118px;z-index:2;rotate:-8deg;filter:drop-shadow(0 10px 14px rgba(0,0,0,.45));animation:bob 5s ease-in-out infinite}
+
+/* ============ 8 · la maison ============ */
+.ho-chantier{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.ho-chantier video{width:100%;height:100%;object-fit:cover;object-position:50% 60%;opacity:.55;filter:brightness(.62) saturate(.8)}
+.ho-chantier::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,44,37,.97) 0%,rgba(10,44,37,.9) 34%,rgba(14,59,49,.5) 60%,rgba(14,59,49,.3) 100%),linear-gradient(180deg,rgba(10,44,37,.6) 0%,rgba(10,44,37,0) 30%,rgba(10,44,37,0) 70%,rgba(10,44,37,.7) 100%)}
+.ho-decor{position:absolute;inset:0;pointer-events:none;z-index:0}
+.ho-grue{position:absolute;left:1620px;top:150px;width:250px;height:250px;filter:drop-shadow(0 16px 20px rgba(0,0,0,.35))}
+.ho-palmes{position:absolute;left:790px;top:500px;width:190px;filter:drop-shadow(0 16px 20px rgba(0,0,0,.35));animation:balance 9s ease-in-out infinite;transform-origin:50% 100%}
+.ho-roc{position:absolute;filter:drop-shadow(0 6px 8px rgba(0,0,0,.3))}
+.ho-roc.r1{left:850px;top:930px;width:90px}.ho-roc.r2{left:1320px;top:952px;width:80px}
+.ho-dalle{position:absolute;width:84px;filter:drop-shadow(0 10px 10px rgba(0,0,0,.35));animation:bob 5s ease-in-out infinite}
+.ho-dalle.d1{left:960px;top:985px}.ho-dalle.d2{left:1070px;top:1000px;animation-delay:-1.6s}.ho-dalle.d3{left:1180px;top:990px;animation-delay:-3.2s}
+.m3d::before{left:120px;top:620px;width:860px;height:300px;background:radial-gradient(closest-side,rgba(0,0,0,.42),rgba(0,0,0,0));opacity:1}
+.s-maison .jal .js i{font-size:24px}
+.s-maison .st-wait{color:#C9D3CC}
+.ho-macon{animation:bob 6s ease-in-out infinite}
+
+/* ============ 9 · les flux ============ */
+.fx-sol{position:absolute;inset:0;z-index:-1;pointer-events:none;background:url("assets/textures/chaux.webp") 0 0/700px repeat;opacity:.55;mix-blend-mode:multiply}
+.s-flux .ro-flux{left:710px;top:220px;width:500px;opacity:.13}
+.flux .t-a{fill:url(#g-piece);stroke:#FFF6E0;stroke-width:3}
+.flux .t-p{fill:url(#g-preuve);stroke:#F1FAF5;stroke-width:3}
+
+/* ============ 10 · le prix ============ */
+.vol-haut{position:absolute;left:0;top:0;width:118px;height:104px;z-index:1;pointer-events:none;offset-path:path("M-200 34 C 400 -8, 900 50, 1400 6 S 1900 30, 2160 -4");offset-rotate:0deg;animation:vol-haut 40s linear infinite}
+@keyframes vol-haut{from{offset-distance:0%}to{offset-distance:100%}}
+.paliers{height:480px}
+.socle .ombre-sol{bottom:-6px}
+.socle.s1{right:-30px;top:-150px;width:180px}
+.socle.s2{right:-50px;top:-250px;width:280px;height:280px}
+.socle.s3{right:-40px;top:-200px;width:240px;height:240px}
+.socle.s1 img{animation:flotte-ilot 6s ease-in-out infinite}
+.px-regle{top:812px}
+.px-notes{top:906px;background:rgba(251,247,240,.94);border-radius:24px;padding:16px 26px;box-shadow:var(--ombre);font-size:19px;gap:26px;width:1680px}
+
+/* ============ 11 · la rentabilité ============ */
+.rt-bloc{width:1640px}
+.ruban{height:26px;margin-top:10px;border-radius:4px;background:repeating-linear-gradient(90deg,rgba(23,32,28,.55) 0 2px,transparent 2px 82px) 0 0/100% 12px no-repeat,repeating-linear-gradient(90deg,rgba(23,32,28,.32) 0 2px,transparent 2px 16.4px) 0 0/100% 7px no-repeat,linear-gradient(180deg,#F7CC63,#E3A92F);box-shadow:inset 0 -3px 0 rgba(0,0,0,.12),0 4px 8px rgba(120,80,20,.2);animation:ruban-vibre 6s ease-in-out infinite}
+@keyframes ruban-vibre{0%,88%,100%{translate:0 0}92%{translate:-3px 0}96%{translate:2px 0}}
+.rt-outil{right:22px;bottom:auto;top:700px;width:128px;transform:none;rotate:-4deg;animation:none}
+.rt-cartes{top:880px}
+.rt-dit{font-size:22px}
+.rt-src{font-size:17px}
+
+/* ============ 12 · l'agence ============ */
+.s-agence .ro1{left:1650px;top:150px;width:260px}
+.s-agence .ro2{left:1690px;top:850px;width:330px;animation-direction:reverse}
+.ag-arche video{bottom:22px}
+.ag-autre{position:absolute;left:606px;top:600px;width:180px;opacity:.55;filter:brightness(.6) saturate(.8);z-index:0;animation:flotte 8s ease-in-out -3s infinite}
+.ag-points{gap:16px}
+.ag-points li{font-size:25px}
+.ag-fin{top:862px;font-size:36px}
+
+/* ============ 13 · la trajectoire ============ */
+.tj-collines{position:absolute;inset:0;width:1920px;height:1080px;z-index:-1;pointer-events:none;overflow:visible}
+.tj-collines path{transform-box:fill-box}
+.tj-collines .c1{fill:rgba(226,176,118,.42);animation:colline 46s ease-in-out infinite alternate}
+.tj-collines .c2{fill:rgba(212,150,96,.38);animation:colline 34s ease-in-out -10s infinite alternate-reverse}
+.tj-collines .c3{fill:rgba(196,128,78,.32);animation:colline 28s ease-in-out -5s infinite alternate}
+@keyframes colline{from{translate:-110px 0}to{translate:110px 0}}
+.tj-route path{stroke:#EDCB98;stroke-width:50;filter:none}
+.tj-route path.bord{stroke:#C98A5A;stroke-width:64;filter:drop-shadow(0 8px 0 rgba(155,74,39,.22))}
+.tj-cailloux img{position:absolute;width:72px;z-index:1;pointer-events:none;filter:drop-shadow(0 5px 6px rgba(120,60,20,.25))}
+.tj-cailloux img.palm{width:150px;animation:balance 9s ease-in-out infinite;transform-origin:50% 100%}
+.etp.e0{left:70px;top:316px}.etp.e1{left:520px;top:336px}.etp.e2{left:970px;top:356px}.etp.e3{left:1420px;top:376px}
+.etp .med{width:196px;height:196px}
+.etp .med{transition:none}
+.etp .med video{animation:none}
+.tj-mort{z-index:5}
+
+/* ============ 14 · le maquettage ============ */
+.mq-chemin{width:860px}
+.mq-chemin li{font-size:19px}
+.mq-chemin li img{animation:pas-allume 7s ease-in-out infinite}
+.mq-chemin li:nth-child(2) img{animation-delay:1s}.mq-chemin li:nth-child(3) img{animation-delay:2s}.mq-chemin li:nth-child(4) img{animation-delay:3s}
+.mq-chemin li:nth-child(5) img{animation-delay:4s}.mq-chemin li:nth-child(6) img{animation-delay:5s}.mq-chemin li:nth-child(7) img{animation-delay:6s}
+@keyframes pas-allume{0%,16%,100%{scale:1;filter:drop-shadow(0 8px 10px rgba(0,0,0,.3)) brightness(1)}6%{scale:1.16;filter:drop-shadow(0 0 18px rgba(242,190,92,.75)) brightness(1.15)}}
+.trio .t2 .ph-tag{bottom:auto;top:-44px}
+.mq-cigogne{left:576px;top:858px;width:190px}
+.mq-halo{position:absolute;left:980px;top:110px;width:900px;height:940px;z-index:0;pointer-events:none;background:radial-gradient(closest-side,rgba(242,190,92,.24),rgba(242,190,92,0));animation:respire 6s ease-in-out infinite}
+.s-maquette .ro2{left:-120px;top:820px;width:330px}
+
+/* ============ 15 · la fin ============ */
+.fin-soleil{position:absolute;left:1080px;top:520px;width:900px;height:900px;border-radius:50%;z-index:-1;pointer-events:none;background:radial-gradient(closest-side,rgba(255,214,140,.55),rgba(255,170,90,.18) 55%,rgba(255,160,80,0));animation:respire 9s ease-in-out infinite}
+.s-fin .fin-bab{top:165px;transform:scale(.78)}
+.s-fin .merci{top:826px;text-shadow:0 6px 0 rgba(90,30,20,.3),0 16px 44px rgba(60,20,10,.65)}
+.s-fin .merci-q{top:1002px}
+.fenetre{position:absolute;border-radius:8px;background:radial-gradient(closest-side,rgba(255,205,120,.95),rgba(255,170,70,.45) 60%,rgba(255,170,70,0));mix-blend-mode:screen;opacity:0;animation:fenetre 10s ease-in-out infinite}
+.fenetre.f1{left:214px;top:262px;width:90px;height:130px}
+.fenetre.f2{left:414px;top:188px;width:162px;height:166px;animation-delay:-2.5s}
+.fenetre.f3{left:200px;top:540px;width:92px;height:124px;animation-delay:-5s}
+.fenetre.f4{left:530px;top:528px;width:100px;height:150px;animation-delay:-7.5s}
+@keyframes fenetre{0%,100%{opacity:.15}30%,70%{opacity:.9}}
+.fin-envol{left:0;top:0;width:200px;height:176px;opacity:0;offset-path:path("M2180 660 C 1990 470, 1800 240, 1612 182");offset-rotate:0deg;animation:none}
+.fin-envol video{transform:scaleX(-1)}
+.s-fin.is-active .fin-envol{animation:atterrit 3.4s cubic-bezier(.25,.6,.3,1) 1.6s both}
+@keyframes atterrit{0%{offset-distance:0%;opacity:1}96%{opacity:1}100%{offset-distance:100%;opacity:0}}
+.fin-pose{position:absolute;left:1528px;top:94px;width:168px;height:168px;z-index:4;opacity:0;pointer-events:none}
+.s-fin.is-active .fin-pose{animation:se-pose .35s ease-out 4.9s both}
+@keyframes se-pose{from{opacity:0}to{opacity:1}}
+
+/* ============ 16 · les sources, à la nuit ============ */
+.s-sources{background:linear-gradient(180deg,#0A1311 0%,#10211C 60%,#17291F 100%);color:var(--chaux-n)}
+.s-sources .kicker{color:var(--safran-c)}
+.s-sources .kicker b{background:var(--safran);color:var(--kohl)}
+.s-sources .title{color:#fff}
+.s-sources .so-cols h3{color:var(--safran-c)}
+.s-sources .so-cols li{color:rgba(241,235,223,.86)}
+.so-lune{position:absolute;left:1640px;top:118px;width:96px;height:96px;border-radius:50%;box-shadow:24px -12px 0 0 #F6E7C1;filter:drop-shadow(0 0 18px rgba(246,231,193,.45));animation:bob 10s ease-in-out infinite;pointer-events:none}
+.so-frise.nuit{opacity:.16;-webkit-mask-image:linear-gradient(180deg,transparent,#000 70%);mask-image:linear-gradient(180deg,transparent,#000 70%)}
+.so-bellarej{width:240px;height:240px;bottom:30px;animation:none;filter:brightness(.72) saturate(.85) drop-shadow(0 16px 18px rgba(0,0,0,.4))}
+@media print{.etoiles i,.etoiles b{animation:none;opacity:1}}
+.sp{display:inline-block;width:.24em}
+
+/* impression : les portes de la diapo 3 sont ouvertes, les cartes se lisent */
+@media print{.qdoor .leaf{display:none!important}}
 
 /* ====== repris du moteur du 3 nov. ====== */
 /* repli SVG isométrique */
@@ -696,8 +997,15 @@ body.mouse #ui-btns{opacity:1}
 <div id="viewport"><div id="stage">
 <!-- ================================================================ 1 · la porte -->
 <section class="slide w-jour s-porte" data-part="0" data-speaker="david" data-time="0:15" data-title="TEEQA" data-titre="TEEQA" data-tr="fade">
-  <div class="ciel" aria-hidden="true"><i></i></div>
+  <div class="ciel" aria-hidden="true"><i></i><b></b></div>
+  <div class="nuages-pate" aria-hidden="true"><i class="nu n1"></i><i class="nu n2"></i><i class="nu n3"></i></div>
   <div class="sol" aria-hidden="true"></div>
+  <div class="pt-dune" aria-hidden="true">
+    <div class="pt-palmeraie"><video class="clay" data-v="decor-v3/palmiers"></video></div>
+    <img class="pt-maisonnette" src="assets/vitrine/chemin/decor-2.webp" alt="">
+    <img class="pt-rochers r1" src="assets/vitrine/chemin/decor-1.webp" alt="">
+    <img class="pt-rochers r2" src="assets/vitrine/chemin/decor-5.webp" alt="">
+  </div>
   <div class="vol-libre" aria-hidden="true"><video class="clay" data-v="decor-v3/bellarej-vol"></video></div>
   <div class="pt-left">
     <p class="kicker" data-enter data-at=".1">Jalon 2 · Projet d'innovation · mardi 1er décembre 2026</p>
@@ -710,11 +1018,12 @@ body.mouse #ui-btns{opacity:1}
   <div class="bab" data-enter data-fx="lift" data-at=".15" data-dur="1.3">
     <div class="bab-in"><video class="loop" data-mp4="chemin/arrivee"></video></div>
     <svg class="bab-cadre" viewBox="0 0 760 900" aria-hidden="true"><path class="b1" d="M60 900V420A320 320 0 0 1 700 420V900"/><path class="b2" d="M92 900V424A288 288 0 0 1 668 424V900"/></svg>
-    <img class="bab-cle" src="assets/oral/clay/pastille-validee.webp" alt="">
+    <img class="bab-cle enc" src="assets/oral/clay/pastille-encours.webp" alt="">
+    <img class="bab-cle val" src="assets/oral/clay/pastille-validee.webp" alt="" data-enter data-fx="frappe" data-at="3.1">
   </div>
-  <img class="pt-palmiers" src="assets/oral/clay/palmiers.webp" alt="" data-enter data-fx="pop" data-at="1.4">
-  <img class="pt-caillou" src="assets/oral/clay/caillou-a.webp" alt="" data-enter data-fx="pop" data-at="1.6">
-  <p class="pt-invite" data-enter data-fx="fade" data-at="2.8">Entrer <b>→</b></p>
+  <img class="pt-palmiers" src="assets/oral/clay/palmiers.webp" alt="" data-enter data-fx="tombe" data-at="1.4">
+  <img class="pt-caillou" src="assets/oral/clay/caillou-a.webp" alt="" data-enter data-fx="tombe" data-at="1.6">
+  <p class="pt-invite" data-enter data-fx="fade" data-at="2.8"><img src="assets/vitrine/chemin/dalle-0.webp" alt="">Entrer <b>→</b></p>
 
   <aside class="notes" data-orateur="David" data-duree="0:15">
       <p class="cle">TEEQA, de « thiqa », la confiance : construire au Maroc depuis l'étranger, et ne payer que ce qui est prouvé.</p>
@@ -725,17 +1034,19 @@ body.mouse #ui-btns{opacity:1}
 
 <!-- ================================================================ 2 · le problème -->
 <section class="slide w-nuit s-probleme" data-part="1" data-speaker="david" data-time="0:30" data-title="Le problème" data-titre="Le problème" data-tr="porte" data-gap=".2">
-  <div class="pb-lyon" data-enter data-fx="fade" data-at="0"><img src="assets/oral/visuels/ici-lyon-fenetre.webp" alt=""></div>
-  <div class="pb-nador" data-enter data-fx="rtl" data-at=".5" data-dur="1.2"><img src="assets/oral/visuels/chantier-rif.webp" alt=""></div>
+  <div class="pb-lyon"><img src="assets/oral/visuels/ici-lyon-fenetre.webp" alt=""></div>
+  <div class="pb-nador"><img src="assets/oral/visuels/chantier-rif.webp" alt=""></div>
   <div class="pb-voile" aria-hidden="true"></div>
+  <div class="pb-lueurs" aria-hidden="true"><i style="left:150px;top:360px"></i><i style="left:310px;top:418px;animation-delay:-2s"></i><i style="left:470px;top:340px;animation-delay:-4.5s"></i><i style="left:230px;top:452px;animation-delay:-1.2s"></i><i style="left:600px;top:392px;animation-delay:-3.3s"></i><i style="left:90px;top:470px;animation-delay:-5.1s"></i></div>
+  <div class="pb-poussiere" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
   <div class="pb-head">
     <p class="kicker"><b>01</b> Proposition de valeur · le problème</p>
     <h2 class="title">Aujourd'hui, l'argent part sur un simple message.</h2>
   </div>
   <svg class="pb-arc" viewBox="0 0 1920 1080" aria-hidden="true">
-    <path id="pb-route" class="route" d="M520 430 C 820 210, 1160 210, 1420 470" data-enter data-fx="draw" data-at="1.2" data-dur="1.6"/>
-    <circle cx="520" cy="430" r="11" class="pin" data-enter data-fx="pop" data-at="1.1"/>
-    <circle cx="1420" cy="470" r="11" class="pin ma" data-enter data-fx="pop" data-at="2.6"/>
+    <path id="pb-route" class="route" d="M520 500 C 820 340, 1160 340, 1420 540" data-enter data-fx="draw" data-at="1.2" data-dur="1.6"/>
+    <circle cx="520" cy="500" r="11" class="pin" data-enter data-fx="pop" data-at="1.1"/>
+    <circle cx="1420" cy="540" r="11" class="pin ma" data-enter data-fx="pop" data-at="2.6"/>
   </svg>
   <span class="pb-ville pb-v1" data-enter data-fx="pop" data-at="1.2">Lyon</span>
   <span class="pb-ville pb-v2" data-enter data-fx="pop" data-at="2.7">Nador</span>
@@ -754,9 +1065,9 @@ body.mouse #ui-btns{opacity:1}
     <p class="ph-tag">Scène fictive</p>
   </div>
   <ul class="pb-constats">
-    <li data-enter data-at="4.1"><img src="assets/oral/clay/wallet.webp" alt=""><span>Les tranches partent sur demande, <b>sans preuve vérifiée</b>.</span></li>
-    <li data-enter data-at="4.3"><img src="assets/oral/clay/etape-2.webp" alt=""><span>Une malfaçon se découvre tard, <b>une fois recouverte</b>.</span></li>
-    <li data-enter data-at="4.5"><img src="assets/oral/clay/france.webp" alt=""><span>Sur place, le seul contrôle est souvent la famille : <b>ni experte, ni neutre</b>.</span></li>
+    <li data-enter data-fx="tombe" data-at="4.1"><img src="assets/oral/clay/wallet.webp" alt=""><span>Les tranches partent sur demande, <b>sans preuve vérifiée</b>.</span></li>
+    <li data-enter data-fx="tombe" data-at="4.3"><img src="assets/oral/clay/etape-2.webp" alt=""><span>Une malfaçon se découvre tard, <b>une fois recouverte</b>.</span></li>
+    <li data-enter data-fx="tombe" data-at="4.5"><img src="assets/oral/clay/france.webp" alt=""><span>Sur place, le seul contrôle est souvent la famille : <b>ni experte, ni neutre</b>.</span></li>
   </ul>
 
   <aside class="notes" data-orateur="David" data-duree="0:30">
@@ -769,8 +1080,11 @@ body.mouse #ui-btns{opacity:1}
 </section>
 
 <!-- ================================================================ 3 · la proposition de valeur -->
-<section class="slide w-jour s-valeur" data-scene="doors" data-part="1" data-speaker="david" data-time="0:35" data-title="Proposition de valeur" data-titre="Proposition de valeur" data-tr="iris" data-tr-x="420" data-tr-y="640">
-  <div class="ciel" aria-hidden="true"><i></i></div>
+<section class="slide w-jour s-valeur" data-scene="doors" data-part="1" data-speaker="david" data-time="0:35" data-title="Proposition de valeur" data-titre="Proposition de valeur" data-tr="portail" data-tr-x="960" data-tr-y="660">
+  <div class="ciel" aria-hidden="true"><i></i><b></b></div>
+  <div class="nuages-pate" aria-hidden="true"><i class="nu n1"></i><i class="nu n2"></i><i class="nu n3"></i></div>
+  <div class="va-ilot" aria-hidden="true"><img src="assets/vitrine/chemin/decor-2.webp" alt=""><i class="ombre-sol"></i></div>
+  <div class="va-ilot v2" aria-hidden="true"><img src="assets/vitrine/chemin/decor-0.webp" alt=""><i class="ombre-sol"></i></div>
   <div class="va-head">
     <p class="kicker"><b>01</b> Proposition de valeur</p>
     <h2 class="title t-xl">L'argent suit <em>la preuve</em>.</h2>
@@ -809,8 +1123,10 @@ body.mouse #ui-btns{opacity:1}
 </section>
 
 <!-- ================================================================ 4 · le marché -->
-<section class="slide w-fes s-marche" data-scene="map" data-part="2" data-speaker="manuela" data-time="0:45" data-title="Marché · données secondaires" data-titre="Marché · données secondaires" data-tr="nuages">
+<section class="slide w-fes s-marche" data-scene="map" data-part="2" data-speaker="manuela" data-time="0:45" data-title="Marché · données secondaires" data-titre="Marché · données secondaires" data-tr="zellige">
   <div class="zellige-fond" aria-hidden="true"></div>
+  <img class="rosace ro1" src="assets/zellige/pastille-validee.webp" alt="" aria-hidden="true">
+  <div class="mk-orbites" aria-hidden="true"><i class="o1"></i><i class="o2"></i><i class="o3"></i></div>
   <div class="mk-head">
     <p class="kicker"><b>02</b> Marché et cibles · l'approche globale</p>
     <h2 class="title">L'argent des MRE est là, et il va d'abord à la pierre.</h2>
@@ -842,7 +1158,10 @@ body.mouse #ui-btns{opacity:1}
 
 <!-- ================================================================ 5 · l'étude primaire -->
 <section class="slide w-chaux s-primaire" data-part="2" data-speaker="manuela" data-time="1:05" data-title="Étude primaire" data-titre="Étude primaire" data-tr="feuille">
+  <div class="mur" aria-hidden="true"></div>
   <div class="papier" aria-hidden="true"></div>
+  <div class="so-frise basse" aria-hidden="true"></div>
+  <div class="pr-bellarej" aria-hidden="true"><img class="corps" src="assets/oral/clay/signe-a.webp" alt=""><img class="stylo" src="assets/oral/clay/crayon.webp" alt=""><svg class="feuille" viewBox="0 0 120 150"><rect x="4" y="4" width="112" height="142" rx="12"/><g><path d="M22 36h14M46 36h50M22 66h14M46 66h40M22 96h14M46 96h46M22 126h14M46 126h30"/></g><g class="coches"><path d="M20 34l6 6 12-14"/><path d="M20 64l6 6 12-14"/><path d="M20 94l6 6 12-14"/><path d="M20 124l6 6 12-14"/></g></svg></div>
   <div class="pr-head">
     <p class="kicker"><b>02</b> Marché et cibles · l'étude primaire</p>
     <h2 class="title">32 vraies réponses : le besoin se dessine, le prix reste à confirmer.</h2>
@@ -870,12 +1189,12 @@ body.mouse #ui-btns{opacity:1}
       <span style="left:31%"><b>2 000 €</b>bonne affaire</span>
       <span style="left:63%"><b>3 750 €</b>cher</span>
       <span style="left:91%"><b>5 500 €</b>trop cher</span>
-      <em class="teeqa" style="left:2.6%">TEEQA ≈ 549 € <small>(4 visites)</small></em>
+      <img class="curseur" src="assets/oral/clay/pastille-encours.webp" alt="" style="left:2.6%" data-enter data-fx="glisse" data-dx="1120" data-at="2.9">
+      <em class="teeqa" style="left:2.6%" data-enter data-fx="frappe" data-at="4.1">TEEQA ≈ 549 € <small>(4 visites)</small></em>
     </div>
   </div>
   <p class="pr-pros" data-enter data-at="2.8"><b>Côté pros :</b> un bureau de contrôle de l'Oriental facture 1 500 MAD une visite d'une demi-journée et préfère être payé par le service ; une entreprise de 21 à 50 salariés paie déjà plus de 200 € par mois pour trouver des clients.</p>
   <p class="pr-limite" data-enter data-fx="fade" data-at="3.1">Échantillon petit et non représentatif : 6 répondants seulement ont un chantier au Maroc, passé ou en projet. Aucun entretien à ce jour. À faire : entretiens, devis de 3 bureaux de contrôle.</p>
-  <img class="pr-cigogne" src="assets/oral/clay/signe-a.webp" alt="" data-enter data-fx="pop" data-at="1.2">
 
   <aside class="notes" data-orateur="Manuela" data-duree="1:05">
       <p class="cle">32 vraies réponses : un besoin réel chez ceux qui construisent à distance, et une disposition à payer bien au-dessus de notre prix.</p>
@@ -888,8 +1207,10 @@ body.mouse #ui-btns{opacity:1}
 </section>
 
 <!-- ================================================================ 6 · le benchmark -->
-<section class="slide w-plan s-bench" data-part="3" data-speaker="manuela" data-time="0:45" data-title="Concurrence · benchmark" data-titre="Concurrence · benchmark" data-tr="filets">
+<section class="slide w-plan s-bench" data-part="3" data-speaker="manuela" data-time="0:45" data-title="Concurrence · benchmark" data-titre="Concurrence · benchmark" data-tr="zellige">
   <div class="plan-fond" aria-hidden="true"></div>
+  <svg class="bn-coupe" viewBox="0 0 900 620" aria-hidden="true"><path pathLength="1" d="M40 580H860M110 580V300L450 90L790 300V580M80 318L450 70L820 318M180 580V380H330V580M560 360H720V470H560ZM640 360V470M560 415H720M400 220h100v70H400ZM450 220v70M110 450H790M0 600H900"/><path class="cote" pathLength="1" d="M110 610H790M110 600v20M790 600v20M880 90V580M870 90h20M870 580h20"/></svg>
+  <img class="bn-crayon" src="assets/oral/clay/crayon.webp" alt="" aria-hidden="true">
   <div class="bn-head">
     <p class="kicker"><b>03</b> Concurrence · le benchmark</p>
     <h2 class="title">Le contrôle existe déjà. L'appli partagée, pas encore.</h2>
@@ -903,7 +1224,7 @@ body.mouse #ui-btns{opacity:1}
       <tr data-enter data-at=".8"><td><b>AMG Building</b><small>constructeur</small></td><td><i class="m p"></i>se suit lui-même</td><td><i class="m o"></i>oui</td><td><i class="m p"></i>ses clients seuls</td><td>non communiqué</td><td>Marrakech</td></tr>
       <tr data-enter data-at=".9"><td><b>Soustraitant.ma</b><small>le plus proche</small></td><td><i class="m o"></i>ses ingénieurs</td><td><i class="m o"></i>8 visites</td><td><i class="m p"></i>rapports par message</td><td>sur devis</td><td>Casablanca, Rabat</td></tr>
       <tr data-enter data-at="1.0"><td><b>TACHRONE.ma</b><small>annuaire du BTP</small></td><td><i class="m n"></i>non</td><td><i class="m n"></i>non</td><td><i class="m n"></i>annuaire</td><td>payé par les pros</td><td>Maroc</td></tr>
-      <tr class="nous" data-enter data-fx="pop" data-at="1.4"><td><b>TEEQA</b></td><td><i class="m o"></i>agence payée par TEEQA</td><td><i class="m o"></i>étapes clés</td><td><i class="m o"></i>oui, les trois rôles</td><td>1 500 / 5 900 DH</td><td>l'Oriental d'abord</td></tr>
+      <tr class="nous" data-enter data-fx="monte" data-at="1.4"><td><b>TEEQA</b></td><td><i class="m o" data-enter data-fx="frappe" data-at="1.95"></i>agence payée par TEEQA</td><td><i class="m o" data-enter data-fx="frappe" data-at="2.1"></i>étapes clés</td><td><i class="m o" data-enter data-fx="frappe" data-at="2.25"></i>oui, les trois rôles</td><td>1 500 / 5 900 DH</td><td>l'Oriental d'abord</td></tr>
     </tbody>
   </table>
   <p class="src bn-src" data-enter data-fx="fade" data-at="1.8">Sources : pages publiques des acteurs (soustraitant.ma, inspectimmo.ma, reaconsult.ma) et presse (Morocco World News, Challenge, Le360), consultées le 14 nov. 2026.</p>
@@ -918,9 +1239,12 @@ body.mouse #ui-btns{opacity:1}
 </section>
 
 <!-- ================================================================ 7 · la différenciation -->
-<section class="slide w-nuit s-diff" data-scene="df" data-part="3" data-speaker="manuela" data-time="0:35" data-title="Différenciation" data-titre="Différenciation" data-tr="zoom">
+<section class="slide w-nuit s-diff" data-scene="df" data-part="3" data-speaker="manuela" data-time="0:35" data-title="Différenciation" data-titre="Différenciation" data-tr="objectif" data-tr-x="1330" data-tr-y="700">
   <div class="df-photo"><img src="assets/oral/visuels/preuve-terrain.webp" alt=""><i class="flash"></i></div>
   <div class="df-voile" aria-hidden="true"></div>
+  <div class="df-plan" aria-hidden="true"></div>
+  <div class="df-pile" aria-hidden="true"></div>
+  <img class="df-camera" src="assets/oral/clay/camera.webp" alt="" aria-hidden="true">
   <div class="df-head">
     <p class="kicker"><b>03</b> Concurrence · nos marqueurs de différence</p>
     <h2 class="title">Soustraitant.ma : concurrent aujourd'hui, partenaire possible demain.</h2>
@@ -946,9 +1270,19 @@ body.mouse #ui-btns{opacity:1}
 </section>
 
 <!-- ================================================================ 8 · le concept : la maison -->
-<section class="slide w-fes s-maison" data-scene="house" data-part="4" data-speaker="evrard" data-time="0:40" data-title="Concept · l&#x27;argent suit la preuve" data-titre="Concept · l'argent suit la preuve" data-tr="arche" data-tr-x="1290" data-tr-y="560">
+<section class="slide w-fes s-maison" data-scene="house" data-part="4" data-speaker="evrard" data-time="0:40" data-title="Concept · l&#x27;argent suit la preuve" data-titre="Concept · l'argent suit la preuve" data-tr="arche" data-tr-x="1330" data-tr-y="560">
+  <div class="ho-chantier" aria-hidden="true"><video class="loop" data-mp4="chemin/milieu-bellarej"></video></div>
   <div class="glow-fes"></div>
   <div class="zellige-fond doux" aria-hidden="true"></div>
+  <div class="ho-decor" aria-hidden="true">
+    <div class="ho-grue"><video class="clay" data-v="decor-v3/grue"></video></div>
+    <img class="ho-palmes" src="assets/vitrine/chemin/decor-0.webp" alt="">
+    <img class="ho-roc r1" src="assets/vitrine/chemin/decor-1.webp" alt="">
+    <img class="ho-roc r2" src="assets/vitrine/chemin/decor-5.webp" alt="">
+    <img class="ho-dalle d1" src="assets/vitrine/chemin/dalle-1.webp" alt="">
+    <img class="ho-dalle d2" src="assets/vitrine/chemin/dalle-0.webp" alt="">
+    <img class="ho-dalle d3" src="assets/vitrine/chemin/dalle-2.webp" alt="">
+  </div>
   <div class="ho-left">
     <p class="kicker"><b>04</b> Concept et business model · le concept</p>
     <h2 class="title">À chaque étape, la preuve d'abord. L'argent ensuite.</h2>
@@ -983,8 +1317,10 @@ body.mouse #ui-btns{opacity:1}
 </section>
 
 <!-- ================================================================ 9 · les flux -->
-<section class="slide w-jour s-flux" data-scene="flux" data-part="4" data-speaker="evrard" data-time="0:50" data-title="Business model · les flux" data-titre="Business model · les flux" data-tr="monte">
-  <div class="ciel" aria-hidden="true"><i></i></div>
+<section class="slide w-jour s-flux" data-scene="flux" data-part="4" data-speaker="evrard" data-time="0:50" data-title="Business model · les flux" data-titre="Business model · les flux" data-tr="monte" data-tr-x="960" data-tr-y="470">
+  <div class="fx-sol" aria-hidden="true"></div>
+  <img class="rosace ro-flux" src="assets/zellige/pastille-validee.webp" alt="" aria-hidden="true">
+  <div class="nuages-pate haut" aria-hidden="true"><i class="nu n1"></i><i class="nu n2"></i></div>
   <div class="fx-head">
     <p class="kicker"><b>04</b> Concept et business model · les flux</p>
     <h2 class="title">TEEQA vend la preuve. L'argent des travaux ne passe jamais par lui.</h2>
@@ -993,23 +1329,25 @@ body.mouse #ui-btns{opacity:1}
     <defs>
       <marker id="fl-a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C98A1E"/></marker>
       <marker id="fl-p" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1F6B4F"/></marker>
+      <radialGradient id="g-piece" cx=".38" cy=".32" r=".75"><stop offset="0" stop-color="#FFE3A3"/><stop offset=".55" stop-color="#E0A33A"/><stop offset="1" stop-color="#A8701A"/></radialGradient>
+      <radialGradient id="g-preuve" cx=".38" cy=".32" r=".75"><stop offset="0" stop-color="#BDEBD5"/><stop offset=".55" stop-color="#3FA37F"/><stop offset="1" stop-color="#1F6B4F"/></radialGradient>
       <marker id="fl-d" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#6B6A66"/></marker>
     </defs>
     <g class="fl" data-k="1"><path id="f-forfait" class="argent" d="M470 560 C 620 470, 700 430, 830 430" marker-end="url(#fl-a)"/><text x="560" y="452" class="lab a">Forfait : 1 500 ou 5 900 DH</text></g>
     <g class="fl" data-k="2"><path id="f-mission" class="argent" d="M1090 400 C 1250 330, 1330 300, 1440 300" marker-end="url(#fl-a)"/><text x="1120" y="425" class="lab a">Mission · 700 DH par visite</text></g>
     <g class="fl" data-k="2"><path id="f-paie" class="argent" d="M1600 380 C 1650 480, 1650 580, 1600 660" marker-end="url(#fl-a)"/><text x="1660" y="530" class="lab a">450 DH</text></g>
     <g class="fl" data-k="3"><path id="f-declare" class="decl" d="M960 800 L 960 560" marker-end="url(#fl-d)"/><text x="985" y="690" class="lab d">Déclare l'étape</text></g>
-    <g class="fl" data-k="3"><path id="f-preuve" class="preuve" d="M1440 760 C 1300 700, 1180 600, 1090 520" marker-end="url(#fl-p)"/><text x="1235" y="700" class="lab p">Photos datées</text><text x="1235" y="728" class="lab p">avis signé</text></g>
+    <g class="fl" data-k="3"><path id="f-preuve" class="preuve" d="M1440 760 C 1300 700, 1180 600, 1090 520" marker-end="url(#fl-p)"/><text x="1300" y="652" class="lab p">Photos datées</text><text x="1300" y="680" class="lab p">avis signé</text></g>
     <g class="fl" data-k="4"><path id="f-avis" class="preuve" d="M830 500 C 700 520, 620 580, 480 640" marker-end="url(#fl-p)"/><text x="470" y="725" class="lab p">Avis signé, avec</text><text x="470" y="755" class="lab p">paiement recommandé ou différé</text></g>
     <g class="fl" data-k="5"><path id="f-travaux" class="argent fort" d="M420 700 C 520 880, 700 930, 820 930" marker-end="url(#fl-a)"/><text x="520" y="822" class="lab a fort">Prix des travaux,</text><text x="520" y="854" class="lab a fort">en direct</text></g>
-    <g class="fl" data-k="6"><path id="f-sequestre" class="option" d="M240 720 C 230 820, 220 860, 240 900"/><path class="option" d="M380 960 C 560 1010, 700 1010, 820 975"/><text x="520" y="1050" class="lab o">ou par séquestre bancaire, facultatif</text></g>
+    <g class="fl" data-k="6"><path id="f-sequestre" class="option" d="M240 720 C 230 830, 220 880, 240 925"/><path class="option" d="M380 960 C 560 1010, 700 1010, 820 975"/><text x="520" y="1052" class="lab o">ou par séquestre bancaire, facultatif</text></g>
     <g class="nd" data-k="0" transform="translate(960 470)"><circle r="128" class="halo"/><circle r="104" class="coeur"/><text y="-6" class="nd-t big">TEEQA</text><text y="30" class="nd-s">date, signe, garde</text></g>
     <g class="nd" data-k="1" transform="translate(330 600)"><rect x="-150" y="-110" width="300" height="220" rx="34" class="carte"/><image href="assets/oral/clay/france.webp" x="-58" y="-96" width="116" height="122"/><text y="58" class="nd-t">Client MRE</text><text y="88" class="nd-s">paie le forfait, une fois</text></g>
     <g class="nd" data-k="2" transform="translate(1600 300)"><rect x="-170" y="-110" width="340" height="220" rx="34" class="carte"/><image href="assets/oral/clay/casque.webp" x="-52" y="-98" width="104" height="118"/><text y="54" class="nd-t">Agence de contrôle</text><text y="84" class="nd-s">fournisseur payé par TEEQA</text></g>
     <g class="nd" data-k="2" transform="translate(1600 770)"><rect x="-170" y="-110" width="340" height="220" rx="34" class="carte"/><image href="assets/oral/clay/photo-a.webp" x="-50" y="-104" width="100" height="116"/><text y="50" class="nd-t">Contrôleur</text><text y="80" class="nd-s">anonyme pour l'entreprise</text></g>
     <g class="nd" data-k="3" transform="translate(960 900)"><rect x="-170" y="-100" width="340" height="200" rx="34" class="carte"/><image href="assets/oral/clay/macon.webp" x="-52" y="-96" width="104" height="104"/><text y="40" class="nd-t">Entreprise du BTP</text><text y="70" class="nd-s">invitée gratuitement</text></g>
-    <g class="nd" data-k="6" transform="translate(240 930)"><rect x="-180" y="-58" width="370" height="116" rx="28" class="carte pointille"/><image href="assets/oral/clay/wallet.webp" x="-166" y="-36" width="80" height="64"/><text x="20" y="-4" class="nd-t petit">Banque partenaire</text><text x="20" y="26" class="nd-s">compte au nom du client</text></g>
-    <g class="tok"><circle id="tok-a" r="13" class="t-a"/><circle id="tok-p" r="12" class="t-p"/><circle id="tok-d" r="10" class="t-d"/></g>
+    <g class="nd" data-k="6" transform="translate(240 962)"><rect x="-180" y="-58" width="370" height="116" rx="28" class="carte pointille"/><image href="assets/oral/clay/wallet.webp" x="-166" y="-36" width="80" height="64"/><text x="20" y="-4" class="nd-t petit">Banque partenaire</text><text x="20" y="26" class="nd-s">compte au nom du client</text></g>
+    <g class="tok"><circle id="tok-a" r="15" class="t-a"/><circle id="tok-p" r="14" class="t-p"/><circle id="tok-d" r="10" class="t-d"/></g>
   </svg>
   <ul class="fx-leg" data-enter data-fx="fade" data-at="5.6"><li><i class="a"></i>argent</li><li><i class="p"></i>preuve</li><li><i class="d"></i>déclaration</li><li><i class="o"></i>en pointillé : facultatif</li></ul>
 
@@ -1024,29 +1362,31 @@ body.mouse #ui-btns{opacity:1}
 
 <!-- ================================================================ 10 · le prix -->
 <section class="slide w-jour s-prix" data-part="4" data-speaker="evrard" data-time="0:45" data-title="Modèle de revenus" data-titre="Modèle de revenus" data-tr="ouvre">
-  <div class="ciel" aria-hidden="true"><i></i></div>
+  <div class="ciel" aria-hidden="true"><i></i><b></b></div>
+  <div class="nuages-pate" aria-hidden="true"><i class="nu n1"></i><i class="nu n2"></i><i class="nu n3"></i></div>
+  <div class="vol-haut" aria-hidden="true"><video class="clay" data-v="decor-v3/bellarej-vol"></video></div>
   <div class="sol" aria-hidden="true"></div>
   <div class="px-head">
     <p class="kicker"><b>04</b> Concept et business model · le modèle de revenus</p>
     <h2 class="title">Un seul prix par chantier, en paliers. Personne ne paie deux fois.</h2>
   </div>
   <div class="paliers">
-    <div class="pal p1" data-enter data-fx="pop" data-at=".5">
+    <div class="pal p1" data-enter data-fx="pop" data-at=".2">
       <div class="pal-carte"><p class="pal-n">Suivi</p><p class="pal-p"><b data-count="1500" data-sep=" ">1 500</b> DH</p><p class="pal-e">≈ 140 € · par chantier</p><p class="pal-d">Sans visite : étapes déclarées, photos datées, dossier gardé.</p></div>
-      <div class="socle s1"><img src="assets/oral/clay/caillou-a.webp" alt=""></div>
+      <div class="socle s1"><img src="assets/oral/clay/caillou-a.webp" alt=""><i class="ombre-sol"></i></div>
     </div>
-    <div class="pal p2 ref" data-enter data-fx="pop" data-at=".8">
+    <div class="pal p2 ref" data-enter data-fx="pop" data-at=".35">
       <p class="pal-badge">Le palier de référence</p>
       <div class="pal-carte"><p class="pal-n">Suivi contrôlé</p><p class="pal-p"><b data-count="5900" data-sep=" ">5 900</b> DH</p><p class="pal-e">≈ 549 € · 4 visites clés</p><p class="pal-d">Un contrôleur indépendant passe aux 4 étapes qui seront cachées ensuite.</p></div>
-      <div class="socle s2"><video class="clay" data-v="decor-v3/maison"></video></div>
+      <div class="socle s2"><video class="clay" data-v="decor-v3/maison"></video><i class="ombre-sol"></i></div>
     </div>
-    <div class="pal p3" data-enter data-fx="pop" data-at="1.1">
+    <div class="pal p3" data-enter data-fx="pop" data-at=".5">
       <div class="pal-carte"><p class="pal-n">Chaque visite en plus</p><p class="pal-p">+ <b data-count="1100" data-sep=" ">1 100</b> DH</p><p class="pal-e">≈ 102 € · le même prix partout</p><p class="pal-d">Exemple, 6 visites : 5&nbsp;900 + 2&nbsp;×&nbsp;1&nbsp;100 = <b>8&nbsp;100&nbsp;DH</b>.</p></div>
-      <div class="socle s3"><video class="clay" data-v="decor-v3/grue"></video></div>
+      <div class="socle s3"><video class="clay" data-v="decor-v3/grue"></video><i class="ombre-sol"></i></div>
     </div>
   </div>
   <p class="px-regle" data-enter data-at="1.6">Une règle : <b>forfait = 1 500 DH + 1 100 DH par visite</b>, en une ou 3 fois. Prix du pilote ; ensuite, <b>3 000 + 2 000 DH</b>.</p>
-  <ul class="px-notes">
+  <ul class="px-notes" data-enter data-fx="fade" data-at="1.85">
     <li data-enter data-at="1.9"><b>L'entreprise</b> ne paie rien pour être invitée ni référencée ; seulement une contre-visite causée, ou, à son choix, de la visibilité.</li>
     <li data-enter data-at="2.05"><b>L'agence</b> ne nous paie rien : c'est nous qui la payons, à l'acte.</li>
     <li data-enter data-at="2.2"><b>Le séquestre</b> est facultatif : ses frais sont ceux de la banque, qui nous verse un fixe par compte.</li>
@@ -1065,7 +1405,9 @@ body.mouse #ui-btns{opacity:1}
 
 <!-- ================================================================ 11 · la rentabilité -->
 <section class="slide w-chaux s-renta" data-part="4" data-speaker="evrard" data-time="0:40" data-title="Rentabilité des visites" data-titre="Rentabilité des visites" data-tr="pousse">
+  <div class="mur" aria-hidden="true"></div>
   <div class="papier" aria-hidden="true"></div>
+  <div class="so-frise basse" aria-hidden="true"></div>
   <div class="rt-head">
     <p class="kicker"><b>04</b> Concept et business model · la rentabilité</p>
     <h2 class="title">Chaque visite paie sa visite. Le prix cible paie aussi l'équipe.</h2>
@@ -1085,8 +1427,9 @@ body.mouse #ui-btns{opacity:1}
       <span class="sg tva" style="flex:1833" data-enter data-fx="grow" data-at="2.0"><small>TVA</small><b data-count="1833" data-sep=" ">1 833</b></span>
       <span class="sg ag" style="flex:2800" data-enter data-fx="grow" data-at="2.3"><small>agences</small><b data-count="2800" data-sep=" ">2 800</b></span>
       <span class="sg co" style="flex:778" data-enter data-fx="grow" data-at="2.6"><small>coûts</small><b data-count="778">778</b></span>
-      <span class="sg mg" style="flex:5589" data-enter data-fx="grow" data-at="2.9"><small>marge brute</small><b data-count="5589" data-sep=" ">5 589</b></span>
+      <span class="sg mg" style="flex:5589" data-enter data-fx="grow" data-at="2.9"><small>marge brute</small><b data-count="5589" data-sep=" " data-frappe>5 589</b></span>
     </div>
+    <div class="ruban" data-enter data-fx="deroule" data-at="1.9" aria-hidden="true"></div>
     <p class="rt-dit" data-enter data-at="3.3">3 000 DH de suivi + 2 000 DH par visite, ≈ 1 024 € : au seuil « trop bon marché » de notre étude (1 000 €), la moitié de la « bonne affaire » (2 000 €).</p>
   </div>
   <div class="rt-cartes">
@@ -1094,7 +1437,7 @@ body.mouse #ui-btns{opacity:1}
     <p class="vert" data-enter data-at="3.8"><b>D'autres payeurs, jamais le client</b>Banque, entreprises, assurance : 71 000 DH en 2029.</p>
   </div>
   <p class="src rt-src" data-enter data-fx="fade" data-at="4.0">Estimations, pas encore mesurées : 700 DH payés à l'agence pour une visite courte, sur les points clés, à confirmer par 3 devis. Détail : previsionnel.html.</p>
-  <img class="rt-outil" src="assets/oral/clay/metre.webp" alt="" data-enter data-fx="pop" data-at="1.0">
+  <img class="rt-outil" src="assets/oral/clay/metre.webp" alt="" data-enter data-fx="tombe" data-at="1.0">
 
   <aside class="notes" data-orateur="Evrard" data-duree="0:40">
       <p class="cle">Au prix du pilote, une visite paie sa visite ; au prix cible, un chantier rapporte 5 589 DH de marge brute et paie l'équipe.</p>
@@ -1109,6 +1452,9 @@ body.mouse #ui-btns{opacity:1}
 <!-- ================================================================ 12 · l'agence -->
 <section class="slide w-fes s-agence" data-part="4" data-speaker="evrard" data-time="0:35" data-title="Rôle de l&#x27;agence" data-titre="Rôle de l'agence" data-tr="partage">
   <div class="zellige-fond" aria-hidden="true"></div>
+  <img class="rosace ro1" src="assets/zellige/pastille-validee.webp" alt="" aria-hidden="true">
+  <img class="rosace ro2" src="assets/zellige/pastille-validee.webp" alt="" aria-hidden="true">
+  <img class="ag-autre" src="assets/oral/clay/photo-a.webp" alt="" aria-hidden="true">
   <div class="ag-head">
     <p class="kicker"><b>04</b> Concept et business model · le rôle de l'agence</p>
     <h2 class="title">La valeur, c'est la preuve datée et signée. L'agence est un fournisseur.</h2>
@@ -1119,11 +1465,11 @@ body.mouse #ui-btns{opacity:1}
     <video class="clay" data-v="decor-v3/bellarej-photo"></video>
   </div>
   <ol class="ag-points">
-    <li data-enter data-at=".9"><i></i><span><b>Payée par TEEQA</b>, à l'acte, jamais par l'entreprise qu'elle contrôle.</span></li>
-    <li data-enter data-at="1.15"><i></i><span><b>Attribuée par TEEQA</b> et anonyme pour l'entreprise, qui ne la choisit pas.</span></li>
-    <li data-enter data-at="1.4"><i></i><span><b>Sans lien</b> avec le client ni l'entreprise : un conflit d'intérêts se déclare, et la mission se refuse.</span></li>
-    <li data-enter data-at="1.65"><i></i><span><b>Photos prises dans l'appli</b>, avec l'heure et le lieu ; avis signé, gardé au dossier.</span></li>
-    <li data-enter data-at="1.9"><i></i><span><b>Un désaccord ?</b> Second avis par une autre agence de la zone, jamais celle du premier avis.</span></li>
+    <li data-enter data-at=".9"><i data-enter data-fx="frappe" data-at="1.02"></i><span><b>Payée par TEEQA</b>, à l'acte, jamais par l'entreprise qu'elle contrôle.</span></li>
+    <li data-enter data-at="1.15"><i data-enter data-fx="frappe" data-at="1.27"></i><span><b>Attribuée par TEEQA</b> et anonyme pour l'entreprise, qui ne la choisit pas.</span></li>
+    <li data-enter data-at="1.4"><i data-enter data-fx="frappe" data-at="1.52"></i><span><b>Sans lien</b> avec le client ni l'entreprise : un conflit d'intérêts se déclare, et la mission se refuse.</span></li>
+    <li data-enter data-at="1.65"><i data-enter data-fx="frappe" data-at="1.77"></i><span><b>Photos prises dans l'appli</b>, avec l'heure et le lieu ; avis signé, gardé au dossier.</span></li>
+    <li data-enter data-at="1.9"><i data-enter data-fx="frappe" data-at="2.02"></i><span><b>Un désaccord ?</b> Second avis par une autre agence de la zone, jamais celle du premier avis.</span></li>
   </ol>
   <p class="ag-fin" data-enter data-fx="words" data-at="2.4">TEEQA ne juge pas : il date et il garde. L'agence est remplaçable ; la preuve et son historique restent.</p>
 
@@ -1137,14 +1483,17 @@ body.mouse #ui-btns{opacity:1}
 </section>
 
 <!-- ================================================================ 13 · la trajectoire -->
-<section class="slide w-terre s-traj" data-part="5" data-speaker="david" data-time="1:20" data-title="Trajectoire 3 ans" data-titre="Trajectoire 3 ans" data-tr="flou">
-  <div class="ciel" aria-hidden="true"><i></i></div>
+<section class="slide w-terre s-traj" data-part="5" data-speaker="david" data-time="1:20" data-title="Trajectoire 3 ans" data-titre="Trajectoire 3 ans" data-tr="zellige">
+  <div class="ciel" aria-hidden="true"><i></i><b></b></div>
+  <div class="nuages-pate" aria-hidden="true"><i class="nu n1"></i><i class="nu n2"></i></div>
+  <svg class="tj-collines" viewBox="0 0 1920 1080" preserveAspectRatio="none" aria-hidden="true"><path class="c1" d="M-200 760 C 100 690, 380 720, 640 700 S 1180 640, 1460 690 S 1900 660, 2120 700 V1080 H-200Z"/><path class="c2" d="M-200 850 C 160 800, 420 830, 760 800 S 1300 760, 1620 800 S 1980 780, 2120 800 V1080 H-200Z"/><path class="c3" d="M-200 950 C 200 910, 520 940, 900 915 S 1500 890, 1800 920 S 2050 910, 2120 920 V1080 H-200Z"/></svg>
+  <div class="vol-haut" aria-hidden="true"><video class="clay" data-v="decor-v3/bellarej-vol"></video></div>
   <div class="tj-head">
     <p class="kicker"><b>05</b> Trajectoire stratégique · 3 ans</p>
     <h2 class="title">Prouver dans l'Oriental, puis suivre la diaspora.</h2>
   </div>
-  <svg class="tj-route" viewBox="0 0 1920 1080" aria-hidden="true"><path id="tj-chemin" d="M150 900 C 380 980, 430 640, 640 660 S 900 900, 1120 760 S 1400 520, 1560 600 S 1800 760, 1860 560" data-enter data-fx="draw" data-at=".3" data-dur="2.2"/></svg>
-  <div class="tj-cigogne" aria-hidden="true"><video class="clay" data-v="decor-v3/bellarej-vol"></video></div>
+  <svg class="tj-route" viewBox="0 0 1920 1080" aria-hidden="true"><path class="bord" d="M40 870 C 300 920, 470 800, 690 830 S 980 910, 1180 880 S 1460 830, 1620 870 S 1840 930, 1900 820" data-enter data-fx="draw" data-at=".1" data-dur="1.8"/><path id="tj-chemin" d="M40 870 C 300 920, 470 800, 690 830 S 980 910, 1180 880 S 1460 830, 1620 870 S 1840 930, 1900 820" data-enter data-fx="draw" data-at=".1" data-dur="1.8"/></svg>
+  <div class="tj-cailloux" aria-hidden="true"><img src="assets/vitrine/chemin/decor-1.webp" alt="" style="left:320px;top:800px"><img src="assets/vitrine/chemin/decor-5.webp" alt="" style="left:1240px;top:968px"><img src="assets/vitrine/chemin/decor-1.webp" alt="" style="left:1372px;top:770px"><img src="assets/vitrine/chemin/decor-0.webp" alt="" class="palm" style="left:1500px;top:868px"></div>
   <div class="etp e0" data-enter data-fx="pop" data-at=".6">
     <div class="med"><video class="loop" data-mp4="chemin/depart"></video></div>
     <div class="etp-c"><p class="an">Déc. 2026 – mars 2027</p><h3>Préparer</h3><ul><li>3 devis de bureaux de contrôle</li><li>6 entretiens de MRE qui construisent au Maroc</li><li>Un accord de banque pour le séquestre</li><li>L'appli en ligne</li></ul></div>
@@ -1161,7 +1510,7 @@ body.mouse #ui-btns{opacity:1}
     <div class="med"><video class="loop" data-mp4="chemin/arrivee"></video></div>
     <div class="etp-c"><p class="an">2029</p><h3>Les villes des MRE</h3><p class="vol"><b data-count="100">100</b> chantiers</p><p class="det">3 agences · Casablanca et Rabat avec un partenaire<br>CA ≈ 922 000 DH · résultat − 212 000 DH</p></div>
   </div>
-  <p class="tj-mort" data-enter data-at="2.4"><b>Point mort : 144 chantiers par an</b> · besoin de financement ≈ 630 000 DH.</p>
+  <p class="tj-mort" data-enter data-fx="frappe" data-at="2.4"><b>Point mort : 144 chantiers par an</b> · besoin de financement ≈ 630 000 DH.</p>
   <p class="src tj-src" data-enter data-fx="fade" data-at="2.6">Volumes : hypothèses de l'équipe, à remplacer par les ventes du pilote. CA hors taxes, toutes sources. Détail : previsionnel.html.</p>
 
   <aside class="notes" data-orateur="David" data-duree="1:20">
@@ -1178,6 +1527,8 @@ body.mouse #ui-btns{opacity:1}
 <!-- ================================================================ 14 · le maquettage -->
 <section class="slide w-fes s-maquette" data-part="6" data-speaker="nabih" data-time="5:00 (30 s + démo 4 min 30)" data-title="Maquettage et UX" data-titre="Maquettage et UX" data-tr="ecran">
   <div class="zellige-fond" aria-hidden="true"></div>
+  <div class="mq-halo" aria-hidden="true"></div>
+  <img class="rosace ro2" src="assets/zellige/pastille-validee.webp" alt="" aria-hidden="true">
   <div class="mq-head">
     <p class="kicker"><b>06</b> Maquettage et UX</p>
     <h2 class="title">Le parcours principal, de l'accès à la garantie.</h2>
@@ -1204,7 +1555,7 @@ body.mouse #ui-btns{opacity:1}
     <div class="phone t2" data-enter data-fx="pop" data-at=".35"><div class="ph-ecran"><video class="loop ecran" data-mp4="oral/valide-boucle"></video></div><p class="ph-tag">Contrôleur</p></div>
     <div class="phone t3" data-enter data-fx="pop" data-at=".5"><div class="ph-ecran"><img src="assets/oral/ecran-entreprise.webp" alt=""></div><p class="ph-tag">Entreprise</p></div>
   </div>
-  <img class="mq-cigogne" src="assets/oral/clay/accueil-a.webp" alt="" data-enter data-fx="pop" data-at="2.0">
+  <img class="mq-cigogne" src="assets/oral/clay/accueil-a.webp" alt="" data-enter data-fx="tombe" data-at="2.0">
 
   <aside class="notes" data-orateur="Nabih" data-duree="5:00 (30 s + démo 4 min 30)">
       <p class="cle">Le workflow complet, de P0 à P6, se joue dans l'appli : je vous le montre au doigt, sur les trois téléphones.</p>
@@ -1215,8 +1566,9 @@ body.mouse #ui-btns{opacity:1}
 </section>
 
 <!-- ================================================================ 15 · la fin -->
-<section class="slide w-soir s-fin" data-part="7" data-speaker="david" data-time="0:20" data-title="Conclusion" data-titre="Conclusion" data-tr="porte" data-tr-x="1570" data-tr-y="430">
-  <div class="ciel soir" aria-hidden="true"><i></i></div>
+<section class="slide w-soir s-fin" data-part="7" data-speaker="david" data-time="0:20" data-title="Conclusion" data-titre="Conclusion" data-tr="porte" data-tr-x="1610" data-tr-y="490" data-tr-s="4.8">
+  <div class="ciel soir" aria-hidden="true"><i></i><b></b></div>
+  <div class="fin-soleil" aria-hidden="true"></div>
   <div class="fin-left">
     <h2 class="title t-xl">L'argent suit <em>la preuve</em>.</h2>
     <ul class="fin-pts">
@@ -1229,17 +1581,18 @@ body.mouse #ui-btns{opacity:1}
   <ul class="fin-chiffres">
     <li data-enter data-fx="pop" data-at="1.8"><b data-count="32">32</b>vraies réponses à l'étude</li>
     <li data-enter data-fx="pop" data-at="1.95"><b><span data-count="5900" data-sep=" ">5 900</span> DH</b>par chantier, 4 visites</li>
-    <li class="vert" data-enter data-fx="pop" data-at="2.1"><b>0 DH</b>des travaux ne passe par TEEQA</li>
+    <li class="vert" data-enter data-fx="pop" data-at="2.1"><b><span data-count="0" data-from="1" data-frappe>0</span> DH</b>des travaux ne passe par TEEQA</li>
     <li data-enter data-fx="pop" data-at="2.25"><b data-count="144">144</b>chantiers par an : le point mort</li>
   </ul>
   <div class="bab fin-bab" data-enter data-fx="lift" data-at=".2" data-dur="1.4">
-    <div class="bab-in"><img src="assets/oral/visuels/maison-finie-raccord.webp" alt=""></div>
+    <div class="bab-in"><img src="assets/oral/visuels/maison-finie-raccord.webp" alt=""><i class="fenetre f1"></i><i class="fenetre f2"></i><i class="fenetre f3"></i><i class="fenetre f4"></i></div>
     <svg class="bab-cadre" viewBox="0 0 760 900" aria-hidden="true"><path class="b1" d="M60 900V420A320 320 0 0 1 700 420V900"/><path class="b2" d="M92 900V424A288 288 0 0 1 668 424V900"/></svg>
     <img class="bab-cle" src="assets/oral/clay/pastille-validee.webp" alt="">
   </div>
   <p class="merci" data-enter data-fx="chars" data-at="2.6">Merci.</p>
   <p class="merci-q" data-enter data-fx="fade" data-at="3.3">Vos questions.</p>
   <div class="fin-envol" aria-hidden="true"><video class="clay" data-v="decor-v3/bellarej-vol"></video></div>
+  <div class="fin-pose" aria-hidden="true"><video class="clay" data-v="decor-v3/bellarej-attend"></video></div>
   <canvas class="confettis" aria-hidden="true"></canvas>
 
   <aside class="notes" data-orateur="David" data-duree="0:20">
@@ -1249,10 +1602,11 @@ body.mouse #ui-btns{opacity:1}
 </section>
 
 <!-- ================================================================ 16 · les sources -->
-<section class="slide w-chaux s-sources" data-part="8" data-speaker="" data-time="annexe" data-title="Sources" data-titre="Sources" data-tr="fade">
-  <div class="papier" aria-hidden="true"></div>
-  <div class="so-frise" aria-hidden="true"></div>
-  <img class="so-bellarej" src="assets/oral/clay/accueil-a.webp" alt="" aria-hidden="true">
+<section class="slide w-nuit s-sources" data-part="8" data-speaker="" data-time="annexe" data-title="Sources" data-titre="Sources" data-tr="nuit">
+  <div class="etoiles" aria-hidden="true"><i></i><b></b></div>
+  <div class="so-lune" aria-hidden="true"></div>
+  <div class="so-frise nuit" aria-hidden="true"></div>
+  <div class="so-bellarej" aria-hidden="true"><video class="clay" data-v="decor-v3/bellarej-attend"></video></div>
   <p class="kicker"><b>Annexe</b> Sources</p>
   <h2 class="title">Sources</h2>
   <div class="so-cols">
@@ -1439,6 +1793,11 @@ function fx(tl, el, at) {
       const rest = el.classList.contains('merci') ? 118 : 125;
       return tl.fromTo(chars(el), { autoAlpha: 0, yPercent: 26, '--wdth': 62 }, { autoAlpha: 1, yPercent: 0, '--wdth': rest, duration: .9, stagger: .07 }, at);
     }
+    case 'tombe': return tl.fromTo(el, { autoAlpha: 0, y: -80, rotation: -5 }, { autoAlpha: 1, y: 0, rotation: 0, duration: dur || .95, ease: 'bounce.out' }, at);
+    case 'frappe': return tl.fromTo(el, { autoAlpha: 0, scale: 1.8, rotation: -9 }, { autoAlpha: 1, scale: 1, rotation: 0, duration: dur || .5, ease: 'teeqa.seal' }, at);
+    case 'glisse': return tl.fromTo(el, { autoAlpha: 0, x: +(el.dataset.dx || 600), rotation: 200 }, { autoAlpha: 1, x: 0, rotation: 0, duration: dur || 1.3, ease: 'bounce.out' }, at);
+    case 'monte': return tl.fromTo(el, { autoAlpha: 0, y: 70 }, { autoAlpha: 1, y: 0, duration: dur || .8, ease: 'back.out(1.5)' }, at);
+    case 'deroule': tl.set(el, { autoAlpha: 1 }, at); return tl.fromTo(el, { scaleX: 0, transformOrigin: '100% 50%' }, { scaleX: 1, duration: dur || 1.4, ease: 'power3.out' }, at);
     default: return tl.fromTo(el, { autoAlpha: 0, y: 18 }, { autoAlpha: 1, y: 0, duration: dur || .6 }, at);
   }
 }
@@ -1892,14 +2251,50 @@ function fmt(v, dec, sep) {
   return b ? a + ',' + b : a;
 }
 function compte(s) {
+  $$('[data-count]', s).forEach(el => {
+    const to = +el.dataset.count, dec = +(el.dataset.dec || 0), sep = el.hasAttribute('data-sep');
+    if (el._tw) { el._tw.forEach(t => t.kill()); el._tw = null; }
+    el.classList.remove('compteur');
+    el.innerHTML = espaces(fmt(to, dec, sep));
+  });
   if (!G || instant()) return;
   $$('[data-count]', s).forEach(el => {
-    const to = +el.dataset.count, from = +(el.dataset.from || 0), dec = +(el.dataset.dec || 0), sep = el.hasAttribute('data-sep');
     const host = el.closest('[data-at]'), at = host ? +host.dataset.at : 0;
-    const o = { v: from };
-    el.textContent = fmt(from, dec, sep);
-    gsap.to(o, { v: to, duration: to > 999 ? 1.8 : 1.3, delay: at + .25, ease: 'power2.out', onUpdate: () => { el.textContent = fmt(o.v, dec, sep); } });
+    roues(el, +(el.dataset.from || 0), +el.dataset.count, +(el.dataset.dec || 0), el.hasAttribute('data-sep'), at + .75);
   });
+}
+/* l'espace fine des milliers garde sa largeur, même avec un interlettrage serré */
+function espaces(t) { return t.replace(/\u202F/g, '<span class="sp">\u202F</span>'); }
+/* chaque chiffre est une roue 0-9 qui tourne (les unités d'abord), puis le nombre frappe comme un tampon dateur */
+function roues(el, from, to, dec, sep, delay) {
+  const a = fmt(from, dec, sep), b = fmt(to, dec, sep), n = Math.max(a.length, b.length);
+  const A = a.padStart(n, ' '), B = b.padStart(n, ' '), down = to < from, D = /\d/;
+  el.textContent = ''; el.classList.add('compteur');
+  const tw = el._tw = [], cols = [];
+  for (let k = 0; k < n; k++) {
+    const ca = A[k], cb = B[k];
+    if (D.test(cb) || D.test(ca)) {
+      const w = document.createElement('span'); w.className = 'roue';
+      const c = document.createElement('span'); c.className = 'col';
+      let h = ''; for (let j = 0; j < 30; j++) h += '<i>' + (j % 10) + '</i>';
+      c.innerHTML = h; w.appendChild(c); el.appendChild(w);
+      const da = D.test(ca) ? +ca : 0, db = D.test(cb) ? +cb : 0, tour = k >= n - 2 ? 20 : 10;
+      cols.push({ w, c, i0: down ? tour + da : da, i1: down ? db : tour + db, vide: !D.test(cb), r: n - k });
+    } else { const t = document.createElement('span'); t.textContent = cb === ' ' ? '' : cb; if (cb === '\u202F') t.className = 'sp'; el.appendChild(t); }
+  }
+  let fin = 0;
+  cols.forEach(o => {
+    const d = .9 + o.r * .13; fin = Math.max(fin, d);
+    gsap.set(o.c, { yPercent: -o.i0 * 100 / 30 });
+    tw.push(gsap.to(o.c, { yPercent: -o.i1 * 100 / 30, duration: d, delay: delay, ease: 'back.out(1.3)' }));
+    if (o.vide) tw.push(gsap.to(o.w, { width: 0, autoAlpha: 0, duration: .3, delay: delay + d }));
+  });
+  const ring = document.createElement('i'); ring.className = 'anneau'; el.appendChild(ring);
+  const t = delay + fin;
+  tw.push(gsap.to(el, { keyframes: [{ scale: 1.13, rotation: -2, duration: .09, ease: 'power2.in' }, { scale: 1, rotation: 0, duration: .32, ease: 'teeqa.seal' }], delay: t, transformOrigin: '50% 60%' }));
+  tw.push(gsap.fromTo(ring, { scale: .7, opacity: .7 }, { scale: 1.5, opacity: 0, duration: .7, ease: 'power2.out', delay: t + .04 }));
+  /* au repos, on remet le texte simple (lecteurs d'écran, copier-coller) */
+  tw.push(gsap.delayedCall(t + .8, () => { el.innerHTML = espaces(b); el.classList.remove('compteur'); }));
 }
 
 /* ---------- 32 pois : ils tombent en vrac, puis se rangent par profil ---------- */
@@ -1918,7 +2313,7 @@ function pois(s) {
 
 /* ---------- confettis de fin : une salve, puis une pluie légère qui ne s'arrête pas ---------- */
 const CONF = (() => {
-  let raf = 0, P = [], ctx = null, t0 = 0;
+  let raf = 0, P = [], ctx = null, t0 = 0, tS = 0;
   const COL = ['#E0A33A', '#F2BE5C', '#1F6B4F', '#3FA37F', '#F6F1E7', '#E39A76'];
   function add(burst) {
     const p = { x: burst ? 1570 + (Math.random() - .5) * 200 : 1180 + Math.random() * 740, y: burst ? 560 : -20, vx: burst ? (Math.random() - .5) * 900 : (Math.random() - .5) * 40, vy: burst ? -300 - Math.random() * 700 : 60 + Math.random() * 80,
@@ -1928,7 +2323,7 @@ const CONF = (() => {
   function frame(t) {
     const dt = t0 ? Math.min(.04, (t - t0) / 1000) : 0; t0 = t;
     ctx.clearRect(0, 0, 1920, 1080);
-    if (Math.random() < .25) add(false);
+    if (t - tS < 7000 && Math.random() < .22) add(false);
     P = P.filter(p => p.y < 1120);
     for (const p of P) {
       p.vy += 520 * dt * (p.vy < 120 ? 1 : .05); p.vx *= .99; p.x += p.vx * dt; p.y += p.vy * dt; p.r += p.vr * dt;
@@ -1937,7 +2332,7 @@ const CONF = (() => {
     raf = requestAnimationFrame(frame);
   }
   return {
-    start(s) { const c = $('.confettis', s); if (!c || RM || PRESENTER || PRINTMODE || raf) return; c.width = 1920; c.height = 1080; ctx = c.getContext('2d'); P = []; t0 = 0;
+    start(s) { const c = $('.confettis', s); if (!c || RM || PRESENTER || PRINTMODE || raf) return; c.width = 1920; c.height = 1080; ctx = c.getContext('2d'); P = []; t0 = 0; tS = performance.now() + 2400;
       setTimeout(() => { for (let k = 0; k < 140; k++) add(true); }, 2400); raf = requestAnimationFrame(frame); },
     stop() { cancelAnimationFrame(raf); raf = 0; if (ctx) ctx.clearRect(0, 0, 1920, 1080); }
   };
@@ -1952,7 +2347,7 @@ const VIE = new MutationObserver(ms => {
     videosDe(s, on);
     if (on && s.classList.contains('is-active')) {
       DUST.mode(s); compte(s); pois(s);
-      JOUR(s); TAMPON(s);
+      JOUR(s); HUDFLIP(s); FIL.va(s);
       if (s.classList.contains('s-fin')) CONF.start(s);
     }
     if (!on && s.classList.contains('s-fin')) CONF.stop();
@@ -1976,25 +2371,14 @@ const JOUR = (() => {
   };
 })();
 
-/* ---------- le tampon de partie : la pastille frappe au centre, puis rejoint le chemin ---------- */
-const TAMPON = (() => {
+/* ---------- la pastille de la partie se retourne dans le chemin, en haut à droite (plus rien au centre de la scène) ---------- */
+const HUDFLIP = (() => {
   let partie = null;
   return s => {
     const p = +s.dataset.part || 0, avant = partie; partie = p;
-    if (avant === null || p === avant || p < 1 || p > 7 || !window.gsap || instant() || PRESENTER || PRINTMODE) return;
-    const cible = $('.hud .pas.ici', s); if (!cible) return;
-    const st = $('#stage'), k = st.getBoundingClientRect().width / 1920, r = cible.getBoundingClientRect(), sr = st.getBoundingClientRect();
-    const tx = (r.left - sr.left) / k + 20, ty = (r.top - sr.top) / k + 20;
-    const t = document.createElement('div'); t.className = 'tampon'; t.setAttribute('aria-hidden', 'true');
-    t.innerHTML = '<img src="assets/oral/clay/pastille-encours.webp" alt=""><b>' + p + '</b><span>' + (PARTIES[p] || '') + '</span>';
-    st.appendChild(t);
-    gsap.set(cible, { autoAlpha: 0 });
-    const tl = gsap.timeline({ delay: .9, onComplete: () => { t.remove(); gsap.set(cible, { clearProps: 'all' }); gsap.fromTo(cible, { scale: 1.6 }, { scale: 1, duration: .5, ease: 'teeqa.seal' }); } });
-    tl.fromTo(t, { x: 960, y: 520, xPercent: -50, yPercent: -50, scale: 2.4, autoAlpha: 0, rotation: -12 }, { scale: 1, autoAlpha: 1, rotation: 0, duration: .42, ease: 'power4.in' })
-      .add(() => { DUST.burst && DUST.burst(960, 560); }, '>-0.02')
-      .fromTo(s, { x: 0 }, { x: 7, duration: .05, repeat: 5, yoyo: true, ease: 'none', clearProps: 'x' }, '<')
-      .to($('span', t), { autoAlpha: 0, duration: .25 }, '+=.55')
-      .to(t, { x: tx, y: ty, scale: 40 / 180, duration: .75, ease: 'power3.inOut' }, '<');
+    if (avant === null || p === avant || p < 1 || p > 7 || !G || instant()) return;
+    const c = $('.hud .pas.ici', s); if (!c) return;
+    gsap.fromTo(c, { rotationY: -180, scale: 1.7, transformPerspective: 500 }, { rotationY: 0, scale: 1, duration: 1, ease: 'back.out(1.8)', delay: 1.1, clearProps: 'transform' });
   };
 })();
 
@@ -2005,7 +2389,7 @@ DUST.start();
 const FLOOP = [['f-forfait', 'a', 1.4], ['f-mission', 'a', 1.2], ['f-paie', 'a', 1.0], ['f-declare', 'd', 1.1], ['f-preuve', 'p', 1.4], ['f-avis', 'p', 1.4], ['f-travaux', 'a', 2.0]];
 function fluxShow(tl, s, k, at) {
   const els = $$('#flux [data-k="' + k + '"]', s);
-  tl.fromTo(els, { autoAlpha: 0 }, { autoAlpha: 1, duration: .45 }, at);  /* pas de y : les <g> gardent leur attribut transform */
+  tl.fromTo(els, { autoAlpha: (i, e) => e.classList.contains('nd') ? .3 : 0 }, { autoAlpha: 1, duration: .45 }, at);  /* pas de y : les <g> gardent leur attribut transform */
   els.forEach(el => $$('path', el).forEach(p => {
     const dash = p.classList.contains('decl') || p.classList.contains('option');
     if (!dash) tl.fromTo(p, { drawSVG: '0%' }, { drawSVG: '100%', duration: .9, ease: 'power1.inOut' }, at + .1);
@@ -2076,6 +2460,313 @@ TR.iris = function (tl, o, n) {
   return .55;
 };
 
+/* ==========================================================================
+   TOUR 1 · EXPERT : le fil de la preuve, le zellige des parties, des transitions qui racontent
+   ========================================================================== */
+
+/* ---------- le fil de la preuve : un seul trait safran, qui passe d'une diapo à l'autre ----------
+   Chaque diapo a son tracé (souligne, encadre ou suit la chose à prouver). Au changement de diapo,
+   le trait se défait, une comète part de son bout et rejoint le début du tracé suivant, qui se dessine. */
+const FIL = (() => {
+  const NS = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(NS, 'svg'); svg.id = 'fil'; svg.setAttribute('viewBox', '0 0 1920 1080'); svg.setAttribute('aria-hidden', 'true');
+  svg.innerHTML = '<path class="lueur"/><path class="trait"/><g class="comete" opacity="0"><circle class="halo" r="18"/><circle r="7"/></g>';
+  if (!PRESENTER && !PRINTMODE) stage.appendChild(svg);
+  const lu = svg.children[0], tr = svg.children[1], co = svg.children[2];
+  const mesure = document.createElementNS(NS, 'path');
+  let fin = null, tok = 0, tws = [];
+  const k = () => stage.getBoundingClientRect().width / 1920;
+  function rect(el, texte) {
+    const sr = stage.getBoundingClientRect(), q = k();
+    let r = el.getBoundingClientRect();
+    if (texte) { const g = document.createRange(); g.selectNodeContents(el); const l = Array.from(g.getClientRects()).filter(x => x.width > 2); if (l.length) r = l[l.length - 1]; }
+    return { x: (r.left - sr.left) / q, y: (r.top - sr.top) / q, w: r.width / q, h: r.height / q };
+  }
+  function union(el) { const g = document.createRange(); g.selectNodeContents(el); const L = Array.from(g.getClientRects()).filter(x => x.width > 2), sr = stage.getBoundingClientRect(), q = k();
+    if (!L.length) return rect(el); const x0 = Math.min(...L.map(r => r.left)), x1 = Math.max(...L.map(r => r.right)), y0 = Math.min(...L.map(r => r.top)), y1 = Math.max(...L.map(r => r.bottom));
+    return { x: (x0 - sr.left) / q, y: (y0 - sr.top) / q, w: (x1 - x0) / q, h: (y1 - y0) / q }; }
+  const f = v => v.toFixed(1);
+  const sous = (el, gap, texte) => { if (!el) return ''; const b = rect(el, texte); return 'M' + f(b.x) + ' ' + f(b.y + b.h + gap) + 'H' + f(b.x + b.w); };
+  const cadre = (el, m, r, texte) => { if (!el) return ''; const b = texte ? union(el) : rect(el); const x = b.x - m, y = b.y - m, w = b.w + 2 * m, h = b.h + 2 * m; r = Math.min(r, h / 2);
+    return 'M' + f(x + r) + ' ' + f(y + h) + 'H' + f(x + w - r) + 'A' + r + ' ' + r + ' 0 0 0 ' + f(x + w) + ' ' + f(y + h - r) + 'V' + f(y + r) + 'A' + r + ' ' + r + ' 0 0 0 ' + f(x + w - r) + ' ' + f(y) + 'H' + f(x + r) + 'A' + r + ' ' + r + ' 0 0 0 ' + f(x) + ' ' + f(y + r) + 'V' + f(y + h - r) + 'A' + r + ' ' + r + ' 0 0 0 ' + f(x + r) + ' ' + f(y + h); };
+  const rond = (x, y, r) => 'M' + (x - r) + ' ' + y + 'A' + r + ' ' + r + ' 0 1 1 ' + (x + r) + ' ' + y + 'A' + r + ' ' + r + ' 0 1 1 ' + (x - r) + ' ' + y;
+  const T = {
+    'TEEQA': () => 'M1120 1020V540A320 320 0 0 1 1760 540V1020',
+    'Le problème': () => 'M520 500C820 340 1160 340 1420 540',
+    'Proposition de valeur': s => $$('.va-chaine .fil', s).map(e => { const b = rect(e); return 'M' + f(b.x) + ' ' + f(b.y + b.h / 2) + 'H' + f(b.x + b.w); }).join(''),
+    'Marché · données secondaires': s => cadre($('.mk-stats .grand', s), 9, 34),
+    'Étude primaire': s => { const z = $('.pr-prix .zone', s); if (!z) return ''; const b = rect(z); return 'M' + f(b.x + b.w - 6) + ' ' + f(b.y + b.h / 2) + 'H' + f(b.x + 30); },
+    'Concurrence · benchmark': s => cadre($('.bn tr.nous', s), 8, 32),
+    'Différenciation': s => cadre($('.df-decision', s), 10, 38),
+    "Concept · l'argent suit la preuve": s => sous($('.ho-left .title', s), 16, true),
+    'Business model · les flux': () => rond(960, 470, 122),
+    'Modèle de revenus': s => cadre($('.pal.ref .pal-carte', s), 10, 42),
+    'Rentabilité des visites': s => cadre($('.rt-bloc.b2 .sg.mg', s), 7, 26),
+    "Rôle de l'agence": s => sous($('.ag-fin', s), 12, true),
+    'Trajectoire 3 ans': () => 'M40 870C300 920 470 800 690 830S980 910 1180 880S1460 830 1620 870S1840 930 1900 820',
+    'Maquettage et UX': s => { const L = $$('.mq-chemin img', s); if (!L.length) return ''; let d = ''; for (let i = 0; i < L.length - 1; i++) { const a = rect(L[i]), b = rect(L[i + 1]); d += 'M' + f(a.x + a.w - 4) + ' ' + f(a.y + a.h / 2) + 'H' + f(b.x + 4); } return d; },
+    /* le fil finit en arche autour de la maison livrée, sans toucher « Merci » */
+    'Conclusion': s => { const a = $('.fin-bab', s), m = $('.merci', s); if (!a) return ''; const b = rect(a), q = 16, x0 = b.x - q, x1 = b.x + b.w + q, R = (x1 - x0) / 2, yc = b.y - q + R;
+      const bas = Math.min(b.y + b.h, m ? union(m).y - 18 : b.y + b.h);
+      return 'M' + f(x0) + ' ' + f(bas) + 'V' + f(yc) + 'A' + f(R) + ' ' + f(R) + ' 0 0 1 ' + f(x1) + ' ' + f(yc) + 'V' + f(bas); },
+    'Sources': s => sous($('.title', s), 12, true)
+  };
+  /* le tracé attend que la chose à prouver soit posée */
+  const ATT = { 'Proposition de valeur': 4.3, 'Étude primaire': 4.7, 'Concurrence · benchmark': 3.2, 'Rentabilité des visites': 4.3, 'Conclusion': 4.4, "Rôle de l'agence": 3.4, 'Business model · les flux': 1.3, 'Maquettage et UX': 2.2 };
+  function trace(s) { const g = T[s.dataset.titre]; try { return g ? g(s) : ''; } catch (e) { return ''; } }
+  function point(d, a) { mesure.setAttribute('d', d); const L = mesure.getTotalLength(); const p = mesure.getPointAtLength(a ? L : 0); return [p.x, p.y]; }
+  function stop() { tws.forEach(t => t.kill()); tws = []; }
+  function va(s) {
+    if (PRESENTER || PRINTMODE || !G) return;
+    const my = ++tok, anime = !!trans && !instant();
+    stop();
+    if (anime && fin && tr.getAttribute('d')) tws.push(gsap.to([tr, lu], { drawSVG: '100% 100%', duration: .5, ease: 'power2.in' }));
+    else gsap.set([tr, lu], { drawSVG: '0% 0%' });
+    const depart = fin;
+    /* le tracé se mesure quand la diapo est posée (les titres ont fini d'arriver) */
+    tws.push(gsap.delayedCall(anime ? (ATT[s.dataset.titre] || 2.2) : .05, () => {
+      if (my !== tok) return;
+      const d = trace(s);
+      if (!d) { fin = null; return; }
+      tr.setAttribute('d', d); lu.setAttribute('d', d);
+      const deb = point(d, false); fin = point(d, true);
+      if (!anime) { gsap.set([tr, lu], { drawSVG: '0% 100%' }); return; }
+      gsap.set([tr, lu], { drawSVG: '0% 0%' });
+      const tl = gsap.timeline(); tws.push(tl);
+      if (depart) {
+        const mx = (depart[0] + deb[0]) / 2, my2 = Math.min(depart[1], deb[1]) - 260;
+        tl.set(co, { attr: { opacity: 1 }, x: depart[0], y: depart[1] })
+          .to(co, { motionPath: { path: [{ x: depart[0], y: depart[1] }, { x: mx, y: my2 }, { x: deb[0], y: deb[1] }], curviness: 1.2 }, duration: .7, ease: 'power2.inOut' });
+      } else tl.set(co, { attr: { opacity: 1 }, x: deb[0], y: deb[1] });
+      tl.to([tr, lu], { drawSVG: '0% 100%', duration: 1.3, ease: 'power2.inOut' })
+        .to(co, { motionPath: { path: tr, align: tr, alignOrigin: [.5, .5] }, duration: 1.3, ease: 'power2.inOut' }, '<')
+        .to(co, { attr: { opacity: 0 }, duration: .4 });
+    }));
+  }
+  return { va };
+})();
+
+/* ---------- les acteurs du schéma des flux sont là dès l'arrivée, en retrait, puis s'allument ---------- */
+SC.flux.enter = function (tl, s) {
+  enterDefault(tl, s);
+  tl.set($$('#flux .fl', s), { autoAlpha: 0 }, 0);
+  tl.set($$('#flux .nd', s), { autoAlpha: .3 }, 0);
+  fluxShow(tl, s, 0, .2);
+  tl.fromTo($('#flux .coeur', s), { scale: 1.4, transformOrigin: '50% 50%' }, { scale: 1, duration: .5, ease: 'teeqa.seal' }, .3);
+};
+
+/* ---------- la différenciation : le flash part de la photo, un polaroïd s'imprime et va se ranger ---------- */
+SC.df = SC.df || {};
+SC.df.loop = function (s) {
+  const f = $('.flash', s), pile = $('.df-pile', s); if (!f || !pile || !window.gsap) return;
+  const my = s._dfTok = {}; let n = 0;
+  pile.textContent = '';
+  const cyc = () => {
+    if (s._dfTok !== my || !s.classList.contains('is-active')) return;
+    gsap.fromTo(f, { opacity: 0, scale: .6 }, { opacity: .75, scale: 1.15, duration: .14, yoyo: true, repeat: 1, ease: 'power2.out' });
+    const pc = document.createElement('i'); pc.className = 'polaroid'; pile.appendChild(pc);
+    const slot = n++ % 3;
+    gsap.fromTo(pc, { x: 1330 - 110 - 75, y: 700 - 842 - 85, scale: .25, rotation: 0, autoAlpha: 0 },
+      { x: 20 + slot * 175, y: 12 + (slot % 2) * 10, scale: 1, rotation: gsap.utils.random(-11, 11), autoAlpha: 1, duration: 1.2, ease: 'power3.out', delay: .18 });
+    const L = pile.children;
+    if (L.length > 3) { const v = L[0]; gsap.to(v, { autoAlpha: 0, y: '+=40', duration: .5, onComplete: () => v.parentNode && v.parentNode.removeChild(v) }); }
+    gsap.delayedCall(6.5, cyc);
+  };
+  cyc();
+};
+
+/* ---------- couleurs des mondes (pour les tuiles du zellige) ---------- */
+function monde(s) {
+  const c = s.className;
+  return /w-fes/.test(c) ? '#0E3B31' : /w-nuit/.test(c) ? '#121a17' : /w-soir/.test(c) ? '#7A3F38' : /w-terre/.test(c) ? '#EFD3AA' : /w-plan/.test(c) ? '#F1EBDD' : /w-chaux/.test(c) ? '#F3ECDF' : '#F2E3C6';
+}
+
+/* ---------- changement de partie : un mur de zellige se pose, chaque carreau se retourne aux couleurs du monde suivant ---------- */
+TR.zellige = function (tl, o, n) {
+  const C = 12, R = 7, h = 1080 / R, box = document.createElement('div'); box.className = 'tr-zel'; TRL.appendChild(box);
+  const ca = monde(o), cb = monde(n), tiles = [];
+  for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) {
+    const t = document.createElement('i'); t.style.left = c * 160 + 'px'; t.style.top = (r * h).toFixed(1) + 'px';
+    t.innerHTML = '<b style="background-color:' + ca + '"></b><b class="v" style="background-color:' + cb + '"></b>';
+    box.appendChild(t); tiles.push(t);
+  }
+  const p = +n.dataset.part || 0, lab = trEl('zel-lab');
+  lab.innerHTML = '<img src="assets/oral/clay/pastille-encours.webp" alt=""><b>' + p + '</b><span>' + (PARTIES[p] || '') + '</span>';
+  const grid = [R, C];
+  gsap.set(tiles, { scale: .4, autoAlpha: 0, rotationY: 0 });
+  gsap.set(lab, { autoAlpha: 0 });
+  tl.to(tiles, { scale: 1.03, autoAlpha: 1, duration: .34, ease: 'power2.out', stagger: { grid, from: [0, C - 1], amount: .38 } }, 0)
+    .to(o, { scale: .97, duration: .6, ease: 'power2.in', transformOrigin: '50% 50%' }, 0)
+    .to(tiles, { rotationY: 180, duration: .6, ease: 'back.out(1.25)', stagger: { grid, from: [0, C - 1], amount: .42 } }, .3)
+    .add(() => { gsap.set(o, { autoAlpha: 0 }); }, .78)
+    .fromTo(lab, { autoAlpha: 0, scale: 1.7, rotation: -10 }, { autoAlpha: 1, scale: 1, rotation: 0, duration: .45, ease: 'teeqa.seal' }, .62)
+    .to(tiles, { scale: 0, duration: .5, ease: 'power2.in', stagger: { grid, from: 'center', amount: .4 } }, 1.12)
+    .to(lab, { autoAlpha: 0, scale: .5, y: -40, duration: .35, ease: 'power2.in' }, 1.3);
+  return 1.05;
+};
+
+/* ---------- 2 → 3 : une porte en arc s'ouvre au milieu, sur la porte du milieu de la diapo suivante ---------- */
+TR.portail = function (tl, o, n) {
+  const cx = +(n.dataset.trX || 960), cy = +(n.dataset.trY || 640), P = { s: .3 };
+  const v = trSvg('<path fill="none" stroke="#E0A33A" stroke-width="7"/>'), pa = v.firstChild;
+  const upd = () => { const d = archD(cx, cy, P.s); n.style.clipPath = 'path("' + d + '")'; pa.setAttribute('d', d); };
+  gsap.set(n, { zIndex: 3, scale: 1.18, transformOrigin: cx + 'px ' + cy + 'px' }); upd();
+  tl.to(P, { s: 2.4, duration: .5, ease: 'back.out(1.6)', onUpdate: upd }, 0)
+    .to(P, { s: 28, duration: 1.05, ease: 'power3.in', onUpdate: upd }, .55)
+    .to(o, { scale: 1.1, duration: 1.6, ease: 'power2.in', transformOrigin: cx + 'px ' + cy + 'px' }, 0)
+    .to(n, { scale: 1, duration: 1.5, ease: 'power3.out' }, .45)
+    .to(v, { autoAlpha: 0, duration: .3 }, 1.25);
+  return .85;
+};
+
+/* ---------- la porte (1 → 2 et 14 → 15) : le cadre safran peut s'arrêter sur l'arche de la diapo d'arrivée ---------- */
+TR.porte = function (tl, o, n) {
+  const cx = +(n.dataset.trX || 1440), cy = +(n.dataset.trY || 600), S = +(n.dataset.trS || 0), P = { s: .9 }, Q = { s: .9 };
+  const v = trSvg('<path fill="none" stroke="#E0A33A" stroke-width="6"/>'), pa = v.firstChild;
+  const upd = () => { o.style.clipPath = 'path(evenodd, "M0 0H1920V1080H0Z' + archD(cx, cy, P.s) + '")'; pa.setAttribute('d', archD(cx, cy, S ? Q.s : P.s)); };
+  gsap.set(n, { scale: 1.25, transformOrigin: cx + 'px ' + cy + 'px' });
+  upd();
+  tl.to(o, { scale: 2.6, transformOrigin: cx + 'px ' + cy + 'px', duration: 1.5, ease: 'power3.in' }, 0)
+    .to(P, { s: 40, duration: 1.5, ease: 'teeqa.door', onUpdate: upd }, .15)
+    .to(n, { scale: 1, duration: 1.6, ease: 'power3.out' }, .3);
+  if (S) tl.to(Q, { s: S, duration: 1.7, ease: 'power3.out', onUpdate: upd }, .15).to(v, { autoAlpha: 0, duration: .5 }, 1.75);
+  else tl.to(v, { autoAlpha: 0, duration: .3 }, 1.2);
+  return .7;
+};
+
+/* ---------- 4 → 5 : une vraie feuille tombe, penchée, son ombre avance ; le coin se rabat en se posant ---------- */
+TR.feuille = function (tl, o, n) {
+  const coin = document.createElement('i'); coin.className = 'tr-coin-feuille'; n.appendChild(coin);
+  gsap.set(n, { zIndex: 3, y: -1140, rotationX: 16, transformPerspective: 2600, transformOrigin: '50% 0%', boxShadow: '0 80px 120px rgba(0,0,0,.55)' });
+  tl.to(n, { y: 0, rotationX: 0, duration: 1.1, ease: 'power3.inOut' }, 0)
+    .to(n, { boxShadow: '0 0px 0px rgba(0,0,0,0)', duration: .35, ease: 'power1.out' }, .95)
+    .to(o, { scale: .93, opacity: .35, duration: 1.05, ease: 'power2.in', transformOrigin: '50% 70%' }, 0)
+    .fromTo(coin, { scale: 1 }, { scale: 0, duration: .4, ease: 'power2.in' }, .9)
+    .add(() => { if (coin.parentNode) coin.parentNode.removeChild(coin); }, 1.32);
+  return .65;
+};
+
+/* ---------- 6 → 7 : l'obturateur de l'appareil se ferme sur le tableau et s'ouvre sur la photo de chantier ---------- */
+TR.objectif = function (tl, o, n) {
+  const x = +(n.dataset.trX || 1330), y = +(n.dataset.trY || 700), P = { r: 2300 }, Q = { r: 110 };
+  const v = trSvg('<circle fill="none" stroke="#E0A33A" stroke-width="6"/><circle fill="none" stroke="rgba(241,235,223,.35)" stroke-width="2"/>');
+  const c1 = v.children[0], c2 = v.children[1]; [c1, c2].forEach(c => { c.setAttribute('cx', x); c.setAttribute('cy', y); });
+  const glow = trEl('lueur', { left: x + 'px', top: y + 'px' });
+  const uo = () => { o.style.clipPath = 'circle(' + P.r.toFixed(1) + 'px at ' + x + 'px ' + y + 'px)'; c1.setAttribute('r', P.r); c2.setAttribute('r', P.r + 14); };
+  const un = () => { n.style.clipPath = 'circle(' + Q.r.toFixed(1) + 'px at ' + x + 'px ' + y + 'px)'; c1.setAttribute('r', Q.r); c2.setAttribute('r', Q.r + 14); };
+  gsap.set(n, { autoAlpha: 0, zIndex: 3 }); gsap.set(glow, { autoAlpha: 0, scale: .3 }); uo();
+  tl.to(P, { r: 110, duration: .62, ease: 'power3.in', onUpdate: uo }, 0)
+    .to(o, { scale: 1.06, duration: .62, ease: 'power2.in', transformOrigin: x + 'px ' + y + 'px' }, 0)
+    .add(() => { gsap.set(n, { autoAlpha: 1 }); gsap.set(o, { autoAlpha: 0 }); un(); }, .64)
+    .to(glow, { autoAlpha: .8, scale: 1, duration: .14, ease: 'power2.out' }, .62)
+    .to(glow, { autoAlpha: 0, scale: 1.6, duration: .55, ease: 'power2.out' }, .78)
+    .to(Q, { r: 2300, duration: .95, ease: 'power3.inOut', onUpdate: un }, .7)
+    .fromTo(n, { scale: 1.1 }, { scale: 1, duration: 1.2, ease: 'power3.out', transformOrigin: x + 'px ' + y + 'px' }, .66)
+    .to(v, { autoAlpha: 0, duration: .3 }, 1.4);
+  return .75;
+};
+
+/* ---------- 7 → 8 : l'arche reste lisible au début, son liseré safran s'ouvre sur la maison ---------- */
+TR.arche = function (tl, o, n) {
+  const cx = +(n.dataset.trX || 1290), cy = +(n.dataset.trY || 560), P = { s: .15 };
+  const v = trSvg('<path fill="none" stroke="#E0A33A" stroke-width="6"/>'), pa = v.firstChild;
+  const upd = () => { const d = archD(cx, cy, P.s); o.style.clipPath = 'path(evenodd, "M0 0H1920V1080H0Z' + d + '")'; pa.setAttribute('d', d); };
+  upd();
+  gsap.set(n, { scale: 1.12, transformOrigin: cx + 'px ' + cy + 'px' });
+  tl.to(P, { s: 3.2, duration: .6, ease: 'back.out(1.5)', onUpdate: upd }, 0)
+    .to(P, { s: 34, duration: 1.0, ease: 'power3.in', onUpdate: upd }, .75)
+    .to(o, { scale: 1.08, duration: 1.7, ease: 'power2.in', transformOrigin: cx + 'px ' + cy + 'px' }, 0)
+    .to(n, { scale: 1, duration: 1.4, ease: 'power3.out' }, .7)
+    .to(v, { autoAlpha: 0, duration: .3 }, 1.5);
+  return .85;
+};
+
+/* ---------- 8 → 9 : la maison rétrécit dans un cercle et devient le rond « TEEQA » du schéma ---------- */
+TR.monte = function (tl, o, n) {
+  const hx = 1330, hy = 600, tx = +(n.dataset.trX || 960), ty = +(n.dataset.trY || 470), P = { m: 0, r: 1500 };
+  const v = trSvg('<circle fill="none" stroke="#E0A33A" stroke-width="6"/>'), c = v.firstChild;
+  const upd = () => {
+    const k = 1 - .62 * P.m, sx = hx + (tx - hx) * P.m, sy = hy + (ty - hy) * P.m;
+    gsap.set(o, { x: sx - k * hx, y: sy - k * hy, scale: k, transformOrigin: '0 0' });
+    o.style.clipPath = 'circle(' + P.r.toFixed(1) + 'px at ' + hx + 'px ' + hy + 'px)';
+    c.setAttribute('cx', sx.toFixed(1)); c.setAttribute('cy', sy.toFixed(1)); c.setAttribute('r', (P.r * k).toFixed(1));
+  };
+  gsap.set(v, { autoAlpha: 0 }); upd();
+  tl.to(P, { r: 600, duration: .45, ease: 'power2.in', onUpdate: upd }, 0)
+    .to(v, { autoAlpha: 1, duration: .2 }, .25)
+    .to(P, { m: 1, r: 274, duration: .85, ease: 'power3.inOut', onUpdate: upd }, .42)
+    .to(o, { autoAlpha: 0, duration: .3 }, 1.22)
+    .to(v, { autoAlpha: 0, duration: .3 }, 1.27);
+  return .7;
+};
+
+/* ---------- 9 → 10 : le schéma s'ouvre en deux comme une porte de grange, la diapo suivante est déjà là ---------- */
+TR.ouvre = function (tl, o, n) {
+  const b = o.cloneNode(true); $$('video,canvas', b).forEach(e => e.parentNode.removeChild(e));
+  b.classList.add('is-leaving'); TRL.appendChild(b);
+  o.style.clipPath = 'inset(0 0 50% 0)'; b.style.clipPath = 'inset(50% 0 0 0)';
+  const ln = trEl('hline'), sh = trEl('ombre-h haut'), sb = trEl('ombre-h bas');
+  gsap.set(ln, { scaleX: 0 }); gsap.set([sh, sb], { autoAlpha: 0 });
+  tl.to(ln, { scaleX: 1, duration: .35, ease: 'power3.out' }, 0)
+    .to([sh, sb], { autoAlpha: 1, duration: .2 }, .3)
+    .to(ln, { autoAlpha: 0, duration: .2 }, .4)
+    .to([o, sh], { y: -640, duration: 1.0, ease: 'power3.inOut' }, .32)
+    .to([b, sb], { y: 640, duration: 1.0, ease: 'power3.inOut' }, .32)
+    .fromTo(n, { scale: .93 }, { scale: 1, duration: 1.15, ease: 'power3.out' }, .32);
+  return .45;
+};
+
+/* ---------- 10 → 11 : un mètre ruban traverse l'écran et emporte la diapo ---------- */
+TR.pousse = function (tl, o, n) {
+  const r = trEl('ruban');
+  gsap.set(r, { scaleX: 0 });
+  gsap.set(n, { zIndex: 3, x: 1920 });
+  tl.to(r, { scaleX: 1, duration: .42, ease: 'power3.out' }, 0)
+    .to(o, { x: -1920, duration: 1.0, ease: 'power3.inOut' }, .32)
+    .to(n, { x: 0, duration: 1.0, ease: 'power3.inOut' }, .32)
+    .to(r, { scaleX: 0, duration: .55, ease: 'power3.in' }, .62);
+  return .75;
+};
+
+/* ---------- 11 → 12 : une arche safran grandit, couvre, puis va se poser à la place de l'arche de l'agence ---------- */
+TR.partage = function (tl, o, n) {
+  const a = trEl('arche');
+  gsap.set(a, { x: 540, y: -120, scale: .1, transformOrigin: '50% 50%' });
+  gsap.set(n, { autoAlpha: 0 });
+  tl.to(a, { scale: 4.3, duration: .62, ease: 'power3.in' }, 0)
+    .add(() => { gsap.set(n, { autoAlpha: 1 }); gsap.set(o, { autoAlpha: 0 }); }, .62)
+    .to(a, { x: 0, y: 0, scale: 1, duration: .8, ease: 'power3.out' }, .64)
+    .to(a, { autoAlpha: 0, duration: .3 }, 1.38);
+  return .55;
+};
+
+/* ---------- 13 → 14 : un téléphone sort de la carte 2029, grandit, puis va prendre sa place dans le trio ---------- */
+const TEL_SRC = 'assets/vitrine/ecrans/chemin.mp4';
+(() => { if (PRINTMODE || PRESENTER) return; const v = document.createElement('video'); v.preload = 'auto'; v.muted = true; v.src = TEL_SRC; v.style.display = 'none'; document.body.appendChild(v); })();
+TR.ecran = function (tl, o, n) {
+  const ph = trEl('tel'); ph.innerHTML = '<div><video muted playsinline loop preload="auto"></video></div>';
+  const vd = $('video', ph); vd.muted = true; vd.src = TEL_SRC; const pp = vd.play(); if (pp && pp.catch) pp.catch(() => {});
+  gsap.set(ph, { x: 1615 - 960, y: 430 - 540, scale: .2, rotation: 8, transformOrigin: '50% 50%' });
+  gsap.set(n, { autoAlpha: 0 });
+  tl.to(ph, { x: 0, y: 0, scale: 1, rotation: 0, duration: .7, ease: 'back.out(1.2)' }, 0)
+    .to(o, { scale: .95, opacity: .3, duration: .8, ease: 'power2.inOut' }, 0)
+    .to(n, { autoAlpha: 1, duration: .55, ease: 'power1.inOut' }, .72)
+    .to(ph, { x: 1205 - 960, y: 630 - 540, scale: .816, rotation: -6, duration: .7, ease: 'power3.inOut' }, .78)
+    .to(ph, { autoAlpha: 0, duration: .25 }, 1.45);
+  return .95;
+};
+
+/* ---------- 15 → 16 : le soir tombe jusqu'à la nuit ; les étoiles restent, les sources apparaissent ---------- */
+TR.nuit = function (tl, o, n) {
+  const N_ = trEl('nuit'); N_.innerHTML = '<div class="etoiles"><i></i><b></b></div>';
+  gsap.set(n, { autoAlpha: 0 }); gsap.set(N_, { autoAlpha: 0 });
+  tl.to(N_, { autoAlpha: 1, duration: 1.2, ease: 'power1.inOut' }, 0)
+    .to(o, { y: 70, duration: 1.3, ease: 'power1.in' }, 0)
+    .add(() => { gsap.set(n, { autoAlpha: 1 }); gsap.set(o, { autoAlpha: 0 }); }, 1.2)
+    .to(N_, { autoAlpha: 0, duration: .7, ease: 'power1.out' }, 1.25);
+  return 1.05;
+};
+
 /* ---------- notes à l'écran (N) et démo (D) ---------- */
 const NP = document.createElement('div'); NP.id = 'notes-pan'; NP.hidden = true; document.body.appendChild(NP);
 function notesEcran() {
@@ -2091,6 +2782,9 @@ addEventListener('keydown', e => {
   else if (e.key === 'Escape') NP.hidden = true;
 }, true);
 setInterval(() => { if (!NP.hidden) notesEcran(); }, 600);
+
+/* impression : portes de la diapo 3 ouvertes */
+if (PRINTMODE) document.querySelectorAll(".qdoor.shut").forEach(d => d.classList.remove("shut"));
 
 function transition(from, to) {
   const o = slides[from], n = slides[to];
@@ -2112,6 +2806,7 @@ function transition(from, to) {
 
 function next() {
   if (trans) { if (trans.time() > .45) endTrans(); return; }   /* double appui de télécommande : ignoré au début de la transition */
+  if (running && running.progress() < 1 && stepsCount(slides[cur]) > 0) { if (running.timeScale() < 3) running.timeScale(4); else finish(); return; }
   if (cur < N - 1) go(cur + 1, { animate: true });
 }
 function prev() {
@@ -2402,10 +3097,11 @@ function buildHouse(host, slide, onFail) {
 
   // parcelle, ombre de contact, cordeau d'implantation, fantôme du projet
   { const cv = document.createElement('canvas'); cv.width = cv.height = 256; const g = cv.getContext('2d'), gr = g.createRadialGradient(128, 128, 30, 128, 128, 128);
-    gr.addColorStop(0, 'rgba(139,90,60,1)'); gr.addColorStop(.7, 'rgba(139,90,60,.9)'); gr.addColorStop(1, 'rgba(139,90,60,0)'); g.fillStyle = gr; g.fillRect(0, 0, 256, 256);
+    gr.addColorStop(0, 'rgba(238,208,160,1)'); gr.addColorStop(.8, 'rgba(226,186,130,1)'); gr.addColorStop(.97, 'rgba(206,160,104,1)'); gr.addColorStop(1, 'rgba(206,160,104,0)'); g.fillStyle = gr; g.fillRect(0, 0, 256, 256);
     const t = new THREE.CanvasTexture(cv); t.colorSpace = THREE.SRGBColorSpace;
     const ground = new THREE.Mesh(new THREE.CircleGeometry(11.5, 72), mat(0xFFFFFF, { map: t, transparent: true, depthWrite: false, roughness: 1 }));
     ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; root.add(ground); }
+  { const socle = new THREE.Mesh(new THREE.CylinderGeometry(11.35, 11.9, 1.4, 96), mat(0xC98F58, { roughness: 1 })); socle.position.y = -.72; socle.receiveShadow = true; root.add(socle); }
   { const cv = document.createElement('canvas'); cv.width = cv.height = 256; const g = cv.getContext('2d'), gr = g.createRadialGradient(128, 128, 18, 128, 128, 128);
     gr.addColorStop(0, 'rgba(10,10,12,.5)'); gr.addColorStop(1, 'rgba(10,10,12,0)'); g.fillStyle = gr; g.fillRect(0, 0, 256, 256);
     const ao = new THREE.Mesh(new THREE.PlaneGeometry(W * 1.9, D * 1.9), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(cv), transparent: true, depthWrite: false }));
