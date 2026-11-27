@@ -1255,6 +1255,43 @@ html.rm .s-maison .ho-vol,html.rm .s-maison .ho-nuages .nu,html.rm .s-maison .ho
 .so-horizon .fen{animation-duration:5.5s}
 .s-prix .socle.s2{width:122px;left:calc(50% - 61px);bottom:calc(100% + 40px)}
 
+/* ==========================================================================
+   TOUR 6 · EXPERT
+   ========================================================================== */
+/* 3 · un seul palmier de chaque côté de la maison, en miroir, chacun sur son îlot : trois socles côte à côte, qui ne se touchent pas */
+.va-ilot.va-maison{left:1580px;top:132px;width:190px}
+.va-ilot.va-palme{top:196px;width:116px}
+.va-ilot.va-palme.g{left:1450px}
+.va-ilot.va-palme.g img{transform:none}
+.va-ilot.va-palme.d{left:1784px}
+.va-ilot.va-palme.d img{transform:scaleX(-1)}
+.va-ilot.va-palme .ombre-sol{bottom:-14px;height:16px}
+
+/* 8 · pastilles comme dans l'appli : en cours = jaune qui respire ; réserve = jaune + « ! » ; plus d'icône à rayures noires */
+.s-maison .jal .hold{display:none!important}
+.s-maison .jal li.encours .jp .g,.s-maison .jal li.reserve .jp .g{filter:none;animation:pas 1.8s ease-in-out infinite}
+.s-maison .jal li.encours .jp b{color:var(--kohl);opacity:1}
+.s-maison .jal li.reserve .jp b{opacity:0}
+.s-maison .jal li.reserve .jp::after{content:"!";position:absolute;inset:0;display:grid;place-items:center;padding-bottom:4px;font:1000 26px/1 var(--font);color:var(--kohl)}
+.s-maison .jal li.encours .js i.st-wait{opacity:0!important;visibility:hidden!important}
+.s-maison .jal li.encours .js::before{content:"en cours · preuve attendue";position:absolute;left:0;top:0;font:800 24px/1.4 var(--font);color:var(--safran-c);white-space:nowrap}
+/* la pièce « DH » descend à côté du rail, jamais posée sur une pastille */
+.s-maison .jal li.coin{left:-58px;top:10px;width:38px;height:38px;font-size:14px;line-height:38px}
+
+/* 4 · la boule du fil : bien visible en salle */
+.mk-boule b{left:-30px;top:-30px;width:60px;height:60px;background:radial-gradient(circle,#FFF1CC 0 11px,#FFD27A 12px 15px,rgba(242,190,92,.45) 16px 24px,rgba(242,190,92,0) 30px)}
+.mk-boule .v{height:3px;right:22px}
+.mk-boule .v1{top:-14px;width:90px}.mk-boule .v2{top:-1px;width:150px}.mk-boule .v3{top:12px;width:70px}
+/* 11 · le boîtier du mètre ne touche plus la barre « marge brute » (12 px sous elle) */
+.s-renta .rt-outil{top:742px}
+/* 6 → 7 · le diaphragme : un calque de 2 400 px percé au centre, cerclé d'or ; seule son échelle bouge */
+.tr-iris{width:2400px;height:2400px;margin:-1200px 0 0 -1200px;border-radius:50%;background:radial-gradient(circle closest-side,rgba(0,0,0,0) 0 57px,#E0A33A 58px 60px,rgba(10,16,14,.97) 61.5px);will-change:transform}
+.tr-lueur.or{background:radial-gradient(closest-side,rgba(242,190,92,.55),rgba(224,163,58,.2) 45%,rgba(224,163,58,0))}
+/* présentateur : les chronos des orateurs ne sont plus écrasés (la classe .sp des espaces fines les réduisait à 3 px) */
+body #pv .pv-top .pv-sp{width:auto;min-width:max-content;display:flex;gap:12px;font-size:14px;letter-spacing:0;margin-left:auto;white-space:nowrap}
+#pv-next img.affiche,#pv-cur img.affiche,.pv-box img.affiche{display:block;width:100%;height:100%;object-fit:cover}
+#pv-next img.clay.affiche,.pv-box img.clay.affiche{object-fit:contain}
+
 /* ====== repris du moteur du 3 nov. ====== */
 /* repli SVG isométrique */
 .m3d-fallback .plot{fill:#6B4A34;opacity:.9}
@@ -1471,12 +1508,11 @@ body.mouse #ui-btns{opacity:1}
       </div>
       <div class="im-saisie"><i>+</i><span>iMessage</span><svg viewBox="0 0 14 20" aria-hidden="true"><rect x="4" y="1" width="6" height="11" rx="3"/><path d="M1.5 9a5.5 5.5 0 0 0 11 0M7 14.5V19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
     </div>
-    <p class="ph-tag">Scène fictive</p>
   </div>
   <ul class="pb-constats">
-    <li data-enter data-fx="tombe" data-at="4.1"><img src="assets/oral/clay/wallet.webp" alt=""><span>Les tranches partent sur demande, <b>sans preuve vérifiée</b>.</span></li>
-    <li data-enter data-fx="tombe" data-at="4.3"><img src="assets/oral/clay/etape-2.webp" alt=""><span>Une malfaçon se découvre tard, <b>une fois recouverte</b>.</span></li>
-    <li data-enter data-fx="tombe" data-at="4.5"><img src="assets/oral/clay/france.webp" alt=""><span>Sur place, le seul contrôle est souvent la famille : <b>ni experte, ni neutre</b>.</span></li>
+    <li data-enter data-fx="tombe" data-dur=".6" data-at="4.1"><img src="assets/oral/clay/wallet.webp" alt=""><span>Les tranches partent sur demande, <b>sans preuve vérifiée</b>.</span></li>
+    <li data-enter data-fx="tombe" data-dur=".6" data-at="4.3"><img src="assets/oral/clay/etape-2.webp" alt=""><span>Une malfaçon se découvre tard, <b>une fois recouverte</b>.</span></li>
+    <li data-enter data-fx="tombe" data-dur=".6" data-at="4.5"><img src="assets/oral/clay/france.webp" alt=""><span>Sur place, le seul contrôle est souvent la famille : <b>ni experte, ni neutre</b>.</span></li>
   </ul>
 
   <aside class="notes" data-orateur="David" data-duree="0:30">
@@ -1492,9 +1528,9 @@ body.mouse #ui-btns{opacity:1}
 <section class="slide w-jour s-valeur" data-scene="doors" data-part="1" data-speaker="david" data-time="0:35" data-title="Proposition de valeur" data-titre="Proposition de valeur" data-tr="portail" data-tr-x="960" data-tr-y="660">
   <div class="ciel" aria-hidden="true"><i></i><b></b></div>
   <div class="nuages-pate" aria-hidden="true"><i class="nu n1"></i><i class="nu n2"></i><i class="nu n3"></i></div>
-  <div class="va-ilot va-palme g" aria-hidden="true"><img src="assets/vitrine/chemin/decor-0.webp" alt=""></div>
-  <div class="va-ilot va-palme d" aria-hidden="true"><img src="assets/vitrine/chemin/decor-0.webp" alt=""></div>
-  <div class="va-ilot va-maison" aria-hidden="true"><img src="assets/vitrine/chemin/decor-2.webp" alt=""><i class="ombre-sol"></i></div>
+  <div class="va-ilot va-palme g" aria-hidden="true"><img src="assets/oral/clay/palmier-seul.webp" alt=""><i class="ombre-sol"></i></div>
+  <div class="va-ilot va-palme d" aria-hidden="true"><img src="assets/oral/clay/palmier-seul.webp" alt=""><i class="ombre-sol"></i></div>
+  <div class="va-ilot va-maison" aria-hidden="true"><img src="assets/oral/clay/maison.webp" alt=""><i class="ombre-sol"></i></div>
   <div class="va-head">
     <p class="kicker"><b>01</b> Proposition de valeur</p>
     <h2 class="title t-xl">L'argent suit <em>la preuve</em>.</h2>
@@ -1756,7 +1792,7 @@ body.mouse #ui-btns{opacity:1}
       <radialGradient id="g-preuve" cx=".38" cy=".32" r=".75"><stop offset="0" stop-color="#BDEBD5"/><stop offset=".55" stop-color="#3FA37F"/><stop offset="1" stop-color="#1F6B4F"/></radialGradient>
       <marker id="fl-d" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#6B6A66"/></marker>
     </defs>
-    <g class="fl" data-k="1"><path id="f-forfait" class="argent" d="M470 560 C 620 470, 700 430, 830 430" marker-end="url(#fl-a)"/><text x="560" y="452" class="lab a">Forfait : 1 500 ou 5 900 DH</text></g>
+    <g class="fl" data-k="1"><path id="f-forfait" class="argent" d="M470 560 C 620 470, 700 430, 830 430" marker-end="url(#fl-a)"/><text x="508" y="414" class="lab a">Forfait : 1 500 ou 5 900 DH</text></g>
     <g class="fl" data-k="2"><path id="f-mission" class="argent" d="M1090 400 C 1250 330, 1330 300, 1440 300" marker-end="url(#fl-a)"/><text x="1120" y="425" class="lab a">Mission · 700 DH par visite</text></g>
     <g class="fl" data-k="2"><path id="f-paie" class="argent" d="M1600 380 C 1650 480, 1650 580, 1600 660" marker-end="url(#fl-a)"/><text x="1660" y="530" class="lab a">450 DH</text></g>
     <g class="fl" data-k="3"><path id="f-declare" class="decl" d="M960 800 L 960 560" marker-end="url(#fl-d)"/><text x="985" y="690" class="lab d">Déclare l'étape</text></g>
@@ -1769,7 +1805,7 @@ body.mouse #ui-btns{opacity:1}
     <g class="nd" data-k="2" transform="translate(1600 300)"><rect x="-170" y="-110" width="340" height="220" rx="34" class="carte"/><image href="assets/oral/clay/signe-a.webp" x="-52" y="-100" width="104" height="120"/><text y="54" class="nd-t">Agence de contrôle</text><text y="84" class="nd-s">fournisseur payé par TEEQA</text></g>
     <g class="nd" data-k="2" transform="translate(1600 770)"><rect x="-170" y="-110" width="340" height="220" rx="34" class="carte"/><image href="assets/oral/clay/photo-a.webp" x="-50" y="-104" width="100" height="116"/><text y="50" class="nd-t">Contrôleur</text><text y="80" class="nd-s">anonyme pour l'entreprise</text></g>
     <g class="nd" data-k="3" transform="translate(960 900)"><rect x="-170" y="-100" width="340" height="200" rx="34" class="carte"/><image href="assets/oral/clay/macon.webp" x="-52" y="-96" width="104" height="104"/><text y="40" class="nd-t">Entreprise du BTP</text><text y="70" class="nd-s">invitée gratuitement</text></g>
-    <g class="nd" data-k="6" transform="translate(240 962)"><rect x="-184" y="-58" width="436" height="116" rx="28" class="carte pointille"/><image href="assets/oral/clay/wallet.webp" x="-166" y="-36" width="80" height="64"/><text x="20" y="-4" class="nd-t petit">Banque partenaire</text><text x="20" y="26" class="nd-s">compte au nom du client</text></g>
+    <g class="nd" data-k="6" transform="translate(240 962)"><rect x="-184" y="-58" width="472" height="116" rx="28" class="carte pointille"/><image href="assets/oral/clay/wallet.webp" x="-166" y="-36" width="80" height="64"/><text x="20" y="-4" class="nd-t petit">Banque partenaire</text><text x="20" y="26" class="nd-s">compte au nom du client</text></g>
     <g class="tok"><circle id="tok-a" r="15" class="t-a"/><circle id="tok-p" r="14" class="t-p"/><circle id="tok-d" r="10" class="t-d"/></g>
   </svg>
   <ul class="fx-leg" data-enter data-fx="fade" data-at="5.6"><li><i class="a"></i>argent</li><li><i class="p"></i>preuve</li><li><i class="d"></i>déclaration</li><li><i class="o"></i>en pointillé : facultatif</li></ul>
@@ -2075,7 +2111,7 @@ body.mouse #ui-btns{opacity:1}
 <div id="help" hidden><div class="in">
   <h2>Raccourcis</h2>
   <dl>
-    <dt>→ · Espace · Page↓</dt><dd>slide suivante (elle s’anime seule)</dd>
+    <dt>→ · Espace · Page↓</dt><dd>diapo suivante (elle s’anime seule)</dd>
     <dt>← · Page↑</dt><dd>slide précédente (état final, sans animation)</dd>
     <dt>Origine · Fin</dt><dd>première · dernière slide</dd>
     <dt>chiffres + Entrée</dt><dd>aller à la slide n (état final)</dd>
@@ -2232,9 +2268,9 @@ function fx(tl, el, at) {
     case 'glisse': return tl.fromTo(el, { autoAlpha: 0, x: +(el.dataset.dx || 600), rotation: 200 }, { autoAlpha: 1, x: 0, rotation: 0, duration: dur || 1.3, ease: 'bounce.out' }, at);
     case 'monte': return tl.fromTo(el, { autoAlpha: 0, y: 70 }, { autoAlpha: 1, y: 0, duration: dur || .8, ease: 'back.out(1.5)' }, at);
     case 'deroule': tl.set(el, { autoAlpha: 1 }, at); return tl.fromTo(el, { scaleX: 0, transformOrigin: '100% 50%' }, { scaleX: 1, duration: dur || 1.4, ease: 'power3.out' }, at);
-    case 'fant': return tl.fromTo(el, { autoAlpha: .22 }, { autoAlpha: 1, duration: dur || .45, ease: 'power1.out' }, at);
-    case 'growf': return tl.fromTo(el, { autoAlpha: .3, scaleX: .35, transformOrigin: '0% 50%' }, { autoAlpha: 1, scaleX: 1, duration: dur || .7, ease: 'teeqa.draw' }, at);
-    case 'popf': return tl.fromTo(el, { autoAlpha: .3, scale: .96, y: 8, transformOrigin: '50% 100%' }, { autoAlpha: 1, scale: 1, y: 0, duration: dur || .45 }, at);
+    case 'fant': return tl.fromTo(el, { autoAlpha: .6 }, { autoAlpha: 1, duration: dur || .45, ease: 'power1.out' }, at);
+    case 'growf': return tl.fromTo(el, { autoAlpha: .85, scaleX: .35, transformOrigin: '0% 50%' }, { autoAlpha: 1, scaleX: 1, duration: dur || .7, ease: 'teeqa.draw' }, at);
+    case 'popf': return tl.fromTo(el, { autoAlpha: .75, scale: .96, y: 8, transformOrigin: '50% 100%' }, { autoAlpha: 1, scale: 1, y: 0, duration: dur || .45 }, at);
     default: return tl.fromTo(el, { autoAlpha: 0, y: 18 }, { autoAlpha: 1, y: 0, duration: dur || .6 }, at);
   }
 }
@@ -2248,8 +2284,8 @@ function enterDefault(tl, s) {
   const k = $('.kicker', s);
   if (k && !k.hasAttribute('data-enter')) tl.fromTo(k, { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: .35 }, 0);
   const t = $('.title', s);
-  if (t) tl.fromTo(words(t), { autoAlpha: 0, y: '.32em' }, { autoAlpha: 1, y: 0, duration: .6, stagger: .04 }, .08);
-  reveal(tl, $$('[data-enter]', s), .3);
+  if (t) tl.fromTo(words(t), { autoAlpha: 0, y: '.32em' }, { autoAlpha: 1, y: 0, duration: .45, stagger: .022 }, .06);
+  reveal(tl, $$('[data-enter]', s), .18);
 }
 function stepDefault(n, tl, s) {
   $$('[data-dim-at="' + n + '"]', s).forEach(el => tl.to(el, { opacity: .5, duration: .4 }, 0));
@@ -2879,7 +2915,7 @@ DUST.start();
 const FLOOP = [['f-forfait', 'a', 1.4], ['f-mission', 'a', 1.2], ['f-paie', 'a', 1.0], ['f-declare', 'd', 1.1], ['f-preuve', 'p', 1.4], ['f-avis', 'p', 1.4], ['f-travaux', 'a', 2.0]];
 function fluxShow(tl, s, k, at) {
   const els = $$('#flux [data-k="' + k + '"]', s);
-  tl.fromTo(els, { autoAlpha: (i, e) => e.classList.contains('nd') ? .3 : 0 }, { autoAlpha: 1, duration: .45 }, at);  /* pas de y : les <g> gardent leur attribut transform */
+  tl.fromTo(els, { autoAlpha: (i, e) => e.classList.contains('nd') ? 1 : 0 }, { autoAlpha: 1, duration: .45 }, at);  /* pas de y : les <g> gardent leur attribut transform */
   els.forEach(el => $$('path', el).forEach(p => {
     const dash = p.classList.contains('decl') || p.classList.contains('option');
     if (!dash) tl.fromTo(p, { drawSVG: '0%' }, { drawSVG: '100%', duration: .9, ease: 'power1.inOut' }, at + .1);
@@ -2984,7 +3020,7 @@ const FIL = (() => {
     /* 1 : plus de trait sur l'arche (retour de Nabih : pastille et ligne au sommet de la porte retirées) */
     'Le problème': s => sous($('.pb-head .title', s), 14, true),
     'Proposition de valeur': s => $$('.va-chaine .fil', s).map(e => { const b = rect(e); return 'M' + f(b.x) + ' ' + f(b.y + b.h / 2) + 'H' + f(b.x + b.w); }).join(''),
-    'Marché · données secondaires': s => cadre($('.mk-stats .grand', s), 9, 34),
+    'Marché · données secondaires': s => { const g = $('.mk-stats .grand', s); if (!g) return ''; const t0 = g.style.transform, o0 = g.style.translate; g.style.transform = 'none'; g.style.translate = 'none'; const d = cadre(g, 9, 34); g.style.transform = t0; g.style.translate = o0; return d; },
     'Étude primaire': s => { const z = $('.pr-prix .zone', s); if (!z) return ''; const b = rect(z); return 'M' + f(b.x + b.w - 6) + ' ' + f(b.y + b.h / 2) + 'H' + f(b.x + 30); },
     'Concurrence · benchmark': s => cadre($('.bn tr.nous', s), 8, 32),
     'Différenciation': s => cadre($('.df-decision', s), 10, 38),
@@ -3006,7 +3042,8 @@ const FIL = (() => {
     'Sources': s => sous($('.title', s), 12, true)
   };
   /* le tracé attend que la chose à prouver soit posée */
-  const ATT = { 'Marché · données secondaires': 1.5, 'Proposition de valeur': 4.3, 'Étude primaire': 4.7, 'Concurrence · benchmark': 3.2, 'Rentabilité des visites': 4.3, 'Conclusion': 4.4, "Rôle de l'agence": 3.4, 'Business model · les flux': 1.3, 'Maquettage et UX': 2.2 };
+  const ATT = { 'Marché · données secondaires': 1.0, 'Proposition de valeur': 2.6, 'Étude primaire': 2.6, 'Concurrence · benchmark': 2.4, 'Rentabilité des visites': 2.6, 'Conclusion': 2.8, "Rôle de l'agence": 2.4, 'Business model · les flux': 1.3, 'Maquettage et UX': 2.0 };
+  const SANS_ATTENTE = { 'Marché · données secondaires': 1 };   /* tour 6 : la boule de la 4 n'attend pas la fin des chiffres */
   function trace(s) { const g = T[s.dataset.titre]; try { return g ? g(s) : ''; } catch (e) { return ''; } }
   function point(d, a) { mesure.setAttribute('d', d); const L = mesure.getTotalLength(); const p = mesure.getPointAtLength(a ? L : 0); return [p.x, p.y]; }
   function stop() { tws.forEach(t => t.kill()); tws = []; }
@@ -3022,7 +3059,7 @@ const FIL = (() => {
     const pret = () => !trans && !(running && running.isActive()) && !gsap.isTweening(s);
     tws.push(gsap.delayedCall(anime ? (ATT[s.dataset.titre] || 2.2) : .05, function mesure() {
       if (my !== tok) return;
-      if (anime && !pret() && essais++ < 30) { tws.push(gsap.delayedCall(.2, mesure)); return; }
+      if (anime && !SANS_ATTENTE[s.dataset.titre] && !pret() && essais++ < 30) { tws.push(gsap.delayedCall(.2, mesure)); return; }
       const d = trace(s);
       if (!d) { fin = null; return; }
       tr.setAttribute('d', d); lu.setAttribute('d', d);
@@ -3049,7 +3086,7 @@ const FIL = (() => {
 SC.flux.enter = function (tl, s) {
   enterDefault(tl, s);
   tl.set($$('#flux .fl', s), { autoAlpha: 0 }, 0);
-  tl.set($$('#flux .nd', s), { autoAlpha: .3 }, 0);
+  tl.set($$('#flux .nd', s), { autoAlpha: 1 }, 0);   /* tour 6 : acteurs pleins dès l'arrivée, seuls les flux attendent les clics */
   fluxShow(tl, s, 0, .2);
   tl.fromTo($('#flux .coeur', s), { scale: 1.4, transformOrigin: '50% 50%' }, { scale: 1, duration: .5, ease: 'teeqa.seal' }, .3);
 };
@@ -3866,8 +3903,8 @@ TR.feuille = function (tl, o, n) {
   enCalque([n, om], true);
   gsap.set(n, { zIndex: 3, y: -1100, rotation: -1.5, transformOrigin: '30% 0%' });
   gsap.set(om, { y: -60, autoAlpha: .9 });
-  tl.to(n, { y: 0, duration: .9, ease: 'power3.inOut' }, 0)
-    .to(om, { y: 1060, duration: .9, ease: 'power3.inOut' }, 0)
+  tl.to(n, { y: 0, duration: .95, ease: 'power2.out' }, 0)          /* tour 6 : la feuille part dès l'appui (plus de temps mort) */
+    .to(om, { y: 1060, duration: .95, ease: 'power2.out' }, 0)
     .to(n, { rotation: 0, duration: .9, ease: 'back.out(1.6)' }, .2)
     .to(om, { autoAlpha: 0, duration: .25 }, .8)
     .add(() => enCalque([n, om], false), 1.4);
@@ -3973,9 +4010,9 @@ var ARRIVEE = {
     const V = $$('.v', b), x0 = 1440, y0 = 560, x1 = 1062, y1 = 470, xa = deb[0] - 40, ya = 300;   /* la boule passe AU-DESSUS du bandeau (entre le titre et lui), puis retombe le long de son bord gauche */
     tl.set(b, { x: x0, y: y0, scale: .5, rotation: 0, autoAlpha: 1 })
       .set(V, { autoAlpha: 0, scaleX: .3 })
-      .to(b, { x: x1, y: y1, scale: 1, duration: .32, ease: 'power2.in' })                         /* encore cachée derrière la carte */
+      .to(b, { x: x1, y: y1, scale: 1, duration: .3, ease: 'power2.in' })                         /* encore cachée derrière la carte */
       .to(b, { motionPath: { path: [{ x: x1, y: y1 }, { x: 1012, y: 300 }, { x: 560, y: 276 }, { x: xa, y: ya }], curviness: 1, autoRotate: true },
-        scaleX: 1.75, scaleY: .62, duration: .42, ease: 'power2.inOut' })
+        scaleX: 1.6, scaleY: .7, duration: .62, ease: 'power2.inOut' })
       .to(V, { autoAlpha: .6, scaleX: 1, duration: .1, stagger: .03 }, '<')
       .to(V, { autoAlpha: 0, scaleX: .2, duration: .12 }, '>-.12')
       .to(b, { rotation: 0, scaleX: 1, scaleY: 1, duration: .1, ease: 'power1.out' }, '<')
@@ -4000,12 +4037,15 @@ SC.df.loop = function (s) {
     const pc = document.createElement('i'); pc.className = 'polaroid';
     pc.style.setProperty('--ph', 'url("assets/photos/' + DF_PHOTOS[n % DF_PHOTOS.length] + '.webp")');
     pile.appendChild(pc);
-    const slot = n++ % 3;
-    gsap.fromTo(pc, { x: 1310 - 110 - 75, y: 450 - 842 - 85, scale: .2, rotation: 0, autoAlpha: 0 },
-      { x: 20 + slot * 175, y: 12 + (slot % 2) * 10, scale: 1, rotation: gsap.utils.random(-11, 11), autoAlpha: 1, duration: 1.2, ease: 'power3.out', delay: .16 });
+    const slot = n++ % 3, F = rectScene(f), fx0 = F.x + F.w / 2 - 110 - 75, fy0 = F.y + F.h / 2 - 842 - 85;
+    /* tour 6 : il sort du flash (donc du téléphone), descend côté photo (x > 760) jusque sous la liste, puis file à gauche :
+       il ne passe jamais sur le texte */
+    gsap.timeline({ delay: .14 })
+      .fromTo(pc, { x: fx0, y: fy0, scale: .2, rotation: 0, autoAlpha: 0 }, { x: 945, y: 110, scale: .8, rotation: 8, autoAlpha: 1, duration: .62, ease: 'power2.in' })
+      .to(pc, { x: 20 + slot * 175, y: 12 + (slot % 2) * 10, scale: 1, rotation: gsap.utils.random(-11, 11), duration: .8, ease: 'power3.out' });
     const L = pile.children;
     if (L.length > 3) { const v = L[0]; gsap.to(v, { autoAlpha: 0, y: '+=40', duration: .5, onComplete: () => v.parentNode && v.parentNode.removeChild(v) }); }
-    gsap.delayedCall(5.5, cyc);
+    gsap.delayedCall(4, cyc);
   };
   cyc();
 };
@@ -4029,6 +4069,153 @@ if (SC.house && SC.house.leave) {
     }, 1600);
   };
 }
+
+/* ==========================================================================
+   TOUR 6 · EXPERT
+   ========================================================================== */
+/* une seule barre de chapitres et un seul pied de page à la fois : ceux de la diapo qui part s'effacent tout de suite,
+   ceux de la diapo qui arrive apparaissent quand elle est posée (plus de « MODÈLE » écrit deux fois, ni « 9/16 » sur « 10/16 ») */
+const titreSort5 = titreSort;
+titreSort = function (tl, o, n) {
+  const ch = $$(':scope > .hud, :scope > .pied', o), cn = $$(':scope > .hud, :scope > .pied', n);
+  if (ch.length) tl.to(ch, { autoAlpha: 0, duration: .12, ease: 'power1.in' }, 0);
+  if (cn.length) { gsap.set(cn, { autoAlpha: 0 }); tl.to(cn, { autoAlpha: 1, duration: .3, ease: 'power1.out' }, Math.min(.9, Math.max(.45, tl.duration() - .5))); }
+  tl.add(() => gsap.set(ch, { clearProps: 'opacity,visibility' }), Math.max(.25, tl.duration()));
+  titreSort5(tl, o, n);
+};
+
+/* horloge de lecture : tout ce qui se lit est plein au plus tard ~1,2 s après l'arrivée. Les entrées de chaque diapo sont
+   resserrées dans le même ordre (la décoration garde son rythme relatif). Les diapos pas à pas (8, 9) ne changent pas. */
+(() => {
+  const CIBLE = .7, T0 = .15;
+  slides.forEach(s => {
+    if (/s-(porte|maison|flux)\b/.test(s.className)) return;
+    const els = $$('[data-enter][data-at]', s); if (!els.length) return;
+    const txt = els.filter(e => (e.textContent || '').trim().length > 1);
+    const A = Math.max(0, ...txt.map(e => +e.dataset.at || 0)); if (A <= CIBLE) return;
+    const r = (CIBLE - T0) / (A - T0);
+    els.forEach(e => { const a = +e.dataset.at || 0; if (a > T0) e.dataset.at = (T0 + (a - T0) * r).toFixed(3);
+      const d = +e.dataset.dur || 0; if (d > .5) e.dataset.dur = Math.max(.4, d * Math.max(r, .5)).toFixed(2); });
+  });
+})();
+
+/* 3 · les portes s'ouvrent plus tôt (la bande du bas est lisible à ~1,2 s) */
+SC.doors.enter = function (tl, s) {
+  enterDefault(tl, s);
+  const ds = $$('.qdoor', s);
+  ds.forEach(d => d.classList.add('shut'));
+  [1, 0, 2].forEach((i, r) => { const d = ds[i]; if (!d) return;
+    tl.add(() => d.classList.remove('shut'), .2 + r * .12);
+    const im = $('.qd-in img', d); if (im) tl.fromTo(im, { rotation: -7, y: 14 }, { rotation: 0, y: 0, duration: 1.1, ease: 'elastic.out(1, .45)', clearProps: 'transform' }, .35 + r * .12);
+  });
+};
+
+/* 11 → 12 : l'arche safran (sans texte) vole se poser à la place de l'arche de l'agence ; la vraie arche, avec son texte,
+   prend sa place dans la même image. Plus de découpe de la diapo entière, plus jamais le texte écrit deux fois. */
+TR.partage = function (tl, o, n) {
+  const ag = $('.ag-arche', n), a = trEl('arche');
+  gsap.set(a, { x: 540, y: -120, scale: .1, transformOrigin: '50% 50%', force3D: true });
+  if (ag) gsap.set(ag, { autoAlpha: 0 });
+  gsap.set(n, { autoAlpha: 0, zIndex: 3 });
+  tl.to(a, { x: 0, y: 0, scale: 1, duration: 1.05, ease: 'power3.inOut' }, 0)
+    .to(o, { autoAlpha: 0, duration: .4, ease: 'power1.in' }, .05)
+    .to(n, { autoAlpha: 1, duration: .5, ease: 'power1.out' }, .3);
+  if (ag) tl.set(ag, { autoAlpha: 1 }, 1.05);
+  tl.to(a, { autoAlpha: 0, duration: .18 }, 1.05);
+  reflet(tl, 420, 600, 1.0, .5);
+  return .45;
+};
+
+/* 6 → 7 : l'objectif. Une seule couche composée (un diaphragme sombre percé, cerclé d'or) se referme sur le tableau puis se
+   rouvre sur la photo de chantier ; seules sa taille et son opacité bougent. La 6 n'est plus ni découpée ni réduite. */
+TR.objectif = function (tl, o, n) {
+  const x = +(n.dataset.trX || 1330), y = +(n.dataset.trY || 700), H = { h: 1750 };
+  const v = trSvg('<circle fill="none" stroke="rgba(10,16,14,.96)" stroke-width="4000"/><circle fill="none" stroke="#E0A33A" stroke-width="5"/>');
+  const [noir, or] = v.children; [noir, or].forEach(c => { c.setAttribute('cx', x); c.setAttribute('cy', y); });
+  const up = () => { noir.setAttribute('r', (H.h + 2000).toFixed(1)); or.setAttribute('r', H.h.toFixed(1)); }; up();
+  const glow = trEl('lueur', { left: x + 'px', top: y + 'px' });
+  gsap.set(glow, { autoAlpha: 0, scale: .3 });
+  gsap.set(o, { zIndex: 3 }); gsap.set(n, { zIndex: 2, autoAlpha: 1 });
+  tl.to(H, { h: 120, duration: .55, ease: 'power2.in', onUpdate: up }, 0)
+    .set(o, { autoAlpha: 0 }, .56)
+    .to(glow, { autoAlpha: .6, scale: 1, duration: .08, ease: 'power2.out' }, .55)
+    .to(glow, { autoAlpha: 0, scale: 1.6, duration: .5, ease: 'power2.out' }, .63)
+    .to(H, { h: 1750, duration: .8, ease: 'power3.out', onUpdate: up }, .62)
+    .to(v, { autoAlpha: 0, duration: .25 }, 1.2);
+  return .55;
+};
+
+/* une lumière douce qui s'ouvre là où l'objet se pose (calque de 900 px, opacité et échelle seulement) : la fin d'une
+   transition respire au lieu de se figer */
+function reflet(tl, x, y, t0, fort, or) {
+  const g = trEl('lueur', { left: x + 'px', top: y + 'px' }); if (or) g.classList.add('or');
+  gsap.set(g, { autoAlpha: 0, scale: .5, force3D: true });
+  tl.to(g, { autoAlpha: fort || .45, scale: 1, duration: .3, ease: 'power2.out' }, t0)
+    .to(g, { autoAlpha: 0, scale: 1.9, duration: .85, ease: 'power1.out' }, t0 + .3);
+  return g;
+}
+
+/* 8 → 9 : la maison s'efface (opacité seule : plus de découpe ni de réduction de la diapo entière, qui gelait 0,25 s) ;
+   l'anneau doré se referme en glissant jusqu'au cœur TEEQA du schéma, qui est déjà là dessous. */
+TR.monte = function (tl, o, n) {
+  const hx = 1330, hy = 600, tx = +(n.dataset.trX || 960), ty = +(n.dataset.trY || 470), P = { m: 0, r: 1150 };
+  const v = trSvg('<circle fill="none" stroke="#E0A33A" stroke-width="7"/><circle fill="none" stroke="rgba(242,190,92,.35)" stroke-width="22"/>');
+  const c = [...v.children];
+  const upd = () => { const x = hx + (tx - hx) * P.m, y = hy + (ty - hy) * P.m; c.forEach(e => { e.setAttribute('cx', x.toFixed(1)); e.setAttribute('cy', y.toFixed(1)); e.setAttribute('r', P.r.toFixed(1)); }); };
+  upd();
+  gsap.set(o, { zIndex: 3 }); gsap.set(n, { zIndex: 2, autoAlpha: 0 });
+  tl.to(o, { autoAlpha: 0, duration: .4, ease: 'power1.in' }, 0)
+    .to(n, { autoAlpha: 1, duration: .45, ease: 'power1.out' }, .34)
+    .fromTo(v, { autoAlpha: 0 }, { autoAlpha: 1, duration: .1 }, 0)
+    .to(P, { m: 1, r: 122, duration: 1.55, ease: 'sine.inOut', onUpdate: upd }, 0)
+    .to(P, { r: 190, duration: .5, ease: 'power2.out', onUpdate: upd }, 1.55)
+    .to(v, { autoAlpha: 0, duration: .5 }, 1.55);
+  reflet(tl, tx, ty, 1.2, .9, true);
+  return .45;
+};
+
+/* 10 → 11 : le mètre part tout de suite et emporte la 10 sans attendre (plus de départ mou) */
+TR.pousse = function (tl, o, n) {
+  const r = trEl('ruban');
+  gsap.set(r, { scaleX: 0 });
+  gsap.set(n, { zIndex: 3, x: 1920 });
+  enCalque([o, n], true);
+  tl.to(r, { scaleX: 1, duration: .36, ease: 'power3.out' }, 0)
+    .to(o, { x: -1920, duration: 1.05, ease: 'power2.inOut' }, .06)
+    .to(n, { x: 0, duration: 1.05, ease: 'power2.inOut' }, .06)
+    .to(r, { scaleX: 0, duration: .55, ease: 'power3.in' }, .5)
+    .add(() => enCalque([o, n], false), 1.12);
+  return .6;
+};
+
+/* 14 → 15 et 15 → 16 : la fin d'une transition respire (une lumière s'ouvre là où l'arche, la lune se posent) */
+const porte6 = TR.porte;
+TR.porte = function (tl, o, n) {
+  const at = porte6(tl, o, n);
+  if (n.classList.contains('s-fin')) reflet(tl, +(n.dataset.trX || 1440), +(n.dataset.trY || 600), 1.0, .45);
+  return at;
+};
+const nuit6 = TR.nuit;
+TR.nuit = function (tl, o, n) {
+  const at = nuit6(tl, o, n), l = $('.so-lune', n);
+  if (l) { const r = rectScene(l); reflet(tl, r.x + r.w / 2, r.y + r.h / 2, 1.1, .55); }
+  return at;
+};
+
+/* 8 · logique de l'appli : la première étape pas encore validée est « en cours » (jaune) ; si elle a une réserve, jaune avec « ! » */
+(() => {
+  const s8 = $('.s-maison'); if (!s8) return;
+  const L = $$('.jal li[data-j]', s8), vu = e => !!e && +(e.style.opacity || 0) > .5;
+  setInterval(() => {
+    if (!s8.classList.contains('is-active') && !s8.classList.contains('is-leaving')) return;
+    let trouve = false;
+    L.forEach(li => {
+      const done = vu($('.st-done', li)), held = vu($('.st-held', li));
+      const ici = !trouve && !done; if (ici) trouve = true;
+      li.classList.toggle('encours', ici && !held); li.classList.toggle('reserve', ici && held);
+    });
+  }, 120);
+})();
 
 function transition(from, to, k) {
   const o = slides[from], n = slides[to];
@@ -4131,6 +4318,7 @@ function staticClone(i) {
   const c = pristine[i].cloneNode(true);
   c.classList.add('is-static', 'is-active');
   $$('[id]', c).forEach(e => e.removeAttribute('id'));
+  $$('video', c).forEach(v => { const p = v.getAttribute('poster'); if (!p) return; const im = document.createElement('img'); im.src = p; im.alt = ''; im.className = v.className + ' affiche'; v.replaceWith(im); });
   $$('.notes, canvas, video, .hud', c).forEach(e => e.remove());
   return c;
 }
@@ -4207,15 +4395,15 @@ function refreshPresenter() {
   const now = $('p.now', box); if (now) now.scrollIntoView({ block: 'nearest' });
   const nb = $('#pv-next'), lab = $('#pv-next-label'), nc = $('#pv-nextclic');
   if (k < max) {
-    lab.textContent = 'Prochain clic : étape ' + (k + 1) + ' / ' + max + ' (aperçu : slide complète)';
+    lab.textContent = 'Prochain clic : étape ' + (k + 1) + ' / ' + max + ' (aperçu : diapo complète)';
     const p = notes && $('p[data-at="' + (k + 1) + '"]', notes); nc.textContent = p ? p.textContent.trim() : '';
     previewBox(nb, cur);
   } else if (cur < N - 1) {
     const sn = slides[cur + 1];
-    lab.textContent = 'Slide suivante : ' + (cur + 2) + ' · ' + (sn.dataset.title || '') + ' · ' + (SPEAKERS[sn.dataset.speaker] || '');
+    lab.textContent = 'Diapo suivante : ' + (cur + 2) + ' · ' + (sn.dataset.title || '') + ' · ' + (SPEAKERS[sn.dataset.speaker] || '');
     const p = $('.notes p[data-at="0"]', sn); nc.textContent = p ? p.textContent.trim() : '';
     previewBox(nb, cur + 1);
-  } else { lab.textContent = 'Dernière slide'; nc.textContent = ''; previewBox(nb, null); }
+  } else { lab.textContent = 'Dernière diapo'; nc.textContent = ''; previewBox(nb, null); }
 }
 function setupPresenter() {
   document.body.classList.add('presenter');
@@ -4774,7 +4962,7 @@ function buildMap(host, slide, onFail) {
   return {
     enter(anim) {
       gsap.killTweensOf(st);
-      if (anim) gsap.fromTo(st, { r: 0 }, { r: 1, duration: 2.4, ease: 'none', onUpdate: setR });
+      if (anim) gsap.fromTo(st, { r: 0 }, { r: 1, duration: 1.3, ease: 'none', onUpdate: setR });
       else { st.r = 1; setR(); }
       loop.kick(RM ? 3000 : 600000);
     },
