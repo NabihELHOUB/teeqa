@@ -596,7 +596,7 @@ function touche(e) {
   else if (!dehors && /^[hH]$/.test(e.key)) guide($('#guide').classList.contains('cache'));
   else if (!dehors && /^[fF]$/.test(e.key)) { if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen().catch(() => {}); }
   else if (!dehors && e.key === 'Home') aller(0);
-  else if (!dehors && /^[oO]$/.test(e.key)) location.href = 'oral-1-dec.html#14';   // retour à la diapo de conclusion
+  else if (!dehors && /^[oO]$/.test(e.key)) location.href = 'oral-1-dec.html#15';   // retour à la diapo de conclusion
 }
 addEventListener('keydown', touche);
 function relayerTouches(w) { try { w.addEventListener('keydown', touche); } catch { /* autre origine */ } }
