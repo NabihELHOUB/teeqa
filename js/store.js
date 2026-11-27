@@ -9,6 +9,7 @@ export const SALLE = (() => { try { return /[?&]salle\b/.test(location.search); 
 // chantier par le stockage du navigateur, sans serveur (événement « storage »). Chacun garde son rôle et sa session sous sa clé.
 export const ORAL = (() => { try { return !SALLE && /[?&]oral\b/.test(location.search); } catch { return false; } })();
 const ORAL_ROLE = ORAL ? (new URLSearchParams(location.search).get('role') || 'client') : null;
+export const ORAL_INSCRIPTION = ORAL && ORAL_ROLE === 'client' && /[?&]inscription\b/.test(location.search);
 const KEY = SALLE ? 'teeqa-salle-v1' : ORAL ? 'teeqa-oral-' + ORAL_ROLE : /[?&]vitrine\b/.test(location.search) ? 'teeqa-vitrine-v2' : 'teeqa-demo-v2';
 // Dans la salle, chaque onglet est un téléphone à part (on peut répéter la démo à trois onglets sur un seul ordinateur).
 const STOCK = (() => { try { return SALLE ? sessionStorage : localStorage; } catch { return null; } })();
@@ -817,7 +818,10 @@ function oralPousser() { const r = oralLire(); salleV = Math.max(salleV, (r && r
   try { localStorage.setItem(ORAL_KEY, JSON.stringify({ v: salleV, doc: partage() })); } catch { /* stockage plein */ } }
 function oralCharger() {
   if (ROLES[ORAL_ROLE]) state.role = ORAL_ROLE;
-  Object.assign(state.session, { splashSeen: true, onboarded: true, loggedIn: true });
+  // 27 nov. (Nabih) : avec « &inscription », le client n'a pas encore de compte : il découvre l'appli (accueil, présentation)
+  // et crée son compte devant le jury. Tant qu'aucun compte n'est enregistré, il repart de l'accueil.
+  if (ORAL_INSCRIPTION && !state.account) { Object.assign(state.session, { splashSeen: true, onboarded: false, loggedIn: false }); state.prefs = { ...state.prefs, voixDemandee: true }; }
+  else Object.assign(state.session, { splashSeen: true, onboarded: true, loggedIn: true });
   const r = oralLire();
   if (r && r.doc) { for (const k of PARTAGE) if (k in r.doc) state[k] = r.doc[k]; salleV = r.v || 0; } else oralPousser();
   save();

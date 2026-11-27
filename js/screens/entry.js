@@ -1,5 +1,5 @@
 // Ouverture, première visite, connexion — DA : on entre dans le chantier par une porte.
-import { save, actions, get, reset, ROLES, TEMPLATE_STEPS, TARIFS, dh, PAYS, enDeviseTxt } from '../store.js';
+import { save, actions, get, reset, ROLES, TEMPLATE_STEPS, TARIFS, dh, PAYS, enDeviseTxt, ORAL_INSCRIPTION } from '../store.js';
 // Vague 21 (diaspora) : dès l'accueil, le prix dans la monnaie du pays du téléphone (euros en France, francs en Suisse), avant toute inscription.
 const deviseTel = () => { try { const tz = Intl.DateTimeFormat().resolvedOptions().timeZone; const k = Object.keys(PAYS).find((c) => PAYS[c].tz === tz); return k ? PAYS[k].devise : null; } catch { return null; } };
 // Vague 26 (jury n° 1, GPT 9 et 10) : avant le choix du pays, les prix restent en dirhams ; la devise vient après l'inscription.
@@ -317,6 +317,9 @@ const DOOR_TEXT = { client: 'Je suis mon chantier, sur place ou à distance', en
 // votre chantier (le client peut le poser tout de suite), puis « compte prêt ». Rien n'est envoyé nulle part : tout reste dans le navigateur.
 let su = null;
 const suNew = () => ({ step: 0, from: 0, role: '', name: '', email: '', has: '', pname: '', city: '', pays: '' });
+// Soutenance (demo-oral.html, 27 nov.) : devant le jury, on touche, on ne tape pas : prénom, pays et téléphone de Karim
+// sont déjà saisis (comme le remplissage automatique du téléphone) ; le rôle se choisit au doigt.
+const suNewOral = () => ({ ...suNew(), name: 'Karim', pays: 'FR', tel: '+33 6 12 48 57 30' });
 const SU_N = 4;
 const suMail = (m) => !m.trim() || /.+@.+\..+/.test(m.trim());
 const suValid = (d) => d.step === 0 ? !!d.role : d.step === 1 ? d.name.trim().length > 1 && suMail(d.email) && (d.role !== 'client' || !!d.pays)
@@ -372,7 +375,7 @@ function suCode(d) {
   d.code = String(1000 + Math.floor(Math.random() * 9000)); const tel = String(d.tel || '').replace(/\D/g, '').length >= 9, dest = tel ? esc(String(d.tel).trim()) : esc(d.email.trim());
   openSheet(`<h2>Code de vérification</h2><p class="muted small" style="margin:4px 0 12px">Envoyé ${tel ? 'par SMS au' : 'par e-mail à'} <b>${dest}</b>. Il vérifie que ce ${tel ? 'numéro' : 'courriel'} est bien le vôtre ; les invitations qui l'attendent se rattachent à votre compte.</p>
     <div class="notice" data-testid="su-code-sms" data-code="${d.code}">${icon('message', 'sm')}<span><b>${tel ? 'SMS' : 'E-mail'} · TEEQA</b><br>Votre code TEEQA : <b class="mono">${d.code}</b>. Il expire dans 10 minutes. Ne le donnez à personne.</span></div>
-    <div class="field" style="margin-top:12px"><label for="su-code-in">Code reçu (4 chiffres)</label><input id="su-code-in" class="input mono" data-testid="su-code" inputmode="numeric" maxlength="4" autocomplete="one-time-code" placeholder="• • • •"></div>
+    <div class="field" style="margin-top:12px"><label for="su-code-in">Code reçu (4 chiffres)</label><input id="su-code-in" class="input mono" data-testid="su-code" inputmode="numeric" maxlength="4" autocomplete="one-time-code" placeholder="• • • •"${ORAL_INSCRIPTION ? ` value="${d.code}"` : ''}></div>
     <p class="meta" data-testid="su-code-err" aria-live="polite" style="color:var(--danger-ink);min-height:1em"></p>
     <div class="stack" style="gap:8px"><button class="btn success block" data-act="su-code-ok" data-testid="su-code-ok">Vérifier</button><button class="btn text block" data-act="su-code-again">Renvoyer le code</button></div>`, { label: 'Code de vérification' });
 }
@@ -394,7 +397,7 @@ export const routes = [
   {
     name: 'signup', pattern: /^\/signup$/,
     render() {
-      const d = su || (su = suNew()), last = d.step === SU_N - 1, [hi, ask] = suAsk(d);
+      const d = su || (su = ORAL_INSCRIPTION ? suNewOral() : suNew()), last = d.step === SU_N - 1, [hi, ask] = suAsk(d);
       const fwd = d.step >= d.from, moved = d.step !== d.from, from = d.from; d.from = d.step;
       const redraw = () => { const ae = document.activeElement; if (ae && ae.blur && /INPUT|TEXTAREA/.test(ae.tagName)) ae.blur(); actions.session({}); };   // un champ actif bloque le redessin (voir refresh dans app.js)
       const setStep = (n) => { d.step = n; sfx('pop'); redraw(); };

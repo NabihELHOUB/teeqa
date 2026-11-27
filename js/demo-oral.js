@@ -4,8 +4,8 @@
 //   5 Obtenir : l'anneau se remplit, puis « Ouvrir » · 6 Ouvrir : trois téléphones (la vraie appli) et le fil conducteur.
 // Le fil du réseau social reprend des gestes et une mise en page génériques : aucun logo, aucun nom, aucune couleur d'une autre marque.
 // Les trois téléphones chargent index.html?oral&role=… : le chantier passe de l'un à l'autre par le stockage du navigateur
-// (crochet ORAL de js/store.js). Au premier chargement (ou après « Tout remettre à zéro »), l'étape 4 de Villa Nador est
-// préparée « en cours » par les actions de l'appli, pour que l'entreprise déclare la fin devant le jury.
+// (crochet ORAL de js/store.js). Au premier chargement (ou après « Tout remettre à zéro »), Karim n'a pas encore de compte :
+// son téléphone s'ouvre sur l'accueil de l'appli, il crée son compte, puis son chantier. L'entreprise et le contrôleur attendent.
 import { bellarejRig } from './bellarej-rig.js';
 
 const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -330,6 +330,8 @@ async function sortir(els) {
 
 function LANCE_HTML() { return `<div class="lance"><img src="${ICONE}" alt=""><b>TEEQA</b></div>`; }
 // ---------- acte 2 : trois téléphones ----------
+// 27 nov. (retour de Nabih) : avant tout, Karim découvre l'appli et crée son compte (accueil, présentation, inscription,
+// code par SMS) ; l'entreprise et le contrôleur, déjà inscrits, n'ont encore aucun chantier.
 // 26 nov. (retour de Nabih) : l'histoire commence par le client, sur un chantier vide. Acte A : il crée le chantier et
 // invite l'entreprise, convention acceptée des deux côtés, forfait payé. « Trois mois plus tard » fait le saut dans le
 // temps (fondations, murs et dalle faits, vérifiés, payés). Acte B : une étape contrôlée, de la fin déclarée au paiement.
@@ -342,14 +344,14 @@ $('#trio').innerHTML = ROLES3.map(([r, t, q, c]) => `<div class="place" data-rol
   <div class="etiquette"><i></i>${t}<small>${q}</small></div>
   <div class="cadre"><iframe data-role="${r}" title="TEEQA · ${t}" tabindex="-1"></iframe>${LANCE_HTML()}</div></div>`).join('');
 const cadre = (r) => $(`.place[data-role="${r}"] .cadre`), fen = (r) => $(`iframe[data-role="${r}"]`);
-const urlRole = (r) => `index.html?oral&direct&role=${r}#/home`;
+const urlRole = (r) => `index.html?oral&direct&role=${r}${r === 'client' ? '&inscription' : ''}#/home`;   // le client arrive sans compte
 async function attendreAppli(r, ms = 60000) {
   const t0 = Date.now();
   for (;;) { const w = fen(r).contentWindow; try { if (w && w.__teeqa && w.__teeqa.get()) return w; } catch { /* chargement */ } if (Date.now() - t0 > ms) throw new Error('appli ' + r); await dort(120); }
 }
 function brancher(r, w) {
   // Devant le jury, rien qui casse la scène : ni « Changer de vue », ni le chantier d'exemple, ni les outils de présentation.
-  try { const st = w.document.createElement('style'); st.textContent = '[data-act="role-sheet"], [data-act="exemple"], [data-testid="voir-exemple"], [data-testid="voir-exemple"] + p, [data-testid="presentation-tools"] { display: none !important; }'; w.document.head.appendChild(st); } catch { /* autre origine */ }
+  try { const st = w.document.createElement('style'); st.textContent = '[data-act="role-sheet"], [data-act="exemple"], [data-testid="voir-exemple"], [data-testid="voir-exemple"] + p, [data-testid="land-exemple"], [data-testid="presentation-tools"] { display: none !important; }'; w.document.head.appendChild(st); } catch { /* autre origine */ }
   w.addEventListener('teeqa-salle-notif', (e) => bandeau(r, e.detail));
   // Dans un cadre, le navigateur ne prête pas la webcam : la caméra de l'appli s'ouvre directement (pas de demande à l'écran).
   if (r !== 'client') try { if (!w.__teeqa.get().drafts.camPerm) w.__teeqa.actions.setDraft('camPerm', 'simulee'); } catch { /* ancien état */ }
@@ -379,6 +381,14 @@ function preremplir(w) {
     quote: { name: 'Devis-Rachid-BTP-2026-118.pdf', size: 48213 } }); } catch { /* ancien état */ }
 }
 
+// Inscription sautée (bouton « Deux mois plus tard » touché trop tôt) : le compte de Karim est créé comme l'aurait fait
+// « Créer mon compte ». Rend la clé du propriétaire (e-mail, sinon prénom), celle que « Mes chantiers » du client attend.
+async function compteClient() {
+  try { const wc = fen('client').contentWindow, C = await wc.eval("import('/js/store.js')");
+    if (!C.get().account) { C.actions.setAccount({ role: 'client', name: 'Karim', email: '', tel: '+33 6 12 48 57 30', verifiedAt: new Date().toISOString() });
+      C.actions.pref({ pays: 'FR', ville: '', villePays: '', pourParents: false }); C.actions.session({ loggedIn: true, onboarded: true, splashSeen: true }); }
+    const a = C.get().account; return a.email || a.name; } catch { return null; }
+}
 // « Deux mois plus tard » : la préparation recule de 75 jours ; étapes 1 et 2 faites, contrôlées, payées ;
 // la dalle (étape 3, contrôlée) a commencé il y a deux jours. Fait par les actions de l'appli, comme tests/e2e.mjs.
 async function avancer() {
@@ -386,8 +396,10 @@ async function avancer() {
   const S = await w.eval("import('/js/store.js')"), A = S.actions, sig = [[[20, 60], [120, 40], [220, 70], [300, 52]]];
   const J = 864e5, base = Date.now(), RECUL = 75 * J;
   let p = projetDemo(S.get());
-  if (!p) {   // l'acte A a été sauté : on crée le chantier comme l'aurait fait le client
+  if (!p) {   // l'acte A a été sauté : on crée le compte de Karim et le chantier comme il l'aurait fait
+    const proprio = await compteClient();
     const id = A.createProject({ name: 'Villa Nador', city: 'Nador', steps: [...S.TEMPLATE_STEPS], email: 'contact@rachid-btp.ma', controls: 4, prep: { type: 'neuf', address: 'Lotissement Al Matar, lot 14', quote: { name: 'Devis-Rachid-BTP-2026-118.pdf', size: 48213 } } });
+    if (proprio) S.commit(() => { S.project(id).owner = proprio; });   // le chantier est celui du compte de Karim
     p = S.project(id);
   }
   const PID = p.id;
@@ -442,6 +454,8 @@ async function avancer() {
 let trioPret = null;
 function demarrerTrio({ neuf = false } = {}) {
   return trioPret = (async () => {
+    // Un chantier gardé sans compte client vient d'une répétition d'avant le 27 nov. (le client était déjà inscrit) : on repart de zéro.
+    if (!neuf && projetDemo(lireDoc())) { let c = null; try { c = JSON.parse(localStorage.getItem('teeqa-oral-client') || 'null'); } catch { /* illisible */ } if (!(c && c.account)) neuf = true; }
     if (neuf) { for (const r of ['client', 'controleur', 'entreprise']) fen(r).src = 'about:blank'; await dort(120);
       for (const k of Object.keys(localStorage)) if (k.startsWith('teeqa-oral-')) localStorage.removeItem(k); }
     if (!localStorage.getItem('teeqa-oral-chantier')) localStorage.setItem('teeqa-oral-chantier', JSON.stringify({ v: 1, doc: DOC_VIDE }));
@@ -505,7 +519,11 @@ function bandeau(r, liste) {
 const OK = ['validee', 'corrigee', 'vue'], APRES_FIN = ['fin_declaree', 'retardee', 'refusee', ...OK];
 // [rôle, geste, précision, fait ?(chantier, étape cible)] ; rôle « saut » = le bouton « Trois mois plus tard ».
 const GESTES = [
-  ['client', 'Touche « Nouveau chantier » : tout est déjà rempli (Villa Nador, devis de Rachid BTP). « Continuer » deux fois.', 'Le client commence : c’est lui qui fait construire.', (p) => !!p],
+  ['client', 'Touche « Commencer », puis « Continuer » jusqu’à « Créer mon compte ».', 'Karim découvre TEEQA : il n’a pas encore de compte.', (p, s, c) => !!p || c.compte || /signup/.test(c.hash)],
+  ['client', '« Je fais construire ma maison », « Continuer ». Prénom, pays et téléphone sont déjà saisis : « Continuer ».', 'Une question par écran.', (p, s, c) => !!p || c.compte || c.etape >= 1],
+  ['client', 'Le code arrive par SMS, déjà proposé : « Vérifier ».', 'Le numéro est bien le sien.', (p, s, c) => !!p || c.compte || c.etape >= 2],
+  ['client', '« Pas encore » (rien n’est commencé), « Continuer », puis « Entrer dans TEEQA ».', 'Compte prêt. L’entreprise et le contrôleur n’ont encore aucun chantier.', (p, s, c) => !!p || c.compte],
+  ['client', 'Touche « Créer un chantier » : tout est déjà rempli (Villa Nador, devis de Rachid BTP). « Continuer » deux fois.', 'Le client commence : c’est lui qui fait construire.', (p) => !!p],
   ['client', '« Suivi contrôlé », puis « Créer et envoyer l’invitation », et confirme.', 'Un seul prix pour tout le chantier, payé une fois.', (p) => !!p],
   ['entreprise', 'Touche la nouvelle « Invitation reçue », puis « Accepter et confirmer les étapes ».', 'L’entreprise s’inscrit gratuitement.', (p) => p && p.invites.entreprise.status === 'acceptee'],
   ['entreprise', 'En bas : « Lire » la convention, puis « J’accepte la convention ».', 'Rien ne commence sans elle.', (p) => p && p.convention && !!p.convention.entreprise],
@@ -529,11 +547,19 @@ $('#gestes').innerHTML = GESTES.map(([r, t, d], i) => r === 'saut'
   ? `<li data-i="${i}" class="saut-li" style="--c:${NOM[r][1]}"><button class="saut" id="saut" type="button"><b>${t}</b><small>${d}</small></button></li>`
   : `<li data-i="${i}" style="--c:${NOM[r][1]}"><span class="qui"><i></i>${NOM[r][0]}</span><span>${t}</span>${d ? `<small>${d}</small>` : ''}</li>`).join('');
 const main = new Set();   // gestes cochés à la main (→)
+// Où en est l'inscription de Karim (son compte n'est pas partagé : on le lit dans son téléphone).
+// etape : 0 rôle, 1 prénom et pays, 2 code vérifié (question « déjà un chantier ? »), 3 compte prêt.
+function client() {
+  try { const w = fen('client').contentWindow, d = w.document, st = w.__teeqa && w.__teeqa.get();
+    const etape = d.querySelector('.su-done') ? 3 : d.querySelector('[data-act="su-has"]') ? 2 : d.querySelector('[data-testid="su-code"], #su-name') ? 1 : 0;
+    return { hash: w.location.hash, compte: !!(st && st.account), etape };
+  } catch { return { hash: '', compte: false, etape: 0 }; }
+}
 let auto = [];
 function lireChantier() {
   const p = projetDemo(lireDoc()); let sid = null; try { sid = localStorage.getItem('teeqa-oral-cible'); } catch { /* */ }
-  const s = p && sid ? p.steps.find((x) => x.id === sid) : null;
-  auto = GESTES.map((g) => !!(g[3] && g[3](p, s)));
+  const s = p && sid ? p.steps.find((x) => x.id === sid) : null, c = client();
+  auto = GESTES.map((g) => !!(g[3] && g[3](p, s, c)));
   // Un geste coché par le chantier coche aussi ceux d'avant.
   for (let i = auto.length - 1; i > 0; i--) if (auto[i]) for (let j = 0; j < i; j++) auto[j] = true;
   peindreGuide();

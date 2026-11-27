@@ -1088,6 +1088,173 @@ html.rm .s-maison .ho-vol,html.rm .s-maison .ho-nuages .nu,html.rm .s-maison .ho
 /* 13 : la 1re carte reprend la marge des titres (x 110) ; les trois autres suivent, 40 px d'air entre chaque */
 .etp.e0{left:110px}.etp.e1{left:540px}.etp.e2{left:970px}.etp.e3{left:1400px}
 
+/* ====================================================================== TOUR 5 · EXPERT */
+/* 9 → 10 : la pièce TEEQA qui se retourne sur le palier de référence */
+.tr-piece{left:0;top:0;width:230px;height:230px;transform-style:preserve-3d}
+.tr-piece .f{position:absolute;inset:0;border-radius:50%;display:grid;place-content:center;text-align:center;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  background:radial-gradient(circle at 35% 30%,#F7CF7A,#E0A33A 58%,#B9801F);box-shadow:inset 0 0 0 10px rgba(255,255,255,.22),inset 0 -10px 0 rgba(120,70,10,.25),0 26px 50px rgba(60,40,10,.35)}
+.tr-piece .f b{font:1000 40px/1 var(--font);color:var(--kohl);letter-spacing:-.01em}
+.tr-piece .f small{display:block;margin-top:8px;font:900 15px/1 var(--font);letter-spacing:.12em;text-transform:uppercase;color:rgba(23,16,24,.75)}
+.tr-piece .f.a b{color:var(--fes)}
+.tr-piece .rot{position:absolute;inset:0;transform-style:preserve-3d}
+.tr-piece .f.b{transform:rotateY(180deg)}
+
+/* 2 · le téléphone est une vraie conversation Messages d'iOS (retour de Nabih : on doit voir qu'on est EN DEHORS de TEEQA) */
+.pb-phone .ph-ecran.ios{background:#fff;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",sans-serif;-webkit-font-smoothing:antialiased;color:#000}
+.ios .im-statut{position:absolute;left:0;right:0;top:0;height:58px;display:flex;align-items:center;justify-content:space-between;padding:6px 30px 0 40px;z-index:2}
+.ios .im-statut b{font:600 17px/1 -apple-system,BlinkMacSystemFont,sans-serif;letter-spacing:-.01em}
+.ios .im-ico svg{width:66px;height:14px;fill:#000;color:#000;display:block}
+.ios .im-top{position:absolute;left:0;right:0;top:58px;height:112px;background:rgba(249,249,249,.94);border-bottom:1px solid rgba(60,60,67,.18);display:flex;align-items:flex-start;justify-content:center;z-index:2}
+.ios .im-retour{position:absolute;left:14px;top:30px;display:flex;align-items:center;gap:4px;color:#007AFF}
+.ios .im-retour svg{width:12px;height:20px}
+.ios .im-retour small{font:400 16px/1 -apple-system,sans-serif;background:#007AFF;color:#fff;border-radius:10px;padding:2px 7px}
+.ios .im-video{position:absolute;right:20px;top:32px;color:#007AFF}
+.ios .im-video svg{width:28px;height:19px;fill:none;stroke:#007AFF;stroke-width:2}
+.ios .im-contact{display:flex;flex-direction:column;align-items:center;gap:5px;padding-top:8px}
+.ios .im-contact i{width:54px;height:54px;border-radius:50%;background:linear-gradient(180deg,#A5ABB8,#858994);color:#fff;display:grid;place-items:center;font:500 25px/1 -apple-system,sans-serif;font-style:normal}
+.ios .im-contact b{font:400 13px/1 -apple-system,sans-serif;color:#000}
+.ios .im-contact em{font-style:normal;color:#8E8E93}
+.pb-phone .ios .wa-fil{top:170px;bottom:76px;background:#fff;padding:16px 14px;gap:6px}
+.ios .im-jour{align-self:center;text-align:center;font:400 12px/1.35 -apple-system,sans-serif;color:#8E8E93;margin-bottom:10px}
+.ios .im-jour b{font-weight:600}
+.pb-phone .ios .wa-fil .b{font:400 20px/1.28 -apple-system,BlinkMacSystemFont,sans-serif;letter-spacing:-.01em;padding:9px 15px;border-radius:21px;box-shadow:none;max-width:78%}
+.pb-phone .ios .wa-fil .in{background:#E9E9EB;color:#000;border-bottom-left-radius:6px;border-top-left-radius:21px}
+.pb-phone .ios .wa-fil .out{background:#0A84FF;color:#fff;border-bottom-right-radius:6px;border-top-right-radius:21px;margin:6px 0}
+.pb-phone .ios .wa-fil .typing{padding:13px 17px;gap:6px}
+.pb-phone .ios .wa-fil .typing i{width:10px;height:10px;background:#8E8E93}
+.ios .im-saisie{position:absolute;left:0;right:0;bottom:0;height:76px;padding:10px 14px 26px;display:flex;align-items:center;gap:10px;background:#fff}
+.ios .im-saisie > i{width:34px;height:34px;border-radius:50%;background:#E9E9EB;color:#8E8E93;display:grid;place-items:center;font:300 28px/1 -apple-system,sans-serif;font-style:normal}
+.ios .im-saisie span{flex:1;height:36px;border:1px solid #C7C7CC;border-radius:18px;padding:0 14px;display:flex;align-items:center;font:400 17px/1 -apple-system,sans-serif;color:#C7C7CC}
+.ios .im-saisie svg{position:absolute;right:28px;width:13px;height:19px;fill:#8E8E93;color:#8E8E93}
+.pb-phone .ph-ecran.ios::before{top:12px;width:110px;height:32px;margin-left:-55px;background:#000}
+
+/* 2 · la cigogne ne passe plus à moitié derrière le téléphone : sa route reste assez basse pour qu'elle y soit ENTIÈREMENT
+   cachée (rien ne dépasse au-dessus), puis elle ressort de l'autre côté */
+.pb-cigogne{offset-path:path("M520 500 C 800 440, 1150 440, 1420 540")}
+
+/* 3 · en haut à droite : la maison au centre, un îlot de palmiers de chaque côté, en miroir ; ils flottent ensemble */
+.va-ilot.va-maison{left:1585px;top:146px;width:210px;z-index:1;animation:flotte-ilot 7s ease-in-out infinite}
+.va-ilot.va-palme{top:178px;width:150px;z-index:0;animation:flotte-ilot 7s ease-in-out infinite}
+.va-ilot.va-palme.g{left:1452px}
+.va-ilot.va-palme.g img{transform:scaleX(-1)}
+.va-ilot.va-palme.d{left:1758px}
+
+/* 3 · les battants épousent la forme de la porte : leur filet doré suit l'arche (dessiné en SVG par monde.js) */
+.qdoor .leaf::after{display:none}
+.qdoor .leaf svg.cadre{position:absolute;left:0;top:0;overflow:visible;pointer-events:none}
+.qdoor .leaf svg.cadre path{fill:none;stroke:rgba(242,190,92,.7);stroke-width:3;stroke-linejoin:round}
+
+/* 4 · la carte est en perspective dès la transition : une image de la 1re image 3D (capturée, sans IA) attend sous le canevas */
+.map3d .map-pose{position:absolute;left:0;top:0;width:880px;height:880px;opacity:0;pointer-events:none}
+.map3d.gl-wait .map-pose,.map3d.gl .map-pose{opacity:1}
+.map3d.gl-wait .map-flat{transition:none}
+.map3d.gl .map-pose{opacity:0;transition:opacity .3s 1s}
+.s-marche .map3d{z-index:4}
+
+/* 4 · carreaux : un peu plus bas (air sous le bandeau et son halo) et moins larges (ils ne touchent plus la boussole) */
+.mk-stats{width:850px}
+.mk-stats .st.grand{margin-bottom:18px}
+/* 4 · à tour de rôle, de gauche à droite, chaque carreau de verre se relève comme un bouton 3D, plane, puis se repose */
+.s-marche.is-active .mk-stats .st:not(.grand){animation:leve-verre 10s cubic-bezier(.45,0,.25,1) infinite both}
+.s-marche.is-active .mk-stats .st:nth-child(2){animation-delay:2.6s}
+.s-marche.is-active .mk-stats .st:nth-child(3){animation-delay:4.6s}
+.s-marche.is-active .mk-stats .st:nth-child(4){animation-delay:6.6s}
+.s-marche.is-active .mk-stats .st:nth-child(5){animation-delay:8.6s}
+.s-marche.is-active .mk-stats .st:nth-child(6){animation-delay:10.6s}
+@keyframes leve-verre{
+  0%,19%,100%{translate:0 0;scale:1;box-shadow:0 0 0 rgba(0,0,0,0);border-color:rgba(241,235,223,.14);background-color:rgba(246,241,231,.06)}
+  5%,13%{translate:0 -12px;scale:1.035;box-shadow:0 22px 40px rgba(0,12,8,.45),0 2px 0 rgba(255,255,255,.08) inset;border-color:rgba(242,190,92,.5);background-color:rgba(246,241,231,.11)}
+}
+/* la boule du fil : elle sort de derrière la carte, file vers le bandeau (étirée, traits de vitesse), retombe et l'entoure */
+.mk-boule{position:absolute;left:0;top:0;width:0;height:0;z-index:3;pointer-events:none;opacity:0;visibility:hidden}
+.mk-boule b{position:absolute;left:-18px;top:-18px;width:36px;height:36px;border-radius:50%;background:radial-gradient(circle,#FFE3A3 0 7px,rgba(242,190,92,.38) 8px 16px,rgba(242,190,92,0) 18px)}
+.mk-boule .v{position:absolute;right:12px;height:2px;border-radius:2px;background:linear-gradient(90deg,rgba(255,227,163,0),rgba(255,227,163,.75));opacity:0;transform-origin:100% 50%}
+.mk-boule .v1{top:-9px;width:56px}.mk-boule .v2{top:-1px;width:92px}.mk-boule .v3{top:7px;width:44px}
+
+/* 5 · Bellarej tient SON stylo, la plume posée sur la feuille (le stylo en trop est retiré) ; elle et sa feuille flottent ensemble */
+.pr-bellarej{animation:flotte 6s ease-in-out infinite}
+.pr-bellarej .corps{animation:ecrit-aile 1.6s ease-in-out infinite;transform-origin:70% 95%}
+.pr-bellarej .feuille{left:2px;top:66px;rotate:-4deg}
+@keyframes ecrit-aile{0%,100%{rotate:0deg}30%{rotate:-1.6deg}60%{rotate:.8deg}}
+.map3d.gl-wait:not(.gl) .map-flat{opacity:0}
+
+/* 6 · l'équerre et le crayon arrivent ensemble et vivent tout de suite (le crayon trace, l'équerre glisse) */
+.s-bench .bn-crayon{animation:crayon-trace 3.4s ease-in-out infinite}
+.s-bench .bn-outil{animation:outil 5s ease-in-out infinite}
+@keyframes crayon-trace{0%,100%{translate:0 0;rotate:-20deg}25%{translate:-10px 4px;rotate:-24deg}50%{translate:-22px 2px;rotate:-19deg}75%{translate:-8px -3px;rotate:-17deg}}
+
+/* 7 · le flash : petit, derrière le téléphone de l'homme ; il suit le lent zoom de la photo */
+.s-diff .df-photo .flash-cal{position:absolute;inset:0;pointer-events:none;animation:kenburns 30s ease-in-out infinite alternate;transform-origin:50% 50%}
+.s-diff .df-photo .flash{left:470px;top:360px;width:200px;height:170px;background:radial-gradient(closest-side,rgba(255,255,255,.95),rgba(255,248,225,.55) 45%,rgba(255,255,255,0));mix-blend-mode:screen}
+.s-diff .df-photo img{transform-origin:50% 50%}
+/* 7 · les polaroïds montrent de vraies photos de chantier */
+.polaroid::before{background:var(--ph,url("assets/photos/p2.webp")) center/cover no-repeat}
+
+/* 6 · le crayon ne touche plus l'en-tête « Zone » */
+.s-bench .bn-crayon{top:214px}
+
+/* 8 · le chemin des étapes reprend les pastilles de l'appli : gris = pas encore, jaune = en cours (ou réserve), vert = validée.
+   L'état suit exactement le libellé que la maison affiche (st-wait / st-cur / st-held / st-done), à chaque appui. */
+.s-maison .jal .seal{opacity:0!important}
+.s-maison .jal .jp{position:absolute;left:-5px;top:-4px;width:60px;height:60px;z-index:2;pointer-events:none}
+.s-maison .jal .jp img{position:absolute;inset:0;width:60px;height:60px;transition:opacity .35s,filter .35s,scale .45s cubic-bezier(.3,1.6,.5,1)}
+.s-maison .jal .jp .g{filter:grayscale(1) brightness(1.15) opacity(.5)}
+.s-maison .jal .jp .v{opacity:0;scale:.6}
+.s-maison .jal .jp b{position:absolute;inset:0;display:grid;place-items:center;padding-bottom:4px;font:1000 20px/1 var(--font);color:rgba(23,16,24,.55);transition:opacity .3s}
+.s-maison .jal li:has(.st-cur[style*="opacity: 1"]) .jp .g,.s-maison .jal li:has(.st-held[style*="opacity: 1"]) .jp .g{filter:none;animation:pas 1.8s ease-in-out infinite}
+.s-maison .jal li:has(.st-cur[style*="opacity: 1"]) .jp b,.s-maison .jal li:has(.st-held[style*="opacity: 1"]) .jp b{color:var(--kohl)}
+.s-maison .jal li:has(.st-done[style*="opacity: 1"]) .jp .v{opacity:1;scale:1}
+.s-maison .jal li:has(.st-done[style*="opacity: 1"]) .jp .g{opacity:0}
+.s-maison .jal li:has(.st-done[style*="opacity: 1"]) .jp b{opacity:0}
+
+/* 9 · le bouton de fond est vu de face, à plat, parfaitement centré sous le rond TEEQA (960, 470) */
+.flux-bouton{position:absolute;left:785px;top:295px;width:350px;height:350px;border-radius:50%;z-index:0;pointer-events:none;
+  background:#EFE4CF;box-shadow:0 0 0 10px rgba(239,228,207,.9),0 0 0 12px rgba(160,120,60,.18),0 18px 40px rgba(90,60,20,.16);opacity:.55}
+.flux-bouton i{position:absolute;inset:16px;border-radius:50%;background:url("assets/oral/tour2/zel-clair.svg") center/96px 96px repeat;opacity:.75;animation:tourne 160s linear infinite;
+  -webkit-mask-image:radial-gradient(closest-side,#000 92%,transparent 100%);mask-image:radial-gradient(closest-side,#000 92%,transparent 100%)}
+
+/* 10 · une illustration qui a du sens par palier, centrée au-dessus de sa carte, sans la toucher */
+.s-prix .socle{right:auto!important;top:auto!important;height:auto!important}
+.s-prix .socle.s1{width:132px;left:calc(50% - 66px);bottom:calc(100% + 30px)}
+.s-prix .socle.s2{width:150px;left:calc(50% - 75px);bottom:calc(100% + 48px)}
+.s-prix .socle.s3{width:132px;left:calc(50% - 66px);bottom:calc(100% + 30px)}
+.s-prix .socle img{animation:flotte-ilot 6s ease-in-out infinite}
+.s-prix .socle.s2 img{animation-delay:-2s}.s-prix .socle.s3 img{animation-delay:-4s}
+.s-prix .socle .ombre-sol{bottom:-14px}
+.px-tel{position:relative;width:118px;height:190px;margin:0 auto;border-radius:22px;background:#121614;padding:7px;rotate:-6deg;box-shadow:0 16px 26px rgba(60,40,20,.3);animation:flotte-ilot 6s ease-in-out infinite}
+.px-tel img{width:100%!important;height:100%;object-fit:cover;border-radius:16px;display:block;animation:none!important}
+.px-tel span{position:absolute;left:14px;top:16px;font:900 11px/1 var(--font);color:#fff;background:rgba(0,0,0,.55);padding:4px 6px;border-radius:6px}
+.px-tel b{position:absolute;left:12px;right:12px;bottom:14px;font:900 11px/1.2 var(--font);color:#fff;background:var(--fes);padding:5px 6px;border-radius:7px;text-align:center}
+.s-prix .socle.s3 .plus1{position:absolute;right:-14px;top:-6px;width:50px;height:50px;border-radius:50%;background:var(--safran);color:var(--kohl);display:grid;place-items:center;font:1000 22px/1 var(--font);box-shadow:0 6px 14px rgba(154,106,18,.35)}
+
+/* lisibilité en salle : tout ce qu'on lit à voix haute passe à 20 px ou plus (les sources restent plus petites) */
+.mk-stats p{font-size:20px;line-height:1.22}
+.pr-32 .big small{font-size:20px}
+.s-primaire .pr-prix .cap{font-size:20px}
+.pr-prix .regle span{font-size:20px}
+.pr-prix .teeqa{font-size:20px}
+.pr-prix .teeqa small{font-size:17px}
+.pr-limite{font-size:20px}
+.flux .nd-s{font-size:20px}
+.fx-leg{font-size:20px}
+.px-notes{font-size:20px;line-height:1.28;top:892px;padding:14px 30px 16px}
+.etp .an{font-size:20px}
+.etp li{font-size:20px}
+.etp .det{font-size:20px}
+.s-traj .nw{font-size:20px}
+
+/* 15 · les confettis tombent derrière le texte (sous « Merci. ») */
+.s-fin .confettis{z-index:2}
+
+/* vie au repos, sans vidéo de plus : 12 (les agences se penchent à tour de rôle), 16 (la lune respire, les fenêtres vivent) */
+.s-agence.is-active .med.a img{animation:penche 8s ease-in-out infinite}
+.s-agence.is-active .med.b img{animation:penche 8s ease-in-out -4s infinite}
+@keyframes penche{0%,70%,100%{rotate:0deg;translate:0 0}78%{rotate:-6deg;translate:0 -4px}88%{rotate:3deg;translate:0 0}}
+.s-sources.is-active .so-lune{animation:lune 9s ease-in-out infinite}
+@keyframes lune{0%,100%{scale:1;filter:brightness(1)}50%{scale:1.035;filter:brightness(1.12)}}
+.so-horizon .fen{animation-duration:5.5s}
+.s-prix .socle.s2{width:122px;left:calc(50% - 61px);bottom:calc(100% + 40px)}
+
 /* ====== repris du moteur du 3 nov. ====== */
 /* repli SVG isométrique */
 .m3d-fallback .plot{fill:#6B4A34;opacity:.9}
@@ -1255,8 +1422,6 @@ body.mouse #ui-btns{opacity:1}
   <div class="bab" data-enter data-fx="lift" data-at=".15" data-dur="1.3">
     <div class="bab-in"><video class="loop" data-vedette data-mp4="chemin/arrivee"></video></div>
     <svg class="bab-cadre" viewBox="0 0 760 900" aria-hidden="true"><path class="b1" d="M60 900V420A320 320 0 0 1 700 420V900"/><path class="b2" d="M92 900V424A288 288 0 0 1 668 424V900"/></svg>
-    <img class="bab-cle enc" src="assets/oral/clay/pastille-encours.webp" alt="">
-    <img class="bab-cle val" src="assets/oral/clay/pastille-validee.webp" alt="" data-enter data-fx="frappe" data-at="3.1">
   </div>
   <img class="pt-palmiers" src="assets/oral/clay/palmiers.webp" alt="" data-enter data-fx="tombe" data-at="1.4">
   <img class="pt-caillou" src="assets/oral/clay/caillou-a.webp" alt="" data-enter data-fx="tombe" data-at="1.6">
@@ -1290,14 +1455,21 @@ body.mouse #ui-btns{opacity:1}
   <p class="pb-km" data-enter data-fx="pop" data-at="2.9"><b data-count="1350" data-from="1200" data-roule data-sep=" ">1 350</b> km <small>à vol d'oiseau</small></p>
   <div class="pb-cigogne" aria-hidden="true"><video class="clay" data-v="decor-v3/bellarej-vol"></video></div>
   <div class="phone pb-phone" data-enter data-fx="pop" data-at=".7">
-    <div class="ph-ecran">
-      <div class="wa-top"><i>C</i><span><b>Cousin</b><small>Nador · en ligne</small></span></div>
+    <div class="ph-ecran ios">
+      <div class="im-statut"><b>21:07</b><span class="im-ico"><svg viewBox="0 0 66 14" aria-hidden="true"><rect x="0" y="9" width="3.4" height="5" rx="1"/><rect x="5" y="6.5" width="3.4" height="7.5" rx="1"/><rect x="10" y="4" width="3.4" height="10" rx="1"/><rect x="15" y="1" width="3.4" height="13" rx="1"/><path d="M30 4.2a10 10 0 0 1 13 0l-1.6 1.7a7.6 7.6 0 0 0-9.8 0Zm2.9 3a5.8 5.8 0 0 1 7.2 0l-1.7 1.8a3.3 3.3 0 0 0-3.8 0Zm3.6 5.6-1.9-2a2.6 2.6 0 0 1 3.8 0Z"/><rect x="47" y="1.5" width="16" height="11" rx="3.2" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".45"/><rect x="48.8" y="3.3" width="10" height="7.4" rx="1.8"/><rect x="64" y="5" width="1.6" height="4" rx=".8" opacity=".45"/></svg></span></div>
+      <div class="im-top">
+        <span class="im-retour"><svg viewBox="0 0 12 20" aria-hidden="true"><path d="M10 2 2 10l8 8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><small>12</small></span>
+        <span class="im-contact"><i>C</i><b>Cousin <em>›</em></b></span>
+        <span class="im-video"><svg viewBox="0 0 30 20" aria-hidden="true"><rect x="1" y="2" width="19" height="16" rx="4.5"/><path d="M21.5 8.2 28.5 4v12l-7-4.2Z"/></svg></span>
+      </div>
       <div class="wa-fil">
-        <p class="b in" data-enter data-fx="pop" data-at="1.6">Il faut envoyer pour la dalle.<time>21:04</time></p>
-        <p class="b out" data-enter data-fx="pop" data-at="2.4">Tu peux m'envoyer une photo ?<time>21:06</time></p>
-        <p class="b in" data-enter data-fx="pop" data-at="3.4">C'est bon, fais-moi confiance.<time>21:07</time></p>
+        <p class="im-jour"><b>iMessage</b><br>Aujourd'hui 21:04</p>
+        <p class="b in" data-enter data-fx="pop" data-at="1.6">Il faut envoyer pour la dalle.</p>
+        <p class="b out" data-enter data-fx="pop" data-at="2.4">Tu peux m'envoyer une photo ?</p>
+        <p class="b in" data-enter data-fx="pop" data-at="3.4">C'est bon, fais-moi confiance.</p>
         <p class="b in typing" data-enter data-fx="fade" data-at="3.9"><i></i><i></i><i></i></p>
       </div>
+      <div class="im-saisie"><i>+</i><span>iMessage</span><svg viewBox="0 0 14 20" aria-hidden="true"><rect x="4" y="1" width="6" height="11" rx="3"/><path d="M1.5 9a5.5 5.5 0 0 0 11 0M7 14.5V19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
     </div>
     <p class="ph-tag">Scène fictive</p>
   </div>
@@ -1320,8 +1492,9 @@ body.mouse #ui-btns{opacity:1}
 <section class="slide w-jour s-valeur" data-scene="doors" data-part="1" data-speaker="david" data-time="0:35" data-title="Proposition de valeur" data-titre="Proposition de valeur" data-tr="portail" data-tr-x="960" data-tr-y="660">
   <div class="ciel" aria-hidden="true"><i></i><b></b></div>
   <div class="nuages-pate" aria-hidden="true"><i class="nu n1"></i><i class="nu n2"></i><i class="nu n3"></i></div>
-  <div class="va-ilot" aria-hidden="true"><img src="assets/vitrine/chemin/decor-2.webp" alt=""><i class="ombre-sol"></i></div>
-  <div class="va-ilot v2" aria-hidden="true"><img src="assets/vitrine/chemin/decor-0.webp" alt=""><i class="ombre-sol"></i></div>
+  <div class="va-ilot va-palme g" aria-hidden="true"><img src="assets/vitrine/chemin/decor-0.webp" alt=""></div>
+  <div class="va-ilot va-palme d" aria-hidden="true"><img src="assets/vitrine/chemin/decor-0.webp" alt=""></div>
+  <div class="va-ilot va-maison" aria-hidden="true"><img src="assets/vitrine/chemin/decor-2.webp" alt=""><i class="ombre-sol"></i></div>
   <div class="va-head">
     <p class="kicker"><b>01</b> Proposition de valeur</p>
     <h2 class="title t-xl">L'argent suit <em>la preuve</em>.</h2>
@@ -1378,10 +1551,12 @@ body.mouse #ui-btns{opacity:1}
   </div>
   <div class="map3d" data-3d-host="map" role="img" aria-label="Carte : la France et le Maroc, reliés par un arc d'environ 1 350 km entre Lyon et Nador">
     <svg id="map-flat" class="map-flat" viewBox="-12.9 -12.2 26.4 26.4" aria-hidden="true"></svg>
+    <img class="map-pose" src="assets/oral/carte-3d.webp" alt="" aria-hidden="true">
     <span class="lb lb-city" data-lb="lyon" data-enter data-fx="fade" data-at="2.0">Lyon</span>
     <span class="lb lb-city lb-ma" data-lb="nador" data-enter data-fx="fade" data-at="2.1">Nador · l'Oriental</span>
     <span class="lb lb-km" data-lb="km" data-enter data-fx="fade" data-at="2.3">≈&nbsp;1&nbsp;350&nbsp;km</span>
   </div>
+  <div class="mk-boule" aria-hidden="true"><i class="v v1"></i><i class="v v2"></i><i class="v v3"></i><b></b></div>
   <div class="mk-cigogne" aria-hidden="true"><video class="clay" data-v="decor-v3/bellarej-vol"></video></div>
 
   <aside class="notes" data-orateur="Manuela" data-duree="0:45">
@@ -1398,7 +1573,7 @@ body.mouse #ui-btns{opacity:1}
   <div class="mur" aria-hidden="true"></div>
   <div class="papier" aria-hidden="true"></div>
   <div class="so-frise basse" aria-hidden="true"></div>
-  <div class="pr-bellarej" aria-hidden="true"><img class="corps" src="assets/oral/clay/signe-a.webp" alt=""><img class="stylo" src="assets/oral/clay/crayon.webp" alt=""><svg class="feuille" viewBox="0 0 120 150"><rect x="4" y="4" width="112" height="142" rx="12"/><g><path d="M22 36h14M46 36h50M22 66h14M46 66h40M22 96h14M46 96h46M22 126h14M46 126h30"/></g><g class="coches"><path d="M20 34l6 6 12-14"/><path d="M20 64l6 6 12-14"/><path d="M20 94l6 6 12-14"/><path d="M20 124l6 6 12-14"/></g></svg></div>
+  <div class="pr-bellarej" aria-hidden="true"><svg class="feuille" viewBox="0 0 120 150"><rect x="4" y="4" width="112" height="142" rx="12"/><g><path d="M22 36h14M46 36h50M22 66h14M46 66h40M22 96h14M46 96h46M22 126h14M46 126h30"/></g><g class="coches"><path d="M20 34l6 6 12-14"/><path d="M20 64l6 6 12-14"/><path d="M20 94l6 6 12-14"/><path d="M20 124l6 6 12-14"/></g></svg><img class="corps" src="assets/oral/clay/signe-a.webp" alt=""></div>
   <div class="pr-head">
     <p class="kicker"><b>02</b> Marché et cibles · l'étude primaire</p>
     <h2 class="title">32 vraies réponses : le besoin se dessine, le prix reste à confirmer.</h2>
@@ -1447,7 +1622,7 @@ body.mouse #ui-btns{opacity:1}
 <section class="slide w-plan s-bench" data-part="3" data-speaker="manuela" data-time="0:45" data-title="Concurrence · benchmark" data-titre="Concurrence · benchmark" data-tr="zellige">
   <div class="plan-fond" aria-hidden="true"></div>
   <svg class="bn-coupe" viewBox="0 0 900 620" aria-hidden="true"><path pathLength="1" d="M40 580H860M110 580V300L450 90L790 300V580M80 318L450 70L820 318M180 580V380H330V580M560 360H720V470H560ZM640 360V470M560 415H720M400 220h100v70H400ZM450 220v70M110 450H790M0 600H900"/><path class="cote" pathLength="1" d="M110 610H790M110 600v20M790 600v20M880 90V580M870 90h20M870 580h20"/></svg>
-  <img class="bn-crayon" src="assets/oral/clay/crayon.webp" alt="" aria-hidden="true">
+  <img class="bn-crayon" src="assets/oral/clay/crayon.webp" alt="" aria-hidden="true" data-enter data-fx="pop" data-at=".45">
   <div class="bn-head">
     <p class="kicker"><b>03</b> Concurrence · le benchmark</p>
     <h2 class="title">Le contrôle existe déjà. L'appli partagée, pas encore.</h2>
@@ -1465,7 +1640,7 @@ body.mouse #ui-btns{opacity:1}
     </tbody>
   </table>
   <p class="src bn-src" data-enter data-fx="fade" data-at="1.8">Sources : pages publiques des acteurs (soustraitant.ma, inspectimmo.ma, reaconsult.ma) et presse (Morocco World News, Challenge, Le360), consultées le 14 nov. 2026.</p>
-  <img class="bn-outil" src="assets/oral/clay/equerre.webp" alt="" data-enter data-fx="pop" data-at="1.6">
+  <img class="bn-outil" src="assets/oral/clay/equerre.webp" alt="" data-enter data-fx="pop" data-at=".45">
 
   <aside class="notes" data-orateur="Manuela" data-duree="0:45">
       <p class="cle">D'autres contrôlent déjà ; personne ne réunit le client, l'entreprise et le contrôleur dans une même appli, avec un prix affiché.</p>
@@ -1477,7 +1652,7 @@ body.mouse #ui-btns{opacity:1}
 
 <!-- ================================================================ 7 · la différenciation -->
 <section class="slide w-nuit s-diff" data-scene="df" data-part="3" data-speaker="manuela" data-time="0:35" data-title="Différenciation" data-titre="Différenciation" data-tr="objectif" data-tr-x="1520" data-tr-y="530">
-  <div class="df-photo"><img src="assets/oral/visuels/preuve-terrain.webp" alt=""><i class="flash"></i></div>
+  <div class="df-photo"><img src="assets/oral/visuels/preuve-terrain.webp" alt=""><i class="flash-cal"><i class="flash"></i></i></div>
   <div class="df-voile" aria-hidden="true"></div>
   <div class="df-plan" aria-hidden="true"></div>
   <div class="df-pile" aria-hidden="true"></div>
@@ -1567,7 +1742,7 @@ body.mouse #ui-btns{opacity:1}
 <!-- ================================================================ 9 · les flux -->
 <section class="slide w-jour s-flux" data-scene="flux" data-part="4" data-speaker="evrard" data-time="0:50" data-title="Business model · les flux" data-titre="Business model · les flux" data-tr="monte" data-tr-x="960" data-tr-y="470">
   <div class="fx-sol" aria-hidden="true"></div>
-  <img class="rosace ro-flux" src="assets/zellige/pastille-validee.webp" alt="" aria-hidden="true">
+  <div class="flux-bouton" aria-hidden="true"><i></i></div>
   <div class="nuages-pate haut" aria-hidden="true"><i class="nu n1"></i><i class="nu n2"></i></div>
   <div class="fx-head">
     <p class="kicker"><b>04</b> Concept et business model · les flux</p>
@@ -1626,16 +1801,16 @@ body.mouse #ui-btns{opacity:1}
   <div class="paliers">
     <div class="pal p1" data-enter data-fx="pop" data-at=".2">
       <div class="pal-carte"><p class="pal-n">Suivi</p><p class="pal-p"><b data-count="1500" data-sep=" ">1 500</b> DH</p><p class="pal-e">≈ 140 € · par chantier</p><p class="pal-d">Sans visite : étapes déclarées, photos datées, dossier gardé.</p></div>
-      <div class="socle s1"><img src="assets/oral/clay/caillou-a.webp" alt=""><i class="ombre-sol"></i></div>
+      <div class="socle s1"><div class="px-tel"><img src="assets/photos/p1.webp" alt=""><span>12 mars · 09:41</span><b>Fondations · déclarée</b></div><i class="ombre-sol"></i></div>
     </div>
     <div class="pal p2 ref" data-enter data-fx="pop" data-at=".35">
       <p class="pal-badge">LE PALIER DE RÉFÉRENCE</p>
       <div class="pal-carte"><p class="pal-n">Suivi contrôlé</p><p class="pal-p"><b data-count="5900" data-sep=" ">5 900</b> DH</p><p class="pal-e">≈ 549 € · 4 visites clés</p><p class="pal-d">Un contrôleur indépendant passe aux 4 étapes qui seront cachées ensuite.</p></div>
-      <div class="socle s2"><video class="clay" data-v="decor-v3/maison"></video><i class="ombre-sol"></i></div>
+      <div class="socle s2"><img src="assets/oral/clay/photo-a.webp" alt=""><i class="ombre-sol"></i></div>
     </div>
     <div class="pal p3" data-enter data-fx="pop" data-at=".5">
       <div class="pal-carte"><p class="pal-n">Chaque visite en plus</p><p class="pal-p">+ <b data-count="1100" data-sep=" ">1 100</b> DH</p><p class="pal-e">≈ 102 € · le même prix partout</p><p class="pal-d">Exemple, 6 visites : 5&nbsp;900 + 2&nbsp;×&nbsp;1&nbsp;100 = <b>8&nbsp;100&nbsp;DH</b>.</p></div>
-      <div class="socle s3"><video class="clay" data-v="decor-v3/grue"></video><i class="ombre-sol"></i></div>
+      <div class="socle s3"><img src="assets/oral/clay/casque.webp" alt=""><b class="plus1">+1</b><i class="ombre-sol"></i></div>
     </div>
   </div>
   <p class="px-regle" data-enter data-at="1.6">Une règle : <b>forfait = 1 500 DH + 1 100 DH par visite</b>, en une ou 3 fois. Prix du pilote ; ensuite, <b>3 000 + 2 000 DH</b>.</p>
@@ -1809,7 +1984,7 @@ body.mouse #ui-btns{opacity:1}
   </ul>
   <a class="mq-demo" href="demo-oral.html" data-demo data-enter data-fx="pop" data-at="2.3">Lancer la démo <b>→</b></a>
   <div class="trio">
-    <div class="phone t1" data-enter data-fx="pop" data-at=".2"><div class="ph-ecran"><video class="loop ecran" data-mp4="oral/valide-boucle"></video></div><p class="ph-tag">Client</p></div>
+    <div class="phone t1" data-enter data-fx="fade" data-at=".55" data-dur=".15"><div class="ph-ecran"><video class="loop ecran" data-mp4="oral/valide-boucle"></video></div><p class="ph-tag">Client</p></div>
     <div class="phone t2" data-enter data-fx="pop" data-at=".35"><div class="ph-ecran"><img src="assets/oral/ecran-controleur.webp" alt=""></div><p class="ph-tag">Contrôleur</p></div>
     <div class="phone t3" data-enter data-fx="pop" data-at=".5"><div class="ph-ecran"><img src="assets/oral/ecran-entreprise.webp" alt=""></div><p class="ph-tag">Entreprise</p></div>
   </div>
@@ -1830,17 +2005,17 @@ body.mouse #ui-btns{opacity:1}
   <div class="fin-left">
     <h2 class="title t-xl">L'argent suit <em>la preuve</em>.</h2>
     <ul class="fin-pts">
-      <li data-enter data-fx="fant" data-at=".7">Un besoin chez ceux qui construisent à distance, mesuré sur 32 vraies réponses.</li>
-      <li data-enter data-fx="fant" data-at=".9">Un prix par chantier, en paliers ; l'argent des travaux ne passe jamais par nous.</li>
-      <li data-enter data-fx="fant" data-at="1.1">Une agence fournisseur ; la valeur, c'est la preuve et son historique.</li>
+      <li data-enter data-fx="fade" data-at=".2">Un besoin chez ceux qui construisent à distance, mesuré sur 32 vraies réponses.</li>
+      <li data-enter data-fx="fade" data-at=".3">Un prix par chantier, en paliers ; l'argent des travaux ne passe jamais par nous.</li>
+      <li data-enter data-fx="fade" data-at=".4">Une agence fournisseur ; la valeur, c'est la preuve et son historique.</li>
     </ul>
-    <div class="fin-reste" data-enter data-fx="fant" data-at="1.4"><p class="cap">Ce qu'il nous reste à prouver</p><p>3 devis de bureaux de contrôle</p><p>Des entretiens avec des MRE qui construisent au Maroc</p><p>10 chantiers payants</p></div>
+    <div class="fin-reste" data-enter data-fx="fade" data-at=".55"><p class="cap">Ce qu'il nous reste à prouver</p><p>3 devis de bureaux de contrôle</p><p>Des entretiens avec des MRE qui construisent au Maroc</p><p>10 chantiers payants</p></div>
   </div>
   <ul class="fin-chiffres">
-    <li data-enter data-fx="popf" data-at=".5"><b data-count="32">32</b>vraies réponses à l'étude</li>
-    <li data-enter data-fx="popf" data-at=".62"><b><span data-count="5900" data-sep=" ">5 900</span> DH</b>par chantier, 4 visites</li>
-    <li class="vert" data-enter data-fx="popf" data-at=".74"><b><span data-count="0" data-frappe>0</span> DH</b>des travaux ne passe par TEEQA</li>
-    <li data-enter data-fx="popf" data-at=".86"><b data-count="144">144</b>chantiers par an : le point mort</li>
+    <li data-enter data-fx="pop" data-at=".3"><b data-count="32">32</b>vraies réponses à l'étude</li>
+    <li data-enter data-fx="pop" data-at=".38"><b><span data-count="5900" data-sep=" ">5 900</span> DH</b>par chantier, 4 visites</li>
+    <li class="vert" data-enter data-fx="pop" data-at=".46"><b><span data-count="0" data-frappe>0</span> DH</b>des travaux ne passe par TEEQA</li>
+    <li data-enter data-fx="pop" data-at=".54"><b data-count="144">144</b>chantiers par an : le point mort</li>
   </ul>
   <div class="bab fin-bab">
     <div class="bab-in"><img src="assets/oral/visuels/maison-finie-raccord.webp" alt=""><i class="fenetre f1"></i><i class="fenetre f2"></i><i class="fenetre f3"></i><i class="fenetre f4"></i></div>
@@ -2630,7 +2805,7 @@ const CONF = (() => {
   let raf = 0, P = [], ctx = null, t0 = 0, tS = 0;
   const COL = ['#E0A33A', '#F2BE5C', '#1F6B4F', '#3FA37F', '#F6F1E7', '#E39A76'];
   function add(burst) {
-    const p = { x: burst ? 1570 + (Math.random() - .5) * 260 : 1180 + Math.random() * 740, y: burst ? 800 : -20, vx: burst ? (Math.random() - .5) * 900 : (Math.random() - .5) * 40, vy: burst ? -300 - Math.random() * 700 : 60 + Math.random() * 80,
+    const p = { x: burst ? 1570 + (Math.random() - .5) * 260 : 1200 + Math.random() * 720, y: burst ? 800 : -20, vx: burst ? (Math.random() - .5) * 600 : (Math.random() - .5) * 40, vy: burst ? -300 - Math.random() * 700 : 60 + Math.random() * 80,
       w: 8 + Math.random() * 10, h: 5 + Math.random() * 7, r: Math.random() * 6.28, vr: (Math.random() - .5) * 8, c: COL[(Math.random() * COL.length) | 0] };
     P.push(p);
   }
@@ -2638,7 +2813,7 @@ const CONF = (() => {
     const dt = t0 ? Math.min(.04, (t - t0) / 1000) : 0; t0 = t;
     ctx.clearRect(0, 0, 1920, 1080);
     if (t > tS && t - tS < 7000 && Math.random() < .22) add(false);
-    P = P.filter(p => p.y < 1120);
+    P = P.filter(p => p.y < 1030 && p.x > 1170);   /* tour 5 : jamais sur la colonne de texte de gauche (x < 1 130) */
     for (const p of P) {
       p.vy += 520 * dt * (p.vy < 120 ? 1 : .05); p.vx *= .99; p.x += p.vx * dt; p.y += p.vy * dt; p.r += p.vr * dt;
       ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r); ctx.fillStyle = p.c; ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h * Math.abs(Math.cos(p.r * 1.7))); ctx.restore();
@@ -2806,7 +2981,7 @@ const FIL = (() => {
     return 'M' + f(x + r) + ' ' + f(y + h) + 'H' + f(x + w - r) + 'A' + r + ' ' + r + ' 0 0 0 ' + f(x + w) + ' ' + f(y + h - r) + 'V' + f(y + r) + 'A' + r + ' ' + r + ' 0 0 0 ' + f(x + w - r) + ' ' + f(y) + 'H' + f(x + r) + 'A' + r + ' ' + r + ' 0 0 0 ' + f(x) + ' ' + f(y + r) + 'V' + f(y + h - r) + 'A' + r + ' ' + r + ' 0 0 0 ' + f(x + r) + ' ' + f(y + h); };
   const rond = (x, y, r) => 'M' + (x - r) + ' ' + y + 'A' + r + ' ' + r + ' 0 1 1 ' + (x + r) + ' ' + y + 'A' + r + ' ' + r + ' 0 1 1 ' + (x - r) + ' ' + y;
   const T = {
-    'TEEQA': () => 'M1120 1020V540A320 320 0 0 1 1760 540V1020',
+    /* 1 : plus de trait sur l'arche (retour de Nabih : pastille et ligne au sommet de la porte retirées) */
     'Le problème': s => sous($('.pb-head .title', s), 14, true),
     'Proposition de valeur': s => $$('.va-chaine .fil', s).map(e => { const b = rect(e); return 'M' + f(b.x) + ' ' + f(b.y + b.h / 2) + 'H' + f(b.x + b.w); }).join(''),
     'Marché · données secondaires': s => cadre($('.mk-stats .grand', s), 9, 34),
@@ -2815,7 +2990,11 @@ const FIL = (() => {
     'Différenciation': s => cadre($('.df-decision', s), 10, 38),
     "Concept · l'argent suit la preuve": s => { const t = $('.ho-left .title', s); if (!t) return ''; const b = union(t); return 'M' + f(b.x + 4) + ' ' + f(b.y + b.h + 16) + 'H' + f(b.x + 250); },
     'Business model · les flux': () => rond(960, 470, 122),
-    'Modèle de revenus': s => cadre($('.pal.ref .pal-carte', s), 10, 42),
+    'Modèle de revenus': s => { const c = $('.pal.ref .pal-carte', s), g = $('.pal.ref .pal-badge', s); if (!c) return '';
+      const b = rect(c), m = 10, x = b.x - m, y = b.y - m, w = b.w + 2 * m, h = b.h + 2 * m, r = 42, x1 = g ? rect(g).x + rect(g).w + 12 : x + r;
+      /* part du bout droit de l'étiquette, fait le tour et s'arrête avant son bord gauche : jamais sur les lettres */
+      return 'M' + f(x1) + ' ' + f(y) + 'H' + f(x + w - r) + 'A' + r + ' ' + r + ' 0 0 1 ' + f(x + w) + ' ' + f(y + r) + 'V' + f(y + h - r) + 'A' + r + ' ' + r + ' 0 0 1 ' + f(x + w - r) + ' ' + f(y + h) +
+        'H' + f(x + r) + 'A' + r + ' ' + r + ' 0 0 1 ' + f(x) + ' ' + f(y + h - r) + 'V' + f(y + r) + 'A' + r + ' ' + r + ' 0 0 1 ' + f(x + r) + ' ' + f(y) + 'H' + f(g ? rect(g).x - 12 : x + r); },
     'Rentabilité des visites': s => cadre($('.rt-bloc.b2 .sg.mg', s), 7, 26),
     "Rôle de l'agence": s => sous($('.ag-fin', s), 12, true),
     'Trajectoire 3 ans': () => 'M40 870C300 920 470 800 690 830S980 910 1180 880S1460 830 1620 870S1840 930 1900 820',
@@ -2827,7 +3006,7 @@ const FIL = (() => {
     'Sources': s => sous($('.title', s), 12, true)
   };
   /* le tracé attend que la chose à prouver soit posée */
-  const ATT = { 'Proposition de valeur': 4.3, 'Étude primaire': 4.7, 'Concurrence · benchmark': 3.2, 'Rentabilité des visites': 4.3, 'Conclusion': 4.4, "Rôle de l'agence": 3.4, 'Business model · les flux': 1.3, 'Maquettage et UX': 2.2 };
+  const ATT = { 'Marché · données secondaires': 1.5, 'Proposition de valeur': 4.3, 'Étude primaire': 4.7, 'Concurrence · benchmark': 3.2, 'Rentabilité des visites': 4.3, 'Conclusion': 4.4, "Rôle de l'agence": 3.4, 'Business model · les flux': 1.3, 'Maquettage et UX': 2.2 };
   function trace(s) { const g = T[s.dataset.titre]; try { return g ? g(s) : ''; } catch (e) { return ''; } }
   function point(d, a) { mesure.setAttribute('d', d); const L = mesure.getTotalLength(); const p = mesure.getPointAtLength(a ? L : 0); return [p.x, p.y]; }
   function stop() { tws.forEach(t => t.kill()); tws = []; }
@@ -2851,7 +3030,9 @@ const FIL = (() => {
       if (!anime) { gsap.set([tr, lu], { drawSVG: '0% 100%', opacity: 1 }); return; }
       gsap.set([tr, lu], { drawSVG: '0% 0%', opacity: 0 });
       const tl = gsap.timeline(); tws.push(tl);
-      if (depart) {
+      const arr = (ARRIVEE || {})[s.dataset.titre];
+      if (arr) { tl.add(arr(s, deb)); tl.set(co, { attr: { opacity: 1 }, x: deb[0], y: deb[1] }); }
+      else if (depart) {
         const mx = (depart[0] + deb[0]) / 2, my2 = Math.min(depart[1], deb[1]) - 260;
         tl.set(co, { attr: { opacity: 1 }, x: depart[0], y: depart[1] })
           .to(co, { motionPath: { path: [{ x: depart[0], y: depart[1] }, { x: mx, y: my2 }, { x: deb[0], y: deb[1] }], curviness: 1.2 }, duration: .7, ease: 'power2.inOut' });
@@ -3618,6 +3799,236 @@ function pinPlace(s, pin) {
 /* M relance aussi la vie du chantier (8) */
 const toggleMotion4 = toggleMotion;
 toggleMotion = function () { toggleMotion4(); const h = $('.s-maison .m3d'); if (h && h._vie) h._vie(); };
+
+/* ==========================================================================
+   TOUR 5 · EXPERT
+   Test officiel : chaque transition est FILMÉE à vitesse réelle (Page.startScreencast, vrai Chrome + GPU) ;
+   il faut au moins 88 images peintes sur 96 en 1,6 s, aucune image noire ou unie, jamais deux textes l'un sur l'autre.
+   Méthode : la diapo qui part s'efface (opacité seule) AVANT que le texte de la suivante n'arrive ; les objets qui voyagent
+   d'une diapo à l'autre (porte, pièce, téléphone) sont de petits calques ; aucune diapo entière n'est découpée ni agrandie.
+   ========================================================================== */
+const posePlat = (el, v) => { if (el) el.style.zIndex = v == null ? '' : v; };
+
+/* 2 → 3 · « le jour se lève sur la preuve ». La nuit du message (2) laisse place au jour (3) : le texte de la 2 part d'abord,
+   le téléphone de la conversation (la confiance aveugle) glisse et tombe hors du cadre, la nuit s'efface sur le jour, et les
+   trois portes fermées montent du sol en ressort, celle du milieu en tête ; elles s'ouvriront ensuite une à une.
+   Rien ne surgit au milieu de l'écran, aucune découpe : seulement opacité et translations de calques déjà peints. */
+TR.portail = function (tl, o, n) {
+  const doors = $$('.qdoor', n), ph = $('.pb-phone', o);
+  const txt = $$('.pb-head, .pb-constats, .pb-km, .pb-ville, .pb-arc, .pb-cigogne', o);
+  enCalque([o, ph].concat(doors), true);
+  gsap.set(o, { zIndex: 3 }); gsap.set(n, { zIndex: 2 });
+  tl.to(txt, { autoAlpha: 0, duration: .22, ease: 'power1.in' }, 0);
+  if (ph) tl.to(ph, { y: 700, rotation: 7, duration: .62, ease: 'power2.in' }, 0).to(ph, { autoAlpha: 0, duration: .26, ease: 'power1.in' }, .22);
+  tl.to(o, { autoAlpha: 0, duration: .6, ease: 'power1.inOut' }, .28);
+  [1, 0, 2].forEach((i, r) => { const d = doors[i]; if (!d) return;
+    tl.fromTo(d, { y: 560 }, { y: 0, duration: .95, ease: 'back.out(1.05)', immediateRender: true }, .34 + r * .09); });
+  tl.add(() => { gsap.set(txt, { clearProps: 'opacity,visibility' }); if (ph) gsap.set(ph, { clearProps: 'transform,opacity,visibility' }); gsap.set(doors, { clearProps: 'transform' }); enCalque([o, ph].concat(doors), false); }, 1.62);
+  return .55;
+};
+/* les portes s'ouvrent vite, celle du milieu d'abord (c'est elle qui vient du téléphone), et chaque Bellarej se balance à l'ouverture */
+SC.doors.enter = function (tl, s) {
+  enterDefault(tl, s);
+  const ds = $$('.qdoor', s);
+  ds.forEach(d => d.classList.add('shut'));
+  [1, 0, 2].forEach((i, r) => { const d = ds[i]; if (!d) return;
+    tl.add(() => d.classList.remove('shut'), .82 + r * .38);
+    const im = $('.qd-in img', d); if (im) tl.fromTo(im, { rotation: -7, y: 14 }, { rotation: 0, y: 0, duration: 1.1, ease: 'elastic.out(1, .45)', clearProps: 'transform' }, 1.0 + r * .38);
+  });
+};
+
+/* 9 → 10 · « la pièce » : le cœur TEEQA du schéma devient une pièce safran qui se retourne ; son revers est le palier de
+   référence (5 900 DH), elle vole se poser sur sa carte. Plus de stores, plus de bandes : la 9 s'efface, la 10 monte dessous. */
+TR.ouvre = function (tl, o, n) {
+  const coeur = $('#flux .coeur', o), carte = $('.pal.ref .pal-carte', n);
+  const R = coeur ? rectScene(coeur) : { x: 838, y: 348, w: 244, h: 244 }, C = carte ? rectScene(carte) : { x: 760, y: 470, w: 400, h: 330 };
+  const P = trEl('piece'), D = 230;
+  P.innerHTML = '<div class="rot"><div class="f a"><b>TEEQA</b><small>date · signe · garde</small></div><div class="f b"><b>5 900 DH</b><small>la référence</small></div></div>';
+  const RT = P.firstChild;
+  const x0 = R.x + R.w / 2 - D / 2, y0 = R.y + R.h / 2 - D / 2, x1 = C.x + C.w / 2 - D / 2, y1 = C.y + 120 - D / 2;
+  enCalque([o, n], true);
+  gsap.set(o, { zIndex: 3 }); gsap.set(n, { zIndex: 2, y: 46 });
+  gsap.set(P, { x: x0, y: y0, scale: Math.max(.5, R.w / D), autoAlpha: 0 }); gsap.set(RT, { rotationY: 0, transformPerspective: 900 });
+  tl.to(P, { autoAlpha: 1, scale: 1.08, duration: .2, ease: 'power2.out' }, 0)
+    .to(o, { autoAlpha: 0, y: -40, duration: .5, ease: 'power2.in' }, .06)
+    .to(n, { y: 0, duration: 1.1, ease: 'power3.out' }, .1)
+    .to(RT, { rotationY: 180, duration: .5, ease: 'back.out(1.4)' }, .1)
+    .to(P, { motionPath: { path: [{ x: x0, y: y0 }, { x: (x0 + x1) / 2, y: Math.min(y0, y1) - 110 }, { x: x1, y: y1 }], curviness: 1.2 }, scale: .8, duration: .5, ease: 'power2.inOut' }, .42)
+    .to(P, { autoAlpha: 0, scale: .62, duration: .2, ease: 'power1.in' }, .76)
+    .add(() => { enCalque([o, n], false); gsap.set(o, { clearProps: 'transform' }); }, 1.5);
+  return .42;
+};
+TITRE_GARDE.ouvre = 0;
+
+/* 4 → 5 · la feuille tombe SUR la 4 immobile (rotation −1,5° → 0), son ombre se resserre en se posant */
+TR.feuille = function (tl, o, n) {
+  const om = trEl('feuille-ombre');
+  enCalque([n, om], true);
+  gsap.set(n, { zIndex: 3, y: -1100, rotation: -1.5, transformOrigin: '30% 0%' });
+  gsap.set(om, { y: -60, autoAlpha: .9 });
+  tl.to(n, { y: 0, duration: .9, ease: 'power3.inOut' }, 0)
+    .to(om, { y: 1060, duration: .9, ease: 'power3.inOut' }, 0)
+    .to(n, { rotation: 0, duration: .9, ease: 'back.out(1.6)' }, .2)
+    .to(om, { autoAlpha: 0, duration: .25 }, .8)
+    .add(() => enCalque([n, om], false), 1.4);
+  return .4;
+};
+
+/* 3 → 4, 5 → 6, 12 → 13 · zellige court : une diagonale de carreaux balaie l'écran (jamais plein écran plus d'un instant),
+   la diapo qui part s'efface dessous, le médaillon de la partie se pose puis remonte se ranger dans le chemin. */
+TR.zellige = function (tl, o, n) {
+  const C = 12, R = 7, h = 1080 / R, box = document.createElement('div'); box.className = 'tr-zel'; TRL.appendChild(box);
+  const fa = carreau(o), fb = carreau(n), ox = 1780, oy = 60, DM = Math.hypot(1920, 1080), V = .8;
+  for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) {
+    const t = document.createElement('i'); t.style.left = c * 160 + 'px'; t.style.top = (r * h).toFixed(1) + 'px';
+    t.innerHTML = '<b class="' + fa + '"></b><b class="v ' + fb + '"></b>';
+    box.appendChild(t);
+    const t0 = Math.hypot(c * 160 + 80 - ox, r * h + h / 2 - oy) / DM * V;
+    gsap.set(t, { scale: .3, autoAlpha: 0, rotationY: 0 });
+    tl.to(t, { scale: 1.04, autoAlpha: 1, duration: .16, ease: 'power2.out' }, t0)
+      .to(t, { rotationY: 180, duration: .3, ease: 'power2.out' }, t0 + .06)
+      .to(t, { scale: 0, rotation: 24, autoAlpha: 0, duration: .22, ease: 'power2.in' }, t0 + .28);
+  }
+  gsap.set(o, { zIndex: 3 }); gsap.set(n, { zIndex: 2 });
+  tl.to(o, { autoAlpha: 0, duration: .4, ease: 'power1.inOut' }, .2);
+  const p = +n.dataset.part || 0, lab = trEl('zel-lab'), hp = $('.hud .pas.ici', n);
+  lab.innerHTML = '<img src="assets/oral/clay/pastille-encours.webp" alt=""><b>' + p + '</b><span>' + (PARTIES[p] || '') + '</span>';
+  tl.fromTo(lab, { autoAlpha: 0, scale: 1.7, rotation: -10 }, { autoAlpha: 1, scale: 1, rotation: 0, duration: .4, ease: 'teeqa.seal' }, .15);
+  if (hp) {
+    const r = rectScene(hp), k = Math.max(.18, r.w / 180);
+    tl.to(lab.querySelector('span'), { autoAlpha: 0, duration: .18 }, .8)
+      .to(lab, { x: r.x + r.w / 2 - 960, y: r.y + r.h / 2 - 520, scale: k, duration: .5, ease: 'power3.inOut' }, .8)
+      .to(lab, { autoAlpha: 0, duration: .12 }, 1.28)
+      .fromTo(hp, { scale: 1.5 }, { scale: 1, duration: .5, ease: 'back.out(2.4)', immediateRender: false, clearProps: 'transform' }, 1.26);
+    n._zel = 1;
+  } else tl.to(lab, { autoAlpha: 0, duration: .25 }, .9);
+  return .62;
+};
+
+/* 13 → 14 · le téléphone qui sort de la carte 2029 se pose EXACTEMENT sur le téléphone « Client » de la 14 (même place, même
+   inclinaison) ; la 14 se peint autour de lui ; les deux autres téléphones arrivent ensuite. */
+TR.ecran = function (tl, o, n) {
+  const t1 = $('.trio .t1', n);
+  const ph = trEl('tel'); ph.innerHTML = '<div><img src="assets/oral/tour2/affiches/valide-boucle.webp" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></div>';
+  let x1 = 1205 - 960, y1 = 630 - 540, s1 = .816, r1 = -6;
+  if (t1) {
+    const R = rectScene(t1), m = new DOMMatrix(getComputedStyle(t1).transform === 'none' ? undefined : getComputedStyle(t1).transform);
+    r1 = Math.atan2(m.b, m.a) * 180 / Math.PI; s1 = t1.offsetWidth / 380;
+    x1 = R.x + R.w / 2 - 960; y1 = R.y + R.h / 2 - 540;
+    gsap.set(ph, { width: t1.offsetWidth, height: t1.offsetHeight, left: 960 - t1.offsetWidth / 2, top: 540 - t1.offsetHeight / 2 }); s1 = 1;
+  }
+  gsap.set(ph, { x: 1615 - 960, y: 430 - 540, scale: .2, rotation: 8, transformOrigin: '50% 50%' });
+  enCalque([ph], true);
+  gsap.set(o, { zIndex: 3 }); gsap.set(n, { zIndex: 2 });
+  if (t1) gsap.set(t1, { autoAlpha: 0 });
+  tl.to(ph, { motionPath: { path: [{ x: 1615 - 960, y: 430 - 540 }, { x: (1615 - 960 + x1) / 2 - 120, y: -150 }, { x: x1, y: y1 }], curviness: 1.1 }, scale: s1, rotation: r1, duration: .88, ease: 'power2.inOut' }, 0)
+    .to(o, { autoAlpha: 0, duration: .45, ease: 'power1.inOut' }, .08)
+    .add(() => { if (t1) gsap.set(t1, { autoAlpha: 1 }); }, .9)
+    .to(ph, { autoAlpha: 0, duration: .14 }, .92)
+    .add(() => enCalque([ph], false), 1.2);
+  return .35;
+};
+
+/* 14 → 15 · on passe la porte de la fin : la 14 avance vers l'arche et s'efface vite ; le texte de la 15 n'arrive qu'ensuite */
+const porte4 = TR.porte;
+TR.porte = function (tl, o, n) {
+  if (!n.classList.contains('s-fin')) return porte4(tl, o, n);
+  const cx = +(n.dataset.trX || 1440), cy = +(n.dataset.trY || 600), S = +(n.dataset.trS || 4.8), Q = { s: .9 };
+  const v = trSvg('<path fill="none" stroke="#E0A33A" stroke-width="6" stroke-linejoin="round"/>'), pa = v.firstChild;
+  const upd = () => pa.setAttribute('d', archD(cx, cy, Q.s)); upd();
+  enCalque([o], true);
+  gsap.set(o, { zIndex: 3, transformOrigin: cx + 'px ' + cy + 'px' }); gsap.set(n, { zIndex: 2 });
+  tl.to(o, { scale: 1.5, duration: .6, ease: 'power2.in' }, 0)
+    .to(o, { autoAlpha: 0, duration: .36, ease: 'power1.in' }, .08)
+    .to(Q, { s: S, duration: 1.3, ease: 'power3.out', onUpdate: upd }, .1)
+    .to(v, { autoAlpha: 0, duration: .4 }, 1.25)
+    .add(() => enCalque([o], false), 1.5);
+  return .4;
+};
+
+/* 3 · le filet doré de chaque battant suit la vraie forme de la porte (arche elliptique 260 × 190, coins bas 26) */
+function cadresPortes(root) {
+  $$('.qdoor', root || document).forEach(d => {
+    const w = d.offsetWidth, h = d.offsetHeight; if (!w || !h) return;
+    const rx = Math.min(260, w / 2), ry = 190, m = 24, g = 18, b = 22, f = v => v.toFixed(1), half = w / 2;
+    /* battant gauche, en coordonnées du battant : bord extérieur à gauche, jointure à droite ; le droit est son miroir */
+    const P = 'M' + f(m + 8) + ' ' + f(h - b) + 'Q' + m + ' ' + f(h - b) + ' ' + m + ' ' + f(h - b - 8) + 'V' + ry +
+      'A' + f(rx - m) + ' ' + f(ry - m) + ' 0 0 1 ' + f(Math.min(rx, half - g)) + ' ' + m + 'H' + f(half - g) + 'V' + f(h - b - 8) +
+      'Q' + f(half - g) + ' ' + f(h - b) + ' ' + f(half - g - 8) + ' ' + f(h - b) + 'Z';
+    $$('.leaf', d).forEach(lf => {
+      if ($('svg.cadre', lf)) return;
+      const r = lf.classList.contains('r');
+      lf.insertAdjacentHTML('beforeend', '<svg class="cadre" width="' + f(half) + '" height="' + h + '" viewBox="0 0 ' + f(half) + ' ' + h + '"' + (r ? ' style="transform:scaleX(-1)"' : '') + '><path d="' + P + '"/></svg>');
+    });
+  });
+}
+cadresPortes();
+
+/* 4 · la boule du fil sort de DERRIÈRE la carte, file vers le bandeau « 122 Mds DH » (étirement et traits de vitesse discrets),
+   retombe comme par gravité sur son coin, puis le fil l'entoure (FIL reprend au même point). */
+var ARRIVEE = {
+  'Marché · données secondaires': (s, deb) => {
+    const b = $('.mk-boule', s), tl = gsap.timeline();
+    if (!b) return tl;
+    const V = $$('.v', b), x0 = 1440, y0 = 560, x1 = 1062, y1 = 470, xa = deb[0] - 40, ya = 300;   /* la boule passe AU-DESSUS du bandeau (entre le titre et lui), puis retombe le long de son bord gauche */
+    tl.set(b, { x: x0, y: y0, scale: .5, rotation: 0, autoAlpha: 1 })
+      .set(V, { autoAlpha: 0, scaleX: .3 })
+      .to(b, { x: x1, y: y1, scale: 1, duration: .32, ease: 'power2.in' })                         /* encore cachée derrière la carte */
+      .to(b, { motionPath: { path: [{ x: x1, y: y1 }, { x: 1012, y: 300 }, { x: 560, y: 276 }, { x: xa, y: ya }], curviness: 1, autoRotate: true },
+        scaleX: 1.75, scaleY: .62, duration: .42, ease: 'power2.inOut' })
+      .to(V, { autoAlpha: .6, scaleX: 1, duration: .1, stagger: .03 }, '<')
+      .to(V, { autoAlpha: 0, scaleX: .2, duration: .12 }, '>-.12')
+      .to(b, { rotation: 0, scaleX: 1, scaleY: 1, duration: .1, ease: 'power1.out' }, '<')
+      .to(b, { x: deb[0], y: deb[1], duration: .42, ease: 'bounce.out' })
+      .to(b, { scaleX: 1.3, scaleY: .72, duration: .06, ease: 'power1.out' }, '<.15')
+      .to(b, { scaleX: 1, scaleY: 1, duration: .3, ease: 'elastic.out(1, .4)' })
+      .set(b, { autoAlpha: 0 }, '>-.18');
+    return tl;
+  }
+};
+
+/* 7 · le flash part de l'appareil photo, derrière le téléphone de l'homme (petit, discret, jamais toute la diapo) ;
+   à chaque flash, une VRAIE photo de chantier (fondations, ferraillage, coffrage) s'imprime et file se ranger en bas à gauche. */
+const DF_PHOTOS = ['p2', 'p1', 'p0', 'p6', 'p3'];
+SC.df.loop = function (s) {
+  const f = $('.flash', s), pile = $('.df-pile', s); if (!f || !pile || !window.gsap) return;
+  const my = s._dfTok = {}; let n = 0;
+  pile.textContent = '';
+  const cyc = () => {
+    if (s._dfTok !== my || !s.classList.contains('is-active')) return;
+    gsap.fromTo(f, { opacity: 0, scale: .5 }, { opacity: .9, scale: 1.1, duration: .12, yoyo: true, repeat: 1, ease: 'power2.out' });
+    const pc = document.createElement('i'); pc.className = 'polaroid';
+    pc.style.setProperty('--ph', 'url("assets/photos/' + DF_PHOTOS[n % DF_PHOTOS.length] + '.webp")');
+    pile.appendChild(pc);
+    const slot = n++ % 3;
+    gsap.fromTo(pc, { x: 1310 - 110 - 75, y: 450 - 842 - 85, scale: .2, rotation: 0, autoAlpha: 0 },
+      { x: 20 + slot * 175, y: 12 + (slot % 2) * 10, scale: 1, rotation: gsap.utils.random(-11, 11), autoAlpha: 1, duration: 1.2, ease: 'power3.out', delay: .16 });
+    const L = pile.children;
+    if (L.length > 3) { const v = L[0]; gsap.to(v, { autoAlpha: 0, y: '+=40', duration: .5, onComplete: () => v.parentNode && v.parentNode.removeChild(v) }); }
+    gsap.delayedCall(5.5, cyc);
+  };
+  cyc();
+};
+
+/* 8 · pastilles de l'appli sur le chemin des étapes (l'état est lu en CSS sur le libellé affiché par la maison) */
+$$('.s-maison .jal li[data-j]').forEach((li, j) => {
+  li.insertAdjacentHTML('afterbegin', '<span class="jp" aria-hidden="true"><img class="g" src="assets/oral/clay/pastille-encours.webp" alt=""><img class="v" src="assets/oral/clay/pastille-validee.webp" alt=""><b>' + (j + 1) + '</b></span>');
+});
+
+/* 8 → 9 : libérer la maison 3D (contexte WebGL) gelait l'écran 0,17 s au milieu de la transition (film). On la libère 1,6 s
+   plus tard, quand la 9 est posée ; si l'on revient sur la 8 entre-temps, elle repart sans être reconstruite. */
+if (SC.house && SC.house.leave) {
+  const houseLeave0 = SC.house.leave;
+  SC.house.leave = function (s) {
+    clearTimeout(SC.house._t);
+    SC.house._t = setTimeout(() => {
+      const c = slides[cur];
+      if (c === s) return;
+      if (c && (c.dataset.scene === 'house' || c.dataset.scene === 'map')) { T3D.unprep(s); return; }
+      houseLeave0(s);
+    }, 1600);
+  };
+}
 
 function transition(from, to, k) {
   const o = slides[from], n = slides[to];
