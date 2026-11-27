@@ -1044,6 +1044,50 @@ html.rm .s-maison .ho-vol,html.rm .s-maison .ho-nuages .nu,html.rm .s-maison .ho
 .s-fin .merci{top:858px}
 .s-fin .merci-q{top:988px}
 
+
+/* ==========================================================================
+   TOUR 4 · EXPERT
+   ========================================================================== */
+/* 10 : « RÉFÉRENCE » : les accents des capitales ont leur place (corps 18, interligne 1,3), lisibles au vidéoprojecteur en 1x */
+.pal-badge{font:1000 18px/1.3 var(--font);padding:10px 18px 9px;letter-spacing:.1em}
+/* 10 : la bande des notes garde tout son texte (« visibilité. » ne sort plus) */
+.px-notes{grid-template-columns:1.45fr 1fr 1.15fr;font-size:18px;line-height:1.3;padding:16px 30px 20px;top:900px}
+/* 16 : le masque des étoiles marche enfin : l'ancien masque peignait du noir OPAQUE (un masque lit l'alpha, pas la couleur),
+   il ne cachait donc rien. Ici : un chemin evenodd, transparent sur le titre et sur les deux colonnes de sources. */
+.s-sources .etoiles{-webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1920 1080' preserveAspectRatio='none'%3E%3Cpath fill-rule='evenodd' fill='white' d='M0 0H1920V1080H0Z M90 78H500V208H90Z M90 214H1834V666H90Z'/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1920 1080' preserveAspectRatio='none'%3E%3Cpath fill-rule='evenodd' fill='white' d='M0 0H1920V1080H0Z M90 78H500V208H90Z M90 214H1834V666H90Z'/%3E%3C/svg%3E");-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
+
+/* 8 : la grue en pâte qui flottait est remplacée par une vraie grue 3D posée au sol (maison3d.js) */
+.s-maison .ho-grue{display:none}
+/* 8 : nuages entiers : ils dérivent au-dessus du terrain, apparaissent et s'effacent en entier, sans masque qui les tranche,
+   et ne passent jamais derrière les cartes de droite */
+.s-maison .ho-nuages{left:740px;width:800px;overflow:visible;-webkit-mask-image:none;mask-image:none}
+.s-maison .ho-nuages .nu{animation-name:ho-nu4;animation-timing-function:linear}
+@keyframes ho-nu4{0%{transform:translateX(-60px);opacity:0}14%{opacity:.88}86%{opacity:.88}100%{transform:translateX(520px);opacity:0}}
+/* 8 : l'îlot de palmiers lointain n'est plus derrière la carte « Paiement » : il est sur les collines, à gauche du terrain */
+.s-maison .ho-palmes.loin{left:1040px;top:418px;width:104px}
+
+/* 7 → 8 : le polaroïd qui devient le terrain */
+.tr-polaro{left:0;top:0;width:600px;height:440px;padding:20px;background:#FBF7EE;border-radius:10px;box-shadow:0 30px 60px rgba(0,0,0,.45),0 4px 0 rgba(176,140,90,.25)}
+.tr-polaro .ph{position:relative;width:560px;height:315px;overflow:hidden;border-radius:4px;background:#0A3027}
+.tr-polaro .ph img{position:absolute;max-width:none}
+.tr-polaro b{display:block;margin-top:26px;text-align:center;font:1000 30px/1 var(--font);letter-spacing:.08em;text-transform:uppercase;color:var(--fes)}
+
+/* 11 → 12 : l'arche qui vole porte déjà son contenu */
+.tr-arche.plein{color:var(--kohl);padding:110px 50px 0;text-align:center;overflow:hidden}
+.tr-arche.plein .q{font:1000 42px/1.12 var(--font)}
+.tr-arche.plein .qs{font:800 20px/1.3 var(--font);margin-top:14px;opacity:.8}
+.tr-arche.plein img{position:absolute;left:50%;bottom:22px;width:320px;height:340px;margin-left:-160px;object-fit:contain}
+
+/* 15 : un vrai soir, sans gris : terre profonde en haut (texte blanc lisible), safran chaud en bas ; ciel en pâte très léger */
+.s-fin.w-soir{background:linear-gradient(180deg,#3A1B17 0%,#5E2A1E 26%,#97452A 52%,#D27A43 76%,#F0B26A 100%)}
+.s-fin .ciel.soir i{opacity:.1}
+.s-fin .ciel.soir b{opacity:.08}
+.s-fin .fin-reste{background:rgba(42,14,10,.42);border-color:rgba(242,190,92,.7)}
+.s-fin .fin-pts li{color:#FFF6E8}
+
+/* 13 : la 1re carte reprend la marge des titres (x 110) ; les trois autres suivent, 40 px d'air entre chaque */
+.etp.e0{left:110px}.etp.e1{left:540px}.etp.e2{left:970px}.etp.e3{left:1400px}
+
 /* ====== repris du moteur du 3 nov. ====== */
 /* repli SVG isométrique */
 .m3d-fallback .plot{fill:#6B4A34;opacity:.9}
@@ -1243,7 +1287,7 @@ body.mouse #ui-btns{opacity:1}
   </svg>
   <span class="pb-ville pb-v1" data-enter data-fx="pop" data-at="1.2">Lyon</span>
   <span class="pb-ville pb-v2" data-enter data-fx="pop" data-at="2.7">Nador</span>
-  <p class="pb-km" data-enter data-fx="pop" data-at="2.9"><b data-count="1350" data-sep=" ">1 350</b> km <small>à vol d'oiseau</small></p>
+  <p class="pb-km" data-enter data-fx="pop" data-at="2.9"><b data-count="1350" data-from="1200" data-roule data-sep=" ">1 350</b> km <small>à vol d'oiseau</small></p>
   <div class="pb-cigogne" aria-hidden="true"><video class="clay" data-v="decor-v3/bellarej-vol"></video></div>
   <div class="phone pb-phone" data-enter data-fx="pop" data-at=".7">
     <div class="ph-ecran">
@@ -1624,19 +1668,19 @@ body.mouse #ui-btns{opacity:1}
   <div class="rt-bloc b1">
     <p class="rt-cap">Pilote 2027 : une visite à <b>1 100 DH TTC</b> <small class="echelle">barre = 1 visite</small></p>
     <div class="barre">
-      <span class="sg tva" style="flex:183" data-enter data-fx="growf" data-at=".3"><small>TVA</small><b data-count="183">183</b></span>
-      <span class="sg ag" style="flex:700" data-enter data-fx="growf" data-at=".45"><small>agence</small><b data-count="700">700</b><em>dont 450 au contrôleur</em></span>
-      <span class="sg tq" style="flex:217" data-enter data-fx="growf" data-at=".6"><small>TEEQA</small><b data-count="217">217</b></span>
+      <span class="sg tva" style="flex:183" data-enter data-fx="growf" data-at=".3"><small>TVA</small><b data-count="183" data-roule>183</b></span>
+      <span class="sg ag" style="flex:700" data-enter data-fx="growf" data-at=".45"><small>agence</small><b data-count="700" data-roule>700</b><em>dont 450 au contrôleur</em></span>
+      <span class="sg tq" style="flex:217" data-enter data-fx="growf" data-at=".6"><small>TEEQA</small><b data-count="217" data-roule>217</b></span>
     </div>
     <p class="rt-dit" data-enter data-at=".95">Sur un chantier à 5 900 DH, 4 visites : <b>610 DH</b> restent après tous les coûts de l'annexe de l'appli. Trop peu pour payer une équipe.</p>
   </div>
   <div class="rt-bloc b2">
     <p class="rt-cap">Dès 2028 : un chantier à <b>11 000 DH TTC</b>, 4 visites <small class="echelle">barre = 1 chantier</small></p>
     <div class="barre">
-      <span class="sg tva" style="flex:1833" data-enter data-fx="growf" data-at=".75"><small>TVA</small><b data-count="1833" data-sep=" ">1 833</b></span>
-      <span class="sg ag" style="flex:2800" data-enter data-fx="growf" data-at=".9"><small>agences</small><b data-count="2800" data-sep=" ">2 800</b></span>
-      <span class="sg co" style="flex:778" data-enter data-fx="growf" data-at="1.05"><small>coûts</small><b data-count="778">778</b></span>
-      <span class="sg mg" style="flex:5589" data-enter data-fx="growf" data-at="1.2"><small>marge brute</small><b data-count="5589" data-sep=" " data-frappe>5 589</b></span>
+      <span class="sg tva" style="flex:1833" data-enter data-fx="growf" data-at=".75"><small>TVA</small><b data-count="1833" data-roule data-sep=" ">1 833</b></span>
+      <span class="sg ag" style="flex:2800" data-enter data-fx="growf" data-at=".9"><small>agences</small><b data-count="2800" data-roule data-sep=" ">2 800</b></span>
+      <span class="sg co" style="flex:778" data-enter data-fx="growf" data-at="1.05"><small>coûts</small><b data-count="778" data-roule>778</b></span>
+      <span class="sg mg" style="flex:5589" data-enter data-fx="growf" data-at="1.2"><small>marge brute</small><b data-count="5589" data-roule data-sep=" " data-frappe>5 589</b></span>
     </div>
     <div class="ruban" data-enter data-fx="deroule" data-at=".2" aria-hidden="true"></div>
     <p class="rt-dit" data-enter data-at="1.7">3 000 DH de suivi + 2 000 DH par visite, ≈ 1 024 € : au seuil « trop bon marché » de notre étude (1 000 €), la moitié de la « bonne affaire » <span class="nw">(2 000 €).</span></p>
@@ -1714,15 +1758,15 @@ body.mouse #ui-btns{opacity:1}
   </div>
   <div class="etp e1" data-enter data-fx="popf" data-at=".45">
     <div class="med"><video class="loop" data-mp4="chemin/milieu-a"></video></div>
-    <div class="etp-c"><p class="an">2027</p><h3>Pilote Nador – Driouch</h3><p class="vol"><b data-count="10">10</b> chantiers</p><p class="det">1 agence · prix du pilote<br>CA ≈ 51 000 DH · <span class="nw">résultat − 177 000 DH</span></p></div>
+    <div class="etp-c"><p class="an">2027</p><h3>Pilote Nador – Driouch</h3><p class="vol"><b data-count="10">10</b> chantiers</p><p class="det">1 agence · prix du pilote<br><span class="nw">CA ≈ 51 000 DH</span><br><span class="nw">résultat − 177 000 DH</span></p></div>
   </div>
   <div class="etp e2" data-enter data-fx="popf" data-at=".65">
     <div class="med"><video class="loop" data-mp4="chemin/milieu-b"></video></div>
-    <div class="etp-c"><p class="an">2028</p><h3>Tout l'Oriental</h3><p class="vol"><b data-count="40">40</b> chantiers</p><p class="det">2 agences · Oujda, Berkane<br>CA ≈ 357 000 DH · <span class="nw">résultat − 240 000 DH</span></p></div>
+    <div class="etp-c"><p class="an">2028</p><h3>Tout l'Oriental</h3><p class="vol"><b data-count="40">40</b> chantiers</p><p class="det">2 agences · Oujda, Berkane<br><span class="nw">CA ≈ 357 000 DH</span><br><span class="nw">résultat − 240 000 DH</span></p></div>
   </div>
   <div class="etp e3" data-enter data-fx="popf" data-at=".85">
     <div class="med"><video class="loop" data-mp4="chemin/arrivee"></video></div>
-    <div class="etp-c"><p class="an">2029</p><h3>Les villes des MRE</h3><p class="vol"><b data-count="100">100</b> chantiers</p><p class="det">3 agences · Casablanca et Rabat avec un partenaire<br>CA ≈ 922 000 DH · <span class="nw">résultat − 212 000 DH</span></p></div>
+    <div class="etp-c"><p class="an">2029</p><h3>Les villes des MRE</h3><p class="vol"><b data-count="100">100</b> chantiers</p><p class="det">3 agences · Casablanca et Rabat avec un partenaire<br><span class="nw">CA ≈ 922 000 DH</span><br><span class="nw">résultat − 212 000 DH</span></p></div>
   </div>
   <p class="tj-mort" data-enter data-fx="frappe" data-at="1.4"><b>Point mort : 144 chantiers par an</b> · besoin de financement ≈ 630 000 DH.</p>
   <p class="src tj-src" data-enter data-fx="fade" data-at="1.6">Volumes : hypothèses de l'équipe, à remplacer par les ventes du pilote. CA hors taxes, toutes sources. Détail : annexe chiffrée.</p>
@@ -1759,7 +1803,7 @@ body.mouse #ui-btns{opacity:1}
   <p class="mq-texte" data-enter data-at="1.3">26 itérations testées avec des panels de profils types (MRE par pays, entreprises, contrôleurs) et des tests de parcours au doigt.</p>
   <ul class="mq-mesures">
     <li data-enter data-at="1.5"><b>152 → <span data-count="0" data-from="152">0</span></b>défauts d'accessibilité</li>
-    <li data-enter data-at="1.65"><b>0/6 → <span data-count="6">6</span>/6</b>buts atteints au doigt</li>
+    <li data-enter data-at="1.65"><b>0/6 → <span data-count="6" data-from="0">6</span>/6</b>buts atteints au doigt</li>
     <li data-enter data-at="1.8"><b>28 → <span data-count="17" data-from="28">17</span></b>gestes en moyenne par but</li>
     <li data-enter data-at="1.95"><b>P0 – P6</b>tous les parcours rejoués au clic</li>
   </ul>
@@ -1786,16 +1830,16 @@ body.mouse #ui-btns{opacity:1}
   <div class="fin-left">
     <h2 class="title t-xl">L'argent suit <em>la preuve</em>.</h2>
     <ul class="fin-pts">
-      <li data-enter data-at=".7">Un besoin chez ceux qui construisent à distance, mesuré sur 32 vraies réponses.</li>
-      <li data-enter data-at=".9">Un prix par chantier, en paliers ; l'argent des travaux ne passe jamais par nous.</li>
-      <li data-enter data-at="1.1">Une agence fournisseur ; la valeur, c'est la preuve et son historique.</li>
+      <li data-enter data-fx="fant" data-at=".7">Un besoin chez ceux qui construisent à distance, mesuré sur 32 vraies réponses.</li>
+      <li data-enter data-fx="fant" data-at=".9">Un prix par chantier, en paliers ; l'argent des travaux ne passe jamais par nous.</li>
+      <li data-enter data-fx="fant" data-at="1.1">Une agence fournisseur ; la valeur, c'est la preuve et son historique.</li>
     </ul>
-    <div class="fin-reste" data-enter data-at="1.4"><p class="cap">Ce qu'il nous reste à prouver</p><p>3 devis de bureaux de contrôle</p><p>Des entretiens avec des MRE qui construisent au Maroc</p><p>10 chantiers payants</p></div>
+    <div class="fin-reste" data-enter data-fx="fant" data-at="1.4"><p class="cap">Ce qu'il nous reste à prouver</p><p>3 devis de bureaux de contrôle</p><p>Des entretiens avec des MRE qui construisent au Maroc</p><p>10 chantiers payants</p></div>
   </div>
   <ul class="fin-chiffres">
     <li data-enter data-fx="popf" data-at=".5"><b data-count="32">32</b>vraies réponses à l'étude</li>
     <li data-enter data-fx="popf" data-at=".62"><b><span data-count="5900" data-sep=" ">5 900</span> DH</b>par chantier, 4 visites</li>
-    <li class="vert" data-enter data-fx="popf" data-at=".74"><b><span data-count="0" data-from="1" data-frappe>0</span> DH</b>des travaux ne passe par TEEQA</li>
+    <li class="vert" data-enter data-fx="popf" data-at=".74"><b><span data-count="0" data-frappe>0</span> DH</b>des travaux ne passe par TEEQA</li>
     <li data-enter data-fx="popf" data-at=".86"><b data-count="144">144</b>chantiers par an : le point mort</li>
   </ul>
   <div class="bab fin-bab">
@@ -2518,7 +2562,9 @@ function compte(s) {
   if (!G || instant()) return;
   $$('[data-count]', s).forEach(el => {
     const host = el.closest('[data-at]'), at = host ? +host.dataset.at : 0;
-    const fr = +(el.dataset.from || 0), to = +el.dataset.count;
+    /* tour 4 : un chiffre ne défile que s'il le demande (data-roule) ou s'il a un vrai « avant » (data-from) ; sinon tampon.
+       Un défilé part de 85 % de la valeur, jamais de 0 : on ne lit jamais « 97 DH » ni « 1 DH ». */
+    const to = +el.dataset.count, fr = el.dataset.from != null ? +el.dataset.from : el.hasAttribute('data-roule') ? Math.round(to * .85) : to;
     if (fr === to) {   /* chiffre sourcé ou titre : il est là dès la 1re image, il ne défile pas ; un coup de tampon suffit */
       el._tw = [gsap.to(el, { keyframes: [{ scale: 1.1, rotation: -2, duration: .09, ease: 'power2.in' }, { scale: 1, rotation: 0, duration: .32, ease: 'teeqa.seal' }], delay: at + .9, transformOrigin: '50% 60%' })];
       return;
@@ -2554,7 +2600,7 @@ function roues(el, from, to, dec, sep, delay) {
       o.w.style.visibility = d < 0 ? 'hidden' : ''; if (d >= 0) o.c.style.transform = 'translateY(' + (-d) + 'em)'; });
   };
   put();
-  const dur = 1.1 + Math.min(.6, n * .08);
+  const dur = el.hasAttribute('data-roule') ? .9 : 1.1 + Math.min(.6, n * .08);
   tw.push(gsap.to(P, { v: to, duration: dur, delay: delay, ease: 'power3.out', onUpdate: put }));
   cols.forEach(o => { if (o.vide) tw.push(gsap.to(o.w, { width: 0, duration: .3, delay: delay + dur })); });
   const ring = document.createElement('i'); ring.className = 'anneau'; el.appendChild(ring);
@@ -2767,7 +2813,7 @@ const FIL = (() => {
     'Étude primaire': s => { const z = $('.pr-prix .zone', s); if (!z) return ''; const b = rect(z); return 'M' + f(b.x + b.w - 6) + ' ' + f(b.y + b.h / 2) + 'H' + f(b.x + 30); },
     'Concurrence · benchmark': s => cadre($('.bn tr.nous', s), 8, 32),
     'Différenciation': s => cadre($('.df-decision', s), 10, 38),
-    "Concept · l'argent suit la preuve": s => sous($('.ho-left .title', s), 16, true),
+    "Concept · l'argent suit la preuve": s => { const t = $('.ho-left .title', s); if (!t) return ''; const b = union(t); return 'M' + f(b.x + 4) + ' ' + f(b.y + b.h + 16) + 'H' + f(b.x + 250); },
     'Business model · les flux': () => rond(960, 470, 122),
     'Modèle de revenus': s => cadre($('.pal.ref .pal-carte', s), 10, 42),
     'Rentabilité des visites': s => cadre($('.rt-bloc.b2 .sg.mg', s), 7, 26),
@@ -2789,8 +2835,8 @@ const FIL = (() => {
     if (PRESENTER || PRINTMODE || !G) return;
     const my = ++tok, anime = !!trans && !instant();
     stop();
-    if (anime && fin && tr.getAttribute('d')) tws.push(gsap.to([tr, lu], { drawSVG: '100% 100%', duration: .5, ease: 'power2.in' }));
-    else gsap.set([tr, lu], { drawSVG: '0% 0%' });
+    if (anime && fin && tr.getAttribute('d')) tws.push(gsap.to([tr, lu], { drawSVG: '100% 100%', opacity: 0, duration: .4, ease: 'power2.in' }));
+    else gsap.set([tr, lu], { drawSVG: '0% 0%', opacity: 0 });
     const depart = fin;
     /* le tracé se mesure quand la diapo est posée (les titres ont fini d'arriver) */
     let essais = 0;
@@ -2802,15 +2848,15 @@ const FIL = (() => {
       if (!d) { fin = null; return; }
       tr.setAttribute('d', d); lu.setAttribute('d', d);
       const deb = point(d, false); fin = point(d, true);
-      if (!anime) { gsap.set([tr, lu], { drawSVG: '0% 100%' }); return; }
-      gsap.set([tr, lu], { drawSVG: '0% 0%' });
+      if (!anime) { gsap.set([tr, lu], { drawSVG: '0% 100%', opacity: 1 }); return; }
+      gsap.set([tr, lu], { drawSVG: '0% 0%', opacity: 0 });
       const tl = gsap.timeline(); tws.push(tl);
       if (depart) {
         const mx = (depart[0] + deb[0]) / 2, my2 = Math.min(depart[1], deb[1]) - 260;
         tl.set(co, { attr: { opacity: 1 }, x: depart[0], y: depart[1] })
           .to(co, { motionPath: { path: [{ x: depart[0], y: depart[1] }, { x: mx, y: my2 }, { x: deb[0], y: deb[1] }], curviness: 1.2 }, duration: .7, ease: 'power2.inOut' });
       } else tl.set(co, { attr: { opacity: 1 }, x: deb[0], y: deb[1] });
-      tl.to([tr, lu], { drawSVG: '0% 100%', duration: 1.3, ease: 'power2.inOut' })
+      tl.set([tr, lu], { opacity: 1 }).to([tr, lu], { drawSVG: '0% 100%', duration: 1.3, ease: 'power2.inOut' })
         .to(co, { motionPath: { path: tr, align: tr, alignOrigin: [.5, .5] }, duration: 1.3, ease: 'power2.inOut' }, '<')
         .to(co, { attr: { opacity: 0 }, duration: .4 });
     }));
@@ -3114,7 +3160,7 @@ function house2D(tl, s, idx, prevIdx, anim) {
 const PV = [
   { e: 'Terrain piqueté' },
   { e: 'Fondations', d: '14 janv. · 09:41', avis: 1, as: 'validé, signé', paie: 1, ps: 'tranche des fondations' },
-  { e: 'Gros œuvre', d: '3 mars · 16:05', avis: 0, as: 'réserve : joints à reprendre', paie: 0, ps: 'en attente de la correction' },
+  { e: 'Gros œuvre', d: '3 mars · 16:05', avis: 0, as: 'réserve : joints à reprendre', paie: 0, ps: 'en attente de la correction' },
   { e: 'Correction', d: '10 mars · 11:20', avis: 1, as: 'réserve levée, sans visite', paie: 1, ps: 'tranche du gros œuvre' },
   { e: 'Second œuvre, finitions', d: '22 juin · 10:12', avis: 1, as: 'validé, signé', paie: 1, ps: 'deux tranches' },
   { e: 'Réception', d: '18 sept. · 17:30', avis: 1, as: 'réception signée', paie: 1, ps: 'dernière tranche' }];
@@ -3140,7 +3186,7 @@ function preuves(tl, s, idx, anim, tP) {
   const [ph, av, pa] = $$('.pv', box), pin = $('.ho-epingle', s), grue = $('.ho-grue', s), still = $('.m3d-still', s);
   let fl = $('.flash', ph); if (!fl) { fl = document.createElement('i'); fl.className = 'flash'; ph.appendChild(fl); }
   const pinOn = idx === 2 || idx === 3;
-  const pinPose = () => { if (!pin) return; pin.classList.toggle('ok', idx === 3); $('span', pin).textContent = idx === 3 ? 'Corrigé' : 'Réserve'; $('b', pin).textContent = idx === 3 ? '✓' : '!'; };
+  const pinPose = () => { if (!pin) return; pinPlace(s, pin); pin.classList.toggle('ok', idx === 3); $('span', pin).textContent = idx === 3 ? 'Corrigé' : 'Réserve'; $('b', pin).textContent = idx === 3 ? '✓' : '!'; };
   const fixe = () => { if (still) still.src = 'assets/oral/tour3/maison-' + idx + '.webp'; };
   if (!anim) {
     tl.call(() => { pvPose(s, idx, 3); pinPose(); fixe(); }, null, 0);
@@ -3170,7 +3216,7 @@ function preuves(tl, s, idx, anim, tP) {
   if (grue) { if (idx >= 5) tl.to(grue, { autoAlpha: 0, y: 40, duration: .9, ease: 'power2.in' }, .1); else tl.set(grue, { autoAlpha: 1, y: 0 }, 0); }
 }
 
-const HLEG = ['Le terrain est piqueté : rien n’est encore payé.', 'Fondations : le contrôleur passe, signe ; la tranche est recommandée.', 'Gros œuvre : une réserve. Le paiement est différé.', 'Correction prouvée par photo : la tranche est recommandée.', 'Second œuvre et finitions : contrôlés, recommandés.', 'Réception : la maison est livrée, chaque tranche a sa preuve.'];
+const HLEG = ['Le terrain est piqueté : rien n’est encore payé.', 'Fondations : le contrôleur passe, signe ; la tranche est recommandée.', 'Gros œuvre : une réserve. Le paiement est différé.', 'Correction prouvée par photo : la tranche est recommandée.', 'Second œuvre et finitions : contrôlés, recommandés.', 'Réception : la maison est livrée, chaque tranche a sa preuve.'];
 
 /* ==========================================================================
    TOUR 2 · EXPERT : récit pas à pas, mouvement réduit complet, titres qui ne se chevauchent plus
@@ -3473,6 +3519,106 @@ slides.forEach(s => PREOBS.observe(s, { attributes: true, attributeOldValue: tru
    calques par tuiles et on voit des pans noirs pendant 0,3 s ; mesuré pire.) */
 
 
+
+/* ==========================================================================
+   TOUR 4 · EXPERT
+   Règle d'or des transitions (vérifiée en filmant l'écran à vitesse réelle, Page.startScreencast) :
+   aucune diapo entière n'est redécoupée (clip-path) ni ré-agrandie image par image. Chrome devait alors repeindre
+   une diapo de 5 000 × 2 800 px à chaque image : les tuiles n'arrivaient plus, d'où les écrans noirs et les pans vides
+   (1 → 2, 7 → 8, 14 → 15). On ne bouge plus que des calques déjà peints (transform, opacity) ; les formes (arche,
+   polaroïd) sont de petits éléments posés par-dessus.
+   ========================================================================== */
+const enCalque = (els, v) => els.forEach(e => { if (e) e.style.willChange = v ? 'transform, opacity' : ''; });
+
+/* 1 → 2 et 14 → 15 : on entre par la porte. La diapo de départ (déjà peinte) avance vers la porte et s'efface ;
+   la suivante est dessous, entière, dès la 1re image. Le cadre safran passe la porte avec nous. */
+TR.porte = function (tl, o, n) {
+  const cx = +(n.dataset.trX || 1440), cy = +(n.dataset.trY || 600), S = +(n.dataset.trS || 0), Q = { s: .9 };
+  const v = trSvg('<path fill="none" stroke="#E0A33A" stroke-width="6" stroke-linejoin="round"/>'), pa = v.firstChild;
+  const upd = () => pa.setAttribute('d', archD(cx, cy, Q.s)); upd();
+  enCalque([o, n], true);
+  gsap.set(o, { zIndex: 3, transformOrigin: cx + 'px ' + cy + 'px' });
+  gsap.set(n, { zIndex: 2, scale: 1.08, transformOrigin: cx + 'px ' + cy + 'px' });
+  tl.to(o, { scale: 2.5, duration: 1.0, ease: 'power2.in' }, 0)
+    .to(o, { autoAlpha: 0, duration: .42, ease: 'power1.in' }, .45)
+    .to(n, { scale: 1, duration: 1.25, ease: 'power3.out' }, .42)
+    .add(() => enCalque([o, n], false), 1.7);
+  if (S) tl.to(Q, { s: S, duration: 1.5, ease: 'power3.out', onUpdate: upd }, .2).to(v, { autoAlpha: 0, duration: .45 }, 1.6);
+  else tl.to(Q, { s: 9, duration: 1.0, ease: 'power3.in', onUpdate: upd }, .1).to(v, { autoAlpha: 0, duration: .3 }, .85);
+  return .7;
+};
+
+/* 15 → 16 : le soir devient nuit en fondu enchaîné (jamais d'écran vide) ; le texte de la fin part d'abord,
+   celui des sources arrive quand la nuit est posée (jamais deux textes l'un sur l'autre). */
+TR.nuit = function (tl, o, n) {
+  const sort = $$('.fin-left, .fin-chiffres, .merci, .merci-q, .confettis, .fin-pose, .fin-envol', o);
+  const txt = $$('.kicker, .title, .so-cols > div', n), lune = $('.so-lune', n), fen = $$('.so-horizon .fen', n);
+  enCalque([o, n], true);
+  gsap.set(n, { zIndex: 3, autoAlpha: 0 }); gsap.set(txt, { autoAlpha: 0, y: 14 });
+  tl.to(sort, { autoAlpha: 0, duration: .3, ease: 'power1.in' }, 0)
+    .to(o, { y: 36, duration: 1.1, ease: 'power1.in' }, 0)
+    .to(n, { autoAlpha: 1, duration: .85, ease: 'power1.inOut' }, .12)
+    .add(() => { gsap.set(o, { autoAlpha: 0 }); gsap.set(sort, { clearProps: 'opacity,visibility' }); enCalque([o, n], false); }, 1.0)
+    .to(txt, { autoAlpha: 1, y: 0, duration: .5, stagger: .1, ease: 'power2.out', clearProps: 'transform,opacity,visibility' }, .55);
+  if (lune) tl.fromTo(lune, { y: 46, opacity: 0 }, { y: 0, opacity: 1, duration: 1.4, ease: 'power2.out', clearProps: 'transform,opacity' }, .45);
+  if (fen.length) { const f = gsap.utils.shuffle(fen.slice()); tl.fromTo(f, { opacity: 0 }, { opacity: 1, duration: .3, stagger: { each: .07 }, clearProps: 'opacity' }, .7); }
+  return .95;
+};
+
+/* 7 → 8 : le dernier polaroïd « Validé » de la 7 s'envole et grandit ; sa photo est le terrain de Karim, cadré exactement
+   comme la diapo 8. Il se pose sur le terrain, son cadre blanc s'efface : la photo devient le lieu. Plus de serrure. */
+TR.arche = function (tl, o, n) {
+  const pile = $('.df-pile', o), src = pile && pile.lastElementChild;
+  const R = src ? rectScene(src) : { x: 130, y: 860, w: 150, h: 170 };
+  const X0 = 960, Y0 = 470, PW = 600, PH = 440;           /* photo 560 × 315 posée à (X0, Y0) sur la diapo 8 */
+  const P = trEl('polaro');
+  P.innerHTML = '<div class="ph"><img src="assets/oral/tour3/s8-paysage.webp" alt="" style="left:' + (-X0) + 'px;top:' + (-Y0) + 'px;width:1920px;height:1080px">' +
+    '<img src="assets/oral/tour3/maison-0.webp" alt="" style="left:' + (700 - X0) + 'px;top:' + (172 - Y0) + 'px;width:1100px;height:960px"></div><b>Terrain piqueté · Nador</b>';
+  const r0 = src ? (gsap.getProperty(src, 'rotation') || 0) : -6;
+  const x0 = R.x + R.w / 2 - PW / 2, y0 = R.y + R.h / 2 - PH / 2;
+  gsap.set(P, { x: x0, y: y0, scale: R.w / PW, rotation: r0, transformOrigin: '50% 50%' });
+  if (src) gsap.set(src, { autoAlpha: 0 });
+  const glow = trEl('lueur', { left: (R.x + R.w / 2) + 'px', top: (R.y + R.h / 2) + 'px' }); gsap.set(glow, { autoAlpha: 0, scale: .25 });
+  enCalque([o], true);
+  gsap.set(o, { zIndex: 3 }); gsap.set(n, { zIndex: 2 });
+  const txt7 = $$('.df-points, .df-decision, .df-head, .df-camera', o);
+  tl.to(txt7, { autoAlpha: 0, duration: .25, ease: 'power1.in' }, 0).add(() => gsap.set(txt7, { clearProps: 'opacity,visibility' }), 1.72);
+  tl.to(glow, { autoAlpha: .85, scale: .55, duration: .09, ease: 'power2.out' }, 0)
+    .to(glow, { autoAlpha: 0, scale: 1.1, duration: .45, ease: 'power2.out' }, .09)
+    .to(P, { motionPath: { path: [{ x: x0, y: y0 }, { x: 520, y: 250 }, { x: X0 - 20, y: Y0 - 20 }], curviness: 1.1 },
+      scale: 1, rotation: -2.5, duration: .95, ease: 'power3.inOut' }, .06)
+    .to(o, { autoAlpha: 0, scale: .985, duration: .55, ease: 'power1.inOut' }, .32)
+    .to(P, { rotation: 0, duration: .35, ease: 'back.out(2)' }, 1.0)
+    .to(P, { autoAlpha: 0, duration: .45, ease: 'power1.in' }, 1.25)
+    .add(() => { enCalque([o], false); if (src) gsap.set(src, { clearProps: 'opacity,visibility' }); }, 1.72);
+  return .8;
+};
+
+/* 11 → 12 : l'arche qui arrive porte déjà la question et la Bellarej : elle n'est jamais un aplat jaune vide */
+TR.partage = function (tl, o, n) {
+  const a = $('.ag-arche', n);
+  const at = partage0(tl, o, n), ar = TRL.querySelector('.tr-arche');
+  if (ar && a) {
+    const q = $('.q', a), qs = $('.qs', a);
+    ar.innerHTML = '<p class="q">' + (q ? q.innerHTML : '') + '</p><p class="qs">' + (qs ? qs.innerHTML : '') + '</p><img src="assets/decor-v3/bellarej-photo.png" alt="">';
+    ar.classList.add('plein');
+  }
+  if (a) tl.set(a, { autoAlpha: 1 }, 0);
+  return at;
+};
+
+/* 8 : l'épingle « Réserve / Corrigé » se pose sur un trumeau plein de la façade (entre la fenêtre et la porte), calculé sur la maquette */
+function pinPlace(s, pin) {
+  const m = $('.m3d', s); if (!m || !pin) return;
+  const p = m._proj ? m._proj(-1.45, 2.15, 4.32) : null;
+  const x = p ? p[0] : 585, y = p ? p[1] : 576;
+  pin.style.left = (m.offsetLeft + x - 23) + 'px'; pin.style.top = (m.offsetTop + y - 23) + 'px';
+}
+
+/* M relance aussi la vie du chantier (8) */
+const toggleMotion4 = toggleMotion;
+toggleMotion = function () { toggleMotion4(); const h = $('.s-maison .m3d'); if (h && h._vie) h._vie(); };
+
 function transition(from, to, k) {
   const o = slides[from], n = slides[to];
   TRL.textContent = '';
@@ -3494,8 +3640,10 @@ function transition(from, to, k) {
 }
 
 function next() {
-  if (trans) { if (trans.time() > .45) endTrans(); return; }   /* double appui de télécommande : ignoré au début de la transition */
   const max = stepsCount(slides[cur]);
+  /* double appui de télécommande : ignoré pendant les 0,35 premières secondes de la transition. Ensuite, sur une diapo à étapes
+     (8, 9), l'appui termine l'arrivée ET joue l'étape suivante (tour 4 : un appui à 0,9 s n'est plus avalé) ; ailleurs, il termine l'arrivée. */
+  if (trans) { if (trans.time() < .35) return; endTrans(); if (!(max > 0 && stepOf[cur] < max)) return; }
   if (max > 0 && stepOf[cur] < max) { finish(); pas(cur, stepOf[cur] + 1); return; }
   finish();
   if (cur < N - 1) go(cur + 1, { animate: true, step: 0 });
@@ -3641,7 +3789,7 @@ function refreshPresenter() {
   $('#pv-num').textContent = (cur + 1) + ' / ' + N;
   $('#pv-title').textContent = (cur + 1) + ' · ' + (s.dataset.title || '');
   $('#pv-who').textContent = (SPEAKERS[s.dataset.speaker] || '') + ' · repère ≈ ' + (s.dataset.time || '—');
-  $('#pv-steps').innerHTML = '<span>Animation automatique · un clic = slide suivante</span>';
+  $('#pv-steps').innerHTML = '<span>' + (max > 0 ? 'Pas à pas : ' + max + ' clics, une étape par clic · étape ' + k + ' / ' + max + (k >= max ? ' · le clic suivant passe à la diapo suivante' : '') : 'Un clic = diapo suivante') + '</span>';
   const notes = $('.notes', s), box = $('#pv-notes');
   box.innerHTML = notes ? notes.innerHTML : '';
   $$('p[data-at]', box).forEach(p => { const a = +p.dataset.at; p.classList.toggle('past', a < k); p.classList.toggle('now', a === k); });
@@ -3778,6 +3926,11 @@ function buildHouse(host, slide, onFail) {
   const root = new THREE.Group(); scene.add(root);
   scene.add(new THREE.HemisphereLight(0xFBE3C0, 0x6A3A24, 1.0));
   const sun = new THREE.DirectionalLight(0xFFB870, 3.2); sun.position.set(-17, 15, 13);
+  // TOUR 4 · soleil haut (52°) : l'ombre la plus longue reste sur le sable ; il avance d'un cran à chaque étape et respire doucement
+  const SUN = { az: 150, built: 0 };
+  const placeSun = (t) => { const az = THREE.MathUtils.degToRad(SUN.az + 6 * Math.sin(t * Math.PI * 2 / 40)), el = THREE.MathUtils.degToRad(52), R = 26;
+    sun.position.set(R * Math.cos(el) * Math.cos(az), R * Math.sin(el), R * Math.cos(el) * Math.sin(az)); };
+  placeSun(0);
   sun.castShadow = true; sun.shadow.mapSize.set(2048, 2048);
   Object.assign(sun.shadow.camera, { left: -15, right: 15, top: 15, bottom: -15, near: 1, far: 80 });
   sun.shadow.bias = -.0005; sun.shadow.normalBias = .03;
@@ -3790,7 +3943,7 @@ function buildHouse(host, slide, onFail) {
 
   // TOUR 3 · la parcelle posée sur le vrai sol du décor peint : pas de disque, pas de fantôme en fil de fer.
   // Le sol est transparent (ShadowMaterial) : seules les ombres de la maison tombent sur le sable peint derrière le canevas.
-  { const sh = new THREE.Mesh(new THREE.PlaneGeometry(60, 60), new THREE.ShadowMaterial({ color: 0x4A2410, opacity: .34 }));
+  { const sh = new THREE.Mesh(new THREE.CircleGeometry(10.5, 72), new THREE.ShadowMaterial({ color: 0x4A2410, opacity: .34 }));
     sh.rotation.x = -Math.PI / 2; sh.position.y = .012; sh.receiveShadow = true; root.add(sh); }
   // terre retournée de la parcelle, tracé à la chaux de l'emprise, bords fondus dans le sable peint
   { const n = 512, cv = document.createElement('canvas'); cv.width = cv.height = n; const g = cv.getContext('2d');
@@ -3827,16 +3980,17 @@ function buildHouse(host, slide, onFail) {
     // tas de sable (pâte lisse), palette de parpaings, botte de fers
     const prof = []; for (let i = 0; i <= 18; i++) { const t = i / 18; prof.push(new THREE.Vector2(1.9 * Math.pow(1 - t, .62) + .02, 1.15 * t)); }
     const sable = new THREE.Mesh(new THREE.LatheGeometry(prof, 40), mat(0xE2B47A, { roughness: 1 }));
-    sable.scale.set(1.15, 1, .9); sable.position.set(-8.2, 0, -3.2); sable.castShadow = sable.receiveShadow = true;
+    sable.scale.set(1.05, 1.25, .95); sable.position.set(-4.6, 0, 7.2); sable.castShadow = sable.receiveShadow = true;
+    const sable2 = sable.clone(); sable2.scale.set(.55, .7, .5); sable2.position.set(-2.9, 0, 7.9);
     const pal = new THREE.Group(); pal.add(box(1.7, .16, 1.3, mat(0xA0703F), 0, .08, 0));
     const parpM = mat(0xADA79C, { roughness: .95 });
-    for (let r = 0; r < 3; r++) for (let a = 0; a < 3; a++) for (let b = 0; b < 2; b++) pal.add(box(.48, .23, .6, parpM, -.52 + a * .52, .29 + r * .25, -.31 + b * .62));
+    for (let r = 0; r < 3; r++) for (let a = 0; a < 3; a++) for (let b = 0; b < 2; b++) if (!(r === 2 && a === 2)) pal.add(box(.46, .22, .58, parpM, -.52 + a * .53, .28 + r * .26, -.31 + b * .63));
     pal.position.set(8.4, 0, 3.2); pal.rotation.y = .35;
     const fersB = new THREE.Group(), ferM = mat(0x8A5A40, { roughness: .6, metalness: .35 });
     for (let i = 0; i < 7; i++) { const f = new THREE.Mesh(new THREE.CylinderGeometry(.035, .035, 3.2, 6), ferM);
       f.rotation.z = Math.PI / 2; f.position.set(0, .08 + (i % 3) * .07, -.25 + i * .08); f.castShadow = true; fersB.add(f); }
     fersB.position.set(7.4, 0, -4.6); fersB.rotation.y = -.5;
-    outils.add(sable, pal, fersB); }
+    outils.add(sable, sable2, pal, fersB); }
   root.add(piq, outils);
 
   // ouvertures (u le long de la façade, v en hauteur) : façade avant z+ et pignon gauche x−, les deux faces vues par la caméra
@@ -3861,14 +4015,23 @@ function buildHouse(host, slide, onFail) {
 
   // 1 · gros œuvre : parpaings rang par rang (baies laissées ouvertes), dalles, balcon
   const s1 = new THREE.Group(), blocks = [];
-  const OPF = OPEN.f.concat([DOOR]);
+  const OPF = OPEN.f.concat([[DOOR[0], DOOR[1], B0, B0 + 2.4]]);
   // un rang = blocs de 50 cm à joints décalés, coupés net aux angles : rien ne dépasse de l'enduit
+  const libres = (a0, a1, holes, y) => { let sg = [[a0, a1]];
+    holes.forEach(([u0, u1, v0, v1]) => { if (!(y + BH / 2 > v0 + .01 && y - BH / 2 < v1 - .01)) return;
+      sg = sg.flatMap(([p, q]) => { const o = []; if (u0 > p) o.push([p, Math.min(q, u0)]); if (u1 < q) o.push([Math.max(p, u1), q]); return o.filter(([x0, x1]) => x1 - x0 > .05); }); });
+    return sg; };
+  const run2 = (A0, a0, a1, off, cb) => { for (let a = A0 - off; a < a1 - .01; a += BL) { const u0 = Math.max(a, a0), u1 = Math.min(a + BL, a1); if (u1 - u0 > .06) cb((u0 + u1) / 2, u1 - u0); } };
   const run = (a0, a1, off, cb) => { for (let a = a0 - off; a < a1 - .01; a += BL) { const u0 = Math.max(a, a0), u1 = Math.min(a + BL, a1); if (u1 - u0 > .08) cb((u0 + u1) / 2, u1 - u0); } };
   for (let lvl = 0; lvl < 2; lvl++) { const y0 = B0 + lvl * (FH + SLAB);
     for (let row = 0; row < Math.round(FH / BH); row++) { const off = (row % 2) * BL / 2, y = y0 + row * BH + BH / 2;
-      run(-W / 2 - .1, W / 2 + .1, off, (u, len) => { if (!hit(OPF, u, y, len)) blocks.push([u, y, D / 2, 0, len]); blocks.push([u, y, -D / 2, 0, len]); });
-      run(-D / 2 + .1, D / 2 - .1, off, (u, len) => { if (!hit(OPEN.l, u, y, len)) blocks.push([-W / 2, y, u, 1, len]); blocks.push([W / 2, y, u, 1, len]); }); } }
+      const A = -W / 2 - .1, Bz = -D / 2 + .1;
+      libres(A, W / 2 + .1, OPF, y).forEach(([p, q]) => run2(A, p, q, off, (u, len) => blocks.push([u, y, D / 2, 0, len])));
+      run2(A, A, W / 2 + .1, off, (u, len) => blocks.push([u, y, -D / 2, 0, len]));
+      libres(Bz, D / 2 - .1, OPEN.l, y).forEach(([p, q]) => run2(Bz, p, q, off, (u, len) => blocks.push([-W / 2, y, u, 1, len])));
+      run2(Bz, Bz, D / 2 - .1, off, (u, len) => blocks.push([W / 2, y, u, 1, len])); } }
   blocks.sort((a, b) => a[1] - b[1]);
+  const T1 = 1.8 * blocks.filter(b => b[1] < L1).length / blocks.length;   // le 1er étage est monté : la dalle se pose
   const parp = new THREE.InstancedMesh(new THREE.BoxGeometry(BL, BH * .9, .2), mat(0xA9A49A, { roughness: .95 }), blocks.length);
   blocks.forEach(([x, y, z, r, len], i) => { tmp.position.set(x, y, z); tmp.rotation.set(0, r ? Math.PI / 2 : 0, 0); tmp.scale.set((len - .02) / BL, 1, 1); tmp.updateMatrix(); parp.setMatrixAt(i, tmp.matrix); });
   tmp.rotation.set(0, 0, 0); tmp.scale.set(1, 1, 1);
@@ -3947,6 +4110,94 @@ function buildHouse(host, slide, onFail) {
   s4.add(halo); stages.push(s4);
   stages.forEach(g => { g.visible = false; root.add(g); });
 
+  // ==========================================================================
+  // TOUR 4 · le chantier vit entre deux appuis : grue en 3D qui pivote, deux ouvriers, poussière, soleil qui tourne.
+  // Tout est dans le même canevas (un seul rendu par image) ; « M » fige tout.
+  // ==========================================================================
+  const tex = (w, h, f) => { const cv = document.createElement('canvas'); cv.width = w; cv.height = h; f(cv.getContext('2d')); const t = new THREE.CanvasTexture(cv); t.colorSpace = THREE.SRGBColorSpace; return t; };
+  // poussière : petites bouffées de sable (sprites recyclés)
+  const puffTex = tex(64, 64, g => { const gr = g.createRadialGradient(32, 32, 2, 32, 32, 32);
+    gr.addColorStop(0, 'rgba(238,210,166,.95)'); gr.addColorStop(.45, 'rgba(226,190,140,.5)'); gr.addColorStop(1, 'rgba(226,190,140,0)'); g.fillStyle = gr; g.fillRect(0, 0, 64, 64); });
+  const puffs = []; for (let i = 0; i < 26; i++) { const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: puffTex, transparent: true, depthWrite: false, opacity: 0 })); sp.visible = false; root.add(sp); puffs.push(sp); }
+  let pi = 0;
+  function bouffee(x, y, z, spread, n, big) {
+    if (RM) return;
+    for (let k = 0; k < (n || 1); k++) {
+      const sp = puffs[pi++ % puffs.length]; gsap.killTweensOf([sp.scale, sp.material, sp.position]);
+      const a = Math.random() * 6.283, r = (spread || 0) * (.35 + Math.random() * .65) / 2, S = (big || 1.6) * (.7 + Math.random() * .6);
+      sp.position.set(x + Math.cos(a) * r, y + .15, z + Math.sin(a) * r * .8); sp.visible = true;
+      gsap.fromTo(sp.scale, { x: S * .3, y: S * .3 }, { x: S, y: S, duration: 1.4, ease: 'power2.out' });
+      gsap.to(sp.position, { y: y + .15 + S * .5, duration: 1.4, ease: 'power1.out' });
+      gsap.fromTo(sp.material, { opacity: .6 }, { opacity: 0, duration: 1.4, ease: 'power1.in', onComplete: () => { sp.visible = false; } });
+    }
+  }
+  let lastC = 0, pret = false;
+  function poussiereRang() { if (!pret) return; const c = parp.count; if (c < lastC || !tls[1] || !tls[1].isActive()) { lastC = c; return; }
+    if (c - lastC >= 10 && c > 0) { const b = blocks[c - 1]; bouffee(b[0], b[1] - .15, b[2], .5, 1, 1.05); lastC = c; } }
+
+  // la grue : mât en treillis, flèche, contre-flèche et lest, chariot, câble et palette de parpaings
+  const grue = new THREE.Group(), gTete = new THREE.Group(), chariot = new THREE.Group(), charge = new THREE.Group();
+  const cableM = mat(0x2A2A2E, { roughness: .5 });
+  const cable = new THREE.Mesh(new THREE.CylinderGeometry(.022, .022, 1, 5), cableM);
+  { const latt = (rx, ry) => { const t = tex(64, 64, g => { g.fillStyle = '#E6A12E'; g.fillRect(0, 0, 64, 64); g.strokeStyle = '#7A4E16'; g.lineWidth = 6; g.strokeRect(3, 3, 58, 58); g.beginPath(); g.moveTo(3, 61); g.lineTo(61, 3); g.stroke(); });
+      t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(rx, ry); return mat(0xFFFFFF, { map: t, roughness: .6 }); };
+    const MH = 8.4, beton = mat(0xB9B3A8, { roughness: .95 }), blanc = mat(0xF4EFE6, { roughness: .8 });
+    grue.add(box(1.9, .45, 1.9, beton, 0, .225, 0), box(.6, MH, .6, latt(1, MH / .6), 0, .45 + MH / 2, 0));
+    gTete.position.y = .45 + MH;
+    gTete.add(box(.9, .28, .9, mat(0x7A4E16), 0, .14, 0), box(.85, .72, .8, blanc, .45, .62, .64),
+      box(10.5, .34, .34, latt(10.5 / .34, 1), 5.55, .46, 0), box(3.4, .34, .34, latt(3.4 / .34, 1), -1.7, .46, 0), box(1.05, .9, .72, beton, -3.0, .2, 0));
+    const pointe = new THREE.Mesh(new THREE.ConeGeometry(.4, 1.7, 4), latt(1, 3)); pointe.position.set(0, 1.45, 0); pointe.rotation.y = Math.PI / 4; pointe.castShadow = true; gTete.add(pointe);
+    [9.5, -3.0].forEach(x => { const a = new THREE.Vector3(0, 2.25, 0), b = new THREE.Vector3(x, .62, 0), d = b.clone().sub(a);
+      const c = new THREE.Mesh(new THREE.CylinderGeometry(.022, .022, d.length(), 5), cableM); c.position.copy(a).add(b).multiplyScalar(.5);
+      c.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), d.normalize()); gTete.add(c); });
+    chariot.add(box(.5, .18, .46, cableM, 0, .2, 0)); chariot.position.set(6.5, 0, 0);
+    cable.castShadow = true; chariot.add(cable);
+    const pal = box(1.2, .12, .9, mat(0xA0703F), 0, .06, 0); charge.add(pal);
+    const pm = mat(0xADA79C, { roughness: .95 }); for (let a = 0; a < 2; a++) for (let b = 0; b < 2; b++) charge.add(box(.46, .22, .38, pm, -.25 + a * .5, .23, -.2 + b * .42));
+    const el = new THREE.Mesh(new THREE.TorusGeometry(.12, .03, 6, 12, Math.PI), cableM); el.position.y = .55; charge.add(el);
+    chariot.add(charge); gTete.add(chariot); grue.add(gTete);
+    grue.position.set(9.0, 0, -6.6); root.add(grue); }
+
+  // deux ouvriers (casque safran, tenue vert de Fès / terre) : l'un porte des parpaings de la palette au mur, l'autre bâtit le pignon
+  const ouvrier = (c) => { const g = new THREE.Group(), peau = mat(0xC68B5E, { roughness: .8 }), tenue = mat(c, { roughness: .85 }), jean = mat(0x3B4656, { roughness: .9 }), casque = mat(0xE6A12E, { roughness: .4 });
+    const jg = new THREE.Group(), jd = new THREE.Group(); jg.add(box(.17, .8, .2, jean, 0, -.4, 0)); jd.add(box(.17, .8, .2, jean, 0, -.4, 0)); jg.position.set(-.12, .82, 0); jd.position.set(.12, .82, 0);
+    const bg = new THREE.Group(), bd = new THREE.Group(); bg.add(box(.13, .58, .15, tenue, 0, -.27, 0)); bd.add(box(.13, .58, .15, tenue, 0, -.27, 0)); bg.position.set(-.31, 1.4, 0); bd.position.set(.31, 1.4, 0);
+    const tt = new THREE.Mesh(new THREE.SphereGeometry(.17, 16, 12), peau); tt.position.y = 1.62; tt.castShadow = true;
+    const cq = new THREE.Mesh(new THREE.SphereGeometry(.2, 16, 8, 0, Math.PI * 2, 0, Math.PI / 2), casque); cq.position.y = 1.67; cq.castShadow = true;
+    const vis = new THREE.Mesh(new THREE.CylinderGeometry(.25, .25, .025, 16), casque); vis.position.y = 1.68; vis.castShadow = true;
+    g.add(jg, jd, box(.46, .62, .28, tenue, 0, 1.13, 0), bg, bd, tt, cq, vis); g.userData = { jg, jd, bg, bd }; return g; };
+  const porteur = ouvrier(0x1F6B4F), macon = ouvrier(0xB8613A);
+  const bloc = box(.42, .2, .5, mat(0xADA79C, { roughness: .95 }), 0, 1.05, .34); porteur.add(bloc);
+  macon.position.set(-6.1, 0, -1.2); macon.rotation.y = Math.PI / 2;
+  const gens = new THREE.Group(); gens.add(porteur, macon); root.add(gens);
+  const A = new THREE.Vector3(7.3, 0, 2.3), Bp = new THREE.Vector3(3.4, 0, 5.1);
+  let tv = 0, tPrev = 0, tCoup = 0;
+  function vie(now) {
+    const dt = tPrev ? Math.min(.05, (now - tPrev) / 1000) : 0; tPrev = now;
+    if (RM) { loop.stop(); tPrev = 0; return; }
+    tv += dt; const t = tv;
+    placeSun(t);
+    gTete.rotation.y = -2.55 + .5 * Math.sin(t * Math.PI * 2 / 26);
+    chariot.position.x = 6.2 + 2.3 * Math.sin(t * Math.PI * 2 / 17);
+    const Lc = 4.7 + 1.3 * Math.sin(t * Math.PI * 2 / 11); cable.scale.y = Lc; cable.position.y = -Lc / 2; charge.position.y = -Lc - .6; charge.rotation.y = .35 * Math.sin(t * .6);
+    // le porteur : aller (bloc en main), poser, retour, reprendre
+    const T = 9, ph = (t % T) / T, U = porteur.userData;
+    let k, va = true, porte = true;
+    if (ph < .38) k = ph / .38; else if (ph < .5) { k = 1; va = false; porte = ph < .44; } else if (ph < .88) { k = 1 - (ph - .5) / .38; porte = false; } else { k = 0; va = false; porte = ph > .94; }
+    porteur.position.lerpVectors(A, Bp, k);
+    const dir = Bp.clone().sub(A); porteur.rotation.y = Math.atan2(dir.x, dir.z) + (ph >= .5 && ph < .88 ? Math.PI : 0);
+    const pas = va ? Math.sin(t * 9) : 0;
+    U.jg.rotation.x = .55 * pas; U.jd.rotation.x = -.55 * pas; porteur.position.y = va ? Math.abs(Math.sin(t * 9)) * .05 : 0;
+    U.bg.rotation.x = U.bd.rotation.x = porte ? -1.15 : .4 * -pas; bloc.visible = porte;
+    // le maçon tape trois coups, souffle, recommence ; un peu de poussière au mur
+    const M = macon.userData, c = t % 2.6;
+    M.bd.rotation.x = c < 1.2 ? -1.5 + .75 * Math.abs(Math.sin(c * Math.PI * 2.5)) : -.25;
+    M.bg.rotation.x = -.6;
+    if (c < tCoup && built > 0 && built < 5) bouffee(-5.35, .6 + Math.random() * 1.4, -1.2, .4, 1, .8);
+    tCoup = c;
+  }
+
+
   // (tour 3) plus de cadre en fil de fer pour la réserve : elle est montrée par la carte « Avis du contrôleur » et l'épingle du mur
 
   // une timeline par étape (fromTo explicites : progress 0 = absente, 1 = construite)
@@ -3956,14 +4207,17 @@ function buildHouse(host, slide, onFail) {
       .fromTo(longr.scale, { y: .001 }, { y: 1, duration: .45, ease: 'power3.out' })
       .fromTo(stubs.scale, { y: .001 }, { y: 1, duration: .45, ease: 'power3.out' }, .15)
       .fromTo(aoM, { opacity: 0 }, { opacity: 1, duration: .6 }, 0)
-      .fromTo(fers.scale, { y: .001 }, { y: 1, duration: .5 }, .3),
+      .fromTo(fers.scale, { y: .001 }, { y: 1, duration: .5 }, .3)
+      .call(() => { if (tls[0].isActive()) { bouffee(-W / 2, 0, 0, 3, 2); bouffee(W / 2, 0, 0, 3, 2); bouffee(0, 0, D / 2, 4, 2); } }, null, .1),
     gsap.timeline({ paused: true })
-      .fromTo(parp, { count: 0 }, { count: blocks.length, duration: 1.8, ease: 'none', snap: { count: 1 } })
-      .fromTo(d1.position, { y: d1y + 3 }, { y: d1y, duration: .5, ease: 'power3.out' }, .8)
-      .fromTo(balc.position, { y: by + 3 }, { y: by, duration: .5, ease: 'power3.out' }, .85)
-      .fromTo(m1, { opacity: 0 }, { opacity: 1, duration: .3 }, .8)
-      .fromTo(d2.position, { y: d2y + 3 }, { y: d2y, duration: .5, ease: 'power3.out' }, 1.6)
-      .fromTo(m2, { opacity: 0 }, { opacity: 1, duration: .3 }, 1.6),
+      .fromTo(parp, { count: 0 }, { count: blocks.length, duration: 1.8, ease: 'none', snap: { count: 1 }, onUpdate: () => poussiereRang() })
+      .fromTo(d1.position, { y: d1y + .7 }, { y: d1y, duration: .28, ease: 'power2.out' }, T1 - .02)
+      .fromTo(balc.position, { y: by + .7 }, { y: by, duration: .28, ease: 'power2.out' }, T1 + .06)
+      .fromTo(m1, { opacity: 0 }, { opacity: 1, duration: .12 }, T1 - .02)
+      .call(() => { if (tls[1].isActive()) bouffee(0, L1, 0, 9, 4); }, null, T1 + .2)
+      .fromTo(d2.position, { y: d2y + .7 }, { y: d2y, duration: .28, ease: 'power2.out' }, 1.8)
+      .fromTo(m2, { opacity: 0 }, { opacity: 1, duration: .12 }, 1.8)
+      .call(() => { if (tls[1].isActive()) bouffee(0, TOP, 0, 9, 4); }, null, 2.0),
     gsap.timeline({ paused: true })
       .fromTo(plane, { constant: -(TOP + .5) }, { constant: .1, duration: 1.4, ease: 'power2.inOut' })
       .fromTo([m1.color, m2.color], { r: c0.r, g: c0.g, b: c0.b }, { r: c1.r, g: c1.g, b: c1.b, duration: 1.2 }, .1)
@@ -3975,20 +4229,26 @@ function buildHouse(host, slide, onFail) {
     gsap.timeline({ paused: true })
       .fromTo(glassM, { emissiveIntensity: 0 }, { emissiveIntensity: 1.25, duration: .9, ease: 'power1.in' })
       .fromTo(halo.scale, { x: 1, y: 1, z: 1 }, { x: 11, y: 11, z: 11, duration: 1.3, ease: 'expo.out' }, .55)
-      .fromTo(halo.material, { opacity: .9 }, { opacity: 0, duration: 1.3 }, .55)];
+      .fromTo(halo.material, { opacity: .9 }, { opacity: 0, duration: 1.3 }, .55)
+      .fromTo(grue.scale, { x: 1, y: 1, z: 1 }, { x: .001, y: .001, z: .001, duration: .7, ease: 'back.in(1.4)' }, 0)
+      .fromTo(gens.scale, { x: 1, y: 1, z: 1 }, { x: .001, y: .001, z: .001, duration: .45, ease: 'power2.in' }, .1)];
   tls.forEach(t => t.progress(0));
+  pret = true;
 
   // caméra ¾ plongeante, fixe : la maquette ne bouge que lorsqu'elle se construit
   const camR = 46, pol = THREE.MathUtils.degToRad(60), yaw = -.62;
   camera.position.set(Math.sin(yaw) * Math.sin(pol) * camR, Math.cos(pol) * camR + 2.4, Math.cos(yaw) * Math.sin(pol) * camR);
   camera.lookAt(.6, 2.2, 0);
-  const loop = glLoop(renderer, () => {
+  const loop = glLoop(renderer, (now) => {
+    vie(now || performance.now());
     renderer.render(scene, camera);
     if (!host.classList.contains('gl')) { host.classList.add('gl'); host.classList.remove('gl-wait'); }
   }, onFail);
   function resize() { renderer.setPixelRatio(loop.lowered() ? 1 : clamp(devicePixelRatio * scale, .75, 1.5)); renderer.setSize(VW, VH, false); camera.aspect = VW / VH; camera.updateProjectionMatrix(); loop.kick(80); }
   resize(); addEventListener('resize', resize);
   host._snap = () => { renderer.render(scene, camera); return canvas.toDataURL('image/png'); };
+  host._proj = (x, y, z) => { camera.updateMatrixWorld(); const v = new THREE.Vector3(x, y, z).project(camera); return [(v.x + 1) / 2 * VW, (1 - v.y) / 2 * VH]; };
+  host._vie = () => loop.kick(RM ? 250 : 864e5);
 
   let built = 0;
   function apply(idx, anim) {
@@ -4002,12 +4262,13 @@ function buildHouse(host, slide, onFail) {
       } else { t.delay(0).pause().progress(0); stages[j].visible = false; }
     });
     built = b;
-    loop.kick(anim ? 7000 : 250);
+    gsap.to(SUN, { az: 150 - b * 13, duration: anim ? 2.4 : 0, ease: 'sine.inOut', overwrite: true });   // le temps passe : l'ombre tourne d'un cran
+    loop.kick(RM ? (anim ? 7000 : 250) : 864e5);
   }
   return {
     enter() { apply(slide._hk || 0, false); },
     apply,
-    dispose() { loop.stop(); removeEventListener('resize', resize); tls.forEach(t => t.kill()); glDispose(scene, renderer, canvas, lost); host.classList.remove('gl'); }
+    dispose() { loop.stop(); delete host._proj; delete host._vie; removeEventListener('resize', resize); tls.forEach(t => t.kill()); glDispose(scene, renderer, canvas, lost); host.classList.remove('gl'); }
   };
 }
 
