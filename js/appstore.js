@@ -115,8 +115,8 @@ root.innerHTML = `
   <div class="hero"><div class="wm">TEEQA<small>votre chantier, vérifié</small></div></div>
   <div class="ident">${ic(116)}<div class="grow"><h1>TEEQA : Suivi de chantier et contrôle</h1><p>Construire au Maroc à distance</p>${getBtn()}</div></div>
   <div class="ribbon">
-    <div><small>1,4 M d'avis</small><b>4,9</b><span class="stars">${STAR5}</span></div>
-    <div><small>Téléchargements</small><b>+100 M</b><span>Dans le monde</span></div>
+    <div><small>2,3 k avis</small><b>4,8</b><span class="stars">${STAR5}</span></div>
+    <div><small>Téléchargements</small><b>+20 k</b><span>Maroc et Europe</span></div>
     <div><small>Récompenses</small><b>${laurel('Choix de la<br>rédaction')}</b><span>Apps</span></div>
     <div><small>Classement</small><b>N° 1</b><span>Productivité</span></div>
     <div><small>Âge</small><b>4+</b><span>Ans</span></div>
@@ -133,7 +133,7 @@ root.innerHTML = `
   <div style="height:22px"></div>
   <div class="cardk"><h3>${laurel('Choix de la rédaction')}</h3><p>Suivre un chantier à distance devient limpide et rassurant : six étapes, des photos prises sur place et un avis signé avant chaque paiement.</p></div>
   <button data-sub="v-revs" style="display:block;width:100%;text-align:left"><h2 class="sec">Notes et avis ${CHEV}</h2></button>
-  <div class="rate"><span class="big">4,9</span><span class="r"><span class="stars">${STAR5}</span>1,4 M d'avis</span></div>
+  <div class="rate"><span class="big">4,8</span><span class="r"><span class="stars">${STAR5}</span>2,3 k avis</span></div>
   <p class="h3">Avis les plus utiles</p><div class="hs">${REVIEWS.slice(0, 6).map(rev).join('')}</div>
   <p class="tap">Toucher pour noter</p><div class="tapstars" id="tapstars">${[1, 2, 3, 4, 5].map(n => `<button data-star="${n}" aria-label="${n} étoile${n > 1 ? 's' : ''}">☆</button>`).join('')}</div>
   <div class="two"><button data-sheet="write">✎ Rédiger un avis</button><button data-sheet="help">ⓘ Assistance</button></div>
@@ -163,7 +163,7 @@ root.innerHTML = `
   <div class="app">${fake('6', '#C26A42')}<span class="grow"><b>TEEQA Guide</b><span>Les 6 étapes expliquées</span></span><button class="get soft">Obtenir</button></div></section>
 
 <section class="view sub" id="v-revs"><div class="sbar" style="align-items:center"><button class="round" data-close>${BACK}</button><b style="font-size:17px;flex:1;text-align:center;margin-right:46px">Notes et avis</b></div>
-  <div class="rate"><span class="big">4,9</span><span class="r"><span class="stars">${STAR5}</span>1,4 M d'avis</span></div><p class="h3">Les plus utiles ⌄</p><div class="list">${REVIEWS.map(rev).join('')}</div></section>
+  <div class="rate"><span class="big">4,8</span><span class="r"><span class="stars">${STAR5}</span>2,3 k avis</span></div><p class="h3">Les plus utiles ⌄</p><div class="list">${REVIEWS.map(rev).join('')}</div></section>
 
 <div class="dim" id="dim"></div>
 <section class="sheet" id="sheet" role="dialog" aria-modal="true"></section>
