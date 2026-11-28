@@ -319,7 +319,11 @@ let su = null;
 const suNew = () => ({ step: 0, from: 0, role: '', name: '', email: '', has: '', pname: '', city: '', pays: '' });
 // Soutenance (demo-oral.html, 27 nov.) : devant le jury, on touche, on ne tape pas : prénom, pays et téléphone de Karim
 // sont déjà saisis (comme le remplissage automatique du téléphone) ; le rôle se choisit au doigt.
-const suNewOral = () => ({ ...suNew(), name: 'Karim', pays: 'FR', tel: '+33 6 12 48 57 30' });
+// 28 nov. (Nabih) : l'entreprise arrive par le lien d'invitation de Karim (brouillon « suInvite » posé par demo-oral.js) :
+// son rôle est connu, nom, e-mail et téléphone sont déjà saisis ; après « Entrer dans TEEQA », elle retrouve l'invitation.
+const suNewOral = () => { const i = (get().drafts || {}).suInvite;
+  return i && i.pid ? { ...suNew(), step: 1, from: 1, role: 'entreprise', name: i.name || '', email: i.email || '', tel: i.tel || '', invite: i }
+    : { ...suNew(), name: 'Karim', pays: 'FR', tel: '+33 6 12 48 57 30' }; };
 const SU_N = 4;
 const suMail = (m) => !m.trim() || /.+@.+\..+/.test(m.trim());
 const suValid = (d) => d.step === 0 ? !!d.role : d.step === 1 ? d.name.trim().length > 1 && suMail(d.email) && (d.role !== 'client' || !!d.pays)
@@ -329,6 +333,8 @@ const suManque = (d) => { if (suValid(d)) return ''; const m = d.step === 0 ? ['
   const l = m.filter(Boolean); return l.length ? `Il manque : ${l.join(', ')}.` : ''; };
 const suFirst = (d) => esc(d.name.trim().split(' ')[0] || '');
 const suAsk = (d) => d.step === 0 ? ['Bienvenue ! Moi, c\'est Bellarej.', 'Qui êtes-vous sur le chantier ?']
+  : d.step === 1 && d.invite ? [`${esc(d.invite.de || 'Votre client')} vous invite sur « ${esc(d.invite.nom || 'son chantier')} ».`, 'Créons le compte de votre entreprise.']
+  : d.step === 2 && d.invite ? [`Bienvenue, ${suFirst(d)} !`, 'Votre invitation vous attend.']
   : d.step === 1 ? [d.role === 'entreprise' ? 'Une entreprise, parfait.' : 'Un chantier à suivre, parfait.', d.role === 'entreprise' ? 'Quel est le nom de votre entreprise ?' : 'Comment vous appelle-t-on ?']
   : d.step === 2 ? (d.role === 'entreprise' ? [`Bienvenue, ${suFirst(d)} !`, 'Vos chantiers arrivent par invitation.'] : [`Bienvenue, ${suFirst(d)} !`, d.parents ? 'Le chantier de vos parents est-il déjà en cours ?' : 'Avez-vous déjà un chantier en cours ?'])
   : ['', ''];
@@ -350,7 +356,7 @@ function suBody(d) {
       <div class="field"><label for="su-tel">Votre téléphone <i>(facultatif : alertes par SMS ou WhatsApp)</i></label><input id="su-tel" class="input" type="tel" inputmode="tel" data-input="su-field" data-k="tel" data-testid="su-tel" value="${esc(d.tel || '')}" placeholder="${d.pays && d.pays !== 'MA' ? '+33 6 …, +32 4 …' : '+212 6 …'}" autocomplete="off"></div>${/* vague 25 (5 groupes) : le numéro dès l'inscription, puisque les alertes passent par SMS et WhatsApp */''}
       <p class="meta">${icon('lock', 'xs')} Votre chantier n'est jamais public : seules les personnes que vous invitez le voient.</p></div>`;
   if (d.step === 2 && d.role === 'entreprise') return `<div class="su-info">
-      <div class="su-info-row"><span class="su-num">1</span><span>Votre client crée le chantier et <b>vous invite</b> par e-mail.</span></div>
+      <div class="su-info-row"><span class="su-num">1</span><span>${d.invite ? `${esc(d.invite.de || 'Votre client')} a créé « ${esc(d.invite.nom || 'son chantier')} » et <b>vous a invité</b>.` : 'Votre client crée le chantier et <b>vous invite</b> par e-mail.'}</span></div>
       <div class="su-info-row"><span class="su-num">2</span><span>Vous <b>déclarez</b> le début et la fin de chaque étape, en photos.</span></div>
       <div class="su-info-row"><span class="su-num">3</span><span>Un contrôleur passe sur place et <b>signe un avis</b>.</span></div></div>`;
   if (d.step === 2) return `<div class="su-cards" role="radiogroup" aria-label="Votre chantier">
@@ -389,8 +395,9 @@ function suFinish() {
   actions.session({ loggedIn: true, onboarded: true, splashSeen: true });
   let id = null;
   if (d.role === 'client' && d.has === 'oui') id = actions.createProject({ name: d.pname.trim(), city: d.city.trim(), steps: [...TEMPLATE_STEPS], email: '', controls: TEMPLATE_STEPS.length });
+  const inv = d.invite; if (inv) actions.setDraft('suInvite', null);
   su = null; landing = true;
-  go(id ? `#/c/${id}` : '#/home', { replace: true });
+  go(inv ? `#/invite/${inv.pid}/entreprise` : id ? `#/c/${id}` : '#/home', { replace: true });
 }
 
 export const routes = [

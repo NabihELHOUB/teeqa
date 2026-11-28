@@ -9,7 +9,11 @@ export const SALLE = (() => { try { return /[?&]salle\b/.test(location.search); 
 // chantier par le stockage du navigateur, sans serveur (événement « storage »). Chacun garde son rôle et sa session sous sa clé.
 export const ORAL = (() => { try { return !SALLE && /[?&]oral\b/.test(location.search); } catch { return false; } })();
 const ORAL_ROLE = ORAL ? (new URLSearchParams(location.search).get('role') || 'client') : null;
-export const ORAL_INSCRIPTION = ORAL && ORAL_ROLE === 'client' && /[?&]inscription\b/.test(location.search);
+// 28 nov. (Nabih) : l'entreprise aussi arrive sans compte (elle installe l'appli en touchant le lien d'invitation, puis crée son compte).
+export const ORAL_INSCRIPTION = ORAL && ['client', 'entreprise'].includes(ORAL_ROLE) && /[?&]inscription\b/.test(location.search);
+// 28 nov. (Nabih) : pendant la soutenance, l'agence de contrôle reçoit son lien une fois le forfait payé par le client
+// (dans l'appli ordinaire, dès la convention acceptée des deux côtés). Les textes qui annoncent la mission suivent.
+export const MISSION_QUAND = ORAL ? 'dès que le client aura payé le forfait' : "dès que l'entreprise et la convention seront acceptées";
 const KEY = SALLE ? 'teeqa-salle-v1' : ORAL ? 'teeqa-oral-' + ORAL_ROLE : /[?&]vitrine\b/.test(location.search) ? 'teeqa-vitrine-v2' : 'teeqa-demo-v2';
 // Dans la salle, chaque onglet est un téléphone à part (on peut répéter la démo à trois onglets sur un seul ordinateur).
 const STOCK = (() => { try { return SALLE ? sessionStorage : localStorage; } catch { return null; } })();
@@ -98,7 +102,7 @@ export const REGLES = {
   trancheDue: "Une tranche est due 7 jours après l'avis favorable. Aux points d'arrêt (fondations, murs et poteaux, dalle, et tout ouvrage en béton armé ajouté par avenant), le béton n'est pas encore coulé à l'avis : elle est due 7 jours après le coulage déclaré.",
   // Vague 17 (jury, n° 10) : la mission part à la convention, la première visite attend le forfait.
   // Vague 18 (jury, n° 3) : un seul déclencheur du forfait, dit avec les mêmes mots partout.
-  forfaitMission: "Le forfait se paie en une fois, ou en 3 fois sans frais par carte : rien n'est dû avant la convention acceptée des deux côtés ; en une fois, il est dû avant la première visite de contrôle ; en 3 fois, un tiers avant chacune des 3 premières visites (le premier dès la convention). L'agence est missionnée dès la convention, pour préparer les visites ; l'entreprise peut débuter avant le paiement.",
+  forfaitMission: "Le forfait se paie en une fois, ou en 3 fois sans frais par carte : rien n'est dû avant la convention acceptée des deux côtés ; en une fois, il est dû avant la première visite de contrôle ; en 3 fois, un tiers avant chacune des 3 premières visites (le premier dès la convention). " + (ORAL ? "L'agence est missionnée dès le forfait payé ; l'entreprise peut débuter avant." : "L'agence est missionnée dès la convention, pour préparer les visites ; l'entreprise peut débuter avant le paiement."),
   // Vague 17 (jury, n° 18) : trois routes vers une autre agence, une seule compte dans le « une fois ».
   autresAgences: "Changer d'agence (une fois chacun, avec un motif) est le seul geste limité. Une autre agence pour une visite en retard (sans frais) et le second avis ne le consomment pas.",
   // Vague 17 (jury, n° 21) : données au Maroc, sauf ce que vous choisissez d'envoyer par WhatsApp ou SMS.
@@ -1662,7 +1666,7 @@ const agence = (p) => { const a = agenceFor(p && p.city) || AGENCE; const { proc
 const plusMois = (iso, m) => { const d = new Date(iso); d.setMonth(d.getMonth() + m); return d.toISOString(); };
 function assignController(p, force = false) {
   const c = p.invites.controleur;
-  if (!force && (!c || c.status !== 'non_creee' || access(p, 'entreprise') !== 'ok' || !conventionOk(p) || !p.steps.some(isControlled))) return;
+  if (!force && (!c || c.status !== 'non_creee' || access(p, 'entreprise') !== 'ok' || !conventionOk(p) || !p.steps.some(isControlled) || (ORAL && !(p.forfait && p.forfait.paidAt)))) return;
   p.invites.controleur = { status: 'envoyee', by: 'teeqa', ...agence(p), token: Math.random().toString(36).slice(2, 6) + '-' + Math.random().toString(36).slice(2, 6), at: now(), dueAt: plus(now(), DELAIS.mission) };
   notify(['controleur'], `Mission de contrôle TEEQA : chantier « ${p.name} » (${p.city}). Ouvrez le lien pour l'accepter.`, `#/invite/${p.id}/controleur`);
   notify(['client'], `TEEQA a missionné une agence de contrôle de la zone pour « ${p.name} ».`, `#/c/${p.id}/share`);
@@ -1754,7 +1758,7 @@ export const actions = {
     notify(['client'], `${R('entreprise')} confirme avoir reçu ${dh(x.dh)} (${x.acompte ? 'acompte' : 'versement partiel'}).`, `#/c/${pid}/budget`); }); },
   // Forfait TEEQA : payé une fois par le client, après la convention acceptée des deux côtés (carte, virement bancaire ou en agence).
   payForfait(pid, moyen = 'carte') { commit(st => { const p = project(pid); if (!p || p.status === 'clos' || (p.forfait && p.forfait.paidAt) || !conventionOk(p)) return;
-    p.forfait = { dh: forfaitDh(p.steps.filter(isControlled).length), paidAt: now(), moyen, recu: 'TQ-' + new Date(nowMs()).getFullYear() + '-' + String(Math.abs([...pid].reduce((a, c) => a * 31 + c.charCodeAt(0), 7)) % 100000).padStart(5, '0'), ...(['national', 'sepa', 'agence'].includes(moyen) ? { aReception: true } : {}) }; notify(['client'], `Forfait TEEQA payé pour « ${p.name} » (${dh(p.forfait.dh)}). Reçu dans Documents.`, `#/c/${pid}/controles`); }); },
+    p.forfait = { dh: forfaitDh(p.steps.filter(isControlled).length), paidAt: now(), moyen, recu: 'TQ-' + new Date(nowMs()).getFullYear() + '-' + String(Math.abs([...pid].reduce((a, c) => a * 31 + c.charCodeAt(0), 7)) % 100000).padStart(5, '0'), ...(['national', 'sepa', 'agence'].includes(moyen) ? { aReception: true } : {}) }; notify(['client'], `Forfait TEEQA payé pour « ${p.name} » (${dh(p.forfait.dh)}). Reçu dans Documents.`, `#/c/${pid}/controles`); if (ORAL) assignController(p); }); },
   // Rapport partagé par un lien en lecture seule (famille, banque, notaire), avec une durée ; retirable à tout moment.
   shareReport(pid, { to = 'Famille', days = 30, by = 'client', sansPaiements = false } = {}) { commit(st => { const p = project(pid); if (!p || !['client', 'entreprise'].includes(by)) return;
     (p.partages = p.partages || []).push({ id: uid('sh'), to: String(to).slice(0, 60), by, at: now(), expiresAt: plus(now(), days * 24), vues: 0, ...(sansPaiements ? { sansPaiements: true } : {}) }); }); },

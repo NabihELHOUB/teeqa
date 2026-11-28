@@ -1292,6 +1292,22 @@ body #pv .pv-top .pv-sp{width:auto;min-width:max-content;display:flex;gap:12px;f
 #pv-next img.affiche,#pv-cur img.affiche,.pv-box img.affiche{display:block;width:100%;height:100%;object-fit:cover}
 #pv-next img.clay.affiche,.pv-box img.clay.affiche{object-fit:contain}
 
+/* 28 nov. · 7 · le flash part du DOS du téléphone (côté appareil photo, vers le chantier) : la lueur naît derrière le bord haut,
+   près de l'objectif ; le téléphone et la main droite restent devant elle (masque à leur forme). */
+.s-diff .df-photo .flash{left:680px;top:270px;width:380px;height:300px;border-radius:50%;background:radial-gradient(closest-side,rgba(255,255,255,.95),rgba(255,246,220,.5) 45%,rgba(255,255,255,0))}
+.s-diff .df-photo .flash-cal{-webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1160 1080' width='1160' height='1080' preserveAspectRatio='none'><path fill-rule='evenodd' d='M0 0H1160V1080H0Z M571 428H900V637H571A30 30 0 0 1 541 607V458A30 30 0 0 1 571 428Z M900 404L960 396H1160V1080H900Z'/></svg>") 0 0/100% 100% no-repeat;mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1160 1080' width='1160' height='1080' preserveAspectRatio='none'><path fill-rule='evenodd' d='M0 0H1160V1080H0Z M571 428H900V637H571A30 30 0 0 1 541 607V458A30 30 0 0 1 571 428Z M900 404L960 396H1160V1080H900Z'/></svg>") 0 0/100% 100% no-repeat}
+
+/* 28 nov. · 9 · le bouton du fond est centré à l'œil comme au pixel (mesuré : centre du bouton = centre du rond TEEQA = 960, 470) :
+   l'ombre portée vers le bas (qui alourdissait le bas) devient une ombre égale tout autour, et le zellige en damier (dense d'un côté,
+   vide de l'autre) devient une couronne de 16 étoiles régulières, symétrique autour du centre. */
+.flux-bouton{box-shadow:0 0 0 10px rgba(239,228,207,.9),0 0 0 12px rgba(160,120,60,.18),0 0 38px rgba(90,60,20,.14)}
+.flux-bouton i{background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 318 318'><circle cx='159' cy='159' r='159' fill='%23F3ECDF'/><circle cx='159' cy='159' r='131' fill='none' stroke='%23C9B48E' stroke-width='1.5'/><circle cx='159' cy='159' r='157' fill='none' stroke='%23C9B48E' stroke-width='1.5'/><path d='M159.0 -1.0 L163.4 3.4 L169.6 3.4 L169.6 9.6 L174.0 14.0 L169.6 18.4 L169.6 24.6 L163.4 24.6 L159.0 29.0 L154.6 24.6 L148.4 24.6 L148.4 18.4 L144.0 14.0 L148.4 9.6 L148.4 3.4 L154.6 3.4ZM214.5 10.0 L218.9 14.4 L225.1 14.4 L225.1 20.6 L229.5 25.0 L225.1 29.4 L225.1 35.6 L218.9 35.7 L214.5 40.0 L210.1 35.7 L203.9 35.6 L203.9 29.4 L199.5 25.0 L203.9 20.6 L203.9 14.4 L210.1 14.4ZM261.5 41.5 L265.9 45.8 L272.1 45.9 L272.2 52.1 L276.5 56.5 L272.2 60.9 L272.1 67.1 L265.9 67.1 L261.5 71.5 L257.1 67.1 L250.9 67.1 L250.9 60.9 L246.5 56.5 L250.9 52.1 L250.9 45.9 L257.1 45.8ZM293.0 88.5 L297.4 92.9 L303.6 92.9 L303.6 99.1 L308.0 103.5 L303.6 107.9 L303.6 114.1 L297.4 114.1 L293.0 118.5 L288.6 114.1 L282.4 114.1 L282.3 107.9 L278.0 103.5 L282.3 99.1 L282.4 92.9 L288.6 92.9ZM304.0 144.0 L308.4 148.4 L314.6 148.4 L314.6 154.6 L319.0 159.0 L314.6 163.4 L314.6 169.6 L308.4 169.6 L304.0 174.0 L299.6 169.6 L293.4 169.6 L293.4 163.4 L289.0 159.0 L293.4 154.6 L293.4 148.4 L299.6 148.4ZM293.0 199.5 L297.4 203.9 L303.6 203.9 L303.6 210.1 L308.0 214.5 L303.6 218.9 L303.6 225.1 L297.4 225.1 L293.0 229.5 L288.6 225.1 L282.4 225.1 L282.3 218.9 L278.0 214.5 L282.3 210.1 L282.4 203.9 L288.6 203.9ZM261.5 246.5 L265.9 250.9 L272.1 250.9 L272.2 257.1 L276.5 261.5 L272.2 265.9 L272.1 272.1 L265.9 272.2 L261.5 276.5 L257.1 272.2 L250.9 272.1 L250.9 265.9 L246.5 261.5 L250.9 257.1 L250.9 250.9 L257.1 250.9ZM214.5 278.0 L218.9 282.3 L225.1 282.4 L225.1 288.6 L229.5 293.0 L225.1 297.4 L225.1 303.6 L218.9 303.6 L214.5 308.0 L210.1 303.6 L203.9 303.6 L203.9 297.4 L199.5 293.0 L203.9 288.6 L203.9 282.4 L210.1 282.3ZM159.0 289.0 L163.4 293.4 L169.6 293.4 L169.6 299.6 L174.0 304.0 L169.6 308.4 L169.6 314.6 L163.4 314.6 L159.0 319.0 L154.6 314.6 L148.4 314.6 L148.4 308.4 L144.0 304.0 L148.4 299.6 L148.4 293.4 L154.6 293.4ZM103.5 278.0 L107.9 282.3 L114.1 282.4 L114.1 288.6 L118.5 293.0 L114.1 297.4 L114.1 303.6 L107.9 303.6 L103.5 308.0 L99.1 303.6 L92.9 303.6 L92.9 297.4 L88.5 293.0 L92.9 288.6 L92.9 282.4 L99.1 282.3ZM56.5 246.5 L60.9 250.9 L67.1 250.9 L67.1 257.1 L71.5 261.5 L67.1 265.9 L67.1 272.1 L60.9 272.2 L56.5 276.5 L52.1 272.2 L45.9 272.1 L45.8 265.9 L41.5 261.5 L45.8 257.1 L45.9 250.9 L52.1 250.9ZM25.0 199.5 L29.4 203.9 L35.6 203.9 L35.7 210.1 L40.0 214.5 L35.7 218.9 L35.6 225.1 L29.4 225.1 L25.0 229.5 L20.6 225.1 L14.4 225.1 L14.4 218.9 L10.0 214.5 L14.4 210.1 L14.4 203.9 L20.6 203.9ZM14.0 144.0 L18.4 148.4 L24.6 148.4 L24.6 154.6 L29.0 159.0 L24.6 163.4 L24.6 169.6 L18.4 169.6 L14.0 174.0 L9.6 169.6 L3.4 169.6 L3.4 163.4 L-1.0 159.0 L3.4 154.6 L3.4 148.4 L9.6 148.4ZM25.0 88.5 L29.4 92.9 L35.6 92.9 L35.7 99.1 L40.0 103.5 L35.7 107.9 L35.6 114.1 L29.4 114.1 L25.0 118.5 L20.6 114.1 L14.4 114.1 L14.4 107.9 L10.0 103.5 L14.4 99.1 L14.4 92.9 L20.6 92.9ZM56.5 41.5 L60.9 45.8 L67.1 45.9 L67.1 52.1 L71.5 56.5 L67.1 60.9 L67.1 67.1 L60.9 67.1 L56.5 71.5 L52.1 67.1 L45.9 67.1 L45.8 60.9 L41.5 56.5 L45.8 52.1 L45.9 45.9 L52.1 45.8ZM103.5 10.0 L107.9 14.4 L114.1 14.4 L114.1 20.6 L118.5 25.0 L114.1 29.4 L114.1 35.6 L107.9 35.7 L103.5 40.0 L99.1 35.7 L92.9 35.6 L92.9 29.4 L88.5 25.0 L92.9 20.6 L92.9 14.4 L99.1 14.4Z' fill='%231F6B4F'/><path d='M159.0 5.5 L161.5 8.0 L165.0 8.0 L165.0 11.5 L167.5 14.0 L165.0 16.5 L165.0 20.0 L161.5 20.0 L159.0 22.5 L156.5 20.0 L153.0 20.0 L153.0 16.5 L150.5 14.0 L153.0 11.5 L153.0 8.0 L156.5 8.0ZM214.5 16.5 L217.0 19.0 L220.5 19.0 L220.5 22.6 L223.0 25.0 L220.5 27.5 L220.5 31.0 L217.0 31.0 L214.5 33.5 L212.0 31.0 L208.5 31.0 L208.5 27.5 L206.0 25.0 L208.5 22.6 L208.5 19.0 L212.0 19.0ZM261.5 48.0 L264.0 50.5 L267.5 50.5 L267.5 54.0 L270.0 56.5 L267.5 59.0 L267.5 62.5 L264.0 62.5 L261.5 65.0 L259.0 62.5 L255.5 62.5 L255.5 59.0 L253.0 56.5 L255.5 54.0 L255.5 50.5 L259.0 50.5ZM293.0 95.0 L295.4 97.5 L299.0 97.5 L299.0 101.0 L301.5 103.5 L299.0 106.0 L299.0 109.5 L295.4 109.5 L293.0 112.0 L290.5 109.5 L287.0 109.5 L287.0 106.0 L284.5 103.5 L287.0 101.0 L287.0 97.5 L290.5 97.5ZM304.0 150.5 L306.5 153.0 L310.0 153.0 L310.0 156.5 L312.5 159.0 L310.0 161.5 L310.0 165.0 L306.5 165.0 L304.0 167.5 L301.5 165.0 L298.0 165.0 L298.0 161.5 L295.5 159.0 L298.0 156.5 L298.0 153.0 L301.5 153.0ZM293.0 206.0 L295.4 208.5 L299.0 208.5 L299.0 212.0 L301.5 214.5 L299.0 217.0 L299.0 220.5 L295.4 220.5 L293.0 223.0 L290.5 220.5 L287.0 220.5 L287.0 217.0 L284.5 214.5 L287.0 212.0 L287.0 208.5 L290.5 208.5ZM261.5 253.0 L264.0 255.5 L267.5 255.5 L267.5 259.0 L270.0 261.5 L267.5 264.0 L267.5 267.5 L264.0 267.5 L261.5 270.0 L259.0 267.5 L255.5 267.5 L255.5 264.0 L253.0 261.5 L255.5 259.0 L255.5 255.5 L259.0 255.5ZM214.5 284.5 L217.0 287.0 L220.5 287.0 L220.5 290.5 L223.0 293.0 L220.5 295.4 L220.5 299.0 L217.0 299.0 L214.5 301.5 L212.0 299.0 L208.5 299.0 L208.5 295.4 L206.0 293.0 L208.5 290.5 L208.5 287.0 L212.0 287.0ZM159.0 295.5 L161.5 298.0 L165.0 298.0 L165.0 301.5 L167.5 304.0 L165.0 306.5 L165.0 310.0 L161.5 310.0 L159.0 312.5 L156.5 310.0 L153.0 310.0 L153.0 306.5 L150.5 304.0 L153.0 301.5 L153.0 298.0 L156.5 298.0ZM103.5 284.5 L106.0 287.0 L109.5 287.0 L109.5 290.5 L112.0 293.0 L109.5 295.4 L109.5 299.0 L106.0 299.0 L103.5 301.5 L101.0 299.0 L97.5 299.0 L97.5 295.4 L95.0 293.0 L97.5 290.5 L97.5 287.0 L101.0 287.0ZM56.5 253.0 L59.0 255.5 L62.5 255.5 L62.5 259.0 L65.0 261.5 L62.5 264.0 L62.5 267.5 L59.0 267.5 L56.5 270.0 L54.0 267.5 L50.5 267.5 L50.5 264.0 L48.0 261.5 L50.5 259.0 L50.5 255.5 L54.0 255.5ZM25.0 206.0 L27.5 208.5 L31.0 208.5 L31.0 212.0 L33.5 214.5 L31.0 217.0 L31.0 220.5 L27.5 220.5 L25.0 223.0 L22.6 220.5 L19.0 220.5 L19.0 217.0 L16.5 214.5 L19.0 212.0 L19.0 208.5 L22.6 208.5ZM14.0 150.5 L16.5 153.0 L20.0 153.0 L20.0 156.5 L22.5 159.0 L20.0 161.5 L20.0 165.0 L16.5 165.0 L14.0 167.5 L11.5 165.0 L8.0 165.0 L8.0 161.5 L5.5 159.0 L8.0 156.5 L8.0 153.0 L11.5 153.0ZM25.0 95.0 L27.5 97.5 L31.0 97.5 L31.0 101.0 L33.5 103.5 L31.0 106.0 L31.0 109.5 L27.5 109.5 L25.0 112.0 L22.6 109.5 L19.0 109.5 L19.0 106.0 L16.5 103.5 L19.0 101.0 L19.0 97.5 L22.6 97.5ZM56.5 48.0 L59.0 50.5 L62.5 50.5 L62.5 54.0 L65.0 56.5 L62.5 59.0 L62.5 62.5 L59.0 62.5 L56.5 65.0 L54.0 62.5 L50.5 62.5 L50.5 59.0 L48.0 56.5 L50.5 54.0 L50.5 50.5 L54.0 50.5ZM103.5 16.5 L106.0 19.0 L109.5 19.0 L109.5 22.6 L112.0 25.0 L109.5 27.5 L109.5 31.0 L106.0 31.0 L103.5 33.5 L101.0 31.0 L97.5 31.0 L97.5 27.5 L95.0 25.0 L97.5 22.6 L97.5 19.0 L101.0 19.0Z' fill='%23F3ECDF'/><g fill='%23E0A33A'><circle cx='159.0' cy='14.0' r='3.2'/><circle cx='214.5' cy='25.0' r='3.2'/><circle cx='261.5' cy='56.5' r='3.2'/><circle cx='293.0' cy='103.5' r='3.2'/><circle cx='304.0' cy='159.0' r='3.2'/><circle cx='293.0' cy='214.5' r='3.2'/><circle cx='261.5' cy='261.5' r='3.2'/><circle cx='214.5' cy='293.0' r='3.2'/><circle cx='159.0' cy='304.0' r='3.2'/><circle cx='103.5' cy='293.0' r='3.2'/><circle cx='56.5' cy='261.5' r='3.2'/><circle cx='25.0' cy='214.5' r='3.2'/><circle cx='14.0' cy='159.0' r='3.2'/><circle cx='25.0' cy='103.5' r='3.2'/><circle cx='56.5' cy='56.5' r='3.2'/><circle cx='103.5' cy='25.0' r='3.2'/></g><g fill='%23C9B48E'><circle cx='187.3' cy='16.8' r='3'/><circle cx='239.6' cy='38.4' r='3'/><circle cx='279.6' cy='78.4' r='3'/><circle cx='301.2' cy='130.7' r='3'/><circle cx='301.2' cy='187.3' r='3'/><circle cx='279.6' cy='239.6' r='3'/><circle cx='239.6' cy='279.6' r='3'/><circle cx='187.3' cy='301.2' r='3'/><circle cx='130.7' cy='301.2' r='3'/><circle cx='78.4' cy='279.6' r='3'/><circle cx='38.4' cy='239.6' r='3'/><circle cx='16.8' cy='187.3' r='3'/><circle cx='16.8' cy='130.7' r='3'/><circle cx='38.4' cy='78.4' r='3'/><circle cx='78.4' cy='38.4' r='3'/><circle cx='130.7' cy='16.8' r='3'/></g></svg>") center/100% 100% no-repeat;-webkit-mask-image:none;mask-image:none;opacity:.8}
+
+/* 28 nov. · 10 · le casque était plus sombre que les autres objets (luminance moyenne 128 contre 153 pour Bellarej) : remis à la même lumière */
+.s-prix .socle.s3 img{filter:brightness(1.2) saturate(1.04)}
+/* 28 nov. · 7 · masque au contour réel du téléphone et des doigts de la main droite, bords adoucis (plus d'arête droite visible) */
+.s-diff .df-photo .flash-cal{-webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1160 1080' width='1160' height='1080' preserveAspectRatio='none'><filter id='f' x='-5%' y='-5%' width='110%' height='110%'><feGaussianBlur stdDeviation='3'/></filter><mask id='m'><rect width='1160' height='1080' fill='white'/><g fill='black' filter='url(%23f)'><path d='M573 429H930A31 31 0 0 1 961 460V605A31 31 0 0 1 930 636H573A31 31 0 0 1 542 605V460A31 31 0 0 1 573 429Z'/><path d='M890 436C902 418 928 409 958 406C998 403 1030 409 1062 420L1160 438V1080H890Z'/></g></mask><rect width='1160' height='1080' fill='black' mask='url(%23m)'/></svg>") 0 0/100% 100% no-repeat;mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1160 1080' width='1160' height='1080' preserveAspectRatio='none'><filter id='f' x='-5%' y='-5%' width='110%' height='110%'><feGaussianBlur stdDeviation='3'/></filter><mask id='m'><rect width='1160' height='1080' fill='white'/><g fill='black' filter='url(%23f)'><path d='M573 429H930A31 31 0 0 1 961 460V605A31 31 0 0 1 930 636H573A31 31 0 0 1 542 605V460A31 31 0 0 1 573 429Z'/><path d='M890 436C902 418 928 409 958 406C998 403 1030 409 1062 420L1160 438V1080H890Z'/></g></mask><rect width='1160' height='1080' fill='black' mask='url(%23m)'/></svg>") 0 0/100% 100% no-repeat}
+
 /* ====== repris du moteur du 3 nov. ====== */
 /* repli SVG isométrique */
 .m3d-fallback .plot{fill:#6B4A34;opacity:.9}
@@ -2021,8 +2037,8 @@ body.mouse #ui-btns{opacity:1}
   <a class="mq-demo" href="demo-oral.html" data-demo data-enter data-fx="pop" data-at="2.3">Lancer la démo <b>→</b></a>
   <div class="trio">
     <div class="phone t1" data-enter data-fx="fade" data-at=".55" data-dur=".15"><div class="ph-ecran"><video class="loop ecran" data-mp4="oral/valide-boucle"></video></div><p class="ph-tag">Client</p></div>
-    <div class="phone t2" data-enter data-fx="pop" data-at=".35"><div class="ph-ecran"><img src="assets/oral/ecran-controleur.webp" alt=""></div><p class="ph-tag">Contrôleur</p></div>
-    <div class="phone t3" data-enter data-fx="pop" data-at=".5"><div class="ph-ecran"><img src="assets/oral/ecran-entreprise.webp" alt=""></div><p class="ph-tag">Entreprise</p></div>
+    <div class="phone t2" data-enter data-fx="pop" data-at="2.05"><div class="ph-ecran"><img src="assets/oral/ecran-controleur.webp" alt=""></div><p class="ph-tag">Contrôleur</p></div>
+    <div class="phone t3" data-enter data-fx="pop" data-at="2.2"><div class="ph-ecran"><img src="assets/oral/ecran-entreprise.webp" alt=""></div><p class="ph-tag">Entreprise</p></div>
   </div>
   <img class="mq-cigogne" src="assets/oral/clay/accueil-a.webp" alt="" data-enter data-fx="tombe" data-at="2.0">
 
@@ -3018,7 +3034,8 @@ const FIL = (() => {
   const rond = (x, y, r) => 'M' + (x - r) + ' ' + y + 'A' + r + ' ' + r + ' 0 1 1 ' + (x + r) + ' ' + y + 'A' + r + ' ' + r + ' 0 1 1 ' + (x - r) + ' ' + y;
   const T = {
     /* 1 : plus de trait sur l'arche (retour de Nabih : pastille et ligne au sommet de la porte retirées) */
-    'Le problème': s => sous($('.pb-head .title', s), 14, true),
+    /* 28 nov. (retour de Nabih) : plus de barre dorée sous « …sur un simple message. » */
+    'Le problème': () => '',
     'Proposition de valeur': s => $$('.va-chaine .fil', s).map(e => { const b = rect(e); return 'M' + f(b.x) + ' ' + f(b.y + b.h / 2) + 'H' + f(b.x + b.w); }).join(''),
     'Marché · données secondaires': s => { const g = $('.mk-stats .grand', s); if (!g) return ''; const t0 = g.style.transform, o0 = g.style.translate; g.style.transform = 'none'; g.style.translate = 'none'; const d = cadre(g, 9, 34); g.style.transform = t0; g.style.translate = o0; return d; },
     'Étude primaire': s => { const z = $('.pr-prix .zone', s); if (!z) return ''; const b = rect(z); return 'M' + f(b.x + b.w - 6) + ' ' + f(b.y + b.h / 2) + 'H' + f(b.x + 30); },
@@ -3044,6 +3061,10 @@ const FIL = (() => {
   /* le tracé attend que la chose à prouver soit posée */
   const ATT = { 'Marché · données secondaires': 1.0, 'Proposition de valeur': 2.6, 'Étude primaire': 2.6, 'Concurrence · benchmark': 2.4, 'Rentabilité des visites': 2.6, 'Conclusion': 2.8, "Rôle de l'agence": 2.4, 'Business model · les flux': 1.3, 'Maquettage et UX': 2.0 };
   const SANS_ATTENTE = { 'Marché · données secondaires': 1 };   /* tour 6 : la boule de la 4 n'attend pas la fin des chiffres */
+  /* 28 nov. : sur la 5, pas de vol depuis la 4 (la boule naissait près de « 32 Mds » puis sautait) : elle naît au bout de la barre et la remplit */
+  const SUR_PLACE = { 'Étude primaire': 1 };
+  /* 28 nov. : sur la 4, c'est la boule elle-même (même objet, même taille) qui trace l'anneau, puis s'y fond : plus de 2e boule */
+  const PORTEUR = { 'Marché · données secondaires': s => $('.mk-boule', s) };
   function trace(s) { const g = T[s.dataset.titre]; try { return g ? g(s) : ''; } catch (e) { return ''; } }
   function point(d, a) { mesure.setAttribute('d', d); const L = mesure.getTotalLength(); const p = mesure.getPointAtLength(a ? L : 0); return [p.x, p.y]; }
   function stop() { tws.forEach(t => t.kill()); tws = []; }
@@ -3051,8 +3072,11 @@ const FIL = (() => {
     if (PRESENTER || PRINTMODE || !G) return;
     const my = ++tok, anime = !!trans && !instant();
     stop();
-    if (anime && fin && tr.getAttribute('d')) tws.push(gsap.to([tr, lu], { drawSVG: '100% 100%', opacity: 0, duration: .4, ease: 'power2.in' }));
+    /* 28 nov. : le tracé de la diapo qui part s'efface dès le 1er instant de la transition (le halo de la 4 ne doit plus se voir) */
+    if (anime && fin && tr.getAttribute('d')) tws.push(gsap.to([tr, lu], { opacity: 0, duration: .12, ease: 'power1.out' }));
     else gsap.set([tr, lu], { drawSVG: '0% 0%', opacity: 0 });
+    gsap.set(co, { attr: { opacity: 0 } });
+    $$('.mk-boule').forEach(b => { if (!anime || b.closest('.slide') !== s) { gsap.killTweensOf(b); gsap.set(b, { autoAlpha: 0 }); } });
     const depart = fin;
     /* le tracé se mesure quand la diapo est posée (les titres ont fini d'arriver) */
     let essais = 0;
@@ -3067,15 +3091,18 @@ const FIL = (() => {
       if (!anime) { gsap.set([tr, lu], { drawSVG: '0% 100%', opacity: 1 }); return; }
       gsap.set([tr, lu], { drawSVG: '0% 0%', opacity: 0 });
       const tl = gsap.timeline(); tws.push(tl);
-      const arr = (ARRIVEE || {})[s.dataset.titre];
-      if (arr) { tl.add(arr(s, deb)); tl.set(co, { attr: { opacity: 1 }, x: deb[0], y: deb[1] }); }
+      const arr = (ARRIVEE || {})[s.dataset.titre], pt = PORTEUR[s.dataset.titre] && PORTEUR[s.dataset.titre](s);
+      if (arr) { tl.add(arr(s, deb)); if (!pt) tl.set(co, { attr: { opacity: 1 }, x: deb[0], y: deb[1] }); }
+      else if (SUR_PLACE[s.dataset.titre]) tl.set(co, { x: deb[0], y: deb[1] }).to(co, { attr: { opacity: 1 }, duration: .2, ease: 'power1.out' });
       else if (depart) {
         const mx = (depart[0] + deb[0]) / 2, my2 = Math.min(depart[1], deb[1]) - 260;
         tl.set(co, { attr: { opacity: 1 }, x: depart[0], y: depart[1] })
           .to(co, { motionPath: { path: [{ x: depart[0], y: depart[1] }, { x: mx, y: my2 }, { x: deb[0], y: deb[1] }], curviness: 1.2 }, duration: .7, ease: 'power2.inOut' });
       } else tl.set(co, { attr: { opacity: 1 }, x: deb[0], y: deb[1] });
-      tl.set([tr, lu], { opacity: 1 }).to([tr, lu], { drawSVG: '0% 100%', duration: 1.3, ease: 'power2.inOut' })
-        .to(co, { motionPath: { path: tr, align: tr, alignOrigin: [.5, .5] }, duration: 1.3, ease: 'power2.inOut' }, '<')
+      tl.set([tr, lu], { opacity: 1 }).to([tr, lu], { drawSVG: '0% 100%', duration: 1.3, ease: 'power2.inOut' });
+      if (pt) tl.to(pt, { motionPath: { path: d }, duration: 1.3, ease: 'power2.inOut' }, '<')
+        .to(pt, { scale: .35, autoAlpha: 0, duration: .35, ease: 'power2.in' });   /* la boule se fond dans l'anneau, là où il se ferme */
+      else tl.to(co, { motionPath: { path: tr, align: tr, alignOrigin: [.5, .5] }, duration: 1.3, ease: 'power2.inOut' }, '<')
         .to(co, { attr: { opacity: 0 }, duration: .4 });
     }));
   }
@@ -4018,8 +4045,7 @@ var ARRIVEE = {
       .to(b, { rotation: 0, scaleX: 1, scaleY: 1, duration: .1, ease: 'power1.out' }, '<')
       .to(b, { x: deb[0], y: deb[1], duration: .42, ease: 'bounce.out' })
       .to(b, { scaleX: 1.3, scaleY: .72, duration: .06, ease: 'power1.out' }, '<.15')
-      .to(b, { scaleX: 1, scaleY: 1, duration: .3, ease: 'elastic.out(1, .4)' })
-      .set(b, { autoAlpha: 0 }, '>-.18');
+      .to(b, { scaleX: 1, scaleY: 1, duration: .3, ease: 'elastic.out(1, .4)' });   /* 28 nov. : elle reste là ; c'est elle qui trace l'anneau (FIL) */
     return tl;
   }
 };

@@ -5,7 +5,8 @@
 // Le fil du réseau social reprend des gestes et une mise en page génériques : aucun logo, aucun nom, aucune couleur d'une autre marque.
 // Les trois téléphones chargent index.html?oral&role=… : le chantier passe de l'un à l'autre par le stockage du navigateur
 // (crochet ORAL de js/store.js). Au premier chargement (ou après « Tout remettre à zéro »), Karim n'a pas encore de compte :
-// son téléphone s'ouvre sur l'accueil de l'appli, il crée son compte, puis son chantier. L'entreprise et le contrôleur attendent.
+// son téléphone s'ouvre sur l'accueil de l'appli, il crée son compte, puis son chantier. L'entreprise et le contrôleur n'ont
+// pas encore l'appli (28 nov.) : écran d'accueil de l'iPhone, puis installation par le lien reçu (e-mail, puis SMS de mission).
 import { bellarejRig } from './bellarej-rig.js';
 
 const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -342,9 +343,10 @@ const ROLES3 = [
 ];
 $('#trio').innerHTML = ROLES3.map(([r, t, q, c]) => `<div class="place" data-role="${r}" style="--c:${c}">
   <div class="etiquette"><i></i>${t}<small>${q}</small></div>
-  <div class="cadre"><iframe data-role="${r}" title="TEEQA · ${t}" tabindex="-1"></iframe>${LANCE_HTML()}</div></div>`).join('');
+  <div class="cadre"><iframe data-role="${r}" title="TEEQA · ${t}" tabindex="-1"></iframe>${r === 'client' ? LANCE_HTML() : ''}</div></div>`).join('');
 const cadre = (r) => $(`.place[data-role="${r}"] .cadre`), fen = (r) => $(`iframe[data-role="${r}"]`);
-const urlRole = (r) => `index.html?oral&direct&role=${r}${r === 'client' ? '&inscription' : ''}#/home`;   // le client arrive sans compte
+// Le client et l'entreprise arrivent sans compte ; le contrôleur n'en aura jamais (il entre par son lien).
+const urlRole = (r) => `index.html?oral&direct&role=${r}${r !== 'controleur' ? '&inscription' : ''}#/home`;
 async function attendreAppli(r, ms = 60000) {
   const t0 = Date.now();
   for (;;) { const w = fen(r).contentWindow; try { if (w && w.__teeqa && w.__teeqa.get()) return w; } catch { /* chargement */ } if (Date.now() - t0 > ms) throw new Error('appli ' + r); await dort(120); }
@@ -360,7 +362,7 @@ function brancher(r, w) {
 // Chaque téléphone garde son écran de lancement (jamais noir) jusqu'à ce que son appli réponde ; un échec recharge.
 const prets = {};
 async function chargerRole(r) {
-  const f = fen(r); prets[r] = false; if (!cadre(r).querySelector('.lance')) cadre(r).insertAdjacentHTML('beforeend', LANCE_HTML());
+  const f = fen(r); prets[r] = false; if (installe[r] && !cadre(r).querySelector('.lance')) cadre(r).insertAdjacentHTML('beforeend', LANCE_HTML());
   for (let essai = 0; essai < 3; essai++) {
     f.src = 'about:blank'; await dort(30); f.src = urlRole(r);
     try { const w = await attendreAppli(r); brancher(r, w); await dort(350); prets[r] = true;
@@ -374,6 +376,122 @@ async function chargerRole(r) {
 const DOC_VIDE = { projects: [], notifications: [], reports: [], avis: [], noms: {} };
 const projetDemo = (doc) => doc && doc.projects && doc.projects.find((x) => x.name === 'Villa Nador');
 const lireDoc = () => { try { const d = JSON.parse(localStorage.getItem('teeqa-oral-chantier') || 'null'); return d && d.doc; } catch { return null; } };
+const lireRole = (r) => { try { return JSON.parse(localStorage.getItem('teeqa-oral-' + r) || 'null'); } catch { return null; } };
+
+// ---------- 28 nov. (retour de Nabih) : seul le client a l'appli au départ ----------
+// L'entreprise et le contrôleur montrent l'écran d'accueil de leur iPhone. L'invitation de Karim arrive par e-mail chez
+// Rachid BTP ; le lien installe TEEQA (l'icône apparaît, se charge), l'appli s'ouvre sur la création du compte entreprise.
+// Une fois le forfait payé, l'agence de contrôle reçoit son lien par SMS : l'appli s'ouvre sur le chantier, sans compte.
+// Tout est dessiné ici (dégradés et traits SVG génériques) : aucune image téléchargée, aucun logo d'une autre marque.
+const INSTALLE = 'teeqa-oral-installe';
+let installe = { client: true };
+function lireInstalle() { try { installe = JSON.parse(localStorage.getItem(INSTALLE) || '{}') || {}; } catch { installe = {}; } installe.client = true; }
+lireInstalle();
+const garderInstalle = () => { try { localStorage.setItem(INSTALLE, JSON.stringify(installe)); } catch { /* stockage plein */ } };
+const G = {   // glyphes au trait, 24 × 24
+  tel: 'M6.6 3.5h2.6l1.4 4-2 1.3a11 11 0 0 0 6.6 6.6l1.3-2 4 1.4v2.6a2 2 0 0 1-2 2A16.5 16.5 0 0 1 4.6 5.5a2 2 0 0 1 2-2z',
+  web: 'M12 3a9 9 0 1 1 0 18 9 9 0 0 1 0-18zM15.5 8.5l-2 5-5 2 2-5z',
+  msg: P.bulle, mail: 'M3.5 6.5h17v11h-17zM3.5 7l8.5 6.5L20.5 7',
+  cal: 'M4 6h16v14H4zM4 10h16M8 3.5v4M16 3.5v4M8 14h.01M12 14h.01M16 14h.01M8 17h.01M12 17h.01',
+  photo: 'M4 5h16v14H4zM4 16l5-5 4 4 2-2 5 5M15.5 9.5h.01', cam: 'M4 8h3.5l1.5-2.5h6L16.5 8H20v11H4zM12 11a3 3 0 1 1 0 6 3 3 0 0 1 0-6z',
+  plan: 'M3.5 6.5 9 4.5l6 2 5.5-2v13l-5.5 2-6-2-5.5 2zM9 4.5v13M15 6.5v13', heure: 'M12 3a9 9 0 1 1 0 18 9 9 0 0 1 0-18zM12 7v5l3.5 2',
+  note: 'M6 3.5h12v17H6zM9 8h6M9 12h6M9 16h4', meteo: 'M8 5.5V4M3.5 10H2M5 6.5 4 5.5M12.5 6.5l1-1M8 7.5a3 3 0 0 1 3 2.6M7 19h9.5a3.5 3.5 0 1 0-.8-6.9A4.5 4.5 0 0 0 7 13.5 2.8 2.8 0 0 0 7 19z',
+  calc: 'M6 3.5h12v17H6zM9 7h6M9 11h.01M12 11h.01M15 11h.01M9 14h.01M12 14h.01M15 14h.01M9 17h.01M12 17h.01M15 17h.01',
+  dossier: 'M3.5 6.5h6l2 2h9v10h-17z', banque: 'M3.5 9.5 12 4.5l8.5 5M5.5 10v7M10 10v7M14 10v7M18.5 10v7M3.5 19.5h17',
+  metre: 'M3 15.5 15.5 3l5.5 5.5L8.5 21zM7 11.5l2 2M10 8.5l2 2M13 5.5l2 2', liste: 'M9 7h11M9 12h11M9 17h11M4.5 7h.01M4.5 12h.01M4.5 17h.01',
+  regl: 'M12 9a3 3 0 1 1 0 6 3 3 0 0 1 0-6zM12 2.8v2.4M12 18.8v2.4M2.8 12h2.4M18.8 12h2.4M5.5 5.5l1.7 1.7M16.8 16.8l1.7 1.7M5.5 18.5l1.7-1.7M16.8 7.2l1.7-1.7',
+  musique: 'M9 17.5V5.5l10-2v12M9 17.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0zM19 15.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z',
+};
+const A = (nom, g, a, b) => ({ nom, g, f: `linear-gradient(160deg, ${a}, ${b})` });
+const DOCK = [A('Téléphone', 'tel', '#6FD38A', '#2E9C55'), A('Navigateur', 'web', '#7CC0FF', '#2C6FD8'), A('Messages', 'msg', '#7DE08F', '#29A04A'), A('Mail', 'mail', '#79B8FF', '#2A62D6')];
+const GRILLE = {
+  entreprise: [A('Calendrier', 'cal', '#FF9C80', '#E0533A'), A('Photos', 'photo', '#FFD36E', '#F08A3C'), A('Appareil', 'cam', '#9AA3AE', '#4C545E'), A('Plans', 'plan', '#9FE3B0', '#3FA36B'),
+    A('Horloge', 'heure', '#4A4F57', '#15181C'), A('Notes', 'note', '#FFE27A', '#E6B422'), A('Météo', 'meteo', '#8BD0FF', '#3577E0'), A('Calculette', 'calc', '#FFB45E', '#E37B1C'),
+    A('Fichiers', 'dossier', '#8CC8FF', '#3B82E6'), A('Banque', 'banque', '#6CC7B0', '#1F7D68'), A('Mesure', 'metre', '#D9DDE2', '#8D949C'), A('Réglages', 'regl', '#B7BDC4', '#6A7179')],
+  controleur: [A('Calendrier', 'cal', '#FF9C80', '#E0533A'), A('Photos', 'photo', '#FFD36E', '#F08A3C'), A('Appareil', 'cam', '#9AA3AE', '#4C545E'), A('Plans', 'plan', '#9FE3B0', '#3FA36B'),
+    A('Horloge', 'heure', '#4A4F57', '#15181C'), A('Notes', 'note', '#FFE27A', '#E6B422'), A('Météo', 'meteo', '#8BD0FF', '#3577E0'), A('Rappels', 'liste', '#F4F4F6', '#C9CDD3'),
+    A('Fichiers', 'dossier', '#8CC8FF', '#3B82E6'), A('Musique', 'musique', '#FF8FA3', '#E2405F'), A('Mesure', 'metre', '#D9DDE2', '#8D949C'), A('Réglages', 'regl', '#B7BDC4', '#6A7179')],
+};
+const FOND = { entreprise: 'radial-gradient(120% 70% at 20% 10%, #F6B37A, transparent 60%), radial-gradient(90% 60% at 90% 80%, #7A3B6B, transparent 70%), linear-gradient(170deg, #E0794A, #5A2A55 70%, #2B1636)',
+  controleur: 'radial-gradient(110% 70% at 80% 8%, #8FD6E8, transparent 60%), radial-gradient(100% 60% at 10% 90%, #233F8F, transparent 70%), linear-gradient(170deg, #3E8FBF, #1D3D7A 65%, #101B3D)' };
+const AGENDA = { entreprise: ['Chantier Selouane', '9 h 00'], controleur: ['Visite à Berkane', '10 h 30'] };
+const glyphe = (g) => `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${G[g]}"/></svg>`;
+const appIc = (a, badge) => `<span class="ios-app"><i style="background:${a.f}">${glyphe(a.g)}${badge ? '<em data-badge>1</em>' : ''}</i><small>${a.nom}</small></span>`;
+function accueilHTML(r) {
+  const jour = new Intl.DateTimeFormat('fr-FR', { weekday: 'long' }).format(new Date()), date = new Date().getDate(), [ev, evq] = AGENDA[r];
+  return `<div class="ios" data-ios="${r}" style="--fond:${FOND[r]}">
+    <div class="ios-widgets">
+      <div class="ios-w meteo"><small>Nador</small><b>21°</b><span>${glyphe('meteo')}Ensoleillé</span><small>Max. 23° · Min. 14°</small></div>
+      <div class="ios-w agenda"><small>${jour}</small><b>${date}</b><span>${ev}</span><small>${evq}</small></div>
+    </div>
+    <div class="ios-grille">${GRILLE[r].map((a) => appIc(a)).join('')}
+      <span class="ios-app ios-teeqa" aria-hidden="true"><i><img src="${ICONE}" alt=""><u></u></i><small>Chargement…</small></span></div>
+    <div class="ios-cherche">${glyphe('web').replace('M15.5 8.5l-2 5-5 2 2-5z', '')}Rechercher</div>
+    <div class="ios-dock">${DOCK.map((a) => appIc(a, (r === 'entreprise' && a.g === 'mail') || (r === 'controleur' && a.g === 'msg'))).join('')}</div>
+    <i class="ilot" aria-hidden="true"></i>${barreEtat()}
+  </div>`;
+}
+function notifHTML(r, p) {
+  const client = ((lireRole('client') || {}).account || {}).name || 'Karim';
+  if (r === 'entreprise') return `<button class="ios-notif" type="button"><i style="background:${DOCK[3].f}">${glyphe('mail')}</i><div><b>Mail<small>maintenant</small></b>
+    <strong>${client}, via TEEQA</strong><span>Invitation sur le chantier « ${p.name} » (${p.city}). Ouvrir l’invitation : <u>teeqa.app/i/${String(p.id).slice(-6)}</u></span></div></button>`;
+  const c = p.invites.controleur || {}, ag = String(c.agence || 'Agence de contrôle de la zone').split(' · ')[0];
+  return `<button class="ios-notif" type="button"><i style="background:${DOCK[2].f}">${glyphe('msg')}</i><div><b>Messages<small>maintenant</small></b>
+    <strong>TEEQA</strong><span>Mission de contrôle pour ${ag} : chantier « ${p.name} » (${p.city}). Rejoindre le chantier, sans compte : <u>teeqa.app/m/${c.token || ''}</u></span></div></button>`;
+}
+// L'écran d'accueil suit le chantier : il est là tant que l'appli n'est pas installée ; l'e-mail ou le SMS arrive avec l'invitation.
+function peindreAccueils(p) {
+  for (const r of ['entreprise', 'controleur']) {
+    const c = cadre(r); let ios = c.querySelector('.ios');
+    if (installe[r]) { if (ios && !enInstall[r]) ios.remove(); continue; }
+    if (!ios) { c.insertAdjacentHTML('beforeend', accueilHTML(r)); ios = c.querySelector('.ios'); }
+    const inv = p && p.invites && p.invites[r], attend = !!(inv && inv.status === 'envoyee'), n = ios.querySelector('.ios-notif');
+    ios.querySelectorAll('[data-badge]').forEach((b) => b.classList.toggle('on', attend));
+    if (attend && !n && !enInstall[r]) {
+      ios.insertAdjacentHTML('beforeend', notifHTML(r, p)); const el = ios.querySelector('.ios-notif');
+      el.addEventListener('click', (e) => { e.stopPropagation(); installer(r); });
+      if (scene.classList.contains('trois')) bouge(el, [{ transform: 'translateY(-130%) scale(.96)', opacity: 0 }, { transform: 'none', opacity: 1 }], REBOND);
+    } else if (!attend && n && !enInstall[r]) n.remove();
+  }
+}
+// Le lien touché : l'icône TEEQA apparaît et se charge, puis l'appli s'ouvre depuis son icône (vite : sans animation, pour le saut).
+const enInstall = {};
+async function installer(r, { vite = false } = {}) {
+  if (installe[r] || enInstall[r]) return; enInstall[r] = true;
+  const c = cadre(r), ios = c.querySelector('.ios'), p = projetDemo(lireDoc());
+  try {
+    if (!vite && ios) {
+      const n = ios.querySelector('.ios-notif');
+      if (n) { await bouge(n, [{ transform: 'none', opacity: 1 }, { transform: 'translateY(-130%)', opacity: 0 }], VIF, { fill: 'forwards' })?.finished; n.remove(); }
+      const ic = ios.querySelector('.ios-teeqa'); ic.style.setProperty('--p', 0); ic.classList.add('on', 'charge');
+      await bouge(ic, [{ transform: 'scale(.2)', opacity: 0 }, { transform: 'none', opacity: 1 }], REBOND)?.finished;
+      const t0 = performance.now(), duree = calme ? 300 : 2400, courbe = (u) => u < .5 ? 1.2 * u : u < .75 ? .6 + .4 * (u - .5) : .7 + 1.2 * (u - .75);
+      await new Promise((ok) => { const pas = (t) => { const u = Math.min((t - t0) / duree, 1); ic.style.setProperty('--p', (Math.min(courbe(u), 1) * 100).toFixed(1)); if (u < 1) requestAnimationFrame(pas); else ok(); }; requestAnimationFrame(pas); });
+      ic.classList.remove('charge'); ic.querySelector('small').textContent = 'TEEQA';
+      await bouge(ic.querySelector('i'), [{ transform: 'scale(1)' }, { transform: 'scale(1.12)' }, { transform: 'scale(1)' }], VIF)?.finished;
+      await dort(calme ? 60 : 380);
+    }
+    // L'appli s'ouvre au bon endroit : la création du compte entreprise (invitation reconnue), ou le chantier pour le contrôleur.
+    const w = await attendreAppli(r, 20000).catch(() => null);
+    if (w && p) try {
+      if (r === 'entreprise' && !w.__teeqa.get().account) {
+        const client = ((lireRole('client') || {}).account || {}).name || 'Karim';
+        w.__teeqa.actions.setDraft('suInvite', { pid: p.id, de: client, nom: p.name, name: 'Rachid BTP', email: p.invites.entreprise.email || 'contact@rachid-btp.ma', tel: '+212 6 61 42 18 07' });
+        w.__teeqa.go('#/signup');
+      } else w.__teeqa.go(`#/invite/${p.id}/${r}`);
+    } catch { /* appli en chargement */ }
+    installe[r] = true; garderInstalle();
+    if (!vite && ios) {
+      const ic = ios.querySelector('.ios-teeqa i'), a = c.getBoundingClientRect(), b = ic.getBoundingClientRect(), k = a.width / c.offsetWidth;
+      const t = (b.top - a.top) / k, l = (b.left - a.left) / k, bo = (a.bottom - b.bottom) / k, ri = (a.right - b.right) / k;
+      c.insertAdjacentHTML('beforeend', LANCE_HTML()); const lance = c.lastElementChild;
+      await bouge(lance, [{ clipPath: `inset(${t}px ${ri}px ${bo}px ${l}px round 16px)` }, { clipPath: 'inset(0px 0px 0px 0px round 62px)' }], DOUX)?.finished;
+      ios.remove(); await dort(calme ? 80 : 650);
+      await lance.animate([{ opacity: 1 }, { opacity: 0 }], { duration: calme ? 120 : 380, easing: 'ease-out', fill: 'forwards' }).finished; lance.remove();
+    } else if (ios) ios.remove();
+  } finally { enInstall[r] = false; }
+  lireChantier();
+}
 // Le formulaire du client est déjà rempli : devant le jury, on touche, on ne tape pas.
 function preremplir(w) {
   try { if (!(w.__teeqa.get().drafts || {}).newProject) w.__teeqa.actions.setDraft('newProject', {
@@ -403,6 +521,11 @@ async function avancer() {
     p = S.project(id);
   }
   const PID = p.id;
+  // Rachid BTP et l'agence n'ont pas touché leur lien : l'appli s'installe chez eux, l'entreprise a son compte.
+  for (const r of ['entreprise', 'controleur']) if (!installe[r]) { installe[r] = true; cadre(r).querySelector('.ios')?.remove(); }
+  garderInstalle();
+  if (!S.get().account) { A.setAccount({ role: 'entreprise', name: 'Rachid BTP', email: p.invites.entreprise.email || 'contact@rachid-btp.ma', tel: '+212 6 61 42 18 07', verifiedAt: new Date().toISOString() });
+    A.session({ loggedIn: true, onboarded: true, splashSeen: true }); A.setDraft('suInvite', null); }
   if (p.invites.entreprise.status === 'envoyee') A.acceptInvite(PID, 'entreprise');
   if (S.project(PID).convention && !S.conventionOk(S.project(PID))) { A.acceptConvention(PID, 'entreprise'); A.acceptConvention(PID, 'client'); }
   if (!(S.project(PID).forfait && S.project(PID).forfait.paidAt)) A.payForfait(PID, 'carte');
@@ -455,9 +578,12 @@ let trioPret = null;
 function demarrerTrio({ neuf = false } = {}) {
   return trioPret = (async () => {
     // Un chantier gardé sans compte client vient d'une répétition d'avant le 27 nov. (le client était déjà inscrit) : on repart de zéro.
-    if (!neuf && projetDemo(lireDoc())) { let c = null; try { c = JSON.parse(localStorage.getItem('teeqa-oral-client') || 'null'); } catch { /* illisible */ } if (!(c && c.account)) neuf = true; }
+    // De même, avant le 28 nov., l'entreprise avait déjà l'appli : un chantier accepté sans installation enregistrée repart de zéro.
+    const ancien = projetDemo(lireDoc());
+    if (!neuf && ancien) { const c = lireRole('client'); if (!(c && c.account) || (entOk(ancien) && !installe.entreprise)) neuf = true; }
     if (neuf) { for (const r of ['client', 'controleur', 'entreprise']) fen(r).src = 'about:blank'; await dort(120);
-      for (const k of Object.keys(localStorage)) if (k.startsWith('teeqa-oral-')) localStorage.removeItem(k); }
+      for (const k of Object.keys(localStorage)) if (k.startsWith('teeqa-oral-')) localStorage.removeItem(k);
+      document.querySelectorAll('.cadre .ios').forEach((x) => x.remove()); lireInstalle(); peindreAccueils(null); }
     if (!localStorage.getItem('teeqa-oral-chantier')) localStorage.setItem('teeqa-oral-chantier', JSON.stringify({ v: 1, doc: DOC_VIDE }));
     const [wc] = await Promise.all(['client', 'entreprise', 'controleur'].map(chargerRole));
     preremplir(wc); wc.__teeqa.go('#/home');
@@ -472,7 +598,7 @@ async function entrerTrio() {
   enEntree = true;
   lancerSplash(); await dort(calme ? 60 : 560);
   // On n'attend pas les trois applis : chaque téléphone garde son écran de lancement tant que la sienne charge.
-  $$('.cadre').forEach((c) => { if (!c.querySelector('.lance')) c.insertAdjacentHTML('beforeend', LANCE); });
+  $$('.cadre').forEach((c) => { const r = c.closest('.place').dataset.role; if (installe[r] && !c.querySelector('.lance')) c.insertAdjacentHTML('beforeend', LANCE); });
   const tel = $('#tel').getBoundingClientRect();
   scene.classList.add('trois');
   const sc = scene.getBoundingClientRect(), k = sc.width / 1920;
@@ -505,7 +631,7 @@ async function quitterTrio() {
 // ---------- notifications : un bandeau en haut du téléphone qui la reçoit ----------
 const bandeaux = {};
 function bandeau(r, liste) {
-  const n = liste && liste[liste.length - 1]; if (!n || !scene.classList.contains('trois')) return;
+  const n = liste && liste[liste.length - 1]; if (!n || !scene.classList.contains('trois') || !installe[r]) return;   // sans l'appli, pas de nouvelle TEEQA
   const c = cadre(r); c.querySelector('.bandeau')?.remove(); clearTimeout(bandeaux[r]);
   const t = n.text.length > 150 ? n.text.slice(0, 148) + '…' : n.text;
   c.insertAdjacentHTML('beforeend', `<div class="bandeau"><img src="${ICONE}" alt=""><div><b>TEEQA<small>maintenant</small></b><span></span></div></div>`);
@@ -517,18 +643,23 @@ function bandeau(r, liste) {
 // ---------- le fil conducteur ----------
 // Chaque geste se coche tout seul quand le chantier partagé montre qu'il est fait ; → le coche à la main s'il le faut.
 const OK = ['validee', 'corrigee', 'vue'], APRES_FIN = ['fin_declaree', 'retardee', 'refusee', ...OK];
+const entOk = (p) => !!(p && p.invites.entreprise.status === 'acceptee'), ctlOk = (p) => !!(p && p.invites.controleur && p.invites.controleur.status === 'acceptee');
 // [rôle, geste, précision, fait ?(chantier, étape cible)] ; rôle « saut » = le bouton « Trois mois plus tard ».
 const GESTES = [
   ['client', 'Touche « Commencer », puis « Continuer » jusqu’à « Créer mon compte ».', 'Karim découvre TEEQA : il n’a pas encore de compte.', (p, s, c) => !!p || c.compte || /signup/.test(c.hash)],
   ['client', '« Je fais construire ma maison », « Continuer ». Prénom, pays et téléphone sont déjà saisis : « Continuer ».', 'Une question par écran.', (p, s, c) => !!p || c.compte || c.etape >= 1],
   ['client', 'Le code arrive par SMS, déjà proposé : « Vérifier ».', 'Le numéro est bien le sien.', (p, s, c) => !!p || c.compte || c.etape >= 2],
-  ['client', '« Pas encore » (rien n’est commencé), « Continuer », puis « Entrer dans TEEQA ».', 'Compte prêt. L’entreprise et le contrôleur n’ont encore aucun chantier.', (p, s, c) => !!p || c.compte],
-  ['client', 'Touche « Créer un chantier » : tout est déjà rempli (Villa Nador, devis de Rachid BTP). « Continuer » deux fois.', 'Le client commence : c’est lui qui fait construire.', (p) => !!p],
-  ['client', '« Suivi contrôlé », puis « Créer et envoyer l’invitation », et confirme.', 'Un seul prix pour tout le chantier, payé une fois.', (p) => !!p],
-  ['entreprise', 'Touche la nouvelle « Invitation reçue », puis « Accepter et confirmer les étapes ».', 'L’entreprise s’inscrit gratuitement.', (p) => p && p.invites.entreprise.status === 'acceptee'],
+  ['client', '« Pas encore » (rien n’est commencé), « Continuer », puis « Entrer dans TEEQA ».', 'Compte prêt. Rachid BTP et le contrôleur n’ont pas encore l’appli.', (p, s, c) => !!p || c.compte],
+  ['client', 'Touche « Créer un chantier » : tout est déjà rempli (Villa Nador, devis de Rachid BTP). « Continuer » deux fois.', 'C’est le client qui ouvre le chantier.', (p) => !!p],
+  ['client', '« Suivi contrôlé », puis « Créer et envoyer l’invitation », et confirme.', 'L’invitation part par e-mail chez Rachid BTP.', (p) => !!p],
+  ['entreprise', 'Sur l’écran d’accueil, touche l’e-mail de Karim : TEEQA s’installe, puis s’ouvre.', 'Rachid BTP n’avait pas l’appli : le lien de l’invitation l’installe.', (p, s, c) => c.inst.entreprise || entOk(p), 'installer'],
+  ['entreprise', 'Son compte, avec l’invitation : « Continuer », « Vérifier » le code reçu par SMS, « Continuer », « Entrer dans TEEQA ».', 'Nom, e-mail et téléphone sont déjà saisis.', (p, s, c) => c.entCompte || entOk(p)],
+  ['entreprise', '« Accepter et confirmer les étapes ».', 'Rachid BTP rejoint Villa Nador et confirme les 6 étapes.', (p) => entOk(p)],
   ['entreprise', 'En bas : « Lire » la convention, puis « J’accepte la convention ».', 'Rien ne commence sans elle.', (p) => p && p.convention && !!p.convention.entreprise],
-  ['client', 'En bas : « Lire » la convention, puis « J’accepte la convention ».', 'TEEQA confie les visites à une agence de la zone.', (p) => p && p.convention && !!p.convention.client],
-  ['client', 'En bas : « Payer » le forfait TEEQA, puis « Payer ».', 'Le forfait TEEQA, jamais l’argent des travaux.', (p) => !!(p && p.forfait && p.forfait.paidAt)],
+  ['client', 'Touche « Villa Nador », puis en bas : « Lire » la convention, « J’accepte la convention ».', 'Les mêmes règles, acceptées des deux côtés.', (p) => p && p.convention && !!p.convention.client],
+  ['client', 'En bas : « Payer » le forfait TEEQA, puis « Payer ».', 'Le forfait du suivi contrôlé, jamais l’argent des travaux.', (p) => !!(p && p.forfait && p.forfait.paidAt)],
+  ['controleur', 'Le SMS de mission arrive sur l’écran d’accueil : touche-le. TEEQA s’ouvre sur le chantier.', 'Forfait payé : TEEQA confie les visites à une agence de la zone.', (p, s, c) => c.inst.controleur || ctlOk(p), 'installer'],
+  ['controleur', '« Rejoindre le chantier ».', 'Sans compte : un lien, valable jusqu’à la réception. Anonyme pour l’entreprise.', (p) => ctlOk(p)],
   ['saut', 'Deux mois plus tard.', 'Fondations et murs : faits, vérifiés, payés. Aujourd’hui, la dalle.', (p, s) => !!s && !!s.startedAt],
   ['entreprise', 'Touche « Villa Nador », puis l’étape 3 « Dalle et toiture-terrasse » : « Ouvrir l’étape ».', 'Le même chantier sur les trois téléphones.', (p, s) => !!s && (s.photos.filter((x) => x.by === 'entreprise').length >= 2 || APRES_FIN.includes(s.status))],
   ['entreprise', 'Trois fois : « Ajouter une photo », déclencher, « Utiliser la photo ».', 'Les aciers, photographiés dans l’appli, datés et situés.', (p, s) => !!s && (s.photos.filter((x) => x.by === 'entreprise').length >= 4 || APRES_FIN.includes(s.status))],
@@ -552,13 +683,14 @@ const main = new Set();   // gestes cochés à la main (→)
 function client() {
   try { const w = fen('client').contentWindow, d = w.document, st = w.__teeqa && w.__teeqa.get();
     const etape = d.querySelector('.su-done') ? 3 : d.querySelector('[data-act="su-has"]') ? 2 : d.querySelector('[data-testid="su-code"], #su-name') ? 1 : 0;
-    return { hash: w.location.hash, compte: !!(st && st.account), etape };
-  } catch { return { hash: '', compte: false, etape: 0 }; }
+    return { hash: w.location.hash, compte: !!(st && st.account), etape, inst: installe, entCompte: !!(lireRole('entreprise') || {}).account };
+  } catch { return { hash: '', compte: false, etape: 0, inst: installe, entCompte: false }; }
 }
 let auto = [];
 function lireChantier() {
   const p = projetDemo(lireDoc()); let sid = null; try { sid = localStorage.getItem('teeqa-oral-cible'); } catch { /* */ }
   const s = p && sid ? p.steps.find((x) => x.id === sid) : null, c = client();
+  peindreAccueils(p);
   auto = GESTES.map((g) => !!(g[3] && g[3](p, s, c)));
   // Un geste coché par le chantier coche aussi ceux d'avant.
   for (let i = auto.length - 1; i > 0; i--) if (auto[i]) for (let j = 0; j < i; j++) auto[j] = true;
@@ -577,7 +709,8 @@ function peindreGuide() {
 addEventListener('storage', (e) => { if (e.key === 'teeqa-oral-chantier') lireChantier(); });
 setInterval(lireChantier, 1500);
 $('#gestes').addEventListener('click', (e) => { const li = e.target.closest('li'); if (!li) return; const i = +li.dataset.i; if (main.has(i)) main.delete(i); else main.add(i); peindreGuide(); });
-function gesteSuivant() { const f = faits(), i = f.indexOf(false); if (i === SAUT) return sauter(); if (i >= 0) { main.add(i); peindreGuide(); } }
+// → sur un geste « installer » : l'installation se joue comme si on avait touché le lien.
+function gesteSuivant() { const f = faits(), i = f.indexOf(false); if (i === SAUT) return sauter(); if (i >= 0 && GESTES[i][4] === 'installer' && !installe[GESTES[i][0]]) return installer(GESTES[i][0]); if (i >= 0) { main.add(i); peindreGuide(); } }
 // « Deux mois plus tard » : un voile de chaux traverse la scène, les mois défilent, puis le chantier a avancé.
 let enSaut = false;
 async function sauter() {

@@ -214,3 +214,50 @@ img { display: block; }
 .saut-mois span:nth-child(2) { animation-delay: .5s; } .saut-mois span:nth-child(3) { animation-delay: 1s; } .saut-mois span:nth-child(4) { animation-delay: 1.5s; }
 @keyframes saut-mois { 0% { background: rgba(241, 236, 226, .08); color: rgba(241, 236, 226, .45); } 20%, 100% { background: var(--saf); color: var(--encre); } }
 @media (prefers-reduced-motion: reduce) { .saut-mois span, .guide li.saut-li.ici .saut { animation: none; } }
+
+/* 28 nov. : l'écran d'accueil de l'iPhone (entreprise et contrôleur, tant que TEEQA n'est pas installée).
+   Fond, widgets, grille, recherche et dock en verre, façon iOS 26 ; icônes génériques dessinées (dégradé + trait). */
+.ios { position: absolute; inset: 0; z-index: 20; border-radius: 62px; overflow: hidden; background: var(--fond); color: #fff; font-family: var(--sys); }
+.ios::before { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 40% at 50% 0%, rgba(255, 255, 255, .16), transparent 70%); pointer-events: none; }
+.ios-widgets { position: absolute; left: 24px; right: 24px; top: 70px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.ios-w { height: 162px; border-radius: 26px; padding: 15px 16px; display: grid; align-content: start; gap: 2px; background: rgba(255, 255, 255, .17); backdrop-filter: blur(22px) saturate(1.6); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .22), 0 10px 30px -14px rgba(0, 0, 0, .35); }
+.ios-w small { font-size: 13px; font-weight: 600; opacity: .9; text-transform: capitalize; }
+.ios-w b { font-size: 44px; font-weight: 300; line-height: 1.05; letter-spacing: -.02em; }
+.ios-w span { display: flex; align-items: center; gap: 5px; font-size: 13.5px; font-weight: 600; margin-top: 6px; }
+.ios-w span svg { width: 17px; height: 17px; fill: none; stroke: #FFD36E; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.ios-w.agenda b { font-weight: 500; }
+.ios-w.agenda span { margin-top: 10px; padding-left: 8px; box-shadow: inset 3px 0 0 #FF9C80; display: block; line-height: 1.25; }
+.ios-w.agenda small:last-child { padding-left: 8px; font-weight: 500; opacity: .75; text-transform: none; }
+.ios-grille { position: absolute; left: 18px; right: 18px; top: 258px; display: grid; grid-template-columns: repeat(4, 1fr); row-gap: 20px; }
+.ios-app { display: grid; justify-items: center; gap: 6px; }
+.ios-app i { position: relative; width: 64px; height: 64px; border-radius: 16px; display: grid; place-items: center; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45), inset 0 -1px 0 rgba(0, 0, 0, .12), 0 6px 14px -6px rgba(0, 0, 0, .35); }
+.ios-app i svg { width: 34px; height: 34px; fill: none; stroke: #fff; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .18)); }
+.ios-app small { font-size: 12px; font-weight: 500; text-shadow: 0 1px 2px rgba(0, 0, 0, .35); white-space: nowrap; }
+.ios-app em { position: absolute; top: -6px; right: -6px; min-width: 24px; height: 24px; padding: 0 7px; border-radius: 12px; background: #FF3B30; font: 600 14px/24px var(--sys); font-style: normal; text-align: center; scale: 0; transition: scale .3s cubic-bezier(.3, 1.6, .5, 1); }
+.ios-app em.on { scale: 1; }
+.ios-teeqa { visibility: hidden; }
+.ios-teeqa.on { visibility: visible; }
+.ios-teeqa i { overflow: hidden; background: #0E3B31; }
+.ios-teeqa img { width: 64px; height: 64px; transition: filter .4s; }
+.ios-teeqa.charge img { filter: brightness(.42) saturate(.5); }
+.ios-teeqa u { position: absolute; left: 50%; top: 50%; width: 30px; height: 30px; margin: -15px 0 0 -15px; border-radius: 50%; opacity: 0; transition: opacity .3s;
+  background: conic-gradient(rgba(255, 255, 255, .95) calc(var(--p, 0) * 1%), rgba(255, 255, 255, .2) 0);
+  -webkit-mask: radial-gradient(circle, transparent 10px, #000 10.5px); mask: radial-gradient(circle, transparent 10px, #000 10.5px); }
+.ios-teeqa.charge u { opacity: 1; }
+.ios-cherche { position: absolute; left: 50%; bottom: 128px; transform: translateX(-50%); display: flex; align-items: center; gap: 5px; padding: 7px 14px; border-radius: 99px; font-size: 13.5px; font-weight: 600; background: rgba(255, 255, 255, .2); backdrop-filter: blur(20px); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .2); }
+.ios-cherche svg { width: 15px; height: 15px; fill: none; stroke: #fff; stroke-width: 2.4; }
+.ios-dock { position: absolute; left: 14px; right: 14px; bottom: 16px; height: 98px; border-radius: 40px; display: grid; grid-template-columns: repeat(4, 1fr); align-items: center; padding: 0 6px;
+  background: rgba(255, 255, 255, .2); backdrop-filter: blur(26px) saturate(1.7); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .25), inset 0 1px 0 rgba(255, 255, 255, .35); }
+.ios-dock .ios-app small { display: none; }
+.ios .barre-etat { padding: 6px 34px 0 48px; }
+.ios-notif { position: absolute; left: 10px; right: 10px; top: 60px; z-index: 5; display: flex; gap: 11px; align-items: flex-start; padding: 13px 14px; border-radius: 26px; text-align: left; cursor: pointer;
+  background: rgba(248, 246, 242, .9); backdrop-filter: blur(24px) saturate(1.5); color: #111; box-shadow: 0 14px 36px rgba(0, 0, 0, .3), inset 0 0 0 1px rgba(255, 255, 255, .6); font-family: var(--sys); }
+.ios-notif > i { width: 38px; height: 38px; border-radius: 10px; flex: none; display: grid; place-items: center; }
+.ios-notif > i svg { width: 22px; height: 22px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.ios-notif div { min-width: 0; flex: 1; font-size: 14.5px; line-height: 1.3; display: grid; }
+.ios-notif b { display: flex; justify-content: space-between; font-size: 12.5px; font-weight: 600; color: #555; text-transform: uppercase; letter-spacing: .02em; }
+.ios-notif b small { font-weight: 400; text-transform: none; color: #777; font-size: 13px; }
+.ios-notif strong { font-weight: 600; margin-top: 2px; }
+.ios-notif span { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+.ios-notif u { color: #1F5FD1; text-decoration: none; }
+.ios-notif:hover { background: rgba(255, 255, 255, .95); }
