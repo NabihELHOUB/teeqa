@@ -839,7 +839,7 @@ export async function salleRecommencer({ empty = false } = {}) {
 }
 // Compte créé par le parcours « Créer mon compte » (11 nov.) : le nom saisi remplace le nom d'exemple du rôle choisi.
 const ROLE_NAMES = { client: [ROLES.client.name, ROLES.client.where], entreprise: [ROLES.entreprise.name, ROLES.entreprise.where] };
-export function applyAccount() { for (const k in ROLE_NAMES) [ROLES[k].name, ROLES[k].where] = ROLE_NAMES[k]; if (SALLE && state && state.noms) for (const k in ROLE_NAMES) if (state.noms[k]) { ROLES[k].name = state.noms[k]; ROLES[k].where = k === 'client' ? 'compte client' : 'compte entreprise'; } const a = state && state.account; if (a && ROLE_NAMES[a.role] && a.name) { ROLES[a.role].name = a.name; ROLES[a.role].where = a.role === 'client' ? 'votre compte' : 'votre compte entreprise'; } }
+export function applyAccount() { for (const k in ROLE_NAMES) [ROLES[k].name, ROLES[k].where] = ROLE_NAMES[k]; if ((SALLE || ORAL) && state && state.noms) for (const k in ROLE_NAMES) if (state.noms[k]) { ROLES[k].name = state.noms[k]; ROLES[k].where = k === 'client' ? 'compte client' : 'compte entreprise'; } const a = state && state.account; if (a && ROLE_NAMES[a.role] && a.name) { ROLES[a.role].name = a.name; ROLES[a.role].where = a.role === 'client' ? 'votre compte' : 'votre compte entreprise'; } }
 // 20 nov. : le nom du client suit le chantier affiché (le chantier clos d'exemple est celui de Souad, pas du client de la démo).
 export function vueChantier(path = '') { applyAccount(); const m = /^\/c\/([^/]+)/.exec(path), p = m && state && state.projects.find(x => x.id === m[1]); if (p && p.client) { ROLES.client.name = p.client.name; ROLES.client.where = p.client.where; } }
 export function reset(opts) { if (SALLE) { const keep = { ...state.session }; state.session = { ...keep, loggedIn: true }; save(); listeners.forEach(f => f()); return; } const keep = { ...state.session }, role = state.role, account = state.account; state = freshState(opts); state.role = role; if (account && opts && opts.empty) state.account = account; applyAccount(); state.session = { ...keep, loggedIn: true }; save(); listeners.forEach(f => f()); }
@@ -2376,7 +2376,7 @@ export const actions = {
   setDraft(key, val) { commit(st => { st.drafts[key] = val; }, { silent: true }); },
   session(patch) { commit(st => { Object.assign(st.session, patch); }); },
   feteVue(pid, sid, role) { commit(st => { const s = step(project(pid), sid), rv = s && s.reviews[s.reviews.length - 1]; if (rv && rv.feteVue) rv.feteVue[role] = now(); }, { silent: true }); },
-  setAccount(acc) { commit(st => { st.account = acc; st.role = acc.role; applyAccount(); }); },
+  setAccount(acc) { commit(st => { st.account = acc; st.role = acc.role; if (ORAL) nomsCommuns(); applyAccount(); }); },   // 28 nov. : pendant l'oral, le nom choisi (ex. l'entreprise invitée) se voit sur les trois téléphones
   pref(patch) { commit(st => { Object.assign(st.prefs, patch); }); },
   // M04 : ce que l'entreprise a modifié sur sa fiche professionnelle (zone, présentation, justificatifs déposés, demande de référencement).
   setPro(patch) { commit(st => { st.pro = { ...(st.pro || {}), ...patch }; }, { silent: true }); },

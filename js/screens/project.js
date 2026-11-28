@@ -400,13 +400,15 @@ export function inviteEntOn(p, back) {
   // Vague 25 (doigt : Bilal) : la confirmation se voit en entier (la carte « Invitation envoyée » est amenée sous la barre, sans saut brusque), et Bellarej félicite.
   const done = (canal, t) => { actions.inviteEntreprise(p.id, { ...vals(), canal }); go(back, { replace: true }); recompense(t); requestAnimationFrame(() => { const c = document.querySelector('#app .screen:last-of-type [data-testid="invite-envoyee"]'); if (c) c.scrollIntoView({ block: 'center', behavior: 'smooth' }); }); };
   return {
-    'ent-wa'() { const v = vals(), n = v.contact.replace(/\D/g, ''); try { window.open(`https://wa.me/${/@/.test(v.contact) ? '' : n}?text=${msg()}`, '_blank', 'noopener'); } catch { /* fenêtre bloquée */ } done('whatsapp', `Invitation pour ${v.name.trim() || "votre entreprise"} partagée par WhatsApp`); },
-    'ent-sms'() { const v = vals(); try { location.href = `sms:${/@/.test(v.contact) ? '' : v.contact.replace(/\s/g, '')}?&body=${msg()}`; } catch { /* rien */ } done('sms', `Invitation pour ${v.name.trim() || "votre entreprise"} partagée par SMS`); },
+    // 28 nov. (oral, trois téléphones dans une page) : ni onglet WhatsApp, ni boîte « Ouvrir Messages ? » du Mac : le message part dans l'appli.
+    'ent-wa'() { const v = vals(), n = v.contact.replace(/\D/g, ''); if (!ORAL) try { window.open(`https://wa.me/${/@/.test(v.contact) ? '' : n}?text=${msg()}`, '_blank', 'noopener'); } catch { /* fenêtre bloquée */ } done('whatsapp', `Invitation pour ${v.name.trim() || "votre entreprise"} partagée par WhatsApp`); },
+    'ent-sms'() { const v = vals(); if (!ORAL) try { location.href = `sms:${/@/.test(v.contact) ? '' : v.contact.replace(/\s/g, '')}?&body=${msg()}`; } catch { /* rien */ } done('sms', `Invitation pour ${v.name.trim() || "votre entreprise"} partagée par SMS`); },
     'ent-copy'() { const u = inviteUrl(p); try { navigator.clipboard && navigator.clipboard.writeText(u); } catch { /* presse-papiers indisponible */ } if (p.invites.entreprise.status === 'non_creee') done('lien', 'Lien copié · collez-le dans un message à votre entreprise'); else toast('Lien copié', 'copy'); },
   };
 }
 // Vague 8 : envoyer une invitation là où les gens lisent leurs messages (WhatsApp, SMS), pas seulement par e-mail.
-const inviteShare = (p, who0 = "l'entreprise") => { const t = encodeURIComponent(`Invitation TEEQA : suivi du chantier « ${p.name} » (${p.city}). Ouvrez le lien reçu pour accepter.`);
+const inviteShare = (p, who0 = "l'entreprise") => { if (ORAL) return '';   // 28 nov. (oral) : « Relancer l'entreprise » suffit ; ces liens ouvriraient WhatsApp ou Messages sur l'ordinateur
+  const t = encodeURIComponent(`Invitation TEEQA : suivi du chantier « ${p.name} » (${p.city}). Ouvrez le lien reçu pour accepter.`);
   return `<div class="row" style="gap:8px;flex-wrap:wrap" data-testid="invite-canaux"><a class="btn sm ghost" href="https://wa.me/?text=${t}" target="_blank" rel="noopener">${icon('message', 'sm')}WhatsApp</a><a class="btn sm ghost" href="sms:?&body=${t}">${icon('phone', 'sm')}SMS</a><span class="meta" style="align-self:center">Renvoyer l'invitation à ${who0}</span></div>`; };
 // Vague 4 : les villes couvertes par l'agence partenaire, et ce qui se passe hors zone.
 // Vague 5 : un réseau national d'agences partenaires ; l'agence du chantier dépend de sa ville.

@@ -271,6 +271,7 @@ async function aller(n) {
   n = Math.max(0, Math.min(6, n));
   if (occupe || n === beat) return;
   const de = beat; occupe = true; beat = n; scene.dataset.beat = n;
+  try { if (n === 6) sessionStorage.setItem('teeqa-oral-trio', '1'); else sessionStorage.removeItem('teeqa-oral-trio'); } catch { /* stockage indisponible */ }
   try { await transition(de, n); } finally { occupe = false; }
   peindreRecit(Math.min(n, 5));
 }
@@ -355,6 +356,10 @@ function brancher(r, w) {
   // Devant le jury, rien qui casse la scène : ni « Changer de vue », ni le chantier d'exemple, ni les outils de présentation.
   try { const st = w.document.createElement('style'); st.textContent = '[data-act="role-sheet"], [data-act="exemple"], [data-testid="voir-exemple"], [data-testid="voir-exemple"] + p, [data-testid="land-exemple"], [data-testid="presentation-tools"] { display: none !important; }'; w.document.head.appendChild(st); } catch { /* autre origine */ }
   w.addEventListener('teeqa-salle-notif', (e) => bandeau(r, e.detail));
+  // Aucun lien ne quitte la scène pendant l'oral : ni nouvel onglet, ni « Ouvrir Messages ? » du Mac, ni WhatsApp.
+  try { w.open = () => null;
+    w.document.addEventListener('click', (e) => { const a = e.target.closest && e.target.closest('a[href]'); if (!a) return; const h = a.getAttribute('href') || '';
+      if (/^(sms|tel|mailto|whatsapp):/i.test(h) || (/^https?:/i.test(h) && !h.startsWith(location.origin)) || a.target === '_blank') { e.preventDefault(); } }, true); } catch { /* autre origine */ }
   // Dans un cadre, le navigateur ne prête pas la webcam : la caméra de l'appli s'ouvre directement (pas de demande à l'écran).
   if (r !== 'client') try { if (!w.__teeqa.get().drafts.camPerm) w.__teeqa.actions.setDraft('camPerm', 'simulee'); } catch { /* ancien état */ }
   relayerTouches(w);
@@ -374,8 +379,9 @@ async function chargerRole(r) {
   throw new Error('appli ' + r + ' injoignable');
 }
 const DOC_VIDE = { projects: [], notifications: [], reports: [], avis: [], noms: {} };
-// 28 nov. : le chantier suivi est Villa Nador s'il existe, sinon le dernier créé (le présentateur peut taper un autre nom).
-const projetDemo = (doc) => { const l = doc && doc.projects; if (!l || !l.length) return undefined; return l.find((x) => x.name === 'Villa Nador') || l[l.length - 1]; };
+// 28 nov. : le chantier suivi est le dernier créé, quel que soit son nom (le présentateur peut taper « dddd »).
+// createProject l'ajoute EN TÊTE de la liste : c'est donc le premier (avant, le dernier de la liste était le plus ancien).
+const projetDemo = (doc) => { const l = doc && doc.projects; if (!l || !l.length) return undefined; return l[0]; };
 const lireDoc = () => { try { const d = JSON.parse(localStorage.getItem('teeqa-oral-chantier') || 'null'); return d && d.doc; } catch { return null; } };
 const lireRole = (r) => { try { return JSON.parse(localStorage.getItem('teeqa-oral-' + r) || 'null'); } catch { return null; } };
 
@@ -432,14 +438,18 @@ function accueilHTML(r) {
     <i class="ilot" aria-hidden="true"></i>${barreEtat()}
   </div>`;
 }
+const esc = (t) => String(t == null ? '' : t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+// Ce qui fait changer la notification : le chantier, l'invitation, ses relances (une relance la fait redescendre).
+const notifCle = (r, p) => { const i = (p.invites && p.invites[r]) || {}; return esc([p.id, i.at, i.canal, i.email, i.phone, i.name, i.lastRemindAt, i.reminders, i.token].join('|')); };
 function notifHTML(r, p) {
   const client = ((lireRole('client') || {}).account || {}).name || 'Karim';
-  const sms = r === 'entreprise' && (p.invites.entreprise || {}).canal === 'sms';
-  if (r === 'entreprise') return `<button class="ios-notif" type="button"><i style="background:${DOCK[sms ? 2 : 3].f}">${glyphe(sms ? 'msg' : 'mail')}</i><div><b>${sms ? 'Messages' : 'Mail'}<small>maintenant</small></b>
-    <strong>${client}, via TEEQA</strong><span>Invitation sur le chantier « ${p.name} » (${p.city}). Ouvrir l’invitation : <u>teeqa.app/i/${String(p.id).slice(-6)}</u></span></div></button>`;
+  const inv = p.invites.entreprise || {}, sms = r === 'entreprise' && (['sms', 'whatsapp', 'lien'].includes(inv.canal) || (!inv.email && !!inv.phone));
+  const relance = inv.reminders || inv.lastRemindAt ? (inv.reminders > 1 ? ` (${inv.reminders}e rappel)` : ' (rappel)') : '';
+  if (r === 'entreprise') return `<button class="ios-notif" type="button" data-cle="${notifCle(r, p)}"><i style="background:${DOCK[sms ? 2 : 3].f}">${glyphe(sms ? 'msg' : 'mail')}</i><div><b>${sms ? 'Messages' : 'Mail'}<small>maintenant</small></b>
+    <strong>${esc(client)}, via TEEQA${relance}</strong><span>${relance ? 'Relance : ' : ''}${inv.name ? esc(inv.name) + ', vous êtes invité' : 'Invitation'} sur le chantier « ${esc(p.name)} »${p.city ? ` (${esc(p.city)})` : ''}. Ouvrir l’invitation : <u>teeqa.app/i/${String(p.id).replace(/^ch-/, '')}</u></span></div></button>`;
   const c = p.invites.controleur || {}, ag = String(c.agence || 'Agence de contrôle de la zone').split(' · ')[0];
-  return `<button class="ios-notif" type="button"><i style="background:${DOCK[2].f}">${glyphe('msg')}</i><div><b>Messages<small>maintenant</small></b>
-    <strong>TEEQA</strong><span>Mission de contrôle pour ${ag} : chantier « ${p.name} » (${p.city}). Rejoindre le chantier, sans compte : <u>teeqa.app/m/${c.token || ''}</u></span></div></button>`;
+  return `<button class="ios-notif" type="button" data-cle="${notifCle(r, p)}"><i style="background:${DOCK[2].f}">${glyphe('msg')}</i><div><b>Messages<small>maintenant</small></b>
+    <strong>TEEQA</strong><span>Mission de contrôle pour ${esc(ag)} : chantier « ${esc(p.name)} »${p.city ? ` (${esc(p.city)})` : ''}. Rejoindre le chantier, sans compte : <u>teeqa.app/m/${c.token || ''}</u></span></div></button>`;
 }
 // L'écran d'accueil suit le chantier : il est là tant que l'appli n'est pas installée ; l'e-mail ou le SMS arrive avec l'invitation.
 function peindreAccueils(p) {
@@ -447,8 +457,10 @@ function peindreAccueils(p) {
     const c = cadre(r); let ios = c.querySelector('.ios');
     if (installe[r]) { if (ios && !enInstall[r]) ios.remove(); continue; }
     if (!ios) { c.insertAdjacentHTML('beforeend', accueilHTML(r)); ios = c.querySelector('.ios'); }
-    const inv = p && p.invites && p.invites[r], attend = !!(inv && inv.status === 'envoyee'), n = ios.querySelector('.ios-notif');
+    const inv = p && p.invites && p.invites[r], attend = !!(inv && inv.status === 'envoyee'); let n = ios.querySelector('.ios-notif');
     ios.querySelectorAll('[data-badge]').forEach((b) => b.classList.toggle('on', attend));
+    // Une nouvelle invitation ou une relance remplace la notification affichée, qui redescend.
+    if (attend && n && !enInstall[r] && n.dataset.cle !== notifCle(r, p)) { n.remove(); n = null; }
     if (attend && !n && !enInstall[r]) {
       ios.insertAdjacentHTML('beforeend', notifHTML(r, p)); const el = ios.querySelector('.ios-notif');
       el.addEventListener('click', (e) => { e.stopPropagation(); installer(r); });
@@ -478,7 +490,8 @@ async function installer(r, { vite = false } = {}) {
     if (w && p) try {
       if (r === 'entreprise' && !w.__teeqa.get().account) {
         const client = ((lireRole('client') || {}).account || {}).name || 'Karim';
-        w.__teeqa.actions.setDraft('suInvite', { pid: p.id, de: client, nom: p.name, name: p.invites.entreprise.name || 'Rachid BTP', email: p.invites.entreprise.email || 'contact@rachid-btp.ma', tel: p.invites.entreprise.phone || '+212 6 61 42 18 07' });
+        const inv = p.invites.entreprise || {}, rien = !inv.email && !inv.phone;   // invitée par e-mail, SMS ou lien : on reprend ce que Karim a saisi
+        w.__teeqa.actions.setDraft('suInvite', { pid: p.id, de: client, nom: p.name, name: inv.name || 'Rachid BTP', email: inv.email || (rien ? 'contact@rachid-btp.ma' : ''), tel: inv.phone || '+212 6 61 42 18 07' });
         w.__teeqa.go('#/signup');
       } else w.__teeqa.go(`#/invite/${p.id}/${r}`);
     } catch { /* appli en chargement */ }
@@ -526,7 +539,8 @@ async function avancer() {
   // Rachid BTP et l'agence n'ont pas touché leur lien : l'appli s'installe chez eux, l'entreprise a son compte.
   for (const r of ['entreprise', 'controleur']) if (!installe[r]) { installe[r] = true; cadre(r).querySelector('.ios')?.remove(); }
   garderInstalle();
-  if (!S.get().account) { A.setAccount({ role: 'entreprise', name: 'Rachid BTP', email: p.invites.entreprise.email || 'contact@rachid-btp.ma', tel: '+212 6 61 42 18 07', verifiedAt: new Date().toISOString() });
+  const iv = p.invites.entreprise || {};
+  if (!S.get().account) { A.setAccount({ role: 'entreprise', name: iv.name || 'Rachid BTP', email: iv.email || (iv.phone ? '' : 'contact@rachid-btp.ma'), tel: iv.phone || '+212 6 61 42 18 07', verifiedAt: new Date().toISOString() });
     A.session({ loggedIn: true, onboarded: true, splashSeen: true }); A.setDraft('suInvite', null); }
   if (p.invites.entreprise.status === 'envoyee') A.acceptInvite(PID, 'entreprise');
   if (S.project(PID).convention && !S.conventionOk(S.project(PID))) { A.acceptConvention(PID, 'entreprise'); A.acceptConvention(PID, 'client'); }
@@ -552,7 +566,8 @@ async function avancer() {
     'Dalle et toiture-terrasse conformes : épaisseur, ferraillage et réservations des réseaux vérifiés avant coulage.'];
   const ss = S.project(PID).steps;
   // L'étape jouée devant le jury : la dalle (3e étape, contrôlée avec 4 visites) ; à défaut, la première contrôlée après la 2e.
-  const cible = ss.findIndex((x, i) => i >= 2 && S.isControlled(x));
+  let cible = ss.findIndex((x, i) => i >= 2 && S.isControlled(x));
+  if (cible < 0) cible = Math.min(2, ss.length - 1);   // formule Suivi, ou chantier court : la 3e étape (ou la dernière)
   const jours = [62, 33, 20, 12, 6];
   try {
     for (let i = 0; i < cible; i++) {
@@ -639,12 +654,18 @@ function bandeau(r, liste) {
   c.insertAdjacentHTML('beforeend', `<div class="bandeau"><img src="${ICONE}" alt=""><div><b>TEEQA<small>maintenant</small></b><span></span></div></div>`);
   const el = c.querySelector('.bandeau'); el.querySelector('span').textContent = t;
   bouge(el, [{ transform: 'translateY(-130%) scale(.96)', opacity: 0 }, { transform: 'none', opacity: 1 }], REBOND);
-  bandeaux[r] = setTimeout(async () => { await bouge(el, [{ transform: 'none', opacity: 1 }, { transform: 'translateY(-130%)', opacity: 0 }], VIF, { fill: 'forwards' })?.finished; el.remove(); }, 5200);
+  const partir = async () => { clearTimeout(bandeaux[r]); if (!el.isConnected) return; await bouge(el, [{ transform: 'none', opacity: 1 }, { transform: 'translateY(-130%)', opacity: 0 }], VIF, { fill: 'forwards' })?.finished; el.remove(); };
+  // Toucher le bandeau ouvre la nouvelle, comme sur un iPhone (avant : il recouvrait la barre du haut 5 s, sans réagir).
+  el.addEventListener('click', (e) => { e.stopPropagation(); partir(); try { if (n.route) fen(r).contentWindow.__teeqa.go(n.route); } catch { /* appli en chargement */ } });
+  bandeaux[r] = setTimeout(partir, 4200);
 }
 
 // ---------- le fil conducteur ----------
 // Chaque geste se coche tout seul quand le chantier partagé montre qu'il est fait ; → le coche à la main s'il le faut.
-const OK = ['validee', 'corrigee', 'vue'], APRES_FIN = ['fin_declaree', 'retardee', 'refusee', ...OK];
+const OK = ['validee', 'corrigee', 'vue'], APRES_FIN = ['fin_declaree', 'retardee', 'correction_soumise', ...OK];
+// 28 nov. : après un avis Refusé, l'étape est à reprendre : le fil revient aux photos et à la fin déclarée, puis à la nouvelle visite.
+const avisOk = (s) => OK.includes(s.status) || ['retardee', 'correction_soumise'].includes(s.status) || (s.status !== 'refusee' && s.reviews.length > 0 && ['validee', 'retardee'].includes(s.reviews[s.reviews.length - 1].verdict));
+const visiteEnCours = (s) => !!(s.mission && s.mission.acceptedAt && s.status === 'fin_declaree');
 const entOk = (p) => !!(p && p.invites.entreprise.status === 'acceptee'), ctlOk = (p) => !!(p && p.invites.controleur && p.invites.controleur.status === 'acceptee');
 // [rôle, geste, précision, fait ?(chantier, étape cible)] ; rôle « saut » = le bouton « Trois mois plus tard ».
 const GESTES = [
@@ -666,9 +687,9 @@ const GESTES = [
   ['entreprise', 'Touche « Villa Nador », puis l’étape 3 « Dalle et toiture-terrasse » : « Ouvrir l’étape ».', 'Le même chantier sur les trois téléphones.', (p, s) => !!s && (s.photos.filter((x) => x.by === 'entreprise').length >= 2 || APRES_FIN.includes(s.status))],
   ['entreprise', 'Trois fois : « Ajouter une photo », déclencher, « Utiliser la photo ».', 'Les aciers, photographiés dans l’appli, datés et situés.', (p, s) => !!s && (s.photos.filter((x) => x.by === 'entreprise').length >= 4 || APRES_FIN.includes(s.status))],
   ['entreprise', '« Ferraillage prêt : déclarer la fin », puis confirme.', 'Avant de couler : le contrôleur doit voir les aciers.', (p, s) => !!s && APRES_FIN.includes(s.status)],
-  ['controleur', 'Touche la nouvelle « Mission de contrôle… », puis « Accepter cette visite ».', 'Il reste anonyme pour l’entreprise.', (p, s) => !!s && (!!(s.mission && s.mission.acceptedAt) || s.reviews.length > 0)],
-  ['controleur', 'Sur place : « Photographier », un toucher par point clé.', null, (p, s) => !!s && s.photos.some((x) => x.by === 'controleur')],
-  ['controleur', 'Tape les 2 mesures (épaisseur 16 cm, enrobage 3 cm), « Validé », « Relire et signer » : signe, code, « Signer l’avis », « Fermer ».', 'Avis signé, horodaté, avec ses mesures.', (p, s) => !!s && s.reviews.length > 0],
+  ['controleur', 'Touche la nouvelle « Mission de contrôle… », puis « Accepter cette visite ».', 'Il reste anonyme pour l’entreprise.', (p, s) => !!s && (visiteEnCours(s) || avisOk(s))],
+  ['controleur', 'Sur place : « Photographier », un toucher par point clé.', null, (p, s) => !!s && (avisOk(s) || (visiteEnCours(s) && s.photos.some((x) => x.by === 'controleur' && x.at >= s.mission.acceptedAt)))],
+  ['controleur', 'Tape les 2 mesures (épaisseur 16 cm, enrobage 3 cm), « Validé », « Relire et signer » : signe, code, « Signer l’avis », « Fermer ».', 'Avis signé, horodaté, avec ses mesures.', (p, s) => !!s && avisOk(s)],
   ['entreprise', '« Coulage fait », puis confirme.', 'Deux photos du béton coulé, après l’avis.', (p, s) => !!s && !!s.coulage],
   ['client', 'Touche la nouvelle, puis « J’ai payé cette tranche » et confirme.', '« Paiement recommandé » : l’argent ne passe jamais par TEEQA.', (p, s) => !!s && !!s.decision],
   ['entreprise', 'Touche la nouvelle, « Paiement reçu », puis « J’ai reçu le paiement ».', 'La tranche de la dalle est soldée.', (p, s) => !!(s && s.decision && s.decision.receivedAt)],
@@ -676,9 +697,19 @@ const GESTES = [
 ];
 const SAUT = GESTES.findIndex((g) => g[0] === 'saut');
 const NOM = { ...Object.fromEntries(ROLES3.map(([r, t, , c]) => [r, [t, c]])), saut: ['Le temps passe', '#C9962E'] };
-$('#gestes').innerHTML = GESTES.map(([r, t, d], i) => r === 'saut'
-  ? `<li data-i="${i}" class="saut-li" style="--c:${NOM[r][1]}"><button class="saut" id="saut" type="button"><b>${t}</b><small>${d}</small></button></li>`
-  : `<li data-i="${i}" style="--c:${NOM[r][1]}"><span class="qui"><i></i>${NOM[r][0]}</span><span>${t}</span>${d ? `<small>${d}</small>` : ''}</li>`).join('');
+// 28 nov. : le fil suit le chantier réellement créé (nom tapé à la main, entreprise invitée sous un autre nom).
+let nomsFil = '';
+function peindreFil(p) {
+  const nom = (p && p.name) || 'Villa Nador', ent = (p && p.invites.entreprise && p.invites.entreprise.status !== 'non_creee' && (lireDoc() || {}).noms && lireDoc().noms.entreprise) || (p && p.invites.entreprise.name) || 'Rachid BTP';
+  if (nomsFil === nom + '|' + ent) return false; nomsFil = nom + '|' + ent;
+  const adapte = (t) => t == null ? t : esc(t).replace(/Villa Nador/g, esc(nom)).replace(/Rachid BTP/g, esc(ent));
+  $('#gestes').innerHTML = GESTES.map(([r, t, d], i) => r === 'saut'
+    ? `<li data-i="${i}" class="saut-li" style="--c:${NOM[r][1]}"><button class="saut" id="saut" type="button"><b>${t}</b><small>${d}</small></button></li>`
+    : `<li data-i="${i}" style="--c:${NOM[r][1]}"><span class="qui"><i></i>${NOM[r][0]}</span><span>${adapte(t)}</span>${d ? `<small>${adapte(d)}</small>` : ''}</li>`).join('');
+  const et = $('.place[data-role="entreprise"] .etiquette small'); if (et) et.textContent = `${ent} · ${(p && p.city) || 'Nador'}`;
+  return true;
+}
+peindreFil(null);
 const main = new Set();   // gestes cochés à la main (→)
 // Où en est l'inscription de Karim (son compte n'est pas partagé : on le lit dans son téléphone).
 // etape : 0 rôle, 1 prénom et pays, 2 code vérifié (question « déjà un chantier ? »), 3 compte prêt.
@@ -692,7 +723,7 @@ let auto = [];
 function lireChantier() {
   const p = projetDemo(lireDoc()); let sid = null; try { sid = localStorage.getItem('teeqa-oral-cible'); } catch { /* */ }
   const s = p && sid ? p.steps.find((x) => x.id === sid) : null, c = client();
-  peindreAccueils(p);
+  peindreAccueils(p); peindreFil(p);
   auto = GESTES.map((g) => !!(g[3] && g[3](p, s, c)));
   // Un geste coché par le chantier coche aussi ceux d'avant.
   for (let i = auto.length - 1; i > 0; i--) if (auto[i]) for (let j = 0; j < i; j++) auto[j] = true;
@@ -718,7 +749,8 @@ let enSaut = false;
 async function sauter() {
   if (enSaut) return; enSaut = true;
   const v = document.createElement('div'); v.className = 'saut-voile';
-  v.innerHTML = `<div class="saut-carte"><small>Villa Nador · Nador</small><b>Deux mois plus tard</b><div class="saut-mois"><span>Fondations</span><span>Murs et poteaux</span><span>Dalle</span></div><p>Fondations et murs : faits, vérifiés, payés. Aujourd’hui, la dalle.</p></div>`;
+  const pc = projetDemo(lireDoc());
+  v.innerHTML = `<div class="saut-carte"><small>${esc(pc ? [pc.name, pc.city].filter(Boolean).join(' · ') : 'Villa Nador · Nador')}</small><b>Deux mois plus tard</b><div class="saut-mois"><span>Fondations</span><span>Murs et poteaux</span><span>Dalle</span></div><p>Fondations et murs : faits, vérifiés, payés. Aujourd’hui, la dalle.</p></div>`;
   scene.appendChild(v);
   await bouge(v, [{ opacity: 0 }, { opacity: 1 }], DOUX)?.finished;
   const t0 = Date.now();
@@ -768,5 +800,7 @@ $('.acte1').addEventListener('click', (e) => { if (!e.target.closest('#tel')) su
 peindreRecit(0); lireChantier(); guide(true);
 demarrerTrio();
 // Accès direct pour répéter : demo-oral.html#trois ouvre les trois téléphones (sans le fil).
-if (location.hash === '#trois') { trioPret.then(() => { beat = 5; ficheEtat = 'ouvrir'; aller(6); }); }
+// 28 nov. : une page rechargée pendant les trois téléphones (Cmd + R) y revient directement, chantier gardé.
+let dejaTrio = false; try { dejaTrio = sessionStorage.getItem('teeqa-oral-trio') === '1'; } catch { /* stockage indisponible */ }
+if (location.hash === '#trois' || dejaTrio) { trioPret.then(() => { beat = 5; ficheEtat = 'ouvrir'; aller(6); }); }
 window.__oral = { aller, get beat() { return beat; }, faits, lireChantier, demarrerTrio };

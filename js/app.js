@@ -40,6 +40,11 @@ function back(fallback) {
   // Vague 20 (doigt : Youssef) : connecté, « Retour » ne ramène jamais à l'accueil, à l'inscription ni aux portes.
   const ENTREE = /^#\/(splash|welcome|signup|login)\b/;
   if (stack.length > 1 && get().session.loggedIn && ENTREE.test(stack[stack.length - 2] || '')) { stack.splice(0, stack.length - 1); go(fallback || '#/home', { replace: true }); return; }
+  // 28 nov. (démo de l'oral, trois téléphones dans une page) : dans un cadre, history.back() recule l'historique COMMUN de la
+  // page : c'était le dernier téléphone touché qui reculait, pas celui-ci. Dans un cadre, le retour se fait donc ici même.
+  // On remplace l'adresse puis on prévient comme un vrai retour (hashchange) : le routeur dépile, et les autres écouteurs
+  // (caméra arrêtée, carte de chantier refermée) font leur travail.
+  if (stack.length > 1 && window.parent !== window) { history.replaceState(null, '', stack[stack.length - 2]); window.dispatchEvent(new HashChangeEvent('hashchange')); return; }
   if (stack.length > 1) history.back();
   else go(fallback || '#/home', { replace: true });
 }

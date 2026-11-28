@@ -394,7 +394,7 @@ function suFinish() {
   if (d.role === 'client') actions.pref({ pourParents: !!d.parents });   // vague 20 : pays de résidence demandé à l'inscription
   actions.session({ loggedIn: true, onboarded: true, splashSeen: true });
   let id = null;
-  if (d.role === 'client' && d.has === 'oui') id = actions.createProject({ name: d.pname.trim(), city: d.city.trim(), steps: [...TEMPLATE_STEPS], email: '', controls: TEMPLATE_STEPS.length });
+  if (d.role === 'client' && d.has === 'oui') id = actions.createProject({ name: d.pname.trim(), city: d.city.trim(), steps: [...TEMPLATE_STEPS], email: '', controls: TEMPLATE_STEPS.length, ...(ORAL_INSCRIPTION ? { prep: { type: 'neuf' } } : {}) });   // 28 nov. (oral) : avec sa convention, comme un chantier créé par le formulaire
   const inv = d.invite; if (inv) actions.setDraft('suInvite', null);
   su = null; landing = true;
   go(inv ? `#/invite/${inv.pid}/entreprise` : id ? `#/c/${id}` : '#/home', { replace: true });
@@ -439,7 +439,7 @@ export const routes = [
             if (v !== d.code) { if (er) er.textContent = 'Code incorrect. Vérifiez le message reçu, ou demandez un nouveau code.'; sfx('erreur'); return; }
             d.verifiedAt = new Date().toISOString(); closeSheet(true); setStep(d.step + 1); },
           'su-code-again'() { suCode(d); },
-          'su-back'() { if (d.step) setStep(d.step - 1); else { su = null; history.length > 1 ? history.back() : go('#/welcome', { replace: true }); } },
+          'su-back'() { if (d.step) setStep(d.step - 1); else { su = null; history.length > 1 && window.parent === window ? history.back() : go('#/welcome', { replace: true }); } },
           'su-have'() { su = null; actions.session({ onboarded: true }); go('#/login', { replace: true }); },
           'su-ctl'() { su = null; actions.setRole('controleur'); actions.session({ onboarded: true }); go('#/login', { replace: true }); },
           'su-enter': suFinish,
