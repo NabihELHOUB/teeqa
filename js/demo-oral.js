@@ -374,7 +374,8 @@ async function chargerRole(r) {
   throw new Error('appli ' + r + ' injoignable');
 }
 const DOC_VIDE = { projects: [], notifications: [], reports: [], avis: [], noms: {} };
-const projetDemo = (doc) => doc && doc.projects && doc.projects.find((x) => x.name === 'Villa Nador');
+// 28 nov. : le chantier suivi est Villa Nador s'il existe, sinon le dernier créé (le présentateur peut taper un autre nom).
+const projetDemo = (doc) => { const l = doc && doc.projects; if (!l || !l.length) return undefined; return l.find((x) => x.name === 'Villa Nador') || l[l.length - 1]; };
 const lireDoc = () => { try { const d = JSON.parse(localStorage.getItem('teeqa-oral-chantier') || 'null'); return d && d.doc; } catch { return null; } };
 const lireRole = (r) => { try { return JSON.parse(localStorage.getItem('teeqa-oral-' + r) || 'null'); } catch { return null; } };
 
@@ -433,7 +434,8 @@ function accueilHTML(r) {
 }
 function notifHTML(r, p) {
   const client = ((lireRole('client') || {}).account || {}).name || 'Karim';
-  if (r === 'entreprise') return `<button class="ios-notif" type="button"><i style="background:${DOCK[3].f}">${glyphe('mail')}</i><div><b>Mail<small>maintenant</small></b>
+  const sms = r === 'entreprise' && (p.invites.entreprise || {}).canal === 'sms';
+  if (r === 'entreprise') return `<button class="ios-notif" type="button"><i style="background:${DOCK[sms ? 2 : 3].f}">${glyphe(sms ? 'msg' : 'mail')}</i><div><b>${sms ? 'Messages' : 'Mail'}<small>maintenant</small></b>
     <strong>${client}, via TEEQA</strong><span>Invitation sur le chantier « ${p.name} » (${p.city}). Ouvrir l’invitation : <u>teeqa.app/i/${String(p.id).slice(-6)}</u></span></div></button>`;
   const c = p.invites.controleur || {}, ag = String(c.agence || 'Agence de contrôle de la zone').split(' · ')[0];
   return `<button class="ios-notif" type="button"><i style="background:${DOCK[2].f}">${glyphe('msg')}</i><div><b>Messages<small>maintenant</small></b>
@@ -476,7 +478,7 @@ async function installer(r, { vite = false } = {}) {
     if (w && p) try {
       if (r === 'entreprise' && !w.__teeqa.get().account) {
         const client = ((lireRole('client') || {}).account || {}).name || 'Karim';
-        w.__teeqa.actions.setDraft('suInvite', { pid: p.id, de: client, nom: p.name, name: 'Rachid BTP', email: p.invites.entreprise.email || 'contact@rachid-btp.ma', tel: '+212 6 61 42 18 07' });
+        w.__teeqa.actions.setDraft('suInvite', { pid: p.id, de: client, nom: p.name, name: p.invites.entreprise.name || 'Rachid BTP', email: p.invites.entreprise.email || 'contact@rachid-btp.ma', tel: p.invites.entreprise.phone || '+212 6 61 42 18 07' });
         w.__teeqa.go('#/signup');
       } else w.__teeqa.go(`#/invite/${p.id}/${r}`);
     } catch { /* appli en chargement */ }
