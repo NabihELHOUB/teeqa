@@ -1041,7 +1041,8 @@ export function overdue(p, s, t = nowMs()) {
 // Vague 9 : chronologie. Jamais d'avis avant l'heure de la visite ; jamais de début avant le coulage (ou l'avis) de l'étape
 // d'avant ; jamais de coulage ni de paiement avant l'avis.
 const T = (x) => x ? new Date(x).getTime() : 0;
-export const slotStarted = (s) => { if (!s || !s.mission || !s.mission.slot) return true; const d = new Date(s.mission.slot.at); d.setHours(0, 0, 0, 0); return nowMs() >= d.getTime(); };   // le jour du créneau, pas avant
+// Pendant l'oral, le jury ne peut pas attendre le jour du créneau : le contrôleur est sur place dès la visite acceptée.
+export const slotStarted = (s) => { if (ORAL) return true; if (!s || !s.mission || !s.mission.slot) return true; const d = new Date(s.mission.slot.at); d.setHours(0, 0, 0, 0); return nowMs() >= d.getTime(); };   // le jour du créneau, pas avant
 export const reviewTime = (rv) => rv ? T(rv.sentAt || rv.signedAt || rv.at) : 0;
 export function prevDoneAt(p, s) { const prev = p.steps[p.steps.indexOf(s) - 1]; if (!prev) return 0;
   return Math.max(prev.coulage ? T(prev.coulage.at) : 0, reviewTime(lastReview(prev)), prev.status === 'vue' ? T(((prev.history || []).filter(h => h.type === 'seen').pop() || {}).at) : 0); }
